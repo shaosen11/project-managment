@@ -259,10 +259,120 @@ MyContants(定义常量)
 | code_line_number | int      |      |      |      | 项目代码行 |
 | update_count     | int      |      |      |      | 提交次数   |
 | type             | varchar  | 64   |      |      | 项目类型   |
+| desciption       | varchar  | 1000 |      |      | 项目描述   |
 | create_time      | datatime |      |      |      | 创建时间   |
 | delete_flag      | tinyint  |      |      |      | 是否删除   |
-|                  |          |      |      |      |            |
-|                  |          |      |      |      |            |
 
 
+
+### projects_user（项目人员表，待完善）
+
+描述：项目人员情况
+
+| 属性        | 类型    | 长度 | null | 主键 | 描述         |
+| ----------- | ------- | ---- | ---- | ---- | ------------ |
+| id          | int     |      | no   | yes  | 自增id       |
+| projects_id | int     |      |      |      | 项目id       |
+| user_id     | int     |      |      |      | 用户id       |
+| code_update | int     |      |      |      | 用户上传次数 |
+| delete_flag | tinyint |      |      |      | 是否删除     |
+
+
+
+### projects_function（项目功能表，待完善）
+
+描述：项目功能点情况
+
+| 属性            | 类型    | 长度 | null | 主键 | 描述           |
+| --------------- | ------- | ---- | ---- | ---- | -------------- |
+| id              | int     |      | no   | yes  | 自增id         |
+| projects_id     | int     |      |      |      | 项目id         |
+| function_id     | int     |      |      |      | 功能id         |
+| function_name   | varchar | 64   |      |      | 功能名称       |
+| function_status | tinyint |      |      |      | 功能状态码     |
+| user_id         | int     |      |      |      | 实现功能用户id |
+| delete_flag     | tinyint |      |      |      | 是否删除       |
+
+
+
+### projects_package（项目包结构）
+
+描述：项目包结构
+
+| 属性                                      | 类型     | 长度 | null | 主键 | 描述   |
+| ----------------------------------------- | -------- | ---- | ---- | ---- | ------ |
+| id                                        | int      |      | no   | yes  | 自增id |
+| projects_id                               | int      |      |      |      |        |
+| package_id                                | int      |      |      |      |        |
+| package_name                              | varchar  | 64   |      |      |        |
+| documents_name(待考虑，用document_id替换) | varchar  | 64   |      |      |        |
+| create_time(待考虑)                       | datatime |      |      |      |        |
+| user_id                                   | int      |      |      |      |        |
+| delete_flag                               | tinyint  |      |      |      |        |
+
+
+
+### documents（文件）
+
+描述：文件
+
+| 属性                     | 类型     | 长度 | null | 主键 | 描述                                                |
+| ------------------------ | -------- | ---- | ---- | ---- | --------------------------------------------------- |
+| id                       | int      |      | no   | yes  | 自增id                                              |
+| name                     | varchar  | 255  |      |      | 文件名                                              |
+| user_id                  | int      |      |      |      | 用户id                                              |
+| version                  | int      |      |      |      | 版本                                                |
+| version_massage          | varchar  | 255  |      |      | 版本信息                                            |
+| serial_number            | varchar  | 255  |      |      | 存储UUID                                            |
+| projects_id              | int      |      |      |      | 项目id                                              |
+| upload_time              | datetime |      |      |      | 上传时间                                            |
+| version_flag             | int      |      |      |      | 确定版本号，0位过去版本，1为当前版本，2位待审核版本 |
+| code_line_number(待考虑) | int      |      |      |      | 文件代码行                                          |
+| delete_flag              | tinyint  |      |      |      | 是否删除                                            |
+
+
+
+### documents_record（文件上传日志）
+
+描述：记录文件上传记录
+
+| 属性                      | 类型     | 长度 | null | 主键 | 描述     |
+| ------------------------- | -------- | ---- | ---- | ---- | -------- |
+| id                        | int      |      | no   | yes  | 自增id   |
+| projects_id               | int      |      |      |      | 项目id   |
+| user_id                   | int      |      |      |      | 用户id   |
+| operate_time              | datetime |      |      |      | 上传时间 |
+| operate_massage（待考虑） | varchar  | 255  |      |      | 上传信息 |
+| ip                        | varchar  | 64   |      |      | ip地址   |
+| delete_flag               | tinyint  |      |      |      | 是否删除 |
+
+
+
+### projects_record（项目操作日志）
+
+描述：项目操作记录
+
+| 属性           | 类型     | 长度 | null | 主键 | 描述     |
+| -------------- | -------- | ---- | ---- | ---- | -------- |
+| id             | int      |      | no   | yes  | 自增id   |
+| projects_id    | int      |      |      |      | 项目id   |
+| user_id        | int      |      |      |      | 用户id   |
+| operate_time   | datetime |      |      |      | 操作时间 |
+| operate_massge | varcahr  | 255  |      |      | 操作信息 |
+| ip             | varchar  | 64   |      |      | ip地址   |
+| delete_falg    | tinyint  |      |      |      | 是否删除 |
+
+
+
+### user_recode（用户日志）
+
+描述：用户操作日志
+
+| 属性           | 类型     | 长度 | null | 主键 | 描述     |
+| -------------- | -------- | ---- | ---- | ---- | -------- |
+| id             | int      |      | no   | yes  | 自增id   |
+| user_id        | int      |      |      |      | 用户id   |
+| operate_time   | datetime |      |      |      | 操作时间 |
+| operate_massge | varchar  | 255  |      |      | 操作信息 |
+| ip             | varchar  | 64   |      |      | ip地址   |
 
