@@ -13,8 +13,8 @@ logging:
 spring:
   datasource:
     username: root
-    password: 123456
-    url: jdbc:mysql://192.168.0.103:3306/projectmanagment
+    password: 2017764300
+    url: jdbc:mysql://47.98.240.31:3306/projectmanagment
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     #   数据源其他配置
@@ -39,7 +39,7 @@ spring:
   cache:
     type: redis
   redis:
-    host: 192.168.0.103
+    host: 47.98.240.31
     port: 6379
     lettuce:
       pool:
