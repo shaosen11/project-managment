@@ -1,0 +1,59 @@
+server:
+  servlet:
+    session:
+      timeout: 15m
+      cookie:
+        http-only: true
+        secure: false
+
+logging:
+  level:
+    cn.edu.lingnan.projectmanagment.mapper: debug
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.0.103:3306/projectmanagment
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  thymeleaf:
+    cache: false
+  cache:
+    type: redis
+  redis:
+    host: 192.168.0.103
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8 #连接池最大连接数
+        max-idle: 8 #连接池中的最大空闲链接
+        min-idle: 0 #连接池中的最小空闲链接
+        max-wait: 1000  #连接池最大阻塞等待时间
+      shutdown-timeout: 100 #关闭超时时间
+  security:
+    loginType: json
+#mybatis开启别名
+mybatis:
+  type-aliases-package: cn.edu.lingnan.projectmanagment.bean
+  configuration:
+    map-underscore-to-camel-case: true
+
+

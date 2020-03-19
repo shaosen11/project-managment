@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Login</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script th:href="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+
+	<!-- CSS Files -->
+	<link rel="stylesheet"  href="../assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/azzara.css}">
+</head>
+<body class="login">
+	<div class="wrapper wrapper-login">
+		<div class="container container-login animated fadeIn">
+			<h3 class="text-center">登录</h3>
+			<div class="login-form">
+				<form th:action="@{/loginUser}" method="post">
+					<div class="form-group form-floating-label">
+						<input id="email" name="email" type="email" class="form-control input-border-bottom"  autocomplete="off" required>
+						<label for="email" class="placeholder">邮箱</label>
+					</div>
+					<div class="form-group form-floating-label">
+						<input id="password" name="password" type="password" class="form-control input-border-bottom"  autocomplete="off" required>
+						<label for="password" class="placeholder">密码</label>
+						<div class="show-password">
+							<i class="flaticon-interface"></i>
+						</div>
+					</div>
+					<div class="form-group form-floating-label">
+						<input type="text" name="captchaCode" id="captchaCode"  class="form-control input-border-bottom" autocomplete="off" required>
+						<label for="captchaCode" class="placeholder">验证码</label>
+						<img th:src="@{/kaptcha}" id="kaptcha" width="110px" height="40px"><br>
+					</div>
+					<div class="row form-sub m-0">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" id="rememberme" name="remember-me">
+							<label class="custom-control-label" for="rememberme">记住我</label>
+						</div>
+
+						<a href="#" class="link float-right">忘记密码?</a>
+					</div>
+					<div class="row">
+						<p style="color: red;margin: auto" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+					</div>
+					<div class="form-action mb-3">
+						<input class="btn btn-primary btn-rounded btn-login" type="submit" onclick="login()" value="登录">
+					</div>
+				</form>
+				<div class="login-account">
+					<span class="msg">没有账户?</span>
+					<a href="#" id="show-signup" class="link">注册</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="container container-signup animated fadeIn">
+			<h3 class="text-center">注册</h3>
+			<div class="login-form">
+				<form th:action="@{/user}" method="post">
+					<div class="form-group form-floating-label">
+						<input  id="registerUsername" name="username" type="text" class="form-control input-border-bottom" autocomplete="off" required>
+						<label for="registerUsername" class="placeholder">用户名</label>
+					</div>
+					<div class="form-group form-floating-label">
+						<input  id="registerEmail" name="email" type="email" class="form-control input-border-bottom" autocomplete="off" required>
+						<label for="registerEmail" class="placeholder">邮箱</label>
+					</div>
+					<div class="form-group form-floating-label">
+						<input  id="passwordsignin" name="password" type="password" class="form-control input-border-bottom" required>
+						<label for="passwordsignin" class="placeholder">密码</label>
+						<div class="show-password">
+							<i class="flaticon-interface"></i>
+						</div>
+					</div>
+					<div class="form-group form-floating-label">
+						<input  id="confirmpassword" name="confirmpassword" type="password" class="form-control input-border-bottom" required>
+						<label for="confirmpassword" class="placeholder">确认密码</label>
+						<div class="show-password">
+							<i class="flaticon-interface"></i>
+						</div>
+					</div>
+					<div class="row form-sub m-0">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input" name="agree" id="agree">
+							<label class="custom-control-label" for="agree">我同意条款</label>
+						</div>
+					</div>
+					<div class="form-action">
+						<a href="#" id="show-signin" class="btn btn-danger btn-rounded btn-login mr-3">取消</a>
+						<button class="btn btn-primary btn-rounded btn-login" type="submit">注册</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<!--	<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>-->
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+	<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+	<script th:src="@{/assets/js/core/popper.min.js}"></script>
+	<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+	<script th:src="@{/assets/js/ready.js}"></script>
+	<script th:inline="javascript">
+		window.onload = function (ev) {
+			var kaptchaImg = document.getElementById("kaptcha");
+			kaptchaImg.onclick = function (ev1) {
+				kaptchaImg.src = "/kaptcha?" + Math.floor(Math.random() * 100);
+			}
+		};
+
+		function login() {
+			var email = $("#email").val();
+			var password = $("#password").val();
+			var captchaCode = $("#captchaCode").val();
+			var rememberME = $("#rememberme").is(":checked");
+			if (email === "" || password === ""){
+				alert('邮箱或密码不能为空');
+				return;
+			}
+			$.ajax({
+				type: "POST",
+				url: "/loginUser",
+				data: {
+					"email": email,
+					"password": password,
+					"captchaCode": captchaCode,
+					"remember-me": rememberME
+				},
+				success: function (json) {
+					if (json.isok) {
+						location.href = json.data;
+					} else {
+						alert(json.message);
+					}
+				},
+			})
+		};
+
+		$(function () {
+			$("#registerUsername").keyup(function () {
+				var username = $("#registerUsername").val();
+				console.log(username);
+				$.ajax({
+					type: "get",
+					url: "/user",
+					data: {
+						"username": username
+					},
+					success: function (json) {
+						console.log(json);
+					},
+				})
+			})
+		})
+	</script>
+</body>
+</html>
