@@ -22,6 +22,16 @@
 * application.yml
 * kaptcha.properties
 
+## 数据库表
+
+* sys_user
+* sys_user_role
+* sys_role
+* sys_role_menu
+* sys_menu
+* sys_org
+* persistent_logins
+
 
 
 ## 包结构
@@ -138,3 +148,121 @@ MyContants(定义常量)
 ### application.yml（全局配置）
 
 ### kaptcha.properties（图片验证码配置）
+
+
+
+## 数据库表
+
+### sys_user（用户信息表）
+
+描述：用户信息表格
+
+| 属性名      | 类型     | 长度 | null | 主键 | 描述     |
+| ----------- | -------- | ---- | ---- | ---- | -------- |
+| id          | int      |      | no   | yes  | 自增id   |
+| email       | verchar  | 32   |      |      | 登录邮箱 |
+| username    | varchar  | 255  |      |      | 用户名   |
+| password    | varchar  | 255  |      |      | 密码     |
+| phone       | varchar  | 16   |      |      | 电话     |
+| create_time | datetime |      |      |      | 创建时间 |
+| enabled     | int      |      |      |      | 是否可用 |
+| org_id      | int      |      |      |      | 暂时不用 |
+
+
+
+### sys_user_role（用户角色信息表）
+
+描述：用户对应角色表格，spring security通过此表用户找到角色id
+
+| 属性名  | 类型 | 长度 | null | 主键 | 描述   |
+| ------- | ---- | ---- | ---- | ---- | ------ |
+| id      | int  |      | no   | yes  | 自增id |
+| user_id | int  |      |      |      | 用户id |
+| role_id | int  |      |      |      | 角色id |
+
+
+
+### sys_role（角色表）
+
+描述：角色信息表
+
+| 属性名      | 类型     | 长度 | null | 主键 | 描述                   |
+| ----------- | -------- | ---- | ---- | ---- | ---------------------- |
+| id          | int      |      | no   | yes  | 自增id                 |
+| role_name   | varchar  | 64   |      |      | 角色名                 |
+| role_code   | varchar  | 64   |      |      | 角色代码               |
+| role_desc   | varchar  | 64   |      |      | 角色描述               |
+| sort        | int      |      |      |      | 角色排序               |
+| status      | int      |      |      |      | 0代表可用，1代表不可用 |
+| create_time | datetime |      |      |      | 创建时间               |
+
+
+
+### sys_role_menu（角色菜单表）
+
+描述：角色菜单表，通过角色找到可以访问路径
+
+| 属性名  | 类型 | 长度 | null | 主键 | 描述   |
+| ------- | ---- | ---- | ---- | ---- | ------ |
+| id      | int  |      | no   | yes  | 自增id |
+| role_id | int  |      |      |      | 角色id |
+| menu_id | int  |      |      |      | 菜单id |
+
+
+
+### sys_menu（菜单表）
+
+描述：菜单表，pid,pids等属性还没使用
+
+| 属性名     | 类型    | 长度 | null | 主键 | 描述                   |
+| ---------- | ------- | ---- | ---- | ---- | ---------------------- |
+| id         | int     |      | no   | yes  | 自增id                 |
+| menu_pid   | int     |      |      |      | 父目录                 |
+| menu_pids  | varchar | 255  |      |      | 祖先目录               |
+| is_leaf    | tinyint |      |      |      | 是否叶子节点           |
+| menu_name  | varchar | 16   |      |      | 菜单名称               |
+| url        | varchar | 64   |      |      | 菜单路径               |
+| icon       | varchar | 64   |      |      | 图标                   |
+| icon_color | varchar | 16   |      |      | 图标颜色               |
+| sort       | tinyint |      |      |      | 排序                   |
+| level      | tinyint |      |      |      | 层级                   |
+| status     | tinyint |      |      |      | 0代表可用，1代表不可用 |
+
+
+
+### sys_org（部门表，暂时不用）
+
+
+
+### persistent_logins（cookie表）
+
+描述：浏览器缓存cookie
+
+| 属性      | 类型      | 长度 | null | 主键 | 描述         |
+| --------- | --------- | ---- | ---- | ---- | ------------ |
+| username  | varchar   | 64   |      |      | 用户名       |
+| series    | varchar   | 64   | no   | yes  | 序列号       |
+| token     | varchar   | 64   |      |      | token        |
+| last_used | timestamp |      |      |      | 最近登录时间 |
+
+
+
+### projects（项目表,待完善）
+
+描述：项目表格
+
+| 属性             | 类型     | 长度 | null | 主键 | 描述       |
+| ---------------- | -------- | ---- | ---- | ---- | ---------- |
+| id               | int      |      | no   | yes  | 自增id     |
+| name             | varchar  | 64   |      |      | 项目名称   |
+| charge_user_id   | int      |      |      |      | 项目管理员 |
+| code_line_number | int      |      |      |      | 项目代码行 |
+| update_count     | int      |      |      |      | 提交次数   |
+| type             | varchar  | 64   |      |      | 项目类型   |
+| create_time      | datatime |      |      |      | 创建时间   |
+| delete_flag      | tinyint  |      |      |      | 是否删除   |
+|                  |          |      |      |      |            |
+|                  |          |      |      |      |            |
+
+
+
