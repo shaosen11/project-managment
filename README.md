@@ -31,6 +31,14 @@
 * sys_menu
 * sys_org
 * persistent_logins
+* projects
+* projects_user
+* projects_function
+* projects_package
+* documents
+* documents_record
+* projects_record
+* user_record
 
 
 
