@@ -47,7 +47,7 @@
 						<p style="color: red;margin: auto" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
 					</div>
 					<div class="form-action mb-3">
-						<input class="btn btn-primary btn-rounded btn-login" type="submit" onclick="login()" value="登录">
+						<input class="btn btn-primary btn-rounded btn-login" type="button" onclick="login()" value="登录">
 					</div>
 				</form>
 				<div class="login-account">
@@ -60,7 +60,7 @@
 		<div class="container container-signup animated fadeIn">
 			<h3 class="text-center">注册</h3>
 			<div class="login-form">
-				<form th:action="@{/user}" method="post">
+				<form th:action="@{/user}" method="post" onSubmit="return registerCheck();">
 					<div class="form-group form-floating-label">
 						<input  id="registerUsername" name="username" type="text" class="form-control input-border-bottom" autocomplete="off" required>
 						<label for="registerUsername" class="placeholder">用户名</label>
@@ -117,7 +117,6 @@
 			var captchaCode = $("#captchaCode").val();
 			var rememberME = $("#rememberme").is(":checked");
 			if (email === "" || password === ""){
-				alert('邮箱或密码不能为空');
 				return;
 			}
 			$.ajax({
@@ -140,21 +139,57 @@
 		};
 
 		$(function () {
-			$("#registerUsername").keyup(function () {
-				var username = $("#registerUsername").val();
-				console.log(username);
-				$.ajax({
-					type: "get",
-					url: "/user",
-					data: {
-						"username": username
-					},
-					success: function (json) {
-						console.log(json);
-					},
-				})
+			$("#registerEmail").keyup(function () {
+				setTimeout('checkemail()',1000);
+			})
+			$("#confirmpassword").keyup(function () {
+				checkpassword();
 			})
 		})
+		function checkemail(){
+			var email = $("#registerEmail").val();
+			var registerEmail = $("#registerEmail");
+			$.ajax({
+				type: "GET",
+				url: "/user",
+				data: {
+					"email": email
+				},
+				success: function (json) {
+					if (!json){
+						registerEmail.css('borderColor','red');
+						return false;
+					}else {
+						registerEmail.css('borderColor','');
+					}
+				},
+			})
+		}
+		function checkpassword() {
+			var password1 = $("#passwordsignin").val();
+			var password2 = $("#confirmpassword").val();
+			var confirmpassword = $("#confirmpassword");
+			if (password1 != password2) {
+				confirmpassword.css('borderColor','red');
+				return false;
+			}else {
+				confirmpassword.css('borderColor','');
+			}
+		}
+		function registerCheck() {
+			if($("#registerUsername").val()==""){
+				return false;
+			}
+			if(checkemail()==false){
+				return false;
+			}
+			if(checkpassword()==false){
+				return false;
+			}
+			if($("#agree").is(":checked")==false){
+				return false;
+			}
+		}
 	</script>
 </body>
 </html>

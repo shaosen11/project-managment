@@ -1,5 +1,6 @@
 package cn.edu.lingnan.projectmanagment.service.impl;
 
+import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.User;
 import cn.edu.lingnan.projectmanagment.mapper.UserMapper;
 import cn.edu.lingnan.projectmanagment.service.UserService;
@@ -16,10 +17,16 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
 
-    @Cacheable(key = "'user_' + #username")
+    @Cacheable(key = "'user_' + #email")
     @Override
-    public boolean ckeckUsername(String username) {
-        return userMapper.ckeckUsername(username);
+    public MyUserDetails checkEmail(String email) {
+        return userMapper.checkEmail(email);
+    }
+
+    @Override
+    public boolean addUser(MyUserDetails myUserDetails) {
+        System.out.println(myUserDetails);
+        return userMapper.addUser(myUserDetails);
     }
 }
 

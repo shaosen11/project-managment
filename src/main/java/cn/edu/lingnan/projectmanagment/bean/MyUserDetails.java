@@ -9,8 +9,8 @@ import java.util.Date;
 
 public class MyUserDetails implements UserDetails, Serializable {
 
-    private String password;//密码
     private String username;//用户名
+    private String password;//密码
     private String email;
     private String phone;
     private Date createTime;
@@ -109,5 +109,21 @@ public class MyUserDetails implements UserDetails, Serializable {
 
     public boolean isCredentialNonExpired() {
         return credentialNonExpired;
+    }
+
+    @Override
+    public String toString() {
+        return "MyUserDetails{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", createTime=" + createTime +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialNonExpired=" + credentialNonExpired +
+                ", enabled=" + enabled +
+                ", authorities=" + authorities +
+                '}';
     }
 }

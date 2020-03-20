@@ -165,16 +165,18 @@ MyContants(定义常量)
 
 描述：用户信息表格
 
-| 属性名      | 类型     | 长度 | null | 主键 | 描述     |
-| ----------- | -------- | ---- | ---- | ---- | -------- |
-| id          | int      |      | no   | yes  | 自增id   |
-| email       | verchar  | 32   |      |      | 登录邮箱 |
-| username    | varchar  | 255  |      |      | 用户名   |
-| password    | varchar  | 255  |      |      | 密码     |
-| phone       | varchar  | 16   |      |      | 电话     |
-| create_time | datetime |      |      |      | 创建时间 |
-| enabled     | int      |      |      |      | 是否可用 |
-| org_id      | int      |      |      |      | 暂时不用 |
+| 属性名                 | 类型     | 长度 | null | 主键 | 描述         |
+| ---------------------- | -------- | ---- | ---- | ---- | ------------ |
+| id                     | int      |      | no   | yes  | 自增id       |
+| email                  | verchar  | 32   |      |      | 登录邮箱     |
+| username               | varchar  | 255  |      |      | 用户名       |
+| password               | varchar  | 255  |      |      | 密码         |
+| phone                  | varchar  | 16   |      |      | 电话         |
+| create_time            | datetime |      |      |      | 创建时间     |
+| enabled                | int      |      |      |      | 是否可用     |
+| account_non_expired    | boolean  |      |      |      | 是否过期     |
+| account_non_locked     | boolean  |      |      |      | 是否被锁     |
+| credential_non_expired | boolean  |      |      |      | 证书是否被锁 |
 
 
 

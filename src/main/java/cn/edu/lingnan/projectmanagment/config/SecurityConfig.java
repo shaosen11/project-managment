@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(myAuthenticationFailureHandler)//自定义的错误处理器
             .and()
                 .authorizeRequests()//需要权限的请求
-                .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser").permitAll()//允许所有访问
+                .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()//允许所有访问
                 .antMatchers("/index.html").authenticated()
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()
