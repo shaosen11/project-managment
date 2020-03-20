@@ -307,16 +307,16 @@ MyContants(定义常量)
 
 描述：项目包结构
 
-| 属性                                      | 类型     | 长度 | null | 主键 | 描述   |
-| ----------------------------------------- | -------- | ---- | ---- | ---- | ------ |
-| id                                        | int      |      | no   | yes  | 自增id |
-| projects_id                               | int      |      |      |      |        |
-| package_id                                | int      |      |      |      |        |
-| package_name                              | varchar  | 64   |      |      |        |
-| documents_name(待考虑，用document_id替换) | varchar  | 64   |      |      |        |
-| create_time(待考虑)                       | datatime |      |      |      |        |
-| user_id                                   | int      |      |      |      |        |
-| delete_flag                               | tinyint  |      |      |      |        |
+| 属性                                      | 类型     | 长度 | null | 主键 | 描述     |
+| ----------------------------------------- | -------- | ---- | ---- | ---- | -------- |
+| id                                        | int      |      | no   | yes  | 自增id   |
+| projects_id                               | int      |      |      |      | 项目id   |
+| package_id                                | int      |      |      |      | 包id     |
+| package_name                              | varchar  | 64   |      |      | 包名称   |
+| documents_name(待考虑，用document_id替换) | varchar  | 64   |      |      | 文件名称 |
+| create_time(待考虑)                       | datatime |      |      |      | 创建时间 |
+| user_id                                   | int      |      |      |      | 用户id   |
+| delete_flag                               | tinyint  |      |      |      | 是否删除 |
 
 
 
@@ -368,11 +368,11 @@ MyContants(定义常量)
 | operate_time   | datetime |      |      |      | 操作时间 |
 | operate_massge | varcahr  | 255  |      |      | 操作信息 |
 | ip             | varchar  | 64   |      |      | ip地址   |
-| delete_falg    | tinyint  |      |      |      | 是否删除 |
+| delete_flag    | tinyint  |      |      |      | 是否删除 |
 
 
 
-### user_recode（用户日志）
+### user_record（用户日志）
 
 描述：用户操作日志
 
