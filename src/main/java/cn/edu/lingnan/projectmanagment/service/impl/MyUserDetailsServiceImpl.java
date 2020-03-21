@@ -40,14 +40,11 @@ public class MyUserDetailsServiceImpl implements MyUserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         //加载基础用户信息
         MyUserDetails myUserDetails = myUserDetailsMapper.findByEmail(email);
-
+        System.out.println(myUserDetails);
         //加载用户角色列表
         List<String> roleCodes = myUserDetailsMapper.findRoleByEmail(email);
-
-
         //通过用户角色列表加载用户的资源权限
         List<String> authoritys = myUserDetailsMapper.findAuthorityByRoleCodes(roleCodes);
-
         //角色是一个特殊的权限，ROLE_前缀
         roleCodes = roleCodes.stream()
                 .map(rc -> "ROLE_" + rc)

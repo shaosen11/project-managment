@@ -11,5 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper {
     MyUserDetails checkEmail(@Param("email") String email);
     boolean addUser(MyUserDetails myUserDetails);
+    void updateUser(MyUserDetails myUserDetails);
 }
 

@@ -51,6 +51,10 @@ spring:
     password: 2017764300
   security:
     loginType: json
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 #mybatis开启别名
 mybatis:
   type-aliases-package: cn.edu.lingnan.projectmanagment.bean

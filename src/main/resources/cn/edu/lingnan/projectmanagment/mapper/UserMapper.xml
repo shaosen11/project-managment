@@ -22,4 +22,53 @@
             <if test="phone != null">#{phone},</if>
         </trim>
     </insert>
+
+    <update id="updateUser">
+        update sys_user set
+        <trim suffixOverrides=",">
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="gender != null">
+                gender = #{gender},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="introduce != null">
+                introduce = #{introduce},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled},
+            </if>
+            <if test="accountNonExpired != null">
+                account_non_expired = #{accountNonExpired},
+            </if>
+            <if test="accountNonLocked != null">
+                account_non_locked = #{accountNonLocked},
+            </if>
+            <if test="credentialNonExpired != null">
+                credential_non_expired = #{credentialNonExpired},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
 </mapper>

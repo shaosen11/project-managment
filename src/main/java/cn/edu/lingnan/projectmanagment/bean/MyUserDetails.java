@@ -9,10 +9,16 @@ import java.util.Date;
 
 public class MyUserDetails implements UserDetails, Serializable {
 
+    private int id;
     private String username;//用户名
     private String password;//密码
     private String email;
     private String phone;
+    private Date birthday;
+    private int gender;
+    private String address;
+    private String introduce;
+    private Date lastLoginTime;
     private Date createTime;
     private boolean accountNonExpired;//是否没过期
     private boolean accountNonLocked;//是否没被锁定
@@ -111,13 +117,67 @@ public class MyUserDetails implements UserDetails, Serializable {
         return credentialNonExpired;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "MyUserDetails{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", birthday=" + birthday +
+                ", gender=" + gender +
+                ", address='" + address + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", lastLoginTime=" + lastLoginTime +
                 ", createTime=" + createTime +
                 ", accountNonExpired=" + accountNonExpired +
                 ", accountNonLocked=" + accountNonLocked +

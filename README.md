@@ -40,6 +40,11 @@
 * projects_record
 * user_record
 
+## RUL
+
+* 公共访问
+* 权限访问
+
 
 
 ## 包结构
@@ -172,6 +177,11 @@ MyContants(定义常量)
 | username               | varchar  | 255  |      |      | 用户名       |
 | password               | varchar  | 255  |      |      | 密码         |
 | phone                  | varchar  | 16   |      |      | 电话         |
+| birthday               | date     |      |      |      | 生日         |
+| gender                 | tinyint  |      |      |      | 性别         |
+| address                | varchar  | 255  |      |      | 地址         |
+| introduce              | varchar  | 255  |      |      | 介绍         |
+| last_login_time        | datetime |      |      |      | 最近登录时间 |
 | create_time            | datetime |      |      |      | 创建时间     |
 | enabled                | int      |      |      |      | 是否可用     |
 | account_non_expired    | boolean  |      |      |      | 是否过期     |
@@ -385,4 +395,51 @@ MyContants(定义常量)
 | operate_time   | datetime |      |      |      | 操作时间 |
 | operate_massge | varchar  | 255  |      |      | 操作信息 |
 | ip             | varchar  | 64   |      |      | ip地址   |
+
+
+
+## URL
+
+### 公共访问：
+
+| 路径        | 请求方式（默认get） | 描述     |
+| ----------- | ------------------- | -------- |
+| /           |                     | 登录页面 |
+| /login      |                     | 登录页面 |
+| /login.html |                     | 登录页面 |
+| /kaptcha    |                     | 图片验证 |
+| /loginUser  |                     | 登录URL  |
+| /loginOut   |                     | 注销URL  |
+| /user       | post                | 注册用户 |
+|             |                     |          |
+|             |                     |          |
+
+
+
+
+
+### 权限访问：
+
+| 路径              | 请求方式（默认get） | 描述              |
+| ----------------- | ------------------- | ----------------- |
+| /index.html       |                     | 转发到index       |
+| /userprofile      |                     | 用户信息页面      |
+| /userprofile.html |                     | 装发到userprofile |
+| /user             | put                 | 修改用户信息      |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
+|                   |                     |                   |
 
