@@ -26,6 +26,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
                                         HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
         if(loginType.equalsIgnoreCase("JSON")){
+            
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(AJaxResponse.success("/index.html")));
         }else {

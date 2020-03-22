@@ -1,5 +1,6 @@
 package cn.edu.lingnan.projectmanagment.bean;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -7,11 +8,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+@Data
 public class MyUserDetails implements UserDetails, Serializable {
 
     private int id;
-    private String username;//用户名
-    private String password;//密码
+    private String username;
+    private String password;
     private String email;
     private String phone;
     private Date birthday;
@@ -20,26 +22,27 @@ public class MyUserDetails implements UserDetails, Serializable {
     private String introduce;
     private Date lastLoginTime;
     private Date createTime;
-    private boolean accountNonExpired;//是否没过期
-    private boolean accountNonLocked;//是否没被锁定
-    private boolean credentialNonExpired;//是否没过期
-    private boolean enabled;//账号是否可用
-    Collection<? extends GrantedAuthority> authorities;//用户的权限集合
+    /**
+     * 是否过期
+     */
+    private boolean accountNonExpired;
+    /**
+     * 是否没被锁定
+     */
+    private boolean accountNonLocked;
+    /**
+     * 是否没过期
+     */
+    private boolean credentialNonExpired;
+    /**
+     * 账户是否可用
+     */
+    private boolean enabled;
+    /**
+     * 用户权限结合
+     */
+    Collection<? extends GrantedAuthority> authorities;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -61,129 +64,5 @@ public class MyUserDetails implements UserDetails, Serializable {
         return true;
     }
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialNonExpired(boolean credentialNonExpired) {
-        this.credentialNonExpired = credentialNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public boolean isCredentialNonExpired() {
-        return credentialNonExpired;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
-    }
-
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "MyUserDetails{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", birthday=" + birthday +
-                ", gender=" + gender +
-                ", address='" + address + '\'' +
-                ", introduce='" + introduce + '\'' +
-                ", lastLoginTime=" + lastLoginTime +
-                ", createTime=" + createTime +
-                ", accountNonExpired=" + accountNonExpired +
-                ", accountNonLocked=" + accountNonLocked +
-                ", credentialNonExpired=" + credentialNonExpired +
-                ", enabled=" + enabled +
-                ", authorities=" + authorities +
-                '}';
-    }
 }
