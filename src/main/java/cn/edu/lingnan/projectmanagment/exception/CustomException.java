@@ -1,5 +1,8 @@
 package cn.edu.lingnan.projectmanagment.exception;
 
+/**
+ * @author shaosen
+ */
 public class CustomException {
     private int code;
     private String message;

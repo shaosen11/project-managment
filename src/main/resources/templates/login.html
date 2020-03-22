@@ -128,7 +128,7 @@
 					"remember-me": rememberME
 				},
 				success: function (json) {
-					if (json.isok) {
+					if (json.ok) {
 						location.href = json.data;
 					} else {
 						alert(json.message);

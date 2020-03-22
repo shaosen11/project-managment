@@ -1,5 +1,8 @@
 package cn.edu.lingnan.projectmanagment.exception;
 
+/**
+ * @author shaosen
+ */
 public enum  CustomExceptionType {
     USER_INPUT_ERROR(400,"用户输入异常"),
     SYSTEM_ERROR(500,"系统服务异常"),

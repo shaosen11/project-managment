@@ -4,8 +4,6 @@ import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.mapper.MyRBACServiceMapper;
 import cn.edu.lingnan.projectmanagment.service.MyRBACService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -14,6 +12,9 @@ import org.springframework.util.AntPathMatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * @author shaosen
+ */
 @Component("rbacService")
 public class MyRBACServiceImpl implements MyRBACService {
 

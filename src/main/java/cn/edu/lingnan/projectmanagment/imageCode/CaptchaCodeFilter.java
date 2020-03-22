@@ -21,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * @author shaosen
+ */
 @Component
 public class CaptchaCodeFilter extends OncePerRequestFilter {
 

@@ -1,56 +1,31 @@
 package cn.edu.lingnan.projectmanagment.exception;
 
+import lombok.Data;
+
+/**
+ * @author shaosen
+ */
+@Data
 public class AJaxResponse {
-    private boolean isok;
+    private boolean isOk;
     private int code;
     private String message;
     private Object data;
 
-    public boolean isIsok() {
-        return isok;
-    }
-
-    public void setIsok(boolean isok) {
-        this.isok = isok;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
 
     public AJaxResponse() {
     }
 
     public static AJaxResponse success(){
         AJaxResponse resultBean = new AJaxResponse();
-        resultBean.setIsok(true);
+        resultBean.setOk(true);
         resultBean.setCode(200);
         resultBean.setMessage("success");
         return resultBean;
     }
     public static AJaxResponse success(Object data){
         AJaxResponse resultBean = new AJaxResponse();
-        resultBean.setIsok(true);
+        resultBean.setOk(true);
         resultBean.setCode(200);
         resultBean.setMessage("success");
         resultBean.setData(data);
@@ -58,7 +33,7 @@ public class AJaxResponse {
     }
     public static AJaxResponse error(CustomException e){
         AJaxResponse resultBean = new AJaxResponse();
-        resultBean.setIsok(false);
+        resultBean.setOk(false);
         resultBean.setData("/login");
         resultBean.setCode(e.getCode());
         if (e.getCode() == CustomExceptionType.USER_INPUT_ERROR.getCode()){

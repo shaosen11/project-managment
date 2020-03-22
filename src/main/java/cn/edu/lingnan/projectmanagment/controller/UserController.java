@@ -1,19 +1,13 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
-import cn.edu.lingnan.projectmanagment.bean.User;
-import cn.edu.lingnan.projectmanagment.mapper.MyUserDetailsMapper;
 import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomBooleanEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,14 +15,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
-
+/**
+ * @author shaosen
+ */
 @Controller
 public class UserController {
 
@@ -47,9 +40,11 @@ public class UserController {
     public boolean User(String email){
         MyUserDetails myUserDetails =  userService.checkEmail(email);
         if (myUserDetails == null){
-            return true;//表示可以注册
+            //表示可以注册
+            return true;
         } else {
-            return false;//表示不可以注册
+            //表示不可以注册
+            return false;
         }
     }
 

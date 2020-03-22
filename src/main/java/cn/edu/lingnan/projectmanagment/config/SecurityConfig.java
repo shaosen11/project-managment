@@ -22,6 +22,9 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.sql.DataSource;
 
+/**
+ * @author shaosen
+ */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -50,40 +53,63 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(captchaCodeFilter, UsernamePasswordAuthenticationFilter.class)
             .logout()
-                .logoutUrl("/loginOut")//设置退出url
+                //设置退出url
+                .logoutUrl("/loginOut")
 //                .logoutSuccessUrl("/login.html")//设置退出成功页面
-                .deleteCookies("JSESSIONID")//删除JSESSIONID
-                .logoutSuccessHandler(myLogoutSuccessHandler)//自定义退出处理器
+                //删除JSESSIONID
+                .deleteCookies("JSESSIONID")
+                //自定义退出处理器
+                .logoutSuccessHandler(myLogoutSuccessHandler)
             .and()
                 .rememberMe()
-                .rememberMeParameter("remember-me")//设置前端属性名称
-                .rememberMeCookieName("remember-me-cookie")//设置cookie名称
-                .tokenValiditySeconds(7 * 24 * 60 * 60)//设置过期时间
-                .tokenRepository(persistentTokenRepository())//存储token到数据库，应用重新启动不会刷掉token
+                //设置前端属性名称
+                .rememberMeParameter("remember-me")
+                //设置cookie名称
+                .rememberMeCookieName("remember-me-cookie")
+                //设置过期时间
+                .tokenValiditySeconds(7 * 24 * 60 * 60)
+                //存储token到数据库，应用重新启动不会刷掉token
+                .tokenRepository(persistentTokenRepository())
             .and()
-                .csrf().disable()//跨域请求
-            .formLogin()//formlogin验证
-                .loginPage("/login")//指定登录页面
-                .usernameParameter("email")//可以指定前端页面的用户名参数
-                .passwordParameter("password")//可以指定前端页面的密码参数
-                .loginProcessingUrl("/loginUser")//指定登录URL
+                //跨域请求
+                .csrf().disable()
+            //formlogin验证
+            .formLogin()
+                //指定登录页面
+                .loginPage("/login")
+                //可以指定前端页面的用户名参数
+                .usernameParameter("email")
+                //可以指定前端页面的密码参数
+                .passwordParameter("password")
+                //指定登录URL
+                .loginProcessingUrl("/loginUser")
 //                    .defaultSuccessUrl("/index")//指定登录成功的跳转页面
 //                    .failureUrl("/login.html")
-                .successHandler(myAuthenticationSuccessHandler)//自定义的成功处理器
-                .failureHandler(myAuthenticationFailureHandler)//自定义的错误处理器
+                //自定义的成功处理器
+                .successHandler(myAuthenticationSuccessHandler)
+                //自定义的错误处理器
+                .failureHandler(myAuthenticationFailureHandler)
             .and()
-                .authorizeRequests()//需要权限的请求
-                .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()//允许所有访问
+                //需要权限的请求
+                .authorizeRequests()
+                //允许所有访问
+                .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()
                 .antMatchers("/index.html").authenticated()
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)//如果有需要就创建session
-                .invalidSessionUrl("/login.html")//当session超时，重新跳转到指定页面
-                .sessionFixation().migrateSession()//每次登录都替换sesionID
-                .maximumSessions(1)//只允许最多一个登录
-                .maxSessionsPreventsLogin(false)//允许登录之后再登录
-                .expiredSessionStrategy(new MyExpiredSessionStrategy())//返回自定义的配置
+                //如果有需要就创建session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                //当session超时，重新跳转到指定页面
+                .invalidSessionUrl("/login.html")
+                //每次登录都替换sesionID
+                .sessionFixation().migrateSession()
+                //只允许最多一个登录
+                .maximumSessions(1)
+                //允许登录之后再登录
+                .maxSessionsPreventsLogin(false)
+                //返回自定义的配置
+                .expiredSessionStrategy(new MyExpiredSessionStrategy())
             ;
     }
 

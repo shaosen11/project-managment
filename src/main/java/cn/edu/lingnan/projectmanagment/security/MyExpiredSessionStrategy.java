@@ -7,7 +7,9 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @author shaosen
+ */
 public class MyExpiredSessionStrategy implements SessionInformationExpiredStrategy {
 
     private static ObjectMapper objectMapper = new ObjectMapper();

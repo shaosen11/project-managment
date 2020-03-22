@@ -9,6 +9,9 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.util.Properties;
 
+/**
+ * @author shaosen
+ */
 @Configuration
 @PropertySource(value = {"classpath:kaptcha.properties"})
 public class CaptchaConfig {

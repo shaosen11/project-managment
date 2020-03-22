@@ -15,6 +15,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * @author shaosen
+ */
 @RestController
 public class CaptchaController {
 

@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * @author shaosen
+ */
 @Data
 public class MyUserDetails implements UserDetails, Serializable {
 

@@ -12,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+/**
+ * @author shaosen
+ */
 @Component
 public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
@@ -26,7 +28,8 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
                                         HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
         if(loginType.equalsIgnoreCase("JSON")){
-            
+            System.out.println("登录成功");
+
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(AJaxResponse.success("/index.html")));
         }else {

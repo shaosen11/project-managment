@@ -5,7 +5,9 @@ import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;
 
 
-
+/**
+ * @author shaosen
+ */
 @org.springframework.context.annotation.Configuration
 public class MyBatisConfig {
 
