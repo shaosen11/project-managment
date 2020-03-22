@@ -14,13 +14,13 @@ import java.util.Date;
 @Data
 public class MyUserDetails implements UserDetails, Serializable {
 
-    private int id;
+    private Integer id;
     private String username;
     private String password;
     private String email;
     private String phone;
     private Date birthday;
-    private int gender;
+    private Integer gender;
     private String address;
     private String introduce;
     private Date lastLoginTime;

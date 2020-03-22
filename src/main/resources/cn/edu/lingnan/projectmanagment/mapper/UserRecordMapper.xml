@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.lingnan.projectmanagment.mapper.UserRecordMapper">
+    <insert id="insert">
+        insert into user_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="operateTime != null">operate_time,</if>
+            <if test="operateMassage != null">operate_massage,</if>
+            <if test="ip != null">ip,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="operateTime != null">#{operateTime},</if>
+            <if test="operateMassage != null">#{operateMassage},</if>
+            <if test="ip != null">#{ip},</if>
+        </trim>
+    </insert>
+</mapper>

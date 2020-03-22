@@ -57,9 +57,8 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    public String updateEmployee(MyUserDetails myUserDetails, HttpServletRequest request) {
+    public String updateUser(MyUserDetails myUserDetails, HttpServletRequest request) {
         MyUserDetails myUserDetails1 = userService.updateUser(myUserDetails);
-        System.out.println(myUserDetails1);
         //1.从HttpServletRequest中获取SecurityContextImpl对象
         SecurityContextImpl securityContextImpl = (SecurityContextImpl) request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
         //2.从SecurityContextImpl中获取Authentication对象
