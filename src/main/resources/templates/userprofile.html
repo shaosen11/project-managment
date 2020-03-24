@@ -69,82 +69,111 @@
 								<div class="card-header">
 									<div class="row row-nav-line">
 										<ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
-											<li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#profile" role="tab" aria-selected="false">简介</a> </li>
-											<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#home" role="tab" aria-selected="true">时间线</a> </li>
-											<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-selected="false">设置</a> </li>
+											<li class="nav-item">
+												<a class="nav-link active show" id="pills-home-tab-nobd" data-toggle="pill" href="#pills-profile-nobd" role="tab" aria-controls="pills-profile-nobd" aria-selected="true">个人信息</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="pills-profile-tab-nobd" data-toggle="pill" href="#pills-security-nobd" role="tab" aria-controls="pills-security-nobd" aria-selected="false">安全管理</a>
+											</li>
 										</ul>
 									</div>
 								</div>
-								<div class="card-body">
-									<form th:action="@{/user}" method="post">
-										<input type="hidden" name="_method" value="put"/>
-										<input type="hidden" name="id" th:if="${#authentication.principal.id!=null}" th:value="${#authentication.principal.id}"/>
-										<div class="row mt-3">
-											<div class="col-md-6">
-												<div class="form-group form-group-default">
-													<label>名称</label>
-													<input type="text" class="form-control" name="username" placeholder="Name" autocomplete="off"
-														   th:value="${#authentication.principal.username!=null}?${#authentication.principal.username}">
+								<div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+									<div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+										<div class="tab-pane fade show active" id="pills-profile-nobd" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+											<form th:action="@{/user}" method="post">
+												<input type="hidden" name="_method" value="put"/>
+												<input type="hidden" name="id" th:if="${#authentication.principal.id!=null}" th:value="${#authentication.principal.id}"/>
+												<div class="row mt-3">
+													<div class="col-md-6">
+														<div class="form-group form-group-default">
+															<label>名称</label>
+															<input type="text" class="form-control" name="username" placeholder="Name" autocomplete="off"
+																   th:value="${#authentication.principal.username!=null}?${#authentication.principal.username}">
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group form-group-default">
+															<label>邮箱</label>
+															<input type="email" class="form-control" name="email" placeholder="Name" autocomplete="off"  readonly="true"
+																   th:value="${#authentication.principal.email!=null}?${#authentication.principal.email}">
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group form-group-default">
-													<label>邮箱</label>
-													<input type="email" class="form-control" name="email" placeholder="Name" autocomplete="off"  readonly="true"
-														   th:value="${#authentication.principal.email!=null}?${#authentication.principal.email}">
+												<div class="row mt-3">
+													<div class="col-md-4">
+														<div class="form-group form-group-default">
+															<label>出生日期</label>
+															<input type="text" class="form-control" id="birthday" name="birthday" placeholder="Birth Date" autocomplete="off"
+																   th:value="${#authentication.principal.birthday!=null}?${#dates.format(#authentication.principal.birthday, 'yyyy-MM-dd')}">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group form-group-default">
+															<label>性别</label>
+															<select class="form-control" id="gender" name="gender">
+																<option th:text="男" value="1" autocomplete="off"
+																		th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==1" >男</option>
+																<option th:text="女" value="0" autocomplete="off"
+																		th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==0">女</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group form-group-default">
+															<label>手机</label>
+															<input type="text" class="form-control" name="phone" placeholder="Phone" autocomplete="off"
+																   th:value="${#authentication.principal.phone!=null}?${#authentication.principal.phone}">
+														</div>
+													</div>
 												</div>
-											</div>
+												<div class="row mt-3">
+													<div class="col-md-12">
+														<div class="form-group form-group-default">
+															<label>地址</label>
+															<input type="text" class="form-control" name="address" placeholder="Address" autocomplete="off"
+																   th:value="${#authentication.principal.address!=null}?${#authentication.principal.address}">
+														</div>
+													</div>
+												</div>
+												<div class="row mt-3 mb-1">
+													<div class="col-md-12">
+														<div class="form-group form-group-default">
+															<label>关于我</label>
+															<textarea class="form-control" name="introduce" placeholder="这家伙很懒，什么都没有留下" rows="3" autocomplete="off"
+																	  th:value="${#authentication.principal.introduce!=null}?${#authentication.principal.introduce}"></textarea>
+														</div>
+													</div>
+												</div>
+												<div class="text-right mt-3 mb-3">
+													<button class="btn btn-success" type="submit">保存</button>
+													<button class="btn btn-danger">重置</button>
+												</div>
+											</form>
 										</div>
-										<div class="row mt-3">
-											<div class="col-md-4">
-												<div class="form-group form-group-default">
-													<label>出生日期</label>
-													<input type="text" class="form-control" id="birthday" name="birthday" placeholder="Birth Date" autocomplete="off"
-														   th:value="${#authentication.principal.birthday!=null}?${#dates.format(#authentication.principal.birthday, 'yyyy-MM-dd')}">
+										<div class="tab-pane fade" id="pills-security-nobd" role="tabpanel" aria-labelledby="pills-security-tab-nobd">
+											<form th:action="@{/user}" method="post">
+												<input type="hidden" name="_method" value="put"/>
+												<input type="hidden" name="id" th:if="${#authentication.principal.id!=null}" th:value="${#authentication.principal.id}"/>
+												<div class="form-group form-floating-label">
+													<input  id="oldpassword" name="oldpassword" type="password" class="form-control input-border-bottom" required>
+													<label for="oldpassword" class="placeholder">旧密码</label>
 												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group form-group-default">
-													<label>性别</label>
-													<select class="form-control" id="gender" name="gender">
-														<option th:text="男" value="1" autocomplete="off"
-																th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==1" >男</option>
-														<option th:text="女" value="0" autocomplete="off"
-																th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==0">女</option>
-													</select>
+												<div class="form-group form-floating-label">
+													<input  id="password" name="password" type="password" class="form-control input-border-bottom" required>
+													<label for="password" class="placeholder">新密码</label>
 												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group form-group-default">
-													<label>手机</label>
-													<input type="text" class="form-control" name="phone" placeholder="Phone" autocomplete="off"
-														   th:value="${#authentication.principal.phone!=null}?${#authentication.principal.phone}">
+												<div class="form-group form-floating-label">
+													<input  id="confirmpassword" name="confirmpassword" type="password" class="form-control input-border-bottom" required>
+													<label for="confirmpassword" class="placeholder">确认密码</label>
 												</div>
-											</div>
+
+												<div class="text-right mt-3 mb-3">
+													<button class="btn btn-primary" type="submit">保存</button>
+												</div>
+											</form>
 										</div>
-										<div class="row mt-3">
-											<div class="col-md-12">
-												<div class="form-group form-group-default">
-													<label>地址</label>
-													<input type="text" class="form-control" name="address" placeholder="Address" autocomplete="off"
-														   th:value="${#authentication.principal.address!=null}?${#authentication.principal.address}">
-												</div>
-											</div>
-										</div>
-										<div class="row mt-3 mb-1">
-											<div class="col-md-12">
-												<div class="form-group form-group-default">
-													<label>关于我</label>
-													<textarea class="form-control" name="introduce" placeholder="这家伙很懒，什么都没有留下" rows="3" autocomplete="off"
-															  th:value="${#authentication.principal.introduce!=null}?${#authentication.principal.introduce}"></textarea>
-												</div>
-											</div>
-										</div>
-										<div class="text-right mt-3 mb-3">
-											<button class="btn btn-success" type="submit">保存</button>
-											<button class="btn btn-danger">重置</button>
-										</div>
-									</form>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -159,7 +188,7 @@
 								</div>
 								<div class="card-body">
 									<div class="user-profile text-center">
-										<div class="name">Hizrian, 19</div>
+										<div class="name" th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}"></div>
 										<div class="job">Frontend Developer</div>
 										<div class="desc">A man who hates loneliness</div>
 										<div class="social-media">
@@ -287,6 +316,25 @@
 				},
 			})
 		};
+	</script>
+	<script>
+		$(function () {
+			$("#confirmpassword").keyup(function () {
+				checkpassword();
+			})
+		})
+
+		function checkpassword() {
+			var password1 = $("#password").val();
+			var password2 = $("#confirmpassword").val();
+			var confirmpassword = $("#confirmpassword");
+			if (password1 != password2) {
+				confirmpassword.css('borderColor','red');
+				return false;
+			}else {
+				confirmpassword.css('borderColor','');
+			}
+		}
 	</script>
 </body>
 </html>

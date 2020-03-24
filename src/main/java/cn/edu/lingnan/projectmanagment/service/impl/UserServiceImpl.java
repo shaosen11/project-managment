@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public MyUserDetails updateUser(MyUserDetails myUserDetails) {
         userMapper.updateUser(myUserDetails);
+        myUserDetails = userMapper.findById(myUserDetails.getId());
         return myUserDetails;
     }
 }

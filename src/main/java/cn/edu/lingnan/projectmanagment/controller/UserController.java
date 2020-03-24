@@ -2,7 +2,6 @@ package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.UserRole;
-import cn.edu.lingnan.projectmanagment.service.UserRoleService;
 import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
@@ -60,7 +59,6 @@ public class UserController {
         myUserDetails.setPassword(password);
         userService.addUser(myUserDetails);
         myUserDetails = userService.findByEmail(myUserDetails.getEmail());
-        System.out.println(myUserDetails);
         //给用户权限
         UserRole userRole = new UserRole();
         userRole.setUserId(myUserDetails.getId());
@@ -72,7 +70,12 @@ public class UserController {
 
     @PutMapping("/user")
     public String updateUser(MyUserDetails myUserDetails, HttpServletRequest request) {
+        if (myUserDetails.getPassword() != null){
+            String password = passwordEncoder.encode(myUserDetails.getPassword());
+            myUserDetails.setPassword(password);
+        }
         MyUserDetails myUserDetails1 = userService.updateUser(myUserDetails);
+        System.out.println(myUserDetails + "123456789");
         //1.从HttpServletRequest中获取SecurityContextImpl对象
         SecurityContextImpl securityContextImpl = (SecurityContextImpl) request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
         //2.从SecurityContextImpl中获取Authentication对象

@@ -15,7 +15,14 @@ public interface UserMapper {
      * @param email
      * @return
      */
-    MyUserDetails findByEmail(@Param("email") String email);
+    MyUserDetails findByEmail(String email);
+
+    /**
+     * 通过id查找用户
+     * @param id
+     * @return
+     */
+    MyUserDetails findById(Integer id);
 
     /**
      * 注册用户

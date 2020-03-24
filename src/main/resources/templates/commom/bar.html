@@ -215,17 +215,14 @@
                                     <div class="avatar-lg"><img th:src="@{/assets/img/profile.jpg}" alt="image profile" class="avatar-img rounded"></div>
                                     <div class="u-text">
                                         <h4 th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">用户名</h4>
-                                        <p class="text-muted" th:text="${#authentication.principal.email!=null}?${#authentication.principal.email}">邮箱</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                        <p class="text-muted" th:text="${#authentication.principal.email!=null}?${#authentication.principal.email}">邮箱</p><a th:href="@{/userprofile}" class="btn btn-rounded btn-danger btn-sm">我的信息</a>
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" th:href="@{/userprofile}">My Profile</a>
-                                <a class="dropdown-item" href="#">My Balance</a>
-                                <a class="dropdown-item" href="#">Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Account Setting</a>
+                                <a class="dropdown-item" href="#">我的项目</a>
+                                <a class="dropdown-item" href="#">我的收藏</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/loginOut}">Logout</a>
                             </li>

@@ -64,7 +64,6 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
                 .getPrincipal();
         //设置登录时间
         myUserDetails.setLastLoginTime(new Date());
-        System.out.println(myUserDetails);
         userService.updateUser(myUserDetails);
         //存储登录日志
         UserRecord userRecord = new UserRecord();

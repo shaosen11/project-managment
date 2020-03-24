@@ -6,6 +6,11 @@
         from sys_user
         where email = #{email}
     </select>
+    <select id="findById" resultType="cn.edu.lingnan.projectmanagment.bean.MyUserDetails">
+        select *
+        from sys_user
+        where id = #{id}
+    </select>
     <insert id="addUser">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
