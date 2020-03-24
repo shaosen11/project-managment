@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Cacheable(key = "'user_' + #email")
     @Override
-    public MyUserDetails checkEmail(String email) {
-        return userMapper.checkEmail(email);
+    public MyUserDetails findByEmail(String email) {
+        return userMapper.findByEmail(email);
     }
 
     @Override

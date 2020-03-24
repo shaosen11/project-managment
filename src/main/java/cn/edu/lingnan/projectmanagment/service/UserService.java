@@ -11,7 +11,7 @@ public interface UserService {
      * @param email
      * @return
      */
-    MyUserDetails checkEmail(String email);
+    MyUserDetails findByEmail(String email);
 
     /**
      * 注册用户

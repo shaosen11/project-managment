@@ -1,8 +1,12 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
+import cn.edu.lingnan.projectmanagment.bean.UserRole;
+import cn.edu.lingnan.projectmanagment.service.UserRoleService;
 import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.MyContants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,11 +38,13 @@ public class UserController {
     @Autowired
     MyUserDetailsServiceImpl myUserDetailsService;
 
+    @Autowired
+    UserRoleServiceImpl userRoleService;
 
     @ResponseBody
     @GetMapping("/user")
     public boolean User(String email){
-        MyUserDetails myUserDetails =  userService.checkEmail(email);
+        MyUserDetails myUserDetails =  userService.findByEmail(email);
         if (myUserDetails == null){
             //表示可以注册
             return true;
@@ -53,6 +59,14 @@ public class UserController {
         String password = passwordEncoder.encode(myUserDetails.getPassword());
         myUserDetails.setPassword(password);
         userService.addUser(myUserDetails);
+        myUserDetails = userService.findByEmail(myUserDetails.getEmail());
+        System.out.println(myUserDetails);
+        //给用户权限
+        UserRole userRole = new UserRole();
+        userRole.setUserId(myUserDetails.getId());
+        //暂时默认设置为管理员
+        userRole.setRoleId(MyContants.USER_ROLE_ADMIN);
+        userRoleService.insertUserRole(userRole);
         return "redirect:/login.html";
     }
 
