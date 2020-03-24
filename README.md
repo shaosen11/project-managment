@@ -65,15 +65,15 @@ spring security登录认证成功后，会给这个实体复制
 
 * DruidConfig(Druid连接池)
 
-配置druid连接池和web监控
+1.配置druid连接池和web监控
 
 * MyBatisConfig(MyBatis配置)
 
-配置驼峰命名
+1.配置驼峰命名
 
 * MyMvcConfig(Web配置)
 
-跳转页面配置
+1.跳转页面配置
 
 * SecurityConfig(Security配置)
 
@@ -416,7 +416,7 @@ MyContants(定义常量)
 
 
 
-
+bbb
 
 ### 权限访问：
 
