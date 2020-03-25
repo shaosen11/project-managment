@@ -53,10 +53,7 @@
 							<label class="custom-control-label" for="rememberme">记住我</label>
 						</div>
 
-						<a href="#" class="link float-right">忘记密码?</a>
-					</div>
-					<div class="row">
-						<p style="color: red;margin: auto" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+						<a th:href="@{/forgetpassword}" class="link float-right">忘记密码?</a>
 					</div>
 					<div class="form-action mb-3">
 						<input class="btn btn-primary btn-rounded btn-login" type="button" onclick="login()" value="登录">
@@ -80,6 +77,10 @@
 					<div class="form-group form-floating-label">
 						<input  id="registerEmail" name="email" type="email" class="form-control input-border-bottom" autocomplete="off" required>
 						<label for="registerEmail" class="placeholder">邮箱</label>
+					</div>
+					<div class="form-group form-floating-label">
+						<input  id="registerPhone" name="phone" type="text" class="form-control input-border-bottom" autocomplete="off" required>
+						<label for="registerPhone" class="placeholder">手机</label>
 					</div>
 					<div class="form-group form-floating-label">
 						<input  id="passwordsignin" name="password" type="password" class="form-control input-border-bottom" required>
@@ -132,7 +133,7 @@
 			}
 			$.ajax({
 				type: "POST",
-				url: "/loginUser",
+				url: "/login_user",
 				data: {
 					"email": email,
 					"password": password,
@@ -197,6 +198,9 @@
 				return false;
 			}
 			if(checkemail()==false){
+				return false;
+			}
+			if($("#registerPhone").val()==""){
 				return false;
 			}
 			if(checkpassword()==false){

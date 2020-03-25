@@ -31,9 +31,6 @@
     <update id="updateUser">
         update sys_user set
         <trim suffixOverrides=",">
-            <if test="email != null">
-                email = #{email},
-            </if>
             <if test="username != null">
                 username = #{username},
             </if>
@@ -73,7 +70,13 @@
             <if test="credentialNonExpired != null">
                 credential_non_expired = #{credentialNonExpired},
             </if>
+            <if test="validataCode != null">
+                validata_code = #{validataCode},
+            </if>
+            <if test="outDate">
+                out_date = #{outDate},
+            </if>
         </trim>
-        where id = #{id}
+        where email = #{email}
     </update>
 </mapper>

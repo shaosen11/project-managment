@@ -3,7 +3,6 @@
 ## 包结构
 
 - bean
-- component
 - config
 - controller
 - exception
@@ -53,25 +52,25 @@
 
 spring security登录认证成功后，会给这个实体复制
 
-- User(暂不需要)
+* UserRecord(用户登录、退出日志)
 
-### component（组件包）
+- UserRole
 
-- LoginHandlerInterceptor(过滤器，暂不需要)
+
 
 ### config
 
 - DruidConfig(Druid连接池)
 
-配置druid连接池和web监控
+1.配置druid连接池和web监控
 
 - MyBatisConfig(MyBatis配置)
 
-配置驼峰命名
+1.配置驼峰命名
 
 - MyMvcConfig(Web配置)
 
-跳转页面配置
+1.跳转页面配置
 
 - SecurityConfig(Security配置)
 
@@ -95,17 +94,30 @@ spring security登录认证成功后，会给这个实体复制
 
 10.rememberme存储数据库
 
+
+
+### controller
+
+* CapthaController
+* UserController
+
+
+
 ### exception
 
 - AJaxReponse(定义成功失败返回JSON)
 - CustomException(Exception实体)
 - CustomException(CustomException枚举类)
 
+
+
 ### imageCiode（图片验证）
 
 - CaptchaCode(图片验证实体)
 - CaptchaCodeFilter(图片验证过滤器)
 - CaptchaConfig(图片验证配置)
+
+
 
 ### mapper（mapper接口）
 
@@ -115,12 +127,16 @@ spring security登录认证成功后，会给这个实体复制
 - UserRecordMapper(用户日志记录)
 - UserRoleMapper(用户角色)
 
+
+
 ### security（Spring Secuity）
 
 - MyAuthenticationFailureHandler(登陆失败处理器)
 - MyAuthenticationSuccessHandler(登录成功处理器)
 - MyExpiredSessionStrategy(只允许一处登录)
 - MyLogoutSuccessHandler(退出登录处理器)
+
+
 
 ### service（Service接口层）
 
@@ -130,6 +146,8 @@ spring security登录认证成功后，会给这个实体复制
 - UserRoleService(用户角色接口)
 - UserService(暂时不用)
 
+
+
 ### service.impl
 
 - MyRBACServiceImpl(RBAC权限Service实现层)
@@ -138,11 +156,15 @@ spring security登录认证成功后，会给这个实体复制
 - UserRoleServiceImpl(UserRoleService实现层)
 - UserServiceImpl(UserService实现层)
 
+
+
 ### utils
 
-MyContants(定义常量)
+* MyContants(定义常量)
 
-IPUtil(获取IP工具类)
+* IPUtil(获取IP工具类)
+
+
 
 ## resources
 
@@ -154,19 +176,33 @@ IPUtil(获取IP工具类)
 - UserRecordMapper.xml(用户日志SQL代码)
 - UserRoleMapper.xml(用户角色SQL代码)
 
+
+
 ### public
+
+
 
 ### static（静态资源）
 
 - assets(静态资源代码)
 
+
+
 ### templates（thymeleaf模板）
+
+
 
 ### application.properties（全局配置）
 
+
+
 ### application.yml（全局配置）
 
+
+
 ### kaptcha.properties（图片验证码配置）
+
+
 
 ## 数据库表
 
@@ -174,23 +210,27 @@ IPUtil(获取IP工具类)
 
 描述：用户信息表格
 
-| 属性名                 | 类型     | 长度 | null | 主键 | 描述         |
-| ---------------------- | -------- | ---- | ---- | ---- | ------------ |
-| id                     | int      |      | no   | yes  | 自增id       |
-| email                  | verchar  | 32   |      |      | 登录邮箱     |
-| username               | varchar  | 255  |      |      | 用户名       |
-| password               | varchar  | 255  |      |      | 密码         |
-| phone                  | varchar  | 16   |      |      | 电话         |
-| birthday               | date     |      |      |      | 生日         |
-| gender                 | tinyint  |      |      |      | 性别         |
-| address                | varchar  | 255  |      |      | 地址         |
-| introduce              | varchar  | 255  |      |      | 介绍         |
-| last_login_time        | datetime |      |      |      | 最近登录时间 |
-| create_time            | datetime |      |      |      | 创建时间     |
-| enabled                | int      |      |      |      | 是否可用     |
-| account_non_expired    | boolean  |      |      |      | 是否过期     |
-| account_non_locked     | boolean  |      |      |      | 是否被锁     |
-| credential_non_expired | boolean  |      |      |      | 证书是否被锁 |
+| 属性名                 | 类型      | 长度 | null | 主键 | 描述             |
+| ---------------------- | --------- | ---- | ---- | ---- | ---------------- |
+| id                     | int       |      | no   | yes  | 自增id           |
+| email                  | verchar   | 32   |      |      | 登录邮箱         |
+| username               | varchar   | 255  |      |      | 用户名           |
+| password               | varchar   | 255  |      |      | 密码             |
+| phone                  | varchar   | 16   |      |      | 电话             |
+| birthday               | date      |      |      |      | 生日             |
+| gender                 | tinyint   |      |      |      | 性别             |
+| address                | varchar   | 255  |      |      | 地址             |
+| introduce              | varchar   | 255  |      |      | 介绍             |
+| last_login_time        | datetime  |      |      |      | 最近登录时间     |
+| create_time            | datetime  |      |      |      | 创建时间         |
+| enabled                | int       |      |      |      | 是否可用         |
+| account_non_expired    | boolean   |      |      |      | 是否过期         |
+| account_non_locked     | boolean   |      |      |      | 是否被锁         |
+| credential_non_expired | boolean   |      |      |      | 证书是否被锁     |
+| validata_code          | varchar   | 255  |      |      | 邮箱找回秘钥     |
+| out_date               | timestamp |      |      |      | 邮箱找回过期时间 |
+
+
 
 ### sys_user_role（用户角色信息表）
 
@@ -201,6 +241,8 @@ IPUtil(获取IP工具类)
 | id      | int  |      | no   | yes  | 自增id |
 | user_id | int  |      |      |      | 用户id |
 | role_id | int  |      |      |      | 角色id |
+
+
 
 ### sys_role（角色表）
 
@@ -216,6 +258,8 @@ IPUtil(获取IP工具类)
 | status      | int      |      |      |      | 0代表可用，1代表不可用 |
 | create_time | datetime |      |      |      | 创建时间               |
 
+
+
 ### sys_role_menu（角色菜单表）
 
 描述：角色菜单表，通过角色找到可以访问路径
@@ -225,6 +269,8 @@ IPUtil(获取IP工具类)
 | id      | int  |      | no   | yes  | 自增id |
 | role_id | int  |      |      |      | 角色id |
 | menu_id | int  |      |      |      | 菜单id |
+
+
 
 ### sys_menu（菜单表）
 
@@ -244,7 +290,11 @@ IPUtil(获取IP工具类)
 | level      | tinyint |      |      |      | 层级                   |
 | status     | tinyint |      |      |      | 0代表可用，1代表不可用 |
 
+
+
 ### sys_org（部门表，暂时不用）
+
+
 
 ### persistent_logins（cookie表）
 
@@ -256,6 +306,8 @@ IPUtil(获取IP工具类)
 | series    | varchar   | 64   | no   | yes  | 序列号       |
 | token     | varchar   | 64   |      |      | token        |
 | last_used | timestamp |      |      |      | 最近登录时间 |
+
+
 
 ### projects（项目表,待完善）
 
@@ -273,6 +325,8 @@ IPUtil(获取IP工具类)
 | create_time      | datatime |      |      |      | 创建时间   |
 | delete_flag      | tinyint  |      |      |      | 是否删除   |
 
+
+
 ### projects_user（项目人员表，待完善）
 
 描述：项目人员情况
@@ -284,6 +338,8 @@ IPUtil(获取IP工具类)
 | user_id     | int     |      |      |      | 用户id       |
 | code_update | int     |      |      |      | 用户上传次数 |
 | delete_flag | tinyint |      |      |      | 是否删除     |
+
+
 
 ### projects_function（项目功能表，待完善）
 
@@ -299,6 +355,8 @@ IPUtil(获取IP工具类)
 | user_id         | int     |      |      |      | 实现功能用户id |
 | delete_flag     | tinyint |      |      |      | 是否删除       |
 
+
+
 ### projects_package（项目包结构）
 
 描述：项目包结构
@@ -313,6 +371,8 @@ IPUtil(获取IP工具类)
 | create_time(待考虑)                       | datatime |      |      |      | 创建时间 |
 | user_id                                   | int      |      |      |      | 用户id   |
 | delete_flag                               | tinyint  |      |      |      | 是否删除 |
+
+
 
 ### documents（文件）
 
@@ -332,6 +392,8 @@ IPUtil(获取IP工具类)
 | code_line_number(待考虑) | int      |      |      |      | 文件代码行                                          |
 | delete_flag              | tinyint  |      |      |      | 是否删除                                            |
 
+
+
 ### documents_record（文件上传日志）
 
 描述：记录文件上传记录
@@ -345,6 +407,8 @@ IPUtil(获取IP工具类)
 | operate_massage（待考虑） | varchar  | 255  |      |      | 上传信息 |
 | ip                        | varchar  | 64   |      |      | ip地址   |
 | delete_flag               | tinyint  |      |      |      | 是否删除 |
+
+
 
 ### projects_record（项目操作日志）
 
@@ -360,6 +424,8 @@ IPUtil(获取IP工具类)
 | ip             | varchar  | 64   |      |      | ip地址   |
 | delete_flag    | tinyint  |      |      |      | 是否删除 |
 
+
+
 ### user_record（用户日志）
 
 描述：用户操作日志
@@ -372,21 +438,41 @@ IPUtil(获取IP工具类)
 | operate_massge | varchar  | 255  |      |      | 操作信息 |
 | ip             | varchar  | 64   |      |      | ip地址   |
 
+
+
 ## URL
+
+自定义规则：
+
+.html：都转发页面，防止再次请求
+
+xxxyyyzzz：表示页面
+
+xxx_yyy_zzz：表示controller请求
 
 ### 公共访问：
 
-| 路径        | 请求方式（默认get） | 描述     |
-| ----------- | ------------------- | -------- |
-| /           |                     | 登录页面 |
-| /login      |                     | 登录页面 |
-| /login.html |                     | 登录页面 |
-| /kaptcha    |                     | 图片验证 |
-| /loginUser  |                     | 登录URL  |
-| /loginOut   |                     | 注销URL  |
-| /user       | post                | 注册用户 |
-|             |                     |          |
-|             |                     |          |
+| 路径             | 请求方式（默认get） | 描述         |
+| ---------------- | ------------------- | ------------ |
+| /                |                     | 登录页面     |
+| /login           |                     | 登录页面     |
+| /login.html      |                     | 登录页面     |
+| /kaptcha         |                     | 图片验证     |
+| /login_user      |                     | 登录URL      |
+| /login_out       |                     | 注销URL      |
+| /user            | post                | 注册用户     |
+| /forgetpassword  |                     | 忘记密码页面 |
+| /forget_password |                     | 忘记密码请求 |
+| /resetpassword   |                     | 修改密码页面 |
+| reset_password   |                     | 修改密码请求 |
+|                  |                     |              |
+|                  |                     |              |
+|                  |                     |              |
+|                  |                     |              |
+|                  |                     |              |
+|                  |                     |              |
+|                  |                     |              |
+|                  |                     |              |
 
 
 
@@ -398,7 +484,8 @@ IPUtil(获取IP工具类)
 | ----------------- | ------------------- | ----------------- | ---- | ---- |
 | /index.html       |                     | 转发到index       |      |      |
 | /userprofile      |                     | 用户信息页面      |      |      |
-| /userprofile.html |                     | 装发到userprofile |      |      |
+| /userprofile.html |                     | 转发到userprofile |      |      |
 | /user             | put                 | 修改用户信息      |      |      |
 |                   |                     |                   |      |      |
 |                   |                     |                   |      |      |
+

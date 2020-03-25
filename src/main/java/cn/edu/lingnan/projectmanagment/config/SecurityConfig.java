@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(captchaCodeFilter, UsernamePasswordAuthenticationFilter.class)
             .logout()
                 //设置退出url
-                .logoutUrl("/loginOut")
+                .logoutUrl("/login_out")
 //                .logoutSuccessUrl("/login.html")//设置退出成功页面
                 //删除JSESSIONID
                 .deleteCookies("JSESSIONID")
@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //可以指定前端页面的密码参数
                 .passwordParameter("password")
                 //指定登录URL
-                .loginProcessingUrl("/loginUser")
+                .loginProcessingUrl("/login_user")
 //                    .defaultSuccessUrl("/index")//指定登录成功的跳转页面
 //                    .failureUrl("/login.html")
                 //自定义的成功处理器
@@ -94,6 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //允许所有访问
                 .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()
+                .antMatchers("/forgetpassword","/forget_password","/resetpassword","/reset_password").permitAll()
                 .antMatchers("/index.html").authenticated()
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()
