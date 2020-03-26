@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.lingnan.projectmanagment.mapper.UserMapper">
-    <select id="findByEmail" resultType="cn.edu.lingnan.projectmanagment.bean.MyUserDetails">
+    <select id="checkEmail" resultType="MyUserDetails">
         select *
         from sys_user
         where email = #{email}
-    </select>
-    <select id="findById" resultType="cn.edu.lingnan.projectmanagment.bean.MyUserDetails">
-        select *
-        from sys_user
-        where id = #{id}
     </select>
     <insert id="addUser">
         insert into sys_user
@@ -31,6 +26,9 @@
     <update id="updateUser">
         update sys_user set
         <trim suffixOverrides=",">
+            <if test="email != null">
+                email = #{email},
+            </if>
             <if test="username != null">
                 username = #{username},
             </if>
@@ -70,13 +68,64 @@
             <if test="credentialNonExpired != null">
                 credential_non_expired = #{credentialNonExpired},
             </if>
-            <if test="validataCode != null">
-                validata_code = #{validataCode},
-            </if>
-            <if test="outDate">
-                out_date = #{outDate},
-            </if>
         </trim>
-        where email = #{email}
+        where id = #{id}
     </update>
+
+    <select id="getUserList" resultType="MyUserDetails">
+        select * from sys_user where enabled = 1
+    </select>
+
+    <insert id="addUser2">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">username,</if>
+            <if test="password != null">password,</if>
+            <if test="email != null">email,</if>
+            <if test="phone != null">phone,</if>
+            <if test="gender != null">gender,</if>
+            <if test="birthday != null">birthday,</if>
+            <if test="address != null">address,</if>
+            <if test="introduce != null">introduce,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">#{username},</if>
+            <if test="password != null">#{password},</if>
+            <if test="email != null">#{email},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="birthday != null">#{birthday},</if>
+            <if test="address != null">#{address},</if>
+            <if test="introduce != null">#{introduce},</if>
+        </trim>
+    </insert>
+
+    <update id="deleteUser">
+        update sys_user set enabled = 0 where id = #{id}
+    </update>
+
+    <update id="editUser">
+        update sys_user set
+        <trim suffixOverrides=",">
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null"> password = #{password},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phone != null"> phone = #{phone},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="introduce != null">introduce = #{introduce},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="reductionUser">
+        update sys_user set enabled = 1 where id = #{id}
+    </update>
+
+    <select id="getDeletedUserList" resultType="MyUserDetails">
+        select * from sys_user where enabled = 0
+    </select>
+
 </mapper>

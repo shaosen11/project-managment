@@ -31,14 +31,6 @@ public class AJaxResponse {
         resultBean.setData(data);
         return resultBean;
     }
-    public static AJaxResponse success(Object data, String msg){
-        AJaxResponse resultBean = new AJaxResponse();
-        resultBean.setOk(true);
-        resultBean.setCode(200);
-        resultBean.setMessage(msg);
-        resultBean.setData(data);
-        return resultBean;
-    }
     public static AJaxResponse error(CustomException e){
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(false);

@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 
@@ -26,8 +25,6 @@ public class MyUserDetails implements UserDetails, Serializable {
     private String introduce;
     private Date lastLoginTime;
     private Date createTime;
-    private String validataCode;
-    private Timestamp outDate;
     /**
      * 是否过期
      */

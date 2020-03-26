@@ -1,10 +1,8 @@
 package cn.edu.lingnan.projectmanagment;
 
 import cn.edu.lingnan.projectmanagment.bean.UserRecord;
-import cn.edu.lingnan.projectmanagment.bean.UserRole;
 import cn.edu.lingnan.projectmanagment.service.UserRecordService;
 import cn.edu.lingnan.projectmanagment.service.impl.UserRecordServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,9 +15,6 @@ class ProjectManagmentApplicationTests {
     @Autowired
     UserRecordServiceImpl userRecordService;
 
-    @Autowired
-    UserRoleServiceImpl userRoleService;
-
     @Test
     void contextLoads() {
         UserRecord userRecord = new UserRecord();
@@ -29,14 +24,5 @@ class ProjectManagmentApplicationTests {
         userRecord.setOperateMassage("登录");
         userRecordService.insert(userRecord);
     }
-
-    @Test
-    void testuserRole(){
-        UserRole userRole = new UserRole();
-        userRole.setUserId(16);
-        userRole.setRoleId(1);
-        userRoleService.insertUserRole(userRole);
-    }
-
 
 }
