@@ -6,6 +6,7 @@ import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
 import cn.edu.lingnan.projectmanagment.service.UserRecordService;
 import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.utils.IPUtil;
+import cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

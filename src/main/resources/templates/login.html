@@ -7,11 +7,23 @@
 	<link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
-	<script th:href="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+	<script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Open+Sans:300,400,600,700"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
 
 	<!-- CSS Files -->
-	<link rel="stylesheet"  href="../assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/assets/css/azzara.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 </head>
 <body class="login">
 	<div class="wrapper wrapper-login">
@@ -41,10 +53,7 @@
 							<label class="custom-control-label" for="rememberme">记住我</label>
 						</div>
 
-						<a href="#" class="link float-right">忘记密码?</a>
-					</div>
-					<div class="row">
-						<p style="color: red;margin: auto" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+						<a th:href="@{/forgetpassword}" class="link float-right">忘记密码?</a>
 					</div>
 					<div class="form-action mb-3">
 						<input class="btn btn-primary btn-rounded btn-login" type="button" onclick="login()" value="登录">
@@ -68,6 +77,10 @@
 					<div class="form-group form-floating-label">
 						<input  id="registerEmail" name="email" type="email" class="form-control input-border-bottom" autocomplete="off" required>
 						<label for="registerEmail" class="placeholder">邮箱</label>
+					</div>
+					<div class="form-group form-floating-label">
+						<input  id="registerPhone" name="phone" type="text" class="form-control input-border-bottom" autocomplete="off" required>
+						<label for="registerPhone" class="placeholder">手机</label>
 					</div>
 					<div class="form-group form-floating-label">
 						<input  id="passwordsignin" name="password" type="password" class="form-control input-border-bottom" required>
@@ -109,7 +122,7 @@
 				kaptchaImg.src = "/kaptcha?" + Math.floor(Math.random() * 100);
 			}
 		};
-
+		//登录按钮事件
 		function login() {
 			var email = $("#email").val();
 			var password = $("#password").val();
@@ -120,7 +133,7 @@
 			}
 			$.ajax({
 				type: "POST",
-				url: "/loginUser",
+				url: "/login_user",
 				data: {
 					"email": email,
 					"password": password,
@@ -138,13 +151,16 @@
 		};
 
 		$(function () {
+			//异步检查邮箱是否注册
 			$("#registerEmail").keyup(function () {
 				setTimeout('checkemail()',1500);
 			})
+			//异步检查密码是否一致
 			$("#confirmpassword").keyup(function () {
 				checkpassword();
 			})
 		})
+		//检查邮箱
 		function checkemail(){
 			var email = $("#registerEmail").val();
 			var registerEmail = $("#registerEmail");
@@ -164,6 +180,7 @@
 				},
 			})
 		}
+		//检查密码
 		function checkpassword() {
 			var password1 = $("#passwordsignin").val();
 			var password2 = $("#confirmpassword").val();
@@ -175,11 +192,15 @@
 				confirmpassword.css('borderColor','');
 			}
 		}
+		//检查注册页面是否填写完成
 		function registerCheck() {
 			if($("#registerUsername").val()==""){
 				return false;
 			}
 			if(checkemail()==false){
+				return false;
+			}
+			if($("#registerPhone").val()==""){
 				return false;
 			}
 			if(checkpassword()==false){

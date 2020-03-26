@@ -55,6 +55,16 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  mail:
+    username: projectsmanagment@163.com
+    password: MQCARLWEFQGLZVLQ
+    host: smtp.163.com
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+
 #mybatis开启别名
 mybatis:
   type-aliases-package: cn.edu.lingnan.projectmanagment.bean
