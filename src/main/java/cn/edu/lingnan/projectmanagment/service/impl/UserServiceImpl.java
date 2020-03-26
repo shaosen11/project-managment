@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.service.impl;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
+import cn.edu.lingnan.projectmanagment.bean.UserRecord;
 import cn.edu.lingnan.projectmanagment.mapper.UserMapper;
 import cn.edu.lingnan.projectmanagment.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author shaosen
@@ -36,6 +39,36 @@ public class UserServiceImpl implements UserService {
     public MyUserDetails updateUser(MyUserDetails myUserDetails) {
         userMapper.updateUser(myUserDetails);
         return myUserDetails;
+    }
+
+    @Override
+    public List<MyUserDetails> getUserList() {
+        return userMapper.getUserList();
+    }
+
+    @Override
+    public boolean addUser2(MyUserDetails myUserDetails) {
+        return userMapper.addUser2(myUserDetails);
+    }
+
+    @Override
+    public boolean deleteUser(Integer id) {
+        return userMapper.deleteUser(id);
+    }
+
+    @Override
+    public boolean editUser(MyUserDetails myUserDetails) {
+        return userMapper.editUser(myUserDetails);
+    }
+
+    @Override
+    public boolean reductionUser(Integer id) {
+        return userMapper.reductionUser(id);
+    }
+
+    @Override
+    public List<MyUserDetails> getDeletedUserList() {
+        return userMapper.getDeletedUserList();
     }
 }
 

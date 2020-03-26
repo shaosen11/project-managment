@@ -2,6 +2,10 @@ package cn.edu.lingnan.projectmanagment.service;
 
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
+import cn.edu.lingnan.projectmanagment.bean.UserRecord;
+
+import java.util.List;
+
 /**
  * @author shaosen
  */
@@ -26,4 +30,43 @@ public interface UserService {
      * @return
      */
     MyUserDetails updateUser(MyUserDetails myUserDetails);
+
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    List<MyUserDetails> getUserList();
+
+    /**
+     * 添加用户2
+     * @param myUserDetails
+     * @return
+     */
+    boolean addUser2(MyUserDetails myUserDetails);
+
+    /**
+     * 删除用户
+     * @return
+     */
+    boolean deleteUser(Integer id);
+
+    /**
+     * 修改用户信息
+     * @return
+     */
+    boolean editUser(MyUserDetails myUserDetails);
+
+    /**
+     * 还原用户
+     * @return
+     */
+    boolean reductionUser(Integer id);
+
+    /**
+     * 查询所有已注销用户信息
+     * @return
+     */
+    List<MyUserDetails> getDeletedUserList();
+
+
 }

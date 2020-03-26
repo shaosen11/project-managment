@@ -375,13 +375,13 @@
                         <div class="collapse" id="tables">
                             <ul class="nav nav-collapse">
                                 <li>
-                                    <a href="../tables/tables.html">
-                                        <span class="sub-item">Basic Table</span>
+                                    <a th:href="@{/user_list}">
+                                        <span class="sub-item">用户信息</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../tables/datatables.html">
-                                        <span class="sub-item">Datatables</span>
+                                    <a th:href="@{/projects_list}">
+                                        <span class="sub-item">项目信息</span>
                                     </a>
                                 </li>
                             </ul>
@@ -390,19 +390,19 @@
                     <li class="nav-item">
                         <a data-toggle="collapse" href="#maps">
                             <i class="fas fa-map-marker-alt"></i>
-                            <p>Maps</p>
+                            <p>Deleted</p>
                             <span class="caret"></span>
                         </a>
                         <div class="collapse" id="maps">
                             <ul class="nav nav-collapse">
                                 <li>
-                                    <a href="../maps/googlemaps.html">
-                                        <span class="sub-item">Google Maps</span>
+                                    <a th:href="@{/deleted_user_list}">
+                                        <span class="sub-item">已注销用户</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../maps/fullscreenmaps.html">
-                                        <span class="sub-item">Full Screen Maps</span>
+                                    <a th:href="@{/del_project_list}">
+                                        <span class="sub-item">已注销项目</span>
                                     </a>
                                 </li>
                                 <li>
