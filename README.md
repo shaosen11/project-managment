@@ -160,6 +160,8 @@ spring security登录认证成功后，会给这个实体复制
 
 ### utils
 
+* afterLoginOrLoginOutHandler(用户登录退出日志)
+
 * MyContants(定义常量)
 
 * IPUtil(获取IP工具类)
@@ -210,25 +212,23 @@ spring security登录认证成功后，会给这个实体复制
 
 描述：用户信息表格
 
-| 属性名                 | 类型      | 长度 | null | 主键 | 描述             |
-| ---------------------- | --------- | ---- | ---- | ---- | ---------------- |
-| id                     | int       |      | no   | yes  | 自增id           |
-| email                  | verchar   | 32   |      |      | 登录邮箱         |
-| username               | varchar   | 255  |      |      | 用户名           |
-| password               | varchar   | 255  |      |      | 密码             |
-| phone                  | varchar   | 16   |      |      | 电话             |
-| birthday               | date      |      |      |      | 生日             |
-| gender                 | tinyint   |      |      |      | 性别             |
-| address                | varchar   | 255  |      |      | 地址             |
-| introduce              | varchar   | 255  |      |      | 介绍             |
-| last_login_time        | datetime  |      |      |      | 最近登录时间     |
-| create_time            | datetime  |      |      |      | 创建时间         |
-| enabled                | int       |      |      |      | 是否可用         |
-| account_non_expired    | boolean   |      |      |      | 是否过期         |
-| account_non_locked     | boolean   |      |      |      | 是否被锁         |
-| credential_non_expired | boolean   |      |      |      | 证书是否被锁     |
-| validata_code          | varchar   | 255  |      |      | 邮箱找回秘钥     |
-| out_date               | timestamp |      |      |      | 邮箱找回过期时间 |
+| 属性名                 | 类型     | 长度 | null | 主键 | 描述         |
+| ---------------------- | -------- | ---- | ---- | ---- | ------------ |
+| id                     | int      |      | no   | yes  | 自增id       |
+| email                  | verchar  | 32   |      |      | 登录邮箱     |
+| username               | varchar  | 255  |      |      | 用户名       |
+| password               | varchar  | 255  |      |      | 密码         |
+| phone                  | varchar  | 16   |      |      | 电话         |
+| birthday               | date     |      |      |      | 生日         |
+| gender                 | tinyint  |      |      |      | 性别         |
+| address                | varchar  | 255  |      |      | 地址         |
+| introduce              | varchar  | 255  |      |      | 介绍         |
+| last_login_time        | datetime |      |      |      | 最近登录时间 |
+| create_time            | datetime |      |      |      | 创建时间     |
+| enabled                | int      |      |      |      | 是否可用     |
+| account_non_expired    | boolean  |      |      |      | 是否过期     |
+| account_non_locked     | boolean  |      |      |      | 是否被锁     |
+| credential_non_expired | boolean  |      |      |      | 证书是否被锁 |
 
 
 
@@ -484,8 +484,7 @@ xxx_yyy_zzz：表示controller请求
 | ----------------- | ------------------- | ----------------- | ---- | ---- |
 | /index.html       |                     | 转发到index       |      |      |
 | /userprofile      |                     | 用户信息页面      |      |      |
-| /userprofile.html |                     | 转发到userprofile |      |      |
+| /userprofile.html |                     | 装发到userprofile |      |      |
 | /user             | put                 | 修改用户信息      |      |      |
+| /login_out        |                     | 退出日志处理      |      |      |
 |                   |                     |                   |      |      |
-|                   |                     |                   |      |      |
-

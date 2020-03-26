@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(captchaCodeFilter, UsernamePasswordAuthenticationFilter.class)
             .logout()
                 //设置退出url
-                .logoutUrl("/login_out")
+                .logoutUrl("/security_login_out")
 //                .logoutSuccessUrl("/login.html")//设置退出成功页面
                 //删除JSESSIONID
                 .deleteCookies("JSESSIONID")

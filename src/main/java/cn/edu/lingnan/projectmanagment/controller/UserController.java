@@ -9,6 +9,7 @@ import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
+import cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,9 @@ public class UserController {
 
     @Autowired
     JavaMailSenderImpl mailSender;
+
+    @Autowired
+    cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler afterLoginOrLoginOutHandler;
 
     @ResponseBody
     @GetMapping("/user")
@@ -118,7 +122,7 @@ public class UserController {
     @GetMapping("/forget_password")
     public AJaxResponse forgetpasswordrequest(@Param("id") String email, HttpServletRequest request) {
         MyUserDetails myUserDetails = userService.findByEmail(email);
-        String msg;
+        String msg = "";
         if(myUserDetails == null){
             msg = "用户邮箱不存在";
             return AJaxResponse.error(new CustomException(CustomExceptionType.USER_INPUT_ERROR,msg));
@@ -202,6 +206,12 @@ public class UserController {
         model.setViewName("/resetpassword");
         model.addObject("email",email);
         return model;
+    }
+
+    @GetMapping("/login_out")
+    public String loginOut(HttpServletRequest httpServletRequest){
+        afterLoginOrLoginOutHandler.afterLoginOrLoginOutHandler(httpServletRequest, "退出系统");
+        return "redirect:/security_login_out";
     }
 
     @InitBinder

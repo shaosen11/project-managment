@@ -5,7 +5,7 @@ server:
       cookie:
         http-only: true
         secure: false
-
+  port: 8888
 logging:
   level:
     cn.edu.lingnan.projectmanagment.mapper: debug
