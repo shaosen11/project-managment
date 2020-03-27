@@ -14,7 +14,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,17 +22,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
+
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
+import java.sql.Timestamp;
 import java.util.UUID;
+
 
 /**
  * @author shaosen
@@ -62,7 +66,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/user")
     public boolean User(String email){
-        MyUserDetails myUserDetails =  userService.findByEmail(email);
+        MyUserDetails myUserDetails =  userService.findByEmial(email);
         if (myUserDetails == null){
             //表示可以注册
             return true;
@@ -72,12 +76,13 @@ public class UserController {
         }
     }
 
+    //添加用户1
     @PostMapping("/user")
     public String addUser(MyUserDetails myUserDetails){
         String password = passwordEncoder.encode(myUserDetails.getPassword());
         myUserDetails.setPassword(password);
         userService.addUser(myUserDetails);
-        myUserDetails = userService.findByEmail(myUserDetails.getEmail());
+        myUserDetails = userService.findByEmial(myUserDetails.getEmail());
         //给用户权限
         UserRole userRole = new UserRole();
         userRole.setUserId(myUserDetails.getId());
@@ -117,7 +122,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/forget_password")
     public AJaxResponse forgetpasswordrequest(@Param("id") String email, HttpServletRequest request) {
-        MyUserDetails myUserDetails = userService.findByEmail(email);
+        MyUserDetails myUserDetails = userService.findByEmial(email);
         String msg;
         if(myUserDetails == null){
             msg = "用户邮箱不存在";
@@ -173,7 +178,7 @@ public class UserController {
             System.out.println(email + "找回密码连接失效");
             return model;
         }
-        MyUserDetails myUserDetails = userService.findByEmail(email);
+        MyUserDetails myUserDetails = userService.findByEmial(email);
         if(myUserDetails == null){
             msg = "链接错误,无法找到匹配用户,请重新申请找回密码.";
             model.addObject("msg",msg) ;
@@ -209,4 +214,68 @@ public class UserController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
     }
 
+    //查询所有用户信息
+    @GetMapping("/user_list")
+    public String userList(Model model){
+        List<MyUserDetails> list = userService.getUserList();
+        model.addAttribute("userlist",list);
+        System.out.println("查询所有用户"+list);
+        return "tables/userlist";
+    }
+
+    //添加用户2
+    @PostMapping("/add_user")
+    public String addUser2(MyUserDetails myUserDetails,Model model){
+        System.out.println("添加用户："+myUserDetails);
+        MyUserDetails flag = userService.findByEmial(myUserDetails.getEmail());
+        System.out.println("addflag="+flag+" email="+myUserDetails.getEmail());
+        if(flag == null){
+            String password = passwordEncoder.encode(myUserDetails.getPassword());
+            myUserDetails.setPassword(password);
+            userService.addUser2(myUserDetails);
+            System.out.println("添加用户成功！");
+        }else{
+            System.out.println("添加失败，该邮箱已被绑定！");
+            model.addAttribute("addresult","添加失败，该邮箱已被绑定！");
+        }
+        return "tables/userlist";
+    }
+
+    //删除用户
+    @PostMapping("/delete_user/{id}")
+    public String deleteUser(@PathVariable("id")Integer id){
+        Boolean flag =  userService.deleteUser(id);
+        System.out.println("删除用户:"+id+flag);
+        return "redirect:user_list";
+    }
+
+    //修改用户信息
+    @PostMapping("/edit_user")
+    public String editUser(MyUserDetails myUserDetails,Model model){
+        System.out.println("editUser:用户："+myUserDetails);
+        Boolean flag = userService.editUser(myUserDetails);
+        if(flag){
+            System.out.println("修改成功");
+        }else{
+            System.out.println("修改失败");
+        }
+        return "redirect:user_list";
+    }
+
+    //查询所有注销用户信息
+    @GetMapping("/deleted_user_list")
+    public String deletedUserList(Model model){
+        List<MyUserDetails> list = userService.getDeletedUserList();
+        model.addAttribute("deluserlist",list);
+        System.out.println("查询所有已注销用户"+list);
+        return "deleted/deleteduser";
+    }
+
+    //还原用户
+    @PostMapping("/reduction/{id}")
+    public String reductionUser(@PathVariable("id")Integer id){
+        Boolean flag =  userService.reductionUser(id);
+        System.out.println("删除用户:"+id+flag);
+        return "redirect:../deleteduserList";
+    }
 }

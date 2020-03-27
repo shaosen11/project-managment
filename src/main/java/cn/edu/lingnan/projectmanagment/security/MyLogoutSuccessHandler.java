@@ -1,5 +1,6 @@
 package cn.edu.lingnan.projectmanagment.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -13,13 +14,16 @@ import java.io.IOException;
  */
 @Component
 public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
+    @Autowired
+    cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler afterLoginOrLoginOutHandler;
+
     @Override
     public void onLogoutSuccess(HttpServletRequest httpServletRequest,
                                 HttpServletResponse httpServletResponse,
                                 Authentication authentication)
-            throws IOException, ServletException {
+            throws IOException {
         //写一下业务逻辑
-
+        afterLoginOrLoginOutHandler.afterLoginOrLoginOutHandler(httpServletRequest, "退出系统");
         httpServletResponse.sendRedirect("/login.html");
     }
 }

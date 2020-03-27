@@ -64,7 +64,6 @@ spring:
         smtp:
           ssl:
             enable: true
-
 #mybatis开启别名
 mybatis:
   type-aliases-package: cn.edu.lingnan.projectmanagment.bean

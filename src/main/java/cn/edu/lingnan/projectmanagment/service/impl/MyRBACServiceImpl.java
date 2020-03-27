@@ -37,8 +37,4 @@ public class MyRBACServiceImpl implements MyRBACService {
         }
         return false;
     }
-
-
-
-
 }
