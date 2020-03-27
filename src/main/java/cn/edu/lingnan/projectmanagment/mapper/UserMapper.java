@@ -19,7 +19,7 @@ public interface UserMapper {
      * @param email
      * @return
      */
-    MyUserDetails findByEmial(@Param("email") String email);
+    MyUserDetails findByEmail(@Param("email") String email);
 
     /**
      * 注册用户

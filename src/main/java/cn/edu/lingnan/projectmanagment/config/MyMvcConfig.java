@@ -18,7 +18,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
         //用戶信息頁面
         registry.addViewController("/userprofile").setViewName("userprofile");
         registry.addViewController("/userprofile.html").setViewName("userprofile");
-
+        //跳转到忘记密码页面
+        registry.addViewController("/forgetpassword").setViewName("forgetpassword");
+        //跳转到重置密码页面
+        registry.addViewController("/resetpassword").setViewName("resetpassword");
     }
 
 

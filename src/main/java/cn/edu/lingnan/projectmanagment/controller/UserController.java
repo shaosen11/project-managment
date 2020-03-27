@@ -9,11 +9,13 @@ import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
+import cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -63,10 +65,13 @@ public class UserController {
     @Autowired
     JavaMailSenderImpl mailSender;
 
+    @Autowired
+    cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler afterLoginOrLoginOutHandler;
+
     @ResponseBody
     @GetMapping("/user")
     public boolean User(String email){
-        MyUserDetails myUserDetails =  userService.findByEmial(email);
+        MyUserDetails myUserDetails =  userService.findByEmail(email);
         if (myUserDetails == null){
             //表示可以注册
             return true;
@@ -82,7 +87,7 @@ public class UserController {
         String password = passwordEncoder.encode(myUserDetails.getPassword());
         myUserDetails.setPassword(password);
         userService.addUser(myUserDetails);
-        myUserDetails = userService.findByEmial(myUserDetails.getEmail());
+        myUserDetails = userService.findByEmail(myUserDetails.getEmail());
         //给用户权限
         UserRole userRole = new UserRole();
         userRole.setUserId(myUserDetails.getId());
@@ -122,8 +127,8 @@ public class UserController {
     @ResponseBody
     @GetMapping("/forget_password")
     public AJaxResponse forgetpasswordrequest(@Param("id") String email, HttpServletRequest request) {
-        MyUserDetails myUserDetails = userService.findByEmial(email);
-        String msg;
+        MyUserDetails myUserDetails = userService.findByEmail(email);
+        String msg = "";
         if(myUserDetails == null){
             msg = "用户邮箱不存在";
             return AJaxResponse.error(new CustomException(CustomExceptionType.USER_INPUT_ERROR,msg));
@@ -178,7 +183,7 @@ public class UserController {
             System.out.println(email + "找回密码连接失效");
             return model;
         }
-        MyUserDetails myUserDetails = userService.findByEmial(email);
+        MyUserDetails myUserDetails = userService.findByEmail(email);
         if(myUserDetails == null){
             msg = "链接错误,无法找到匹配用户,请重新申请找回密码.";
             model.addObject("msg",msg) ;
@@ -209,6 +214,12 @@ public class UserController {
         return model;
     }
 
+    @GetMapping("/login_out")
+    public String loginOut(HttpServletRequest httpServletRequest){
+        afterLoginOrLoginOutHandler.afterLoginOrLoginOutHandler(httpServletRequest, "退出系统");
+        return "/security_login_out";
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
@@ -227,7 +238,7 @@ public class UserController {
     @PostMapping("/add_user")
     public String addUser2(MyUserDetails myUserDetails,Model model){
         System.out.println("添加用户："+myUserDetails);
-        MyUserDetails flag = userService.findByEmial(myUserDetails.getEmail());
+        MyUserDetails flag = userService.findByEmail(myUserDetails.getEmail());
         System.out.println("addflag="+flag+" email="+myUserDetails.getEmail());
         if(flag == null){
             String password = passwordEncoder.encode(myUserDetails.getPassword());
@@ -251,7 +262,7 @@ public class UserController {
 
     //修改用户信息
     @PostMapping("/edit_user")
-    public String editUser(MyUserDetails myUserDetails,Model model){
+    public String editUser(MyUserDetails myUserDetails, Model model){
         System.out.println("editUser:用户："+myUserDetails);
         Boolean flag = userService.editUser(myUserDetails);
         if(flag){

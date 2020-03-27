@@ -23,7 +23,6 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
                                 Authentication authentication)
             throws IOException {
         //写一下业务逻辑
-        afterLoginOrLoginOutHandler.afterLoginOrLoginOutHandler(httpServletRequest, "退出系统");
         httpServletResponse.sendRedirect("/login.html");
     }
 }
