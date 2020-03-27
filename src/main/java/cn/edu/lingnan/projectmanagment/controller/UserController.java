@@ -158,7 +158,7 @@ public class UserController {
             String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
             String resetPassHref =  basePath+"reset_password?sid="+digitalSignature+"&email="+myUserDetails.getEmail();
             String emailContent = "请勿回复本邮件.点击下面的链接,重设密码<br/><a href="+resetPassHref +" target='_BLANK'>点击我重新设置密码</a>" +
-                    "<br/>tips:本邮件超过30分钟,链接将会失效，需要重新申请'找回密码'"+key+"\t"+digitalSignature;
+                    "<br/>tips:本邮件超过30分钟,链接将会失效，需要重新申请";
             System.out.println(resetPassHref);
             msg = "操作成功,已经发送找回密码链接到您邮箱。请在30分钟内重置密码";
             helper.setSubject(emailTitle);
@@ -217,7 +217,7 @@ public class UserController {
     @GetMapping("/login_out")
     public String loginOut(HttpServletRequest httpServletRequest){
         afterLoginOrLoginOutHandler.afterLoginOrLoginOutHandler(httpServletRequest, "退出系统");
-        return "/security_login_out";
+        return "redirect:/security_login_out";
     }
 
     @InitBinder

@@ -57,7 +57,7 @@ spring:
         enabled: true
   mail:
     username: projectsmanagment@163.com
-    password: MQCARLWEFQGLZVLQ
+    password: RWMIFXTAYAZLVDRS
     host: smtp.163.com
     properties:
       mail:

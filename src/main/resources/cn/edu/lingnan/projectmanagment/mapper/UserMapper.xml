@@ -26,9 +26,6 @@
     <update id="updateUser">
         update sys_user set
         <trim suffixOverrides=",">
-            <if test="email != null">
-                email = #{email},
-            </if>
             <if test="username != null">
                 username = #{username},
             </if>
@@ -75,7 +72,7 @@
                 out_date = #{outDate},
             </if>
         </trim>
-        where id = #{id}
+        where email = #{email}
     </update>
 
     <select id="getUserList" resultType="cn.edu.lingnan.projectmanagment.bean.MyUserDetails">
