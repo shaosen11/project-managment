@@ -1,12 +1,14 @@
 package cn.edu.lingnan.projectmanagment.mapper;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
+import cn.edu.lingnan.projectmanagment.bean.Myprojects;
 import cn.edu.lingnan.projectmanagment.bean.UserRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shaosen
@@ -33,6 +35,12 @@ public interface UserMapper {
      * @param myUserDetails
      */
     void updateUser(MyUserDetails myUserDetails);
+
+    /**
+     * 通过id查询是否存在
+     * @return
+     */
+    MyUserDetails findById(Integer id);
 
     /**
      * 查询所有用户信息
@@ -69,5 +77,41 @@ public interface UserMapper {
      * @return
      */
     List<MyUserDetails> getDeletedUserList();
+
+    /**
+     * 查询我的所有项目(user)
+     * @return
+     */
+    List<Myprojects> getMyProjects(Integer id);
+
+    /**
+     * 查询我负责的项目(user)
+     * @return
+     */
+    List<Myprojects> getMyChargeProjects(Integer id);
+
+    /**
+     * 查询我参与的项目(user)
+     * @return
+     */
+    List<Myprojects> getMyJoinProjects(Integer id);
+
+    /**
+     * 查询我所有的项目进度数量(饼图1)
+     * @return
+     */
+    Integer myProjectScheduleNum(@Param("id")Integer id,@Param("schedule")String schedule);
+
+    /**
+     * 查询我负责的项目进度数量(饼图1)
+     * @return
+     */
+    Integer myProjectScheduleNum2(@Param("id")Integer id,@Param("schedule")String schedule);
+
+    /**
+     * 查询我参加的项目进度数量(饼图1)
+     * @return
+     */
+    Integer myProjectScheduleNum3(@Param("id")Integer id,@Param("schedule")String schedule);
 }
 

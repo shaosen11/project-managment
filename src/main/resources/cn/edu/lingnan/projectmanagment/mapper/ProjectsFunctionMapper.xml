@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.lingnan.projectmanagment.mapper.ProjectsFunctionMapper">
+    <!--查找所有项目功能点信息-->
+    <resultMap id="pflist" type="ProjectsFunction">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectsId"></result>
+        <result column="pname" property="projectName"></result>
+        <result column="fid" property="functionId"></result>
+        <result column="fname" property="functionName"></result>
+        <result column="fstatus" property="functionStatus"></result>
+        <result column="uid" property="userId"></result>
+        <result column="uname" property="userName"></result>
+    </resultMap>
+    <select id="getProjectFunctionList" resultMap="pflist">
+        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname, pf.function_status as fstatus, pf.user_id as uid, su.username as uname
+        from projects_function pf left Join sys_user su on pf.user_id = su.id left Join projects p on pf.projects_id = p.id
+        where pf.delete_flag = 1
+    </select>
+
+    <!--查找所有被注销项目功能点信息-->
+    <resultMap id="delpflist" type="ProjectsFunction">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectsId"></result>
+        <result column="pname" property="projectName"></result>
+        <result column="fid" property="functionId"></result>
+        <result column="fname" property="functionName"></result>
+        <result column="fstatus" property="functionStatus"></result>
+        <result column="uid" property="userId"></result>
+        <result column="uname" property="userName"></result>
+    </resultMap>
+    <select id="getDelProjectFunctionList" resultMap="delpflist">
+        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname, pf.function_status as fstatus, pf.user_id as uid, su.username as uname
+        from projects_function pf left Join sys_user su on pf.user_id = su.id left Join projects p on pf.projects_id = p.id
+        where pf.delete_flag = 0
+    </select>
+
+    <!--删除一条记录-->
+    <update id="deleteProjectFunction">
+        update projects_function set delete_flag = 0 where id = #{id}
+    </update>
+
+    <!--通过ProjectsId删除一条记录-->
+    <update id="deleteProjectFunctionByProjectsId">
+        update projects_function set delete_flag = 0 where projects_id = #{id}
+    </update>
+
+    <!--还原一条记录-->
+    <update id="reductionProjectFunction">
+        update projects_function set delete_flag = 1 where id = #{id}
+    </update>
+
+    <!--更新信息-->
+    <update id="editProjectFunction">
+        update projects_function set
+        <trim suffixOverrides=",">
+            <if test="projectsId != null">projects_id = #{projectsId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="functionId != null">function_id = #{functionId},</if>
+            <if test="functionName != null">function_name = #{functionName},</if>
+            <if test="functionStatus != null">function_status = #{functionStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!--插入一条记录-->
+    <insert id="addProjectFunction">
+        insert into projects_function
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectsId != null">projects_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="functionId != null">function_id,</if>
+            <if test="functionName != null">function_name,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectsId != null">#{projectsId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="functionId != null">#{functionId},</if>
+            <if test="functionName != null">#{functionName},</if>
+        </trim>
+    </insert>
+    <!--插入记录前查找该项目最大功能点id-->
+    <select id="findMaxFunctionId" resultType="Integer">
+        select MAX(function_id) from projects_function where projects_id = #{id} group by projects_id
+    </select>
+</mapper>

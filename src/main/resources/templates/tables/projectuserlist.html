@@ -91,11 +91,12 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">项目信息</h4>
+                                    <h4 class="card-title">项目用户信息</h4>
+                                    <p style="color: darkred" th:text="${addmsg}" th:if="${not #strings.isEmpty(addmsg)}"></p>
                                     <p style="color: darkred" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
                                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                                         <i class="fa fa-plus"></i>
-                                        Add Project
+                                        Add ProjectUser
                                     </button>
                                 </div>
                             </div>
@@ -109,55 +110,27 @@
 														<span class="fw-mediumbold">
 														New</span>
                                                     <span class="fw-light">
-															Project
+															ProjectUser
 														</span>
                                                 </h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form th:action="@{/add_project}" method="post" onsubmit="return checkAddProjectForm()" >
+                                            <form th:action="@{/add_project_user}" method="post" >
                                                 <div class="modal-body">
                                                     <p class="small">Create a new Project using this form, make sure you fill them all</p>
                                                     <div class="row">
                                                         <div class="col-md-6 pr-0">
                                                             <div class="form-group form-group-default">
-                                                                <label>项目名</label>
-                                                                <input id="addName" name="name" type="text" class="form-control" onBlur="checkProjectName()">
-                                                                <span class="default" style="color: #3c763d" id="pnameErr">*</span>
+                                                                <label>项目ID</label>
+                                                                <input id="addProjectId" name="projectsId" type="number" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default">
-                                                                <label>项目管理员</label>
-                                                                <input id="addChargeUserId" name="chargeUserId" type="number" class="form-control" onBlur="checkChargeUserId()">
-                                                                <span class="default" style="color: #3c763d" id="pchargeUserIdErr">*</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 pr-0">
-                                                            <div class="form-group form-group-default">
-                                                                <label>功能点</label>
-                                                                <input id="addFunctionPoints" name="functionPoints" type="number" class="form-control" onBlur="checkFunctionPoints()">
-                                                                <span class="default" style="color: #3c763d" id="pfunctionPointsErr">*</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group form-group-default">
-                                                                <label>项目类型</label>
-                                                                <select name="type" id="addType">
-                                                                    <option value=null th:selected="selected">请选择</option>
-                                                                    <option value="Web应用开发">Web应用开发</option>
-                                                                    <option value="大数据">大数据</option>
-                                                                    <option value="物联网">物联网</option>
-                                                                    <option value="人工智能">人工智能</option>
-                                                                    <option value="微信小程序">微信小程序</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group form-group-default">
-                                                                <label>项目描述</label>
-                                                                <input id="addDesciption" name="characterization" type="text" class="form-control" >
+                                                                <label>用户ID</label>
+                                                                <input id="addUserId" name="userId" type="number" class="form-control" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -180,14 +153,14 @@
 														<span class="fw-mediumbold">
 														Edit</span>
                                                     <span class="fw-light">
-															Project
+															ProjectUser
 														</span>
                                                 </h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form th:action="@{/edit_project}" method="post" onsubmit="return checkEditProjectForm()">
+                                            <form th:action="@{/edit_project_user}" method="post">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-md-6 pr-0">
@@ -198,58 +171,20 @@
                                                         </div>
                                                         <div class="col-md-6 pr-0">
                                                             <div class="form-group form-group-default">
-                                                                <label>项目名</label>
-                                                                <input id="editName" name="name"type="text" class="form-control" onBlur="checkEditProjectName()">
-                                                                <span class="default" style="color: #3c763d" id="editNameErr">*</span>
+                                                                <label>项目ID</label>
+                                                                <input id="editProjectId" name="projectsId" type="number" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default">
-                                                                <label>项目管理员</label>
-                                                                <input id="editChargeUserId" name="chargeUserId" type="number" class="form-control" onBlur="checkEditChargeUserId()">
-                                                                <span class="default" style="color: #3c763d" id="editUserIdErr">*</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 pr-0">
-                                                            <div class="form-group form-group-default">
-                                                                <label>进度</label>
-                                                                <select name="schedule" id="editSchedule">
-                                                                    <option value="未开始">未开始</option>
-                                                                    <option value="进行中">进行中</option>
-                                                                    <option value="已完成">已完成</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 pr-0">
-                                                            <div class="form-group form-group-default">
-                                                                <label>功能点</label>
-                                                                <input id="editFunctionPoints" name="functionPoints" type="number" class="form-control" onBlur="checkEditFunctionPoints()">
-                                                                <span class="default" style="color: #3c763d" id="editFunctionPointsErr">*</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 pr-0">
-                                                            <div class="form-group form-group-default">
-                                                                <label>已完成功能点</label>
-                                                                <input id="editCompletedFunctionPoints" name="completedFunctionPoints" type="number" class="form-control" onBlur="checkEditComFunctionPoints()">
-                                                                <span class="default" style="color: #3c763d" id="editCompletedFunctionPointsErr">*</span>
+                                                                <label>用户ID</label>
+                                                                <input id="editUserId" name="userId" type="number" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default">
-                                                                <label>类型</label>
-                                                                <select name="type" id="editType">
-                                                                    <option value="Web应用开发">Web应用开发</option>
-                                                                    <option value="大数据">大数据</option>
-                                                                    <option value="物联网">物联网</option>
-                                                                    <option value="人工智能">人工智能</option>
-                                                                    <option value="微信小程序">微信小程序</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group form-group-default">
-                                                                <label>项目描述</label>
-                                                                <input id="editCharacterization" name="characterization" type="text" class="form-control" >
+                                                                <label>用户上传次数</label>
+                                                                <input id="editCodeUpdate" name="codeUpdate" type="number" class="form-control" required>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -263,60 +198,45 @@
                                     </div>
                                 </div>
 
-                                <!-- 用户信息表单 -->
+                                <!-- 项目用户信息表单 -->
                                 <div class="table-responsive">
                                     <table id="add-row" class="display table table-striped table-hover" >
                                         <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>项目ID</th>
                                             <th>项目名</th>
-                                            <th>项目管理员</th>
-                                            <th>代码行</th>
-                                            <th>进度</th>
-                                            <th>功能点</th>
-                                            <th>已完成功能点</th>
-                                            <th>提交次数</th>
-                                            <th>项目类型</th>
-                                            <th>项目描述</th>
-                                            <th>创建时间</th>
+                                            <th>用户ID</th>
+                                            <th>用户名</th>
+                                            <th>用户上传次数</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                         </thead>
                                         <tfoot>
                                         <tr>
                                             <th>ID</th>
+                                            <th>项目ID</th>
                                             <th>项目名</th>
-                                            <th>项目管理员</th>
-                                            <th>代码行</th>
-                                            <th>进度</th>
-                                            <th>功能点</th>
-                                            <th>已完成功能点</th>
-                                            <th>提交次数</th>
-                                            <th>项目类型</th>
-                                            <th>项目描述</th>
-                                            <th>创建时间</th>
+                                            <th>用户ID</th>
+                                            <th>用户名</th>
+                                            <th>用户上传次数</th>
                                             <th>Action</th>
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <tr th:each="project:${projectlist}">
-                                            <td th:text="${project.id}"></td>
-                                            <td th:text="${project.name}"></td>
-                                            <td th:text="${project.chargeUserId}"></td>
-                                            <td th:text="${project.codeLineNumber}"></td>
-                                            <td th:text="${project.schedule}"></td>
-                                            <td th:text="${project.functionPoints}"></td>
-                                            <td th:text="${project.completedFunctionPoints}"></td>
-                                            <td th:text="${project.updateCount}"></td>
-                                            <td th:text="${project.type}"></td>
-                                            <td th:text="${project.characterization}"></td>
-                                            <td th:text="${#dates.format(project.createTime,'yyyy-MM-dd')}"></td>
+                                        <tr th:each="projectuser:${projectuserlist}">
+                                            <td th:text="${projectuser.id}"></td>
+                                            <td th:text="${projectuser.projectsId}"></td>
+                                            <td th:text="${projectuser.projects.name}"></td>
+                                            <td th:text="${projectuser.userId}"></td>
+                                            <td th:text="${projectuser.myUserDetails.username}"></td>
+                                            <td th:text="${projectuser.codeUpdate}"></td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <button class="btn btn-primary btn-link ml-auto" data-toggle="modal" data-target="#editRowModal" onclick="editProject(this)">
+                                                    <button class="btn btn-primary btn-link ml-auto" data-toggle="modal" data-target="#editRowModal" onclick="editProjectUser(this)">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
-                                                    <form th:action="@{/del_project/}+${project.id}" th:method="post">
+                                                    <form th:action="@{/del_project_user/}+${projectuser.id}" th:method="post">
                                                         <button type="submit"  data-toggle="tooltip" title="" class="btn btn-link btn-danger">
                                                             <i class="fa fa-times"></i>
                                                         </button>
@@ -403,25 +323,17 @@
     });
 </script>
 <script>
-    function editProject(obj){
+    function editProjectUser(obj){
         var $td= $(obj).parents('tr').children('td');
         var td_id = $td.eq(0).text();
-        var td_name = $td.eq(1).text();
-        var td_chargeUserId = $td.eq(2).text();
-        var td_schedule = $td.eq(4).text();
-        var td_functionPoints = $td.eq(5).text();
-        var td_completedFunctionPoints = $td.eq(6).text();
-        var td_type = $td.eq(8).text();
-        var td_characterization = $td.eq(9).text();
+        var td_pid = $td.eq(1).text();
+        var td_userId = $td.eq(3).text();
+        var td_codeupdate = $td.eq(5).text();
 
         $("#editId").val(td_id);
-        $("#editName").val(td_name);
-        $("#editChargeUserId").val(td_chargeUserId);
-        $("#editSchedule").val(td_schedule);
-        $("#editFunctionPoints").val(td_functionPoints);
-        $("#editCompletedFunctionPoints").val(td_completedFunctionPoints);
-        $("#editType").val(td_type);
-        $("#editCharacterization").val(td_characterization);
+        $("#editProjectId").val(td_pid);
+        $("#editUserId").val(td_userId);
+        $("#editCodeUpdate").val(td_codeupdate);
     }
 </script>
 </body>
