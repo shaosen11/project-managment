@@ -221,7 +221,7 @@
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/projects_list">我的项目</a>
+                                <a class="dropdown-item" th:href="@{/my_projects/}+${#authentication.principal.id}">我的项目</a>
                                 <a class="dropdown-item" href="#">我的收藏</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/login_out}">Logout</a>
@@ -381,6 +381,17 @@
                                         <span class="sub-item">项目信息</span>
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a th:href="@{/project_user_list}">
+                                        <span class="sub-item">项目用户信息</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/project_function_list}">
+                                        <span class="sub-item">项目功能信息</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -403,8 +414,13 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../maps/jqvmap.html">
-                                        <span class="sub-item">JQVMap</span>
+                                    <a th:href="@{/del_project_user_list}">
+                                        <span class="sub-item">已注销项目用户</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/del_project_function_list}">
+                                        <span class="sub-item">已注销项目功能</span>
                                     </a>
                                 </li>
                             </ul>

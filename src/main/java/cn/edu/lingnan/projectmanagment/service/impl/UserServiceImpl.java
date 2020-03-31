@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.service.impl;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
+import cn.edu.lingnan.projectmanagment.bean.Myprojects;
 import cn.edu.lingnan.projectmanagment.bean.UserRecord;
 import cn.edu.lingnan.projectmanagment.mapper.UserMapper;
 import cn.edu.lingnan.projectmanagment.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shaosen
@@ -42,6 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public MyUserDetails findById(Integer id) {
+        return userMapper.findById(id);
+    }
+
+    @Override
     public List<MyUserDetails> getUserList() {
         return userMapper.getUserList();
     }
@@ -69,6 +76,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<MyUserDetails> getDeletedUserList() {
         return userMapper.getDeletedUserList();
+    }
+
+    @Override
+    public List<Myprojects> getMyProjects(Integer id) {
+        return userMapper.getMyProjects(id);
+    }
+
+    @Override
+    public List<Myprojects> getMyChargeProjects(Integer id) {
+        return userMapper.getMyChargeProjects(id);
+    }
+
+    @Override
+    public List<Myprojects> getMyJoinProjects(Integer id) {
+        return userMapper.getMyJoinProjects(id);
+    }
+
+    @Override
+    public Integer myProjectScheduleNum(Integer id, String schedule) {
+        return userMapper.myProjectScheduleNum(id,schedule);
+    }
+
+    @Override
+    public Integer myProjectScheduleNum2(Integer id, String schedule) {
+        return userMapper.myProjectScheduleNum2(id,schedule);
+    }
+
+    @Override
+    public Integer myProjectScheduleNum3(Integer id, String schedule) {
+        return userMapper.myProjectScheduleNum3(id,schedule);
     }
 }
 

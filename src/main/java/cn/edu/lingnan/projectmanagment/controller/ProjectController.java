@@ -1,7 +1,12 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
+import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.Projects;
 import cn.edu.lingnan.projectmanagment.service.ProjectService;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +20,16 @@ import java.util.List;
 @Controller
 public class ProjectController {
     @Autowired
-    ProjectService projectService;
+    private ProjectServiceImpl projectService;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    ProjectUserServiceImpl projectUserService;
+
+    @Autowired
+    ProjectsFunctionServiceImpl projectsFunctionService;
 
     //查询一条项目信息
     @GetMapping("/get_by_id")
@@ -45,40 +59,74 @@ public class ProjectController {
     //添加项目
     @PostMapping("/add_project")
     public String addProject(Projects project, Model model){
-        System.out.println("添加项目："+project);
-        Boolean flag = projectService.addProject(project);
-        if (flag){
-            System.out.println("添加项目成功！");
+        System.out.println("待添加项目："+project+" ChargeUserId="+project.getChargeUserId());
+        if (userService.findById(project.getChargeUserId()) == null){
+            model.addAttribute("msg","该项目负责人不存在！");
+            System.out.println("该项目负责人不存在");
         }else{
-            System.out.println("添加项目失败！");
+            project.setSchedule("未开始");
+            System.out.println("添加项目："+project);
+            Boolean flag = projectService.addProject(project);
+            if (flag){
+                System.out.println("添加项目成功！");
+            }else{
+                System.out.println("添加项目失败！");
+            }
         }
-        return "redirect:projects_list";
+        List<Projects> list = projectService.getProjectList();
+        model.addAttribute("projectlist",list);
+        System.out.println("查询所有用户"+list);
+        return "tables/projectlist";
     }
 
     //删除项目
     @PostMapping("/del_project/{id}")
-    public String deleteProject(@PathVariable("id")Integer id){
-        Boolean flag =  projectService.deleteProject(id);
-        System.out.println("删除用户:"+ id + flag);
-        return "redirect:../projects_list";
+    public String deleteProject(@PathVariable("id")Integer id,Model model){
+        Boolean projectsuserflag = projectUserService.deleteProjectUserByProjectsId(id);
+        if(projectsuserflag = true){
+            Boolean projectsfunctionflag = projectsFunctionService.deleteProjectFunctionByProjectsId(id);
+            if(projectsfunctionflag == true){
+                Boolean flag =  projectService.deleteProject(id);
+                System.out.println("删除用户:"+ id + flag);
+            }else{
+                System.out.println("projects_function表删除失败！");
+                model.addAttribute("msg","删除失败！");
+            }
+        }else{
+            System.out.println("projects_user表删除失败！");
+            model.addAttribute("msg","删除失败！");
+        }
+        List<Projects> list = projectService.getProjectList();
+        model.addAttribute("projectlist",list);
+        System.out.println("查询所有用户"+list);
+        return "tables/projectlist";
     }
 
     //修改项目信息
     @PostMapping("/edit_project")
     public String editProject(Projects project, Model model){
-        System.out.println("editproject项目："+project);
-        Boolean flag = projectService.editProject(project);
-        if(flag){
-            System.out.println("修改项目信息成功");
+        MyUserDetails myUserDetails = userService.findById(project.getChargeUserId());
+        if (myUserDetails == null){
+            model.addAttribute("msg","该项目负责人不存在！");
+            System.out.println("该项目负责人不存在");
         }else{
-            System.out.println("修改项目信息失败");
+            System.out.println("editproject项目："+project);
+            Boolean flag = projectService.editProject(project);
+            if(flag){
+                System.out.println("修改项目信息成功");
+            }else{
+                System.out.println("修改项目信息失败");
+            }
         }
-        return "redirect:projects_list";
+        List<Projects> list = projectService.getProjectList();
+        model.addAttribute("projectlist",list);
+        System.out.println("查询所有用户"+list);
+        return "tables/projectlist";
     }
 
     //查询所有注销项目信息
     @GetMapping("/del_project_list")
-    public String deletedUserList(Model model){
+    public String deletedProjectList(Model model){
         List<Projects> list = projectService.getDelProjectList();
         model.addAttribute("delprojectlist",list);
         System.out.println("查询所有已注销用户"+list);
@@ -89,7 +137,7 @@ public class ProjectController {
     @PostMapping("/reduction_project/{id}")
     public String reductionProject(@PathVariable("id")Integer id){
         Boolean flag =  projectService.reductionProject(id);
-        System.out.println("删除项目:"+id+flag);
+        System.out.println("还原项目:"+id+flag);
         return "redirect:../del_project_list";
     }
 }

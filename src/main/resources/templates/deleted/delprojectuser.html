@@ -91,61 +91,46 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
-                                    <h4 class="card-title">已注销项目</h4>
+                                    <h4 class="card-title">已注销项目用户</h4>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <!-- 项目信息表单 -->
+                                <!-- 项目用户信息表单 -->
                                 <div class="table-responsive">
                                     <table id="add-row" class="display table table-striped table-hover" >
                                         <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>项目ID</th>
                                             <th>项目名</th>
-                                            <th>项目管理员</th>
-                                            <th>代码行</th>
-                                            <th>进度</th>
-                                            <th>功能点</th>
-                                            <th>已完成功能点</th>
-                                            <th>提交次数</th>
-                                            <th>项目类型</th>
-                                            <th>项目描述</th>
-                                            <th>创建时间</th>
+                                            <th>用户ID</th>
+                                            <th>用户名</th>
+                                            <th>用户上传次数</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                         </thead>
                                         <tfoot>
                                         <tr>
                                             <th>ID</th>
+                                            <th>项目ID</th>
                                             <th>项目名</th>
-                                            <th>项目管理员</th>
-                                            <th>代码行</th>
-                                            <th>进度</th>
-                                            <th>功能点</th>
-                                            <th>已完成功能点</th>
-                                            <th>提交次数</th>
-                                            <th>项目类型</th>
-                                            <th>项目描述</th>
-                                            <th>创建时间</th>
+                                            <th>用户ID</th>
+                                            <th>用户名</th>
+                                            <th>用户上传次数</th>
                                             <th>Action</th>
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <tr th:each="project:${delprojectlist}">
-                                            <td th:text="${project.id}"></td>
-                                            <td th:text="${project.name}"></td>
-                                            <td th:text="${project.chargeUserId}"></td>
-                                            <td th:text="${project.codeLineNumber}"></td>
-                                            <td th:text="${project.schedule}"></td>
-                                            <td th:text="${project.functionPoints}"></td>
-                                            <td th:text="${project.completedFunctionPoints}"></td>
-                                            <td th:text="${project.updateCount}"></td>
-                                            <td th:text="${project.type}"></td>
-                                            <td th:text="${project.characterization}"></td>
-                                            <td th:text="${#dates.format(project.createTime,'yyyy-MM-dd')}"></td>
+                                        <tr th:each="projectuser:${delprojectuserlist}">
+                                            <td th:text="${projectuser.id}"></td>
+                                            <td th:text="${projectuser.projectsId}"></td>
+                                            <td th:text="${projectuser.projects.name}"></td>
+                                            <td th:text="${projectuser.userId}"></td>
+                                            <td th:text="${projectuser.myUserDetails.username}"></td>
+                                            <td th:text="${projectuser.codeUpdate}"></td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <form th:action="@{/reduction_project/}+${project.id}" th:method="post">
+                                                    <form th:action="@{/reduction_project_user/}+${projectuser.id}" th:method="post">
                                                         <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-success">
                                                             <i class="fa fa-check"></i>
                                                         </button>

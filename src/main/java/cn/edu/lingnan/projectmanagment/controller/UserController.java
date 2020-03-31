@@ -1,21 +1,20 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
+import cn.edu.lingnan.projectmanagment.bean.Echarts;
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
+import cn.edu.lingnan.projectmanagment.bean.Myprojects;
 import cn.edu.lingnan.projectmanagment.bean.UserRole;
 import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
 import cn.edu.lingnan.projectmanagment.exception.CustomException;
 import cn.edu.lingnan.projectmanagment.exception.CustomExceptionType;
 import cn.edu.lingnan.projectmanagment.service.UserService;
-import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
-import cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,12 +32,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
-import java.sql.Timestamp;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -48,7 +42,7 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -288,5 +282,71 @@ public class UserController {
         Boolean flag =  userService.reductionUser(id);
         System.out.println("删除用户:"+id+flag);
         return "redirect:../deleteduserList";
+    }
+
+    //查看我的项目
+    @GetMapping("/my_projects/{id}")
+    public String myProjects(@PathVariable("id")Integer id,Model model){
+        //我所有项目
+        List<Myprojects> myprojectsList = userService.getMyProjects(id);
+        System.out.println("userid:"+id+" 我的项目："+myprojectsList);
+        model.addAttribute("myprojects",myprojectsList);
+        //我负责的项目
+        List<Myprojects> mychargeprojectsList = userService.getMyChargeProjects(id);
+        System.out.println("userid:"+id+" 我负责的项目："+mychargeprojectsList);
+        model.addAttribute("mychargeprojects",mychargeprojectsList);
+        //我参加的项目
+        List<Myprojects> myjoinprojectsList = userService.getMyJoinProjects(id);
+        System.out.println("userid:"+id+" 我参与的项目："+myjoinprojectsList);
+        model.addAttribute("myjoinprojects",myjoinprojectsList);
+        return "myprojects";
+    }
+
+    //我的项目--饼图1
+    @PostMapping("/getMyProjectData/{id}")
+    @ResponseBody
+    public List<Echarts> getMyProjectData(@PathVariable("id")Integer id) {
+        List<Echarts> list1 = new ArrayList<>();
+        Integer num1 = userService.myProjectScheduleNum(id,"进行中");
+        Integer num2 = userService.myProjectScheduleNum(id,"未开始");
+        Integer num3 = userService.myProjectScheduleNum(id,"已完成");
+        System.out.println("list1:: num1="+num1+" num2="+num2+" num3="+num3);
+        list1.add(new Echarts("进行中",num1));
+        list1.add(new Echarts("未开始",num2));
+        list1.add(new Echarts("已完成",num3));
+        System.out.println("getMyProjectData数据:"+list1);
+        return list1;
+    }
+
+    //我的项目--饼图2
+    @PostMapping("/getMyProjectData2/{id}")
+    @ResponseBody
+    public List<Echarts> getMyProjectData2(@PathVariable("id")Integer id) {
+        List<Echarts> list2 = new ArrayList<>();
+        Integer num1 = userService.myProjectScheduleNum2(id,"进行中");
+        Integer num2 = userService.myProjectScheduleNum2(id,"未开始");
+        Integer num3 = userService.myProjectScheduleNum2(id,"已完成");
+        System.out.println("list2:: num1="+num1+" num2="+num2+" num3="+num3);
+        list2.add(new Echarts("进行中",num1));
+        list2.add(new Echarts("未开始",num2));
+        list2.add(new Echarts("已完成",num3));
+        System.out.println("getMyProjectData2数据:"+list2);
+        return list2;
+    }
+
+    //我的项目--饼图3
+    @PostMapping("/getMyProjectData3/{id}")
+    @ResponseBody
+    public List<Echarts> getMyProjectData3(@PathVariable("id")Integer id) {
+        List<Echarts> list3 = new ArrayList<>();
+        Integer num1 = userService.myProjectScheduleNum3(id,"进行中");
+        Integer num2 = userService.myProjectScheduleNum3(id,"未开始");
+        Integer num3 = userService.myProjectScheduleNum3(id,"已完成");
+        System.out.println("list3:: num1="+num1+" num2="+num2+" num3="+num3);
+        list3.add(new Echarts("进行中",num1));
+        list3.add(new Echarts("未开始",num2));
+        list3.add(new Echarts("已完成",num3));
+        System.out.println("getMyProjectData3数据:"+list3);
+        return list3;
     }
 }

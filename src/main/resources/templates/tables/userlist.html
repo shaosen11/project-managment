@@ -284,7 +284,7 @@
 													<th>邮箱</th>
 													<th>电话</th>
 													<th>生日</th>
-													<th>性别</th>
+													<th>性别(1男0女)</th>
 													<th>地址</th>
 													<th>介绍</th>
 													<th style="width: 10%">Action</th>
@@ -310,7 +310,7 @@
 													<td th:text="${user.email}"></td>
 													<td th:text="${user.phone}"></td>
 													<td th:text="${#dates.format(user.birthday,'yyyy-MM-dd')}"></td>
-													<td th:text="${user.gender==0?'女':'男'}"></td>
+													<td th:text="${user.gender}"></td>
 													<td th:text="${user.address}"></td>
 													<td th:text="${user.introduce}"></td>
 													<td>

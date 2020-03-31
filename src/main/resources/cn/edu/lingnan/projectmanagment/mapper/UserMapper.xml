@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.lingnan.projectmanagment.mapper.UserMapper">
     <select id="findByEmail" resultType="cn.edu.lingnan.projectmanagment.bean.MyUserDetails">
-        select *
-        from sys_user
-        where email = #{email}
+        select * from sys_user where email = #{email} and enabled = 1
     </select>
+
+    <select id="findById" resultType="MyUserDetails">
+        select * from sys_user where id = #{id} and enabled = 1
+    </select>
+
     <insert id="addUser">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -131,4 +134,91 @@
         select * from sys_user where enabled = 0
     </select>
 
+    <!--查找我的所有项目-->
+    <resultMap id="myprojects" type="Myprojects">
+        <result column="projectId" property="projectId"></result>
+        <result column="projectName" property="projectName"></result>
+        <result column="chargeUserId" property="chargeUserId"></result>
+        <result column="chargeUser" property="chargeUser"></result>
+        <result column="schedule" property="schedule"></result>
+        <result column="functionPoints" property="functionPoints"></result>
+        <result column="completedFunctionPoints" property="completedFunctionPoints"></result>
+        <result column="updateCount" property="updateCount"></result>
+        <result column="myUpdateCount" property="myUpdateCount"></result>
+        <result column="type" property="type"></result>
+    </resultMap>
+    <select id="getMyProjects" resultMap="myprojects">
+        select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
+            p.schedule as schedule, p.function_points as functionPoints,
+            p.completed_function_points as completedFunctionPoints,
+            p.update_count as updateCount, pu.code_update as myUpdateCount,
+            p.type as type
+        from projects_user pu,sys_user su,projects p
+        where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1
+            and p.id = pu.projects_id and p.charge_user_id = su.id and pu.user_id = #{id}
+    </select>
+
+    <!--查找我负责的项目-->
+    <resultMap id="mychargeprojects" type="Myprojects">
+        <result column="projectId" property="projectId"></result>
+        <result column="projectName" property="projectName"></result>
+        <result column="chargeUserId" property="chargeUserId"></result>
+        <result column="chargeUser" property="chargeUser"></result>
+        <result column="schedule" property="schedule"></result>
+        <result column="functionPoints" property="functionPoints"></result>
+        <result column="completedFunctionPoints" property="completedFunctionPoints"></result>
+        <result column="updateCount" property="updateCount"></result>
+        <result column="myUpdateCount" property="myUpdateCount"></result>
+        <result column="type" property="type"></result>
+    </resultMap>
+    <select id="getMyChargeProjects" resultMap="mychargeprojects">
+        select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
+            p.schedule as schedule, p.function_points as functionPoints,
+            p.completed_function_points as completedFunctionPoints,
+            p.update_count as updateCount, pu.code_update as myUpdateCount,p.type as type
+        from projects_user pu,sys_user su,projects p
+        where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1
+            and p.id = pu.projects_id and p.charge_user_id = su.id and pu.user_id = #{id}
+            and p.charge_user_id = #{id}
+    </select>
+
+    <!--查找我参与的项目-->
+    <resultMap id="myjoinprojects" type="Myprojects">
+        <result column="projectId" property="projectId"></result>
+        <result column="projectName" property="projectName"></result>
+        <result column="chargeUserId" property="chargeUserId"></result>
+        <result column="chargeUser" property="chargeUser"></result>
+        <result column="schedule" property="schedule"></result>
+        <result column="functionPoints" property="functionPoints"></result>
+        <result column="completedFunctionPoints" property="completedFunctionPoints"></result>
+        <result column="updateCount" property="updateCount"></result>
+        <result column="myUpdateCount" property="myUpdateCount"></result>
+        <result column="type" property="type"></result>
+    </resultMap>
+    <select id="getMyJoinProjects" resultMap="myjoinprojects">
+        select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
+            p.schedule as schedule, p.function_points as functionPoints,
+            p.completed_function_points as completedFunctionPoints,
+            p.update_count as updateCount, pu.code_update as myUpdateCount, p.type as type
+        from projects_user pu,sys_user su,projects p
+        where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1 and p.id = pu.projects_id and p.charge_user_id = su.id and pu.user_id = #{id} and p.charge_user_id != #{id}
+    </select>
+
+    <!--查找我所有的项目进度数据，饼图-->
+    <select id="myProjectScheduleNum" resultType="Integer">
+        select count(*) from projects p, projects_user pu
+            where p.id = pu.projects_id and p.enabled = 1 and pu.delete_flag = 1 and pu.user_id = #{id} and p.schedule = #{schedule}
+    </select>
+
+    <!--查找我负责的项目进度数据，饼图-->
+    <select id="myProjectScheduleNum2" resultType="Integer">
+        select count(*) from projects p, projects_user pu
+            where p.id = pu.projects_id and pu.user_id = #{id} and p.schedule = #{schedule} and p.charge_user_id = #{id} and p.enabled = 1 and pu.delete_flag = 1
+    </select>
+
+    <!--查找我参加的项目进度数据，饼图-->
+    <select id="myProjectScheduleNum3" resultType="Integer">
+        select count(*) from projects p, projects_user pu
+            where p.id = pu.projects_id and pu.user_id = #{id} and p.schedule = #{schedule} and p.charge_user_id != #{id} and p.enabled = 1 and pu.delete_flag = 1
+    </select>
 </mapper>
