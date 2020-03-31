@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	  			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Home</title>
@@ -9,15 +8,15 @@
 
 	<!-- Fonts and icons -->
 	<script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-	<script>
-		WebFont.load({
-			google: {"families":["Open+Sans:300,400,600,700"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},
-			active: function() {
-				sessionStorage.fonts = true;
-			}
-		});
-	</script>
+<!--	<script>-->
+<!--		WebFont.load({-->
+<!--			google: {"families":["Open+Sans:300,400,600,700"]},-->
+<!--			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},-->
+<!--			active: function() {-->
+<!--				sessionStorage.fonts = true;-->
+<!--			}-->
+<!--		});-->
+<!--	</script>-->
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
@@ -692,5 +691,30 @@
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <script th:src="@{/assets/js/demo.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+	window.onload = function (ev) {
+		var userId = [[${#authentication.principal.id}]];
+		console.log(userId);
+		$.ajax({
+			url: "/user_prjects?userId=" + userId,
+			type: "get",
+			datatype: "json",
+			success: function (data) {
+				console.log(data);
+				var parentUL = document.getElementById("projectsul");
+				for (var i = 0; i < data.length; i++) {
+					//创建二级li
+					var li = document.createElement("li");
+					parentUL.appendChild(li);
+					var a = document.createElement("a");
+					a.href = '/projects_view?projectId=' + data[i].id;
+					a.innerHTML = data[i].name;
+					li.appendChild(a);
+				}
+			}
+		})
+
+	}
+</script>
 </body>
 </html>

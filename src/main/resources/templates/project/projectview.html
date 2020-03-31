@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+<!--    <script>-->
+<!--        WebFont.load({-->
+<!--            google: {"families":["Open+Sans:300,400,600,700"]},-->
+<!--            custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},-->
+<!--            active: function() {-->
+<!--                sessionStorage.fonts = true;-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+</head>
+
+<body onLoad="init()">
+<div class="wrapper">
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a th:href="index.html" class="logo">
+                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-wrapper scrollbar-inner">
+            <div class="sidebar-background"></div>
+            <div class="sidebar-content">
+                <div class="user">
+                    <div class="avatar-sm float-left mr-2">
+                        <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle">
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                    <span th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">
+									用户名
+									<span class="user-level">Administrator</span>
+									<span class="caret"></span>
+								</span>
+                        </a>
+                        <div class="clearfix"></div>
+
+                        <div class="collapse in" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a href="#profile">
+                                        <span class="link-collapse">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#edit">
+                                        <span class="link-collapse">Edit Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#settings">
+                                        <span class="link-collapse">Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a th:href="index.html">
+                            <i class="fas fa-home"></i>
+                            <p>主页</p>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">infromation</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="index.html">
+                            <i class="far fa-comment-dots"></i>
+                            <p>message</p>
+                            <span class="badge badge-count">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">content</h4>
+                    </li>
+                    <li class="nav-item" id="test">
+                        <a data-toggle="collapse" href="#base1">
+                            <i class="fas fa-box"></i>
+                            <p>项目</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="base1">
+                            <ul class="nav nav-collapse" id="projectsul">
+                            </ul>
+                        </div>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a data-toggle="collapse" href="#tables">-->
+<!--                            <i class="fas fa-table"></i>-->
+<!--                            <p>当前数据</p>-->
+<!--                            <span class="caret"></span>-->
+<!--                        </a>-->
+<!--                        <div class="collapse" id="tables">-->
+<!--                            <ul class="nav nav-collapse">-->
+<!--                                <c:if test="${loginUser.duty == '管理员'}">-->
+<!--                                    <li>-->
+<!--                                        <a th:href="${ctx}/user/list">-->
+<!--                                            <span class="sub-item">User</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </c:if>-->
+<!--                                <li>-->
+<!--                                    <a th:href="${ctx}/projects/getAllProjects">-->
+<!--                                        <span class="sub-item">Projects</span>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <c:if test="${loginUser.duty == '项目经理'}">-->
+<!--                                    <li class="active">-->
+<!--                                        <a th:href="${ctx}/projects/getApplicant">-->
+<!--                                            <span class="sub-item">Check Projects</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </c:if>-->
+<!--                                <li>-->
+<!--                                    <a th:href="${ctx}/userProjects/getAllUserProjects">-->
+<!--                                        <span class="sub-item">User Projects</span>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <c:if test="${loginUser.duty == '管理员'}">-->
+<!--                        <li class="nav-item">-->
+<!--                            <a data-toggle="collapse" th:href="#base">-->
+<!--                                <i class="fas fa-layer-group"></i>-->
+<!--                                <p>失效数据</p>-->
+<!--                                <span class="caret"></span>-->
+<!--                            </a>-->
+<!--                            <div class="collapse" id="base">-->
+<!--                                <ul class="nav nav-collapse">-->
+<!--                                    <li>-->
+<!--                                        <a th:href="${ctx}/user/getAllDeleteUser">-->
+<!--                                            <span class="sub-item">Deleted User</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a th:href="${ctx}/projects/getAllDeleteProjects">-->
+<!--                                            <span class="sub-item">Deleted Projects</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a th:href="${ctx}/userProjects/getAllDeleteUserProjects">-->
+<!--                                            <span class="sub-item">Deleted User_Projects</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a th:href="${ctx}/documents/getAllDeleteDocuments">-->
+<!--                                            <span class="sub-item">Deleted Document</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li>-->
+<!--                                        <a th:href="${ctx}/documentsRecord/getAllDeleteDocumentsRecord">-->
+<!--                                            <span class="sub-item">Deleted DocumentsRecord</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                    </c:if>-->
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">package</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="modal" data-target="#addpackage">
+                            <i class="fas fa-plus-square"></i>
+                            <p>new package</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="modal" data-target="#uploadfile">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>upload file</p>
+                        </a>
+<!--                        <button class="btn btn-danger btn-round" type="button" data-toggle="modal" data-target="#uploadfile" data-id="edit" style="width: 50%">上传文件</button>-->
+                    </li>
+                    <li class="nav-item" id="test">
+                        <a data-toggle="collapse" href="#base2">
+                            <i class="fas fa-folder"></i>
+                            <p>All Package</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="base2">
+                            <ul class="nav nav-collapse" id="packageul">
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <!-- 折线图-->
+                    <div class="col-md-8">
+                        <div id="lindChart" style="width: 100%;height: 500px;"></div>
+                    </div>
+                    <!-- 饼图-->
+<!--                    <%&#45;&#45;                    <div class="col-md-4">&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                        <button data-target="#devoteChart" onclick="hide('devoteChart','reduceChart')" class="btn btn-primary" type="button" >贡献量饼图</button>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                        <button data-target="#reduceChart" onclick="show('devoteChart','reduceChart')" class="btn btn-danger" type="button" >上传次数饼图</button>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                        <br>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                        <div id="devoteChart" style="width: 400px; height: 400px" ></div>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                        <div id="reduceChart" style="width: 400px; height: 400px;display: none"></div>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                        <div>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                            <c:forEach items="${information}" var="projects">&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                                <div style="text-align: center">${projects.name}的总贡献量为:${projects.codeDevote}，一共上交了${projects.codeInsert}次；</div>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                            </c:forEach>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                        </div>&#45;&#45;%>-->
+<!--                    <%&#45;&#45;                    </div>&#45;&#45;%>-->
+                    <div class="col-md-4">
+                        <div class="card-body">
+                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd" id="pills-tab-without-border"
+                                role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-home-tab-nobd" data-toggle="pill"
+                                       href="#pills-home-nobd" role="tab" aria-controls="pills-home-nobd"
+                                       aria-selected="true">贡献量饼图</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-profile-tab-nobd" data-toggle="pill"
+                                       href="#pills-profile-nobd" role="tab" aria-controls="pills-profile-nobd"
+                                       aria-selected="false">上传次数饼图</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home-nobd" role="tabpanel"
+                                     aria-labelledby="pills-home-tab-nobd">
+                                    <div id="devoteChart" style="width: 330px; height: 330px;"></div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-profile-nobd" role="tabpanel"
+                                     aria-labelledby="pills-profile-tab-nobd">
+                                    <div id="reduceChart" style="width: 330px; height: 330px;"></div>
+                                </div>
+                                <div>
+                                    <c:forEach items="${information}" var="projects">
+                                        <div style="text-align: center">${projects.name}的总贡献量为:${projects.codeDevote}，一共上交了${projects.codeInsert}次；</div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">操作记录</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="basic-datatables" class="display table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>操作者</th>
+                                            <th>操作信息</th>
+                                            <th>Ip</th>
+                                            <th>操作时间</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th>操作者</th>
+                                            <th>操作信息</th>
+                                            <th>Ip</th>
+                                            <th>操作时间</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <tr th:each="documentsRecord:${documentsRecordlist}">
+                                            <td th:text="${documentsRecord.userId}"></td>
+                                            <td th:text="${documentsRecord.operateMessage}"></td>
+                                            <td th:text="${documentsRecord.ip}"></td>
+                                            <td th:text="${#dates.format(documentsRecord.operateTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">填写版本信息</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="${ctx}/documents/upload" method="POST" enctype="multipart/form-data">
+                    <div class="from-group" style="width: 100%">
+                        <div class="form-group" style="width: 100%">
+                            <select class="form-control input-fixed" id="packageName1" name="packageName1">
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="projectId" name="projectId" value="${projectId}">
+                    <input type="hidden" id="writer" name="writer" value="${loginUser.id}">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id='location' class="form-control" onclick="$('#i-file').click();">
+                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary"
+                                   onclick="$('#i-file').click();">
+                        </div>
+                        <input type="file" name="file" id='i-file' onchange="$('#location').val($('#i-file').val());"
+                               style="display: none">
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage"
+                                  name="versionMessage" autocomplete="off"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                        <input type="submit" class="btn btn-primary" value="提交">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form th:action="@{/projectsPackage}" method="post" onSubmit="return submitPackageCheck();">
+                <input type="hidden" id="newPackageProjectId" name="projectId" th:value="${param.projectId}">
+                <input type="hidden" id="newPackageUserId" name="userId" th:value="${#authentication.principal.id}">
+<!--                <input type="hidden" id="filename" name="filename" value="${filename}">-->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabe">新建包</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <label>包名称:</label>
+                            <input class="form-control" id="packageName" name="packageName" type="text"
+                                   placeholder="请输入包名" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" type="submit">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+<script th:src="@{/assets/js/demo.js}"></script>
+<script>
+    $(document).ready(function () {
+        $('#basic-datatables').DataTable({});
+
+        $('#multi-filter-select').DataTable({
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
+            }
+        });
+
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+
+        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $('#addRowButton').click(function () {
+            $('#add-row').dataTable().fnAddData([
+                $("#addName").val(),
+                $("#addPosition").val(),
+                $("#addOffice").val(),
+                action
+            ]);
+            $('#addRowModal').modal('hide');
+
+        });
+    });
+</script>
+<script type="text/javascript">
+    /*var showSignIn = true,
+        showSignUp = false;*/
+    function changeContainer(id1, id2) {
+        if (showSignIn == true) {
+            document.getElementById(id1).style.display = "block";
+        } else {
+            document.getElementById(id1).style.display = "none";
+        }
+        if (showSignUp == true) {
+            document.getElementById(id2).style.display = "block";
+        } else {
+            document.getElementById(id2).style.display = "none";
+        }
+    }
+
+    function hide(id1, id2) {
+        showSignUp = false;
+        showSignIn = true;
+        changeContainer(id1, id2);
+    }
+
+    function show(id1, id2) {
+        showSignUp = true;
+        showSignIn = false;
+        changeContainer(id1, id2);
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    //加载页面时加载
+    $(document).ready(function () {
+        var projectId = [[${param.projectId}]];
+        $.ajax({
+            url: "/projectsPackages?projectId=" + projectId,
+            type: "get",
+            datatype: "json",
+            success: function (data) {
+                console.log(data);
+                console.log(data.length);
+                var parentUL = document.getElementById("packageul");
+                for (var i = 0; i < data.length; i++) {
+                    //创建一级目录
+                    var li = document.createElement("li");
+                    li.className = 'nav-item';
+                    parentUL.appendChild(li);
+                    //创建超链接
+                    var a = document.createElement("a");
+                    a.setAttribute('data-toggle', 'collapse');
+                    a.href = "#package" + i;
+                    li.appendChild(a);
+                    //创建i
+                    var i1 = document.createElement("i");
+                    i1.className = 'fas fa-file-code';
+                    a.appendChild(i1);
+                    //创建P
+                    var p = document.createElement("p");
+                    p.innerHTML = data[i].packageName;
+                    a.appendChild(p);
+                    //创建span
+                    var span = document.createElement("span");
+                    span.className = 'caret';
+                    a.appendChild(span);
+                    //创建div
+                    var div = document.createElement("div");
+                    div.className = 'collapse';
+                    div.id = "package" + i;
+                    li.appendChild(div);
+                    //创建ul
+                    var ul = document.createElement("ul");
+                    ul.className = 'nav nav-collapse';
+                    div.appendChild(ul);
+                    for (var j = 0; j < data[i].projectsPackageList.length; j++) {
+                        if (data[i].projectsPackageList[j].documentName != null) {
+                            //创建二级li
+                            var li1 = document.createElement("li");
+                            ul.append(li1);
+                            var a1 = document.createElement("a");
+                            a1.href = '/documents/text?userId=${loginUser.id}&projectId=${projectId}&filename=' + data[i].projectsPackageList[j].documentName;
+                            // a1.href = '#';
+                            li1.appendChild(a1);
+                            //创建span
+                            var span1 = document.createElement("span");
+                            span1.className = "sub-item";
+                            span1.innerHTML = data[i].projectsPackageList[j].documentName;
+                            a1.appendChild(span1);
+                        }
+                    }
+                }
+            }
+        })
+    });
+    //获得用户id
+    //     $.ajax({
+    //         url: "${ctx}/userProjects/getProjects?userId=${loginUser.id}",
+    //         type: "get",
+    //         datatype: "json",
+    //         success: function (data) {
+    //             // console.log(projectId);
+    //             var parentUL = document.getElementById("projectsul");
+    //             for (var i = 0; i < data.length; i++) {
+    //                 //创建二级li
+    //                 var li = document.createElement("li");
+    //                 parentUL.appendChild(li);
+    //                 var a = document.createElement("a");
+    //                 a.href = '${ctx}/userProjects/information?projectId=' + data[i].id;
+    //                 a.innerHTML = data[i].name;
+    //                 li.appendChild(a);
+    //             }
+    //         }
+    //     })
+
+    //动态创建select
+    // $.ajax({
+    //     url: '${ctx}/documentspackage/getallpackagebyprojectsid?projectId=${projectId}',
+    //     type: "get",
+    //     dataType: "json",
+    //     success: function (data) {
+    //         console.log("进入");
+    //         var opts = "";
+    //         for (var i = 0; i < data.length; i++) {
+    //             opts += "<option value='" + data[i].packageName + "'>" + data[i].packageName + "</option>";
+    //         }
+    //         $('#packageName1').selectpicker('val', '');
+    //         $("#packageName1").append(opts);
+    //         $("#packageName1").selectpicker("refresh");
+    //     }
+    // });
+
+    // var pieCharts2 = echarts.init(document.getElementById("reduceChart"));
+    // $.ajax({
+    //     type: "post",
+    //     async: true,
+    //     url: "${ctx}/userProjects/getCodeInsertData?id=${projectId}",
+    //     data: [],
+    //     dataType: "json",
+    //     error: function (result) {
+    //     },
+    //     success: function (result) {
+    //         pieCharts2.setOption({
+    //             title: {
+    //                 text: '上传次数',
+    //                 subtext: '百分比',
+    //                 x: 'center'
+    //             },
+    //             tooltip: {
+    //                 trigger: 'item',
+    //                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+    //             },
+    //             legend: {
+    //                 orient: 'vertical',
+    //                 left: 'left',
+    //                 data: ['第一名', '第二名', '第三名']
+    //             },
+    //             toolbox: {
+    //                 show: true,
+    //                 feature: {
+    //                     mark: {show: true},
+    //                     dataView: {show: true, readOnly: false},
+    //                     magicType: {
+    //                         show: true,
+    //                         type: ['pie', 'funnel'],
+    //                         option: {
+    //                             funnel: {
+    //                                 x: '25%',
+    //                                 width: '50%',
+    //                                 funnelAlign: 'left',
+    //                                 max: 1548
+    //                             }
+    //                         }
+    //                     },
+    //                     restore: {show: true},
+    //                     saveAsImage: {show: true}
+    //                 }
+    //             },
+    //             calculable: true,
+    //             series: [
+    //                 {
+    //                     name: '数量',
+    //                     type: 'pie',
+    //                     radius: '55%',
+    //                     center: ['50%', '60%'],
+    //                     data: result
+    //                 }
+    //             ]
+    //         });
+    //     }
+    // })
+
+
+    // var pieCharts1 = echarts.init(document.getElementById("devoteChart"));
+    // $.ajax({
+    //     type: "post",
+    //     async: true,
+    //     url: "${ctx}/userProjects/getCodeDevoteData?id=${projectId}",
+    //     data: [],
+    //     dataType: "json",
+    //     error: function (result) {
+    //     },
+    //     success: function (result) {
+    //         pieCharts1.setOption({
+    //             title: {
+    //                 text: '代码贡献量',
+    //                 subtext: '百分比',
+    //                 x: 'center'
+    //             },
+    //             tooltip: {
+    //                 trigger: 'item',
+    //                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+    //             },
+    //             legend: {
+    //                 orient: 'vertical',
+    //                 x: 'left',
+    //                 data: ["第一名", "第二名", "第三名"]
+    //             },
+    //             toolbox: {
+    //                 show: true,
+    //                 feature: {
+    //                     mark: {show: true},
+    //                     dataView: {show: true, readOnly: false},
+    //                     magicType: {
+    //                         show: true,
+    //                         type: ['pie', 'funnel'],
+    //                         option: {
+    //                             funnel: {
+    //                                 x: '25%',
+    //                                 width: '50%',
+    //                                 funnelAlign: 'left',
+    //                                 max: 1548
+    //                             }
+    //                         }
+    //                     },
+    //                     restore: {show: true},
+    //                     saveAsImage: {show: true}
+    //                 }
+    //             },
+    //             calculable: true,
+    //             series: [
+    //                 {
+    //                     name: '数量',
+    //                     type: 'pie',
+    //                     radius: '55%',
+    //                     center: ['50%', '60%'],
+    //                     data: result
+    //                 }
+    //             ]
+    //         });
+    //     }
+    // })
+    // var lindCharts = echarts.init(document.getElementById("lindChart"));
+    // var xdata = [];
+    // var ydata = [];
+    //异步请求数据
+    // $.ajax({
+    //     type: "post",
+    //     async: true,
+    //     url: "${ctx}/userProjects/getLineChartDate?id=${projectId}",
+    //     data: [],
+    //     dataType: "json",
+    //     error: function (result) {
+    //     },
+    //     success: function (result) {
+    //         $(result).each(function (index, item) {
+    //             xdata.push(item.uploadTime);
+    //             ydata.push(item.sumCodeLine);
+    //         })
+    //         lindCharts.setOption({
+    //             title: {
+    //                 text: '项目代码行数变化',
+    //             },
+    //             tooltip: {
+    //                 trigger: 'axis',
+    //                 axisPointer: {
+    //                     type: 'cross'
+    //                 }
+    //             },
+    //             toolbox: {
+    //                 show: true,
+    //                 feature: {
+    //                     saveAsImage: {}
+    //                 }
+    //             },
+    //             xAxis: {
+    //                 type: 'category',
+    //                 boundaryGap: false,
+    //                 data: xdata
+    //             },
+    //             yAxis: {
+    //                 type: 'value',
+    //                 axisLabel: {
+    //                     formatter: '{value}'
+    //                 },
+    //                 axisPointer: {
+    //                     snap: true
+    //                 }
+    //             },
+    //             visualMap: {
+    //                 show: false,
+    //                 dimension: 0,
+    //                 pieces: [{
+    //                     lte: 6,
+    //                     color: 'green'
+    //                 }, {
+    //                     gt: 6,
+    //                     lte: 8,
+    //                     color: 'red'
+    //                 }, {
+    //                     gt: 8,
+    //                     lte: 14,
+    //                     color: 'green'
+    //                 }, {
+    //                     gt: 14,
+    //                     lte: 17,
+    //                     color: 'red'
+    //                 }, {
+    //                     gt: 17,
+    //                     color: 'green'
+    //                 }]
+    //             },
+    //             series: [
+    //                 {
+    //                     name: '代码行',
+    //                     type: 'line',
+    //                     smooth: true,
+    //                     data: ydata
+    //                 }
+    //             ]
+    //         });
+    //     }
+    // })
+</script>
+<script th:inline="javascript">
+    $(function () {
+        $("#packageName").keyup(function () {
+            setTimeout('checkPackage()', 1000);
+        })
+    })
+    //检查包名是否存在
+    var packageFlag = false;
+    function checkPackage() {
+        var projectId = $("#newPackageProjectId").val();
+        var packageName = $("#packageName").val();
+        var packageNamecss = $("#packageName");
+        console.log(projectId.concat());
+        console.log(packageName);
+        $.ajax({
+            type: "get",
+            url: "projectsPackage",
+            data: {
+                "projectId" : projectId,
+                "packageName" : packageName
+            },
+            success:function (json) {
+                if (!json){
+                    packageNamecss.css('borderColor','red');
+                    packageFlag = false;
+                }else {
+                    packageNamecss.css('borderColor','');
+                    packageFlag = true;
+                }
+            }
+        })
+    }
+    //检查注册页面是否填写完成
+    function submitPackageCheck() {
+        if(!packageFlag){
+            alert("包名已存在");
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

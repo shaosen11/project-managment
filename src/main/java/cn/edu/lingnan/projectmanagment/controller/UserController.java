@@ -8,6 +8,7 @@ import cn.edu.lingnan.projectmanagment.exception.CustomExceptionType;
 import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
 import cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -48,7 +49,7 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -71,7 +72,9 @@ public class UserController {
     @ResponseBody
     @GetMapping("/user")
     public boolean User(String email){
+        System.out.println(email);
         MyUserDetails myUserDetails =  userService.findByEmail(email);
+        System.out.println(myUserDetails);
         if (myUserDetails == null){
             //表示可以注册
             return true;
@@ -105,7 +108,6 @@ public class UserController {
             myUserDetails.setPassword(password);
         }
         MyUserDetails myUserDetails1 = userService.updateUser(myUserDetails);
-        System.out.println(myUserDetails + "123456789");
         //1.从HttpServletRequest中获取SecurityContextImpl对象
         SecurityContextImpl securityContextImpl = (SecurityContextImpl) request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
         if (securityContextImpl != null){

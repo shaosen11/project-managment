@@ -15,6 +15,17 @@
         select * from projects where enabled = 1
     </select>
 
+    <!--通过id查询所有项目-->
+    <select id="getProjectListByUserId" resultType="Projects">
+        select *
+        from projects
+        where id in (
+            select projects_id
+            from projects_user
+            where user_id = #{userId}
+        ) and enabled = 1
+    </select>
+
     <!--查找所有被注销项目-->
     <select id="getDelProjectList" resultType="Projects">
         select * from projects where enabled = 0

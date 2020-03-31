@@ -13,7 +13,7 @@ logging:
 spring:
   datasource:
     username: root
-    password: 2017764300
+    password: 20177600
     url: jdbc:mysql://47.98.240.31:3306/projectmanagment
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource

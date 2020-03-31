@@ -160,6 +160,7 @@
 				checkpassword();
 			})
 		})
+		var emailFlag = false;
 		//检查邮箱
 		function checkemail(){
 			var email = $("#registerEmail").val();
@@ -173,9 +174,10 @@
 				success: function (json) {
 					if (!json){
 						registerEmail.css('borderColor','red');
-						return false;
+						emailFlag = false;
 					}else {
 						registerEmail.css('borderColor','');
+						emailFlag = true;
 					}
 				},
 			})
@@ -190,6 +192,7 @@
 				return false;
 			}else {
 				confirmpassword.css('borderColor','');
+				return true;
 			}
 		}
 		//检查注册页面是否填写完成
@@ -197,16 +200,16 @@
 			if($("#registerUsername").val()==""){
 				return false;
 			}
-			if(checkemail()==false){
+			if(!emailFlag){
 				return false;
 			}
 			if($("#registerPhone").val()==""){
 				return false;
 			}
-			if(checkpassword()==false){
+			if(!checkpassword()){
 				return false;
 			}
-			if($("#agree").is(":checked")==false){
+			if(!$("#agree").is(":checked")){
 				return false;
 			}
 		}

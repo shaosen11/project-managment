@@ -18,6 +18,13 @@ public interface ProjectService {
     List<Projects> getProjectList();
 
     /**
+     * 通过userId查询所有项目
+     * @param userId
+     * @return
+     */
+    List<Projects> getProjectListByUserId(Integer userId);
+
+    /**
      * 添加项目
      * @param project
      * @return

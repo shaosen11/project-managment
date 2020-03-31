@@ -1,13 +1,17 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
+import cn.edu.lingnan.projectmanagment.bean.DocumentsRecord;
 import cn.edu.lingnan.projectmanagment.bean.Projects;
 import cn.edu.lingnan.projectmanagment.service.ProjectService;
+import cn.edu.lingnan.projectmanagment.service.impl.DocumentsRecordServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.util.List;
@@ -16,6 +20,9 @@ import java.util.List;
 public class ProjectController {
     @Autowired
     ProjectService projectService;
+
+    @Autowired
+    DocumentsRecordServiceImpl documentsRecordService;
 
     //查询一条项目信息
     @GetMapping("/get_by_id")
@@ -39,6 +46,14 @@ public class ProjectController {
         model.addAttribute("projectlist",list);
         System.out.println("查询所有用户"+list);
         return "tables/projectlist";
+    }
+
+    @GetMapping("/projects_view")
+    public String projectView(@Param("projectId") Integer projectId, Model model){
+        System.out.println("项目id " + projectId);
+        List<DocumentsRecord> documentsRecordList = documentsRecordService.getAllByProjectId(projectId);
+        model.addAttribute("documentsRecordlist", documentsRecordList);
+        return "project/projectview";
     }
 
 

@@ -24,6 +24,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<Projects> getProjectListByUserId(Integer userId) {
+        return projectMapper.getProjectListByUserId(userId);
+    }
+
+    @Override
     public boolean addProject(Projects project) {
         return projectMapper.addProject(project);
     }

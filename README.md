@@ -1,4 +1,4 @@
-# a开发文档
+# 开发文档
 
 ## 包结构
 
@@ -313,19 +313,20 @@ spring security登录认证成功后，会给这个实体复制
 
 描述：项目表格
 
-| 属性             | 类型     | 长度 | null | 主键 | 描述       |
-| ---------------- | -------- | ---- | ---- | ---- | ---------- |
-| id               | int      |      | no   | yes  | 自增id     |
-| name             | varchar  | 64   |      |      | 项目名称   |
-| charge_user_id   | int      |      |      |      | 项目管理员 |
-| code_line_number | int      |      |      |      | 项目代码行 |
-| update_count     | int      |      |      |      | 提交次数   |
-| type             | varchar  | 64   |      |      | 项目类型   |
-| desciption       | varchar  | 1000 |      |      | 项目描述   |
-| create_time      | datatime |      |      |      | 创建时间   |
-| delete_flag      | tinyint  |      |      |      | 是否删除   |
-
-
+| 属性                      | 类型      | 长度 | null | 主键 | 描述         |
+| ------------------------- | --------- | ---- | ---- | ---- | ------------ |
+| id                        | int       |      | no   | yes  | 自增id       |
+| name                      | varchar   | 64   |      |      | 项目名称     |
+| charge_user_id            | int       |      |      |      | 项目管理员   |
+| code_line_number          | int       |      |      |      | 项目代码行   |
+| schedule                  | varchar   | 64   |      |      | 项目进度     |
+| function_points           | int       |      |      |      | 功能点       |
+| completed_function_points | int       |      |      |      | 已完成功能点 |
+| update_count              | int       |      |      |      | 提交次数     |
+| type                      | varchar   | 64   |      |      | 项目类型     |
+| characterization          | varchar   | 1000 |      |      | 项目描述     |
+| create_time               | timestamp |      |      |      | 创建时间     |
+| enabled（1可用，0失效）   | tinyint   |      |      |      | 是否删除     |
 
 ### projects_user（项目人员表，待完善）
 
