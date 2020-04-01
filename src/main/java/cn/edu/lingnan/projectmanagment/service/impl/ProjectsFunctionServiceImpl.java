@@ -19,6 +19,21 @@ public class ProjectsFunctionServiceImpl implements ProjectsFunctionService {
     }
 
     @Override
+    public ProjectsFunction getOneProjectFunction(Integer id) {
+        return projectsFunctionMapper.getOneProjectFunction(id);
+    }
+
+    @Override
+    public Integer countProjectFunctionByProjectId(Integer id) {
+        return projectsFunctionMapper.countProjectFunctionByProjectId(id);
+    }
+
+    @Override
+    public Integer countCompletedProjectFunctionByProjectId(Integer id) {
+        return projectsFunctionMapper.countCompletedProjectFunctionByProjectId(id);
+    }
+
+    @Override
     public Integer findMaxFunctionId(Integer id) {
         return projectsFunctionMapper.findMaxFunctionId(id);
     }

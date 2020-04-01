@@ -44,6 +44,12 @@ public interface ProjectService {
     boolean editProject(Projects project);
 
     /**
+     * 修改项目进度
+     * @return
+     */
+    boolean updateSchedule(Projects project);
+
+    /**
      * 还原项目
      * @return
      */

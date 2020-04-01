@@ -182,8 +182,11 @@
                                                         </div>
                                                         <div class="col-md-6 pr-0">
                                                             <div class="form-group form-group-default">
-                                                                <label>功能状态(1=完成,0=未完成)</label>
-                                                                <input id="editFunctionStatus" name="functionStatus" type="number" class="form-control" required>
+                                                                <label>功能状态</label>
+                                                                <select name="functionStatus" id="editFunctionStatus">
+                                                                    <option value="1">完成</option>
+                                                                    <option value="0">未完成</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -211,7 +214,6 @@
                                             <th>ID</th>
                                             <th>项目ID</th>
                                             <th>项目名</th>
-                                            <th>功能ID</th>
                                             <th>功能名</th>
                                             <th>功能状态(1=完成,0=未完成)</th>
                                             <th>用户ID</th>
@@ -224,7 +226,6 @@
                                             <th>ID</th>
                                             <th>项目ID</th>
                                             <th>项目名</th>
-                                            <th>功能ID</th>
                                             <th>功能名</th>
                                             <th>功能状态</th>
                                             <th>用户ID</th>
@@ -237,7 +238,6 @@
                                             <td th:text="${projectfunction.id}"></td>
                                             <td th:text="${projectfunction.projectsId}"></td>
                                             <td th:text="${projectfunction.projectName}"></td>
-                                            <td th:text="${projectfunction.functionId}"></td>
                                             <td th:text="${projectfunction.functionName}"></td>
                                             <td th:text="${projectfunction.functionStatus}"></td>
                                             <td th:text="${projectfunction.userId}"></td>
@@ -338,14 +338,12 @@
         var $td= $(obj).parents('tr').children('td');
         var td_id = $td.eq(0).text();
         var td_pid = $td.eq(1).text();
-        var td_funId = $td.eq(3).text();
-        var td_funname = $td.eq(4).text();
-        var td_funstatus = $td.eq(5).text();
-        var td_uid = $td.eq(6).text();
+        var td_funname = $td.eq(3).text();
+        var td_funstatus = $td.eq(4).text();
+        var td_uid = $td.eq(5).text();
 
         $("#editId").val(td_id);
         $("#editProjectId").val(td_pid);
-        $("#editFunctionId").val(td_funId);
         $("#editFunctionName").val(td_funname);
         $("#editFunctionStatus").val(td_funstatus);
         $("#editUserId").val(td_uid);

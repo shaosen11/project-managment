@@ -44,6 +44,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public boolean updateSchedule(Projects project) {
+        return projectMapper.updateSchedule(project);
+    }
+
+    @Override
     public boolean reductionProject(Integer id) {
         return projectMapper.reductionProject(id);
     }

@@ -8,6 +8,8 @@ import cn.edu.lingnan.projectmanagment.service.impl.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -91,21 +93,17 @@ public class ProjectController {
     }
 
     //删除项目
+    @Transactional
     @PostMapping("/del_project/{id}")
     public String deleteProject(@PathVariable("id")Integer id,Model model){
-        Boolean projectsuserflag = projectUserService.deleteProjectUserByProjectsId(id);
-        if(projectsuserflag = true){
-            Boolean projectsfunctionflag = projectsFunctionService.deleteProjectFunctionByProjectsId(id);
-            if(projectsfunctionflag == true){
-                Boolean flag =  projectService.deleteProject(id);
-                System.out.println("删除用户:"+ id + flag);
-            }else{
-                System.out.println("projects_function表删除失败！");
-                model.addAttribute("msg","删除失败！");
-            }
-        }else{
-            System.out.println("projects_user表删除失败！");
+        try{
+            projectUserService.deleteProjectUserByProjectsId(id);
+            projectsFunctionService.deleteProjectFunctionByProjectsId(id);
+            projectService.deleteProject(id);
+        }catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             model.addAttribute("msg","删除失败！");
+            System.out.println("事务回滚，删除失败！");
         }
         List<Projects> list = projectService.getProjectList();
         model.addAttribute("projectlist",list);

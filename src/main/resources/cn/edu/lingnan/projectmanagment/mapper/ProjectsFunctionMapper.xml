@@ -18,6 +18,23 @@
         where pf.delete_flag = 1
     </select>
 
+    <!--查找一条项目功能点信息-->
+    <resultMap id="onepflist" type="ProjectsFunction">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectsId"></result>
+        <result column="pname" property="projectName"></result>
+        <result column="fid" property="functionId"></result>
+        <result column="fname" property="functionName"></result>
+        <result column="fstatus" property="functionStatus"></result>
+        <result column="uid" property="userId"></result>
+        <result column="uname" property="userName"></result>
+    </resultMap>
+    <select id="getOneProjectFunction" resultMap="onepflist">
+        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname, pf.function_status as fstatus, pf.user_id as uid, su.username as uname
+        from projects_function pf left Join sys_user su on pf.user_id = su.id left Join projects p on pf.projects_id = p.id
+        where pf.delete_flag = 1 and pf.id = #{id}
+    </select>
+
     <!--查找所有被注销项目功能点信息-->
     <resultMap id="delpflist" type="ProjectsFunction">
         <result column="id" property="id"></result>
@@ -35,12 +52,24 @@
         where pf.delete_flag = 0
     </select>
 
+    <!--通过项目id查询功能点数量-->
+    <select id="countProjectFunctionByProjectId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{id} and delete_flag = 1
+    </select>
+
+    <!--通过项目id查询已完成的功能点数量-->
+    <select id="countCompletedProjectFunctionByProjectId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{id} and delete_flag = 1 and function_status = 1
+    </select>
+
     <!--删除一条记录-->
     <update id="deleteProjectFunction">
         update projects_function set delete_flag = 0 where id = #{id}
     </update>
 
-    <!--通过ProjectsId删除一条记录-->
+    <!--通过ProjectsId删除记录-->
     <update id="deleteProjectFunctionByProjectsId">
         update projects_function set delete_flag = 0 where projects_id = #{id}
     </update>

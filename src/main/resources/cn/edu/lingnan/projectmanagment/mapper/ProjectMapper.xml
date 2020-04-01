@@ -19,11 +19,7 @@
     <select id="getProjectListByUserId" resultType="Projects">
         select *
         from projects
-        where id in (
-            select projects_id
-            from projects_user
-            where user_id = #{userId}
-        ) and enabled = 1
+        where id in ( select projects_id from projects_user where user_id = #{userId} ) and enabled = 1
     </select>
 
     <!--查找所有被注销项目-->
@@ -85,5 +81,16 @@
             <if test="characterization != null">#{characterization},</if>
         </trim>
     </insert>
+
+    <!--修改项目进度-->
+    <update id="updateSchedule">
+        update projects set schedule =
+        CASE
+            when function_points = completed_function_points and function_points != 0 then "已完成"
+            when function_points != completed_function_points then "进行中"
+            when function_points = 0 then "未开始"
+        END
+        where enabled = 1 and id = #{id}
+    </update>
 
 </mapper>
