@@ -21,6 +21,8 @@
 - application.yml
 - kaptcha.properties
 
+
+
 ## 数据库表
 
 - sys_user

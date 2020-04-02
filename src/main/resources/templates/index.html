@@ -692,7 +692,7 @@
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <script th:src="@{/assets/js/demo.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-	window.onload = function (ev) {
+	$(function () {
 		var userId = [[${#authentication.principal.id}]];
 		console.log(userId);
 		$.ajax({
@@ -713,8 +713,7 @@
 				}
 			}
 		})
-
-	}
+	})
 </script>
 </body>
 </html>

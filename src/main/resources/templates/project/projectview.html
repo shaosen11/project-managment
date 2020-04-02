@@ -8,15 +8,6 @@
 
     <!-- Fonts and icons -->
     <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-<!--    <script>-->
-<!--        WebFont.load({-->
-<!--            google: {"families":["Open+Sans:300,400,600,700"]},-->
-<!--            custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},-->
-<!--            active: function() {-->
-<!--                sessionStorage.fonts = true;-->
-<!--            }-->
-<!--        });-->
-<!--    </script>-->
 
     <!-- CSS Files -->
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
@@ -501,9 +492,33 @@
     }
 </script>
 <script type="text/javascript" th:inline="javascript">
+    //加载用户所有项目
+    $(function () {
+        var userId = [[${#authentication.principal.id}]];
+        console.log(userId);
+        $.ajax({
+            url: "/user_prjects?userId=" + userId,
+            type: "get",
+            datatype: "json",
+            success: function (data) {
+                console.log(data);
+                var parentUL = document.getElementById("projectsul");
+                for (var i = 0; i < data.length; i++) {
+                    //创建二级li
+                    var li = document.createElement("li");
+                    parentUL.appendChild(li);
+                    var a = document.createElement("a");
+                    a.href = '/projects_view?projectId=' + data[i].id;
+                    a.innerHTML = data[i].name;
+                    li.appendChild(a);
+                }
+            }
+        })
+    })
     //加载页面时加载
-    $(document).ready(function () {
+    $(function () {
         var projectId = [[${param.projectId}]];
+        var userId = [[${#authentication.principal.id}]];
         $.ajax({
             url: "/projectsPackages?projectId=" + projectId,
             type: "get",
@@ -549,8 +564,7 @@
                             var li1 = document.createElement("li");
                             ul.append(li1);
                             var a1 = document.createElement("a");
-                            a1.href = '/documents/text?userId=${loginUser.id}&projectId=${projectId}&filename=' + data[i].projectsPackageList[j].documentName;
-                            // a1.href = '#';
+                            a1.href = '/document?userId=' + userId + '&projectId=' + projectId + '&filename=' + data[i].projectsPackageList[j].documentName;
                             li1.appendChild(a1);
                             //创建span
                             var span1 = document.createElement("span");
@@ -562,7 +576,7 @@
                 }
             }
         })
-    });
+    })
     //获得用户id
     //     $.ajax({
     //         url: "${ctx}/userProjects/getProjects?userId=${loginUser.id}",

@@ -2,8 +2,6 @@ package cn.edu.lingnan.projectmanagment;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.ProjectsPackageService;
-import cn.edu.lingnan.projectmanagment.service.UserRecordService;
-import cn.edu.lingnan.projectmanagment.service.UserService;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,6 @@ class ProjectManagmentApplicationTests {
 
     @Autowired
     UserRecordServiceImpl userRecordService;
-
-    @Autowired
-    ProjectsUserServiceImpl projectsUserService;
 
     @Autowired
     ProjectServiceImpl projectService;

@@ -3,7 +3,6 @@ package cn.edu.lingnan.projectmanagment.controller;
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.Projects;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
-import cn.edu.lingnan.projectmanagment.service.ProjectUserService;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;

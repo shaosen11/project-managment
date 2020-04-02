@@ -4,6 +4,7 @@ import cn.edu.lingnan.projectmanagment.imageCode.CaptchaCode;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class CaptchaController {
 
     @Autowired
     DefaultKaptcha captchaProducer;
+
 
     @RequestMapping(value = "/kaptcha", method = RequestMethod.GET)
     public void kaptcha(HttpSession session, HttpServletResponse response) throws IOException {

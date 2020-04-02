@@ -34,10 +34,13 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
   thymeleaf:
     cache: false
+
   cache:
     type: redis
+
   redis:
     host: 47.98.240.31
     port: 6379
@@ -49,12 +52,15 @@ spring:
         max-wait: 1000  #连接池最大阻塞等待时间
       shutdown-timeout: 100 #关闭超时时间
     password: 2017764300
+
   security:
     loginType: json
+
   mvc:
     hiddenmethod:
       filter:
         enabled: true
+
   mail:
     username: projectsmanagment@163.com
     password: RWMIFXTAYAZLVDRS
@@ -64,10 +70,22 @@ spring:
         smtp:
           ssl:
             enable: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 10MB
+      max-file-size: 10MB
+
+  ftp:
+    host: 47.98.240.31
+    port: 21
+    username: projectadmin
+    password: 2017764300
+    basePath: /home/projectadmin/files
+    httpPath: http://47.98.240.31
 #mybatis开启别名
 mybatis:
   type-aliases-package: cn.edu.lingnan.projectmanagment.bean
   configuration:
     map-underscore-to-camel-case: true
-
-
