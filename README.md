@@ -11,6 +11,8 @@
 - secutity
 - utils
 
+
+
 ## resources
 
 - cn.edu.lingnan.projectmant.mapper
@@ -25,20 +27,18 @@
 
 ## 数据库表
 
-- sys_user
-- sys_user_role
-- sys_role
-- sys_role_menu
-- sys_menu
-- sys_org
-- persistent_logins
-- projects
-- projects_user
-- projects_function
-- projects_package
 - documents
 - documents_record
-- projects_record
+- persistent_logins
+- projects
+- projects_function
+- projects_package
+- projects_user
+- sys_menu
+- sys_role_menu
+- sys_user
+- sys_role
+- sys_user_role
 - user_record
 
 ## RUL
@@ -50,13 +50,20 @@
 
 ### bean（实体对象包）
 
+- Documents(文件实体)
+- DocumentsRecord(文件记录实体)
 - MyUserDatails(spring security登录认证实体)
 
 spring security登录认证成功后，会给这个实体复制
 
-* UserRecord(用户登录、退出日志)
+* Projects(项目实体)
+* ProjectsPackage(项目包实体)
+* ProjectsPackageList(项目包列表，暂未优化)
+* ProjectsUser(项目角色关系实体)
 
-- UserRole
+- UserRecord(用户登录、退出日志)
+
+- UserRole(用户角色实体)
 
 
 
@@ -100,8 +107,12 @@ spring security登录认证成功后，会给这个实体复制
 
 ### controller
 
-* CapthaController
-* UserController
+- CapthaController
+- DocumentsController
+- ProjectsController
+- ProjectsPackageController
+- ProjectsUserController
+- UserController
 
 
 
@@ -123,11 +134,17 @@ spring security登录认证成功后，会给这个实体复制
 
 ### mapper（mapper接口）
 
-- MyRBACServiceMapper(RBAC权限管理)
-- MyUserDetailsMapper(UserMapper登录验证)
-- UserMapper(暂时不用)
-- UserRecordMapper(用户日志记录)
-- UserRoleMapper(用户角色)
+* DocumentsMapper(文件mapper接口)
+* DocumentsRecordMapper(文件记录mapper接口)
+
+- MyRBACServiceMapper(RBAC权限管理mapper接口)
+- MyUserDetailsMapper(UserMapper登录验证mapper接口)
+- ProjectsMapper(项目mapper接口)
+- ProjectsPackageMapper(项目包mapper接口)
+- ProjectsUserMapper(项目用户关系mapper接口)
+- UserMapper(用户mapper接口)
+- UserRecordMapper(用户日志记录mapper接口)
+- UserRoleMapper(用户角色mapper接口)
 
 
 
@@ -142,8 +159,13 @@ spring security登录认证成功后，会给这个实体复制
 
 ### service（Service接口层）
 
+- DocumentsRecordService(文件记录Service接口)
+- DocumentsService(文件Service接口)
 - MyRBACService(RBAC权限Service接口)
 - MyUserDetailsService(UserDetailsService接口)
+- ProjectService(项目Service接口)
+- ProjectsPackageService(项目包Service接口)
+- ProjectsUserService(项目角色Service接口)
 - UserRecordService(用户日志接口)
 - UserRoleService(用户角色接口)
 - UserService(暂时不用)
@@ -152,8 +174,14 @@ spring security登录认证成功后，会给这个实体复制
 
 ### service.impl
 
+* DocumentsRecordService(DocumentsRecordService实现层)
+* DocumentsServiceImpl(DocumentsService实现层)
+
 - MyRBACServiceImpl(RBAC权限Service实现层)
 - MyUserDetailServiceImpl(UserDetailsService实现层)
+- ProjectServiceImpl(ProjectService实现层)
+- ProjectsPackageServiceImpl(ProjectsPackageService实现层)
+- ProjectsUserServiceImpl(ProjectsUserService实现层)
 - UserRecordService(UserRecordService实现层)
 - UserRoleServiceImpl(UserRoleService实现层)
 - UserServiceImpl(UserService实现层)
@@ -162,11 +190,10 @@ spring security登录认证成功后，会给这个实体复制
 
 ### utils
 
-* afterLoginOrLoginOutHandler(用户登录退出日志)
-
-* MyContants(定义常量)
-
-* IPUtil(获取IP工具类)
+- afterLoginOrLoginOutHandler(用户登录退出日志)
+- FileUtil(文件上传工具)
+- MyContants(定义常量)
+- IPUtil(获取IP工具类)
 
 
 
@@ -174,9 +201,14 @@ spring security登录认证成功后，会给这个实体复制
 
 ### cn.edu.lingnan.projectmant.mapper（SQL语句）
 
+- DocumentsMapper(文件SQL代码)
+- DocumentsRecordMapper(文件记录SQL代码)
 - MyRBACServiceMapper(RBAC权限管理SQL代码)
 - MyUserDetailsMapper(登录认证SQL代码)
-- UserMapper(暂时不用)
+- ProjectsMapper(项目SQL代码)
+- ProjectsPackageMapper(项目包SQL代码)
+- ProjectsUserMapper(项目用户关系SQL代码)
+- UserMapper(用户SQL代码)
 - UserRecordMapper.xml(用户日志SQL代码)
 - UserRoleMapper.xml(用户角色SQL代码)
 
@@ -184,29 +216,17 @@ spring security登录认证成功后，会给这个实体复制
 
 ### public
 
-
-
 ### static（静态资源）
 
 - assets(静态资源代码)
 
-
-
 ### templates（thymeleaf模板）
-
-
 
 ### application.properties（全局配置）
 
-
-
 ### application.yml（全局配置）
 
-
-
 ### kaptcha.properties（图片验证码配置）
-
-
 
 ## 数据库表
 
@@ -278,23 +298,12 @@ spring security登录认证成功后，会给这个实体复制
 
 描述：菜单表，pid,pids等属性还没使用
 
-| 属性名     | 类型    | 长度 | null | 主键 | 描述                   |
-| ---------- | ------- | ---- | ---- | ---- | ---------------------- |
-| id         | int     |      | no   | yes  | 自增id                 |
-| menu_pid   | int     |      |      |      | 父目录                 |
-| menu_pids  | varchar | 255  |      |      | 祖先目录               |
-| is_leaf    | tinyint |      |      |      | 是否叶子节点           |
-| menu_name  | varchar | 16   |      |      | 菜单名称               |
-| url        | varchar | 64   |      |      | 菜单路径               |
-| icon       | varchar | 64   |      |      | 图标                   |
-| icon_color | varchar | 16   |      |      | 图标颜色               |
-| sort       | tinyint |      |      |      | 排序                   |
-| level      | tinyint |      |      |      | 层级                   |
-| status     | tinyint |      |      |      | 0代表可用，1代表不可用 |
-
-
-
-### sys_org（部门表，暂时不用）
+| 属性名    | 类型    | 长度 | null | 主键 | 描述                   |
+| --------- | ------- | ---- | ---- | ---- | ---------------------- |
+| id        | int     |      | no   | yes  | 自增id                 |
+| menu_name | varchar | 16   |      |      | 菜单名称               |
+| url       | varchar | 64   |      |      | 菜单路径               |
+| status    | tinyint |      |      |      | 0代表可用，1代表不可用 |
 
 
 
@@ -326,11 +335,15 @@ spring security登录认证成功后，会给这个实体复制
 | completed_function_points | int       |      |      |      | 已完成功能点 |
 | update_count              | int       |      |      |      | 提交次数     |
 | type                      | varchar   | 64   |      |      | 项目类型     |
+| store_count               | int       |      |      |      | 收藏次数     |
+| like_count                | int       |      |      |      | 点赞次数     |
 | characterization          | varchar   | 1000 |      |      | 项目描述     |
 | create_time               | timestamp |      |      |      | 创建时间     |
 | enabled（1可用，0失效）   | tinyint   |      |      |      | 是否删除     |
 
-### projects_user（项目人员表，待完善）
+
+
+### projects_user（项目人员表）
 
 描述：项目人员情况
 
@@ -344,7 +357,7 @@ spring security登录认证成功后，会给这个实体复制
 
 
 
-### projects_function（项目功能表，待完善）
+### projects_function（项目功能表）
 
 描述：项目功能点情况
 
@@ -360,20 +373,20 @@ spring security登录认证成功后，会给这个实体复制
 
 
 
-### projects_package（项目包结构）
+### projects_package（项目包结构，待考虑）
 
 描述：项目包结构
 
-| 属性                                      | 类型     | 长度 | null | 主键 | 描述     |
-| ----------------------------------------- | -------- | ---- | ---- | ---- | -------- |
-| id                                        | int      |      | no   | yes  | 自增id   |
-| projects_id                               | int      |      |      |      | 项目id   |
-| package_id                                | int      |      |      |      | 包id     |
-| package_name                              | varchar  | 64   |      |      | 包名称   |
-| documents_name(待考虑，用document_id替换) | varchar  | 64   |      |      | 文件名称 |
-| create_time(待考虑)                       | datatime |      |      |      | 创建时间 |
-| user_id                                   | int      |      |      |      | 用户id   |
-| delete_flag                               | tinyint  |      |      |      | 是否删除 |
+| 属性           | 类型     | 长度 | null | 主键 | 描述     |
+| -------------- | -------- | ---- | ---- | ---- | -------- |
+| id             | int      |      | no   | yes  | 自增id   |
+| projects_id    | int      |      |      |      | 项目id   |
+| package_id     | int      |      |      |      | 包id     |
+| package_name   | varchar  | 64   |      |      | 包名称   |
+| documents_name | varchar  | 64   |      |      | 文件名称 |
+| create_time    | datatime |      |      |      | 创建时间 |
+| user_id        | int      |      |      |      | 用户id   |
+| delete_flag    | tinyint  |      |      |      | 是否删除 |
 
 
 
@@ -401,15 +414,15 @@ spring security登录认证成功后，会给这个实体复制
 
 描述：记录文件上传记录
 
-| 属性                      | 类型     | 长度 | null | 主键 | 描述     |
-| ------------------------- | -------- | ---- | ---- | ---- | -------- |
-| id                        | int      |      | no   | yes  | 自增id   |
-| projects_id               | int      |      |      |      | 项目id   |
-| user_id                   | int      |      |      |      | 用户id   |
-| operate_time              | datetime |      |      |      | 上传时间 |
-| operate_massage（待考虑） | varchar  | 255  |      |      | 上传信息 |
-| ip                        | varchar  | 64   |      |      | ip地址   |
-| delete_flag               | tinyint  |      |      |      | 是否删除 |
+| 属性            | 类型     | 长度 | null | 主键 | 描述     |
+| --------------- | -------- | ---- | ---- | ---- | -------- |
+| id              | int      |      | no   | yes  | 自增id   |
+| projects_id     | int      |      |      |      | 项目id   |
+| user_id         | int      |      |      |      | 用户id   |
+| operate_time    | datetime |      |      |      | 上传时间 |
+| operate_massage | varchar  | 255  |      |      | 上传信息 |
+| ip              | varchar  | 64   |      |      | ip地址   |
+| delete_flag     | tinyint  |      |      |      | 是否删除 |
 
 
 
@@ -441,6 +454,28 @@ spring security登录认证成功后，会给这个实体复制
 | operate_massge | varchar  | 255  |      |      | 操作信息 |
 | ip             | varchar  | 64   |      |      | ip地址   |
 
+### user_store（用户收藏）
+
+描述：用户的项目收藏
+
+| 属性                    | 类型    | 长度 | null | 主键 | 描述     |
+| ----------------------- | ------- | ---- | ---- | ---- | -------- |
+| id                      | int     |      | no   | yes  | 自增id   |
+| user_id                 | int     |      |      |      | 用户id   |
+| projects_id             | int     |      |      |      | 项目id   |
+| delete_flag(1可用0失效) | tinyint |      |      |      | 是否删除 |
+
+### user_like（用户点赞）
+
+描述：项目的点赞
+
+| 属性                    | 类型    | 长度 | null | 主键 | 描述     |
+| ----------------------- | ------- | ---- | ---- | ---- | -------- |
+| id                      | int     |      | no   | yes  | 自增id   |
+| user_id                 | int     |      |      |      | 用户id   |
+| projects_id             | int     |      |      |      | 项目id   |
+| delete_flag(1可用0失效) | tinyint |      |      |      | 是否删除 |
+
 
 
 ## URL
@@ -453,6 +488,8 @@ xxxyyyzzz：表示页面
 
 xxx_yyy_zzz：表示controller请求
 
+
+
 ### 公共访问：
 
 | 路径             | 请求方式（默认get） | 描述         |
@@ -463,11 +500,12 @@ xxx_yyy_zzz：表示controller请求
 | /kaptcha         |                     | 图片验证     |
 | /login_user      |                     | 登录URL      |
 | /login_out       |                     | 注销URL      |
+| /user            | get                 | 查询用户     |
 | /user            | post                | 注册用户     |
 | /forgetpassword  |                     | 忘记密码页面 |
 | /forget_password |                     | 忘记密码请求 |
 | /resetpassword   |                     | 修改密码页面 |
-| reset_password   |                     | 修改密码请求 |
+| /reset_password  |                     | 修改密码请求 |
 |                  |                     |              |
 |                  |                     |              |
 |                  |                     |              |
@@ -481,13 +519,23 @@ xxx_yyy_zzz：表示controller请求
 
 ### 权限访问：
 
-
-
-| 路径              | 请求方式（默认get） | 描述              |      |      |
-| ----------------- | ------------------- | ----------------- | ---- | ---- |
-| /index.html       |                     | 转发到index       |      |      |
-| /userprofile      |                     | 用户信息页面      |      |      |
-| /userprofile.html |                     | 装发到userprofile |      |      |
-| /user             | put                 | 修改用户信息      |      |      |
-| /login_out        |                     | 退出日志处理      |      |      |
-|                   |                     |                   |      |      |
+| 路径              | 请求方式（默认get） | 描述               |
+| ----------------- | ------------------- | ------------------ |
+| /index.html       |                     | 转发到index        |
+| /userprofile      |                     | 用户信息页面       |
+| /userprofile.html |                     | 装发到userprofile  |
+| /user             | put                 | 修改用户信息       |
+| /projectview      |                     | 项目详情页面       |
+| /projectsPackages | get                 | 查询项目所有包结构 |
+| /projectsPackage  | post                | 增加包             |
+| /projectsPackage  | get                 | 查询包是否存在     |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
+|                   |                     |                    |
