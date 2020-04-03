@@ -47,4 +47,9 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     public List<ProjectsUser> getDelProjectUserList() {
         return projectUserMapper.getDelProjectUserList();
     }
+
+    @Override
+    public ProjectsUser getByUserIdAndProjectId(Integer userId, Integer projectId) {
+        return projectUserMapper.getByUserIdAndProjectId(userId, projectId);
+    }
 }

@@ -146,10 +146,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-
-                            <c:if test="${documents1!=null && documents2!=null}">
+                            <div th:if="${documents1!=null} and ${documents2!=null}">
                                 <div class="card-header">
-                                    <h4 class="card-title">${documents1.name}</h4>
+                                    <h4 class="card-title" th:text="${documents1.name}">文件名</h4>
                                 </div>
 
                                 <div class="card-body">
@@ -169,20 +168,19 @@
                                                 <div class="panel-heading">
                                                     <h3 class="panel-title">待审核版本</h3>
                                                 </div>
-                                                <textarea id="addressd2" class="form-control" rows="25"
-                                                          style="width: 100%"></textarea>
+                                                <textarea id="addressd2" class="form-control" rows="25" style="width: 100%"></textarea>
                                             </div>
                                         </div>
 
 
                                         <div class="form-group" style="width: 20%;">
-                                            <c:if test="${power!=null}">
-                                                <a href="${ctx}/documents/update?documentsName=${documents1.name}&operate=1"
+                                            <div th:if="${projectAdmin!=null}">
+                                                <a th:href="/documents/update?documentsName=${documents1.name}&operate=1"
                                                    style="width: 33%">
                                                     <button class="btn btn-primary btn-round" style="width: 100%"><i
                                                             class="fas fa-check-circle"></i></button>
                                                 </a>
-                                                <a href="${ctx}/documents/update?documentsName=${documents1.name}&operate=2"
+                                                <a th:href="/documents/update?documentsName=${documents1.name}&operate=2"
                                                    style="width: 33%">
                                                     <button class="btn btn-danger btn-round" style="width: 100%"><i
                                                             class="fas fa-times-circle"></i></button>
@@ -192,23 +190,21 @@
                                                         style="width: 33%">
                                                     <i class="fas fa-cloud-upload-alt"></i>
                                                 </button>
-                                            </c:if>
+                                            </div>
                                             <div class="panel panel-info" style="width: 100%">
                                                 <div class="panel-heading">
                                                     <h3 class="panel-title">版本信息</h3>
                                                 </div>
-                                                <textarea class="form-control" rows="10"
-                                                          style="width: 100%">${documents2.versionMessage}</textarea>
+                                                <textarea class="form-control" rows="10" style="width: 100%" th:text="${documents2.versionMessage}"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </c:if>
+                            </div>
 
-
-                            <c:if test="${documents1!=null && documents2==null}">
+                            <div th:if="${documents1!=null} and ${documents2==null}">
                                 <div class="card-header">
-                                    <h4 class="card-title">${documents1.name}</h4>
+                                    <h4 class="card-title" th:text="${documents1.name}"></h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="form-inline">
@@ -223,8 +219,7 @@
                                         </div>
 
                                         <div class="form-group" style="width: 20%;">
-                                            <a href="/upload/${documents1.serialNumber}-${documents1.name}"
-                                               style="width: 33%">
+                                            <a th:href="@{/upload/${documents1.serialNumber}-${documents1.name}}" style="width: 33%">
                                                 <button class="btn btn-secondary btn-round" style="width: 100%"><i
                                                         class="fas fa-cloud-download-alt"></i></button>
                                             </a>
@@ -242,13 +237,12 @@
                                                 <div class="panel-heading">
                                                     <h3 class="panel-title">版本信息</h3>
                                                 </div>
-                                                <textarea class="form-control" rows="15"
-                                                          style="width: 100%">${documents1.versionMessage}</textarea>
+                                                <textarea class="form-control" rows="15" style="width: 100%" th:text="${documents1.versionMessage}"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </c:if>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -300,28 +294,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="${ctx}/documents/upload" method="POST" enctype="multipart/form-data">
+                <form th:action="@{/documents/upload}" method="POST" enctype="multipart/form-data">
                     <div class="from-group" style="width: 100%">
                         <div class="form-group" style="width: 100%">
-                            <select class="form-control input-fixed" id="packageName1" name="packageName1">
-                            </select>
+                            <select class="form-control input-fixed" id="packageName1" name="packageName"></select>
                         </div>
                     </div>
-                    <input type="hidden" id="projectId" name="projectId" value="${projectId}">
-                    <input type="hidden" id="writer" name="writer" value="${loginUser.id}">
+                    <input type="hidden" id="projectId" name="projectId" th:value="${param.projectId}">
+                    <input type="hidden" id="writer" name="userId" th:value="${param.userId}">
                     <div class="form-group">
                         <div class="input-group">
                             <input id='location' class="form-control" onclick="$('#i-file').click();">
-                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary"
-                                   onclick="$('#i-file').click();">
+                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();">
                         </div>
-                        <input type="file" name="file" id='i-file' onchange="$('#location').val($('#i-file').val());"
-                               style="display: none">
+                        <input type="file" name="file" id='i-file' onchange="$('#location').val($('#i-file').val());" style="display: none">
                     </div>
 
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage"
-                                  name="versionMessage" autocomplete="off"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage" name="versionMessage" autocomplete="off"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
@@ -377,7 +367,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="projectId" value="${projectId}">
+                    <input type="hidden" name="projectId" th:value="${projectId}">
                     <input type="hidden" name="creator" value="${loginUser.id}">
                     <input type="hidden" name="filename" value="${filename}">
                     <div class="from-group" style="width: 100%">
@@ -419,7 +409,6 @@
 <script th:src="@{/assets/js/ready.min.js}"></script>
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
-<script th:src="@{/assets/js/demo.js}"></script>
 <script th:src="@{/assets/js/core/bootstrap-select.min.js}"></script>
 <script>
     $(document).ready(function () {
@@ -470,18 +459,26 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     $(function () {
-        $('#addressdocument').load('${addressdocument}');
-        $('#addressd1').load('${addressd1}');
-        $('#addressd2').load('${addressd2}');
+        var addressdocument = [[${addressdocument}]];
+        var addressd1 = [[${addressd1}]];
+        var addressd2 = [[${addressd2}]];
+        if(addressd1!=null && addressd2!=null){
+            $('#addressd1').load(addressd1);
+            $('#addressd2').load(addressd2);
+        }else {
+            $('#addressdocument').load(addressdocument);
+        }
+    })
+    $(function () {
+        //加载包结构
         $(function () {
             var projectId = [[${param.projectId}]];
+            var userId = [[${#authentication.principal.id}]];
             $.ajax({
                 url: "/projectsPackages?projectId=" + projectId,
                 type: "get",
                 datatype: "json",
                 success: function (data) {
-                    console.log(data);
-                    console.log(data.length);
                     var parentUL = document.getElementById("packageul");
                     for (var i = 0; i < data.length; i++) {
                         //创建一级目录
@@ -520,7 +517,7 @@
                                 var li1 = document.createElement("li");
                                 ul.append(li1);
                                 var a1 = document.createElement("a");
-                                a1.href = '/documents/text?userId=${loginUser.id}&projectId=${projectId}&filename=' + data[i].projectsPackageList[j].documentName;
+                                a1.href = '/document?userId=' + userId + '&projectId=' + projectId + '&filename=' + data[i].projectsPackageList[j].documentName;
                                 // a1.href = '#';
                                 li1.appendChild(a1);
                                 //创建span
@@ -537,13 +534,11 @@
         //加载用户所有项目
         $(function () {
             var userId = [[${#authentication.principal.id}]];
-            console.log(userId);
             $.ajax({
                 url: "/user_prjects?userId=" + userId,
                 type: "get",
                 datatype: "json",
                 success: function (data) {
-                    console.log(data);
                     var parentUL = document.getElementById("projectsul");
                     for (var i = 0; i < data.length; i++) {
                         //创建二级li
@@ -557,24 +552,27 @@
                 }
             })
         })
-        $.ajax({
-            url: '${ctx}/documentspackage/getallpackagebyprojectsid?projectId=${projectId}',
-            type: "get",
-            dataType: "json",
-            success: function (data) {
-                console.log("进入");
-                var opts = "";
-                for (var i = 0; i < data.length; i++) {
-                    opts += "<option value='" + data[i].packageName + "'>" + data[i].packageName + "</option>";
+        $(function () {
+            var projectId = [[${param.projectId}]];
+            $.ajax({
+                url: '/projectsPackages?projectId=' + projectId,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    var opts = "";
+                    for (var i = 0; i < data.length; i++) {
+                        opts += "<option value='" + data[i].packageName + "'>" + data[i].packageName + "</option>";
+                    }
+                    $('#packageName1').selectpicker('val', '');
+                    $("#packageName1").append(opts);
+                    $("#packageName1").selectpicker("refresh");
+                    $('#packageName3').selectpicker('val', '');
+                    $("#packageName3").append(opts);
+                    $("#packageName3").selectpicker("refresh");
                 }
-                $('#packageName1').selectpicker('val', '');
-                $("#packageName1").append(opts);
-                $("#packageName1").selectpicker("refresh");
-                $('#packageName3').selectpicker('val', '');
-                $("#packageName3").append(opts);
-                $("#packageName3").selectpicker("refresh");
-            }
-        });
+            });
+        })
+
     })
 </script>
 </body>

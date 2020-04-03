@@ -7,6 +7,8 @@ import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ public class ProjectUserController {
 
     @Autowired
     private UserServiceImpl userService;
+
 
     //查询所有项目用户信息
     @GetMapping("/project_user_list")
@@ -117,4 +120,27 @@ public class ProjectUserController {
         return "redirect:../del_project_user_list";
     }
 
+    //如果codeLine大于0，代码增加
+    //小于0，代码减少
+    //等于0，代码不变，上传次数增加
+    public String update(Integer codeLine, Integer userId, Integer projectId) {
+        System.out.println("代码改变行数：：：" + codeLine);
+        //获得人员项目表中的
+        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
+        Projects projects = projectService.getById(projectId);
+        //修改个人代码贡献量
+        if (codeLine > 0) {
+            projectsUser.setCodeDevoteLine(projectsUser.getCodeDevoteLine() + codeLine);
+            System.out.println("用户代码增加了" + codeLine);
+        }
+        //修改代码上传次数
+        projectsUser.setCodeUpdate(projectsUser.getCodeUpdate() + 1);
+        System.out.println(projectsUser);
+        System.out.println("projectUser修改：" + projectUserService.editProjectUser(projectsUser));
+        //修改系统代码量
+        projects.setCodeLineNumber(projects.getCodeLineNumber() + codeLine);
+        System.out.println("项目代码改变了" + codeLine);
+        System.out.println("projects修改：" + projectService.editProject(projects));
+        return "success";
+    }
 }

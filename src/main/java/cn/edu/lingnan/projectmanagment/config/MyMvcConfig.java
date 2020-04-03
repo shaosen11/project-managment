@@ -24,8 +24,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/resetpassword").setViewName("resetpassword");
         //跳转到项目页面
         registry.addViewController("/projectview").setViewName("projectview");
-        //跳转到上传页面
-        registry.addViewController("/upload.html").setViewName("upload");
     }
 
 

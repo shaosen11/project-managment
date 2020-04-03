@@ -52,4 +52,12 @@ public interface ProjectUserMapper {
      * @return
      */
     List<ProjectsUser> getDelProjectUserList();
+
+    /**
+     * 通过用户Id和项目Id查询用户
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    ProjectsUser getByUserIdAndProjectId(Integer userId, Integer projectId);
 }

@@ -57,4 +57,9 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Projects> getDelProjectList() {
         return projectMapper.getDelProjectList();
     }
+
+    @Override
+    public Projects getAdminByUserIdAndProjectId(Integer userId, Integer projectId) {
+        return projectMapper.getAdminByUserIdAndProjectId(userId, projectId);
+    }
 }

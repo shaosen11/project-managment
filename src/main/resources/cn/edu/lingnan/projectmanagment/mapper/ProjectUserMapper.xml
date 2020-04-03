@@ -7,6 +7,7 @@
         <result column="id" property="id"></result>
         <result column="pid" property="projectsId"></result>
         <result column="uid" property="userId"></result>
+        <result column="codedevoteline" property="codeDevoteLine"></result>
         <result column="codeupdate" property="codeUpdate"></result>
         <result column="username" property="myUserDetails.username"></result>
         <result column="pname" property="projects.name"></result>
@@ -22,6 +23,7 @@
         <result column="id" property="id"></result>
         <result column="pid" property="projectsId"></result>
         <result column="uid" property="userId"></result>
+        <result column="codedevoteline" property="codeDevoteLine"></result>
         <result column="codeupdate" property="codeUpdate"></result>
         <result column="username" property="myUserDetails.username"></result>
         <result column="pname" property="projects.name"></result>
@@ -53,6 +55,7 @@
         <trim suffixOverrides=",">
             <if test="projectsId != null">projects_id = #{projectsId},</if>
             <if test="userId != null">user_id = #{userId},</if>
+            <if test="codeDevoteLine != null">code_devote_line = #{codeDevoteLine},</if>
             <if test="codeUpdate != null">code_update = #{codeUpdate},</if>
         </trim>
         where id = #{id}
@@ -64,14 +67,19 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectsId != null">projects_id,</if>
             <if test="userId != null">user_id,</if>
+            <if test="codeDevoteLine != null">code_devote_line,</if>
             <if test="codeUpdate != null">code_update,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectsId != null">#{projectsId},</if>
             <if test="userId != null">#{userId},</if>
+            <if test="codeDevoteLine != null">#{codeDevoteLine}</if>
             <if test="codeUpdate != null">#{codeUpdate},</if>
         </trim>
     </insert>
 
+    <select id="getByUserIdAndProjectId" resultType="ProjectsUser">
+        select * from projects_user where delete_flag = 1 and user_id = #{userId} and projects_id = #{projectId}
+    </select>
 </mapper>

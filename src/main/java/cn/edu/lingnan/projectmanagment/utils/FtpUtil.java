@@ -24,17 +24,11 @@ public class FtpUtil {
     //密码
     private static final String FTP_PASSWORD = "2017764300";
     //密码
-    private static final String FTP_BASEPATH = "/home/projectadmin/files";
+    private static final String FTP_BASEPATH = "/home/projectadmin";
 
-    public static String uploadFile(MultipartFile file) throws IOException{
+    public static String uploadFile(MultipartFile file, String fileName) throws IOException{
         //获取上传文件的文件流
         InputStream inputStream = file.getInputStream();
-        //获取上传的文件名
-        String filename = file.getOriginalFilename();
-        //截取后缀
-        String suffix = filename.substring(filename.lastIndexOf("."));
-        //使用UUID
-        String finalName = UUID.randomUUID() + suffix;
         FTPClient ftp = new FTPClient();
         try {
             int reply;
@@ -49,7 +43,7 @@ public class FtpUtil {
             ftp.makeDirectory(FTP_BASEPATH);
             ftp.changeWorkingDirectory(FTP_BASEPATH);
             ftp.enterLocalPassiveMode();
-            ftp.storeFile(finalName, inputStream);
+            ftp.storeFile(fileName, inputStream);
             inputStream.close();
             ftp.logout();
 
@@ -65,7 +59,7 @@ public class FtpUtil {
                 }
             }
         }
-        return finalName;
+        return fileName;
     }
 
     public static Boolean uploadFile(String host, int port, String username, String password, String basePath,

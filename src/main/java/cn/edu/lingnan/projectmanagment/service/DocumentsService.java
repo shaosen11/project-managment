@@ -12,7 +12,7 @@ import java.util.List;
 public interface DocumentsService {
     Documents getById(Integer id);
 
-    Documents getByVersionAndName(Integer version, String name);
+    Documents getByProjectsIdAndVersionAndName(Integer projectsId, Integer version, String name);
 
     Documents getByVersionFlagAndName(Integer versionflag, String name);
 

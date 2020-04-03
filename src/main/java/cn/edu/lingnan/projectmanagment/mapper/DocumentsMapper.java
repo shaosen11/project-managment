@@ -17,7 +17,7 @@ import java.util.List;
 public interface DocumentsMapper {
     Documents getById(Integer id);
 
-    Documents getByVersionAndName(@Param("version") Integer version, @Param("name") String name);
+    Documents getByProjectsIdAndVersionAndName(@Param("projectsId") Integer projectsId, @Param("version") Integer version, @Param("name") String name);
 
     Documents getByVersionFlagAndName(@Param("versionflag") Integer versionflag, @Param("name") String name);
 

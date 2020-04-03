@@ -46,8 +46,8 @@ public class ProjectsPackageServiceImpl implements ProjectsPackageService {
     }
 
     @Override
-    public ProjectsPackage getDocumentsNameByProjectIdAndPackageNameAndDocumentsName(Integer projectId, String PackageName, String DocumentsName) {
-        return projectsPackageMapper.getDocumentsNameByProjectIdAndPackageNameAndDocumentsName(projectId, PackageName, DocumentsName);
+    public ProjectsPackage getDocumentsNameByProjectIdAndPackageNameAndDocumentsName(Integer projectId, String PackageName, String DocumentName) {
+        return projectsPackageMapper.getDocumentsNameByProjectIdAndPackageNameAndDocumentsName(projectId, PackageName, DocumentName);
     }
 
     @Override

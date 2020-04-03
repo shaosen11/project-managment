@@ -415,7 +415,7 @@
 <script th:src="@{/assets/js/ready.min.js}"></script>
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
-<script th:src="@{/assets/js/demo.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap-select.min.js}"></script>
 <script>
     $(document).ready(function () {
         $('#basic-datatables').DataTable({});
@@ -495,13 +495,11 @@
     //加载用户所有项目
     $(function () {
         var userId = [[${#authentication.principal.id}]];
-        console.log(userId);
         $.ajax({
             url: "/user_prjects?userId=" + userId,
             type: "get",
             datatype: "json",
             success: function (data) {
-                console.log(data);
                 var parentUL = document.getElementById("projectsul");
                 for (var i = 0; i < data.length; i++) {
                     //创建二级li
@@ -515,7 +513,7 @@
             }
         })
     })
-    //加载页面时加载
+    //加载包结构
     $(function () {
         var projectId = [[${param.projectId}]];
         var userId = [[${#authentication.principal.id}]];
@@ -524,8 +522,6 @@
             type: "get",
             datatype: "json",
             success: function (data) {
-                console.log(data);
-                console.log(data.length);
                 var parentUL = document.getElementById("packageul");
                 for (var i = 0; i < data.length; i++) {
                     //创建一级目录
@@ -577,42 +573,27 @@
             }
         })
     })
-    //获得用户id
-    //     $.ajax({
-    //         url: "${ctx}/userProjects/getProjects?userId=${loginUser.id}",
-    //         type: "get",
-    //         datatype: "json",
-    //         success: function (data) {
-    //             // console.log(projectId);
-    //             var parentUL = document.getElementById("projectsul");
-    //             for (var i = 0; i < data.length; i++) {
-    //                 //创建二级li
-    //                 var li = document.createElement("li");
-    //                 parentUL.appendChild(li);
-    //                 var a = document.createElement("a");
-    //                 a.href = '${ctx}/userProjects/information?projectId=' + data[i].id;
-    //                 a.innerHTML = data[i].name;
-    //                 li.appendChild(a);
-    //             }
-    //         }
-    //     })
 
-    //动态创建select
-    // $.ajax({
-    //     url: '${ctx}/documentspackage/getallpackagebyprojectsid?projectId=${projectId}',
-    //     type: "get",
-    //     dataType: "json",
-    //     success: function (data) {
-    //         console.log("进入");
-    //         var opts = "";
-    //         for (var i = 0; i < data.length; i++) {
-    //             opts += "<option value='" + data[i].packageName + "'>" + data[i].packageName + "</option>";
-    //         }
-    //         $('#packageName1').selectpicker('val', '');
-    //         $("#packageName1").append(opts);
-    //         $("#packageName1").selectpicker("refresh");
-    //     }
-    // });
+    $(function () {
+        var projectId = [[${param.projectId}]];
+        $.ajax({
+            url: '/projectsPackages?projectId=' + projectId,
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                var opts = "";
+                for (var i = 0; i < data.length; i++) {
+                    opts += "<option value='" + data[i].packageName + "'>" + data[i].packageName + "</option>";
+                }
+                $('#packageName1').selectpicker('val', '');
+                $("#packageName1").append(opts);
+                $("#packageName1").selectpicker("refresh");
+                $('#packageName3').selectpicker('val', '');
+                $("#packageName3").append(opts);
+                $("#packageName3").selectpicker("refresh");
+            }
+        });
+    })
 
     // var pieCharts2 = echarts.init(document.getElementById("reduceChart"));
     // $.ajax({

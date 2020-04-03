@@ -26,7 +26,7 @@ public interface ProjectsPackageMapper {
 
      ProjectsPackage getPackageByProjectIdAndPackageName(@Param("projectId") Integer projectId, @Param("PackageName") String PackageName);
 
-     ProjectsPackage getDocumentsNameByProjectIdAndPackageNameAndDocumentsName(@Param("projectId") Integer projectId, @Param("PackageName") String PackageName, @Param("DocumentsName") String DocumentsName);
+     ProjectsPackage getDocumentsNameByProjectIdAndPackageNameAndDocumentsName(@Param("projectId") Integer projectId, @Param("PackageName") String PackageName, @Param("DocumentName") String DocumentName);
 
      boolean delete(Integer id);
 

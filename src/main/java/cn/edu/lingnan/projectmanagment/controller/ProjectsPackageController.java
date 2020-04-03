@@ -56,12 +56,10 @@ public class ProjectsPackageController {
         System.out.println("packageName" + packageName);
         //先查找文件在文件包表是否存在
         if (projectsPackageService.getDocumentsNameByProjectIdAndPackageNameAndDocumentsName(documents.getProjectId(), packageName, documents.getName()) != null) {
-            System.out.println("文件已存在，不要在插入文件包表");
+            System.out.println("文件已存在，不用再插入文件包表");
             return false;
         } else {
-
-            ApplicationContext ctx = new ClassPathXmlApplicationContext("application-context.xml");
-            ProjectsPackage projectsPackage = ctx.getBean(ProjectsPackage.class);
+            ProjectsPackage projectsPackage = new ProjectsPackage();
             //设置项目id
             projectsPackage.setProjectId(documents.getProjectId());
             //设置包名
@@ -84,10 +82,8 @@ public class ProjectsPackageController {
     public boolean updateprojectsPackage(Documents documents, String packageName) {
         System.out.println("documents:::" + documents);
         System.out.println("packageName" + packageName);
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("application-context.xml");
-        ProjectsPackage projectsPackage = ctx.getBean(ProjectsPackage.class);
         //先查找出原先记录
-        projectsPackage = projectsPackageService.getDocumentsNameByProjectIdAndDocumentsName(documents.getProjectId(), documents.getName());
+        ProjectsPackage projectsPackage = projectsPackageService.getDocumentsNameByProjectIdAndDocumentsName(documents.getProjectId(), documents.getName());
         //先查看包名是否存在
         if (projectsPackageService.getPackageByProjectIdAndPackageName(documents.getProjectId(), packageName) == null) {
             System.out.println("包不存在，不要在插入文件包表");
@@ -95,8 +91,7 @@ public class ProjectsPackageController {
         } else {
             //先查找这条记录
             //查找包id
-            ProjectsPackage projectsPackage1 = ctx.getBean(ProjectsPackage.class);
-            projectsPackage1 = projectsPackageService.getPackageByProjectIdAndPackageName(documents.getProjectId(), packageName);
+            ProjectsPackage projectsPackage1 = projectsPackageService.getPackageByProjectIdAndPackageName(documents.getProjectId(), packageName);
             System.out.println("documents::" + projectsPackage1.getPackageId() + "________________________________________");
             Integer packageId = projectsPackage1.getPackageId();
             System.out.println(packageId);

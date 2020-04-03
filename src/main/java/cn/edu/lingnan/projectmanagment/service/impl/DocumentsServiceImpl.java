@@ -1,7 +1,9 @@
 package cn.edu.lingnan.projectmanagment.service.impl;
 
 import cn.edu.lingnan.projectmanagment.bean.Documents;
+import cn.edu.lingnan.projectmanagment.mapper.DocumentsMapper;
 import cn.edu.lingnan.projectmanagment.service.DocumentsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,53 +16,55 @@ import java.util.List;
 @Service
 public class DocumentsServiceImpl implements DocumentsService {
 
+    @Autowired
+    private DocumentsMapper documentMapper;
+
     @Override
     public Documents getById(Integer id) {
-        return null;
+        return documentMapper.getById(id);
     }
 
     @Override
-    public Documents getByVersionAndName(Integer version, String name) {
-        return null;
+    public Documents getByProjectsIdAndVersionAndName(Integer projectsId, Integer version, String name) {
+        return documentMapper.getByProjectsIdAndVersionAndName(projectsId, version, name);
     }
 
     @Override
     public Documents getByVersionFlagAndName(Integer versionflag, String name) {
-        return null;
-    }
-
-    @Override
-    public List<Documents> getAllByProjectId(Integer projectId) {
-        return null;
+        return documentMapper.getByVersionFlagAndName(versionflag, name);
     }
 
     @Override
     public Integer getVersionByName(String name) {
-        return null;
+        return documentMapper.getVersionByName(name);
     }
 
     @Override
-    public boolean delete(Integer id) {
-        return false;
-    }
-
-    @Override
-    public boolean update(Documents bean) {
-        return false;
+    public List<Documents> getAllByProjectId(Integer projectId) {
+        return documentMapper.getAllByProjectId(projectId);
     }
 
     @Override
     public boolean insert(Documents bean) {
-        return false;
+        return documentMapper.insert(bean);
     }
 
     @Override
+    public boolean update(Documents bean) {
+        return documentMapper.update(bean);
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return documentMapper.delete(id);
+    }
+
     public List<Documents> getAllDeleteDocuments() {
-        return null;
+        return documentMapper.getAllDeleteDocuments();
     }
 
     @Override
     public boolean undo(Integer id) {
-        return false;
+        return documentMapper.undo(id);
     }
 }

@@ -60,4 +60,12 @@ public interface ProjectService {
      * @return
      */
     List<Projects> getDelProjectList();
+
+    /**
+     * 查找项目负责人
+     * @param userId
+     * @param projectId
+     * @return
+     */
+    Projects getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
 }
