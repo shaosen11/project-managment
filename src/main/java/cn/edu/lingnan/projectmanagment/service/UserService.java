@@ -112,4 +112,10 @@ public interface UserService {
      * @return
      */
     Integer myProjectScheduleNum3(Integer id,String schedule);
+
+    /**
+     * 查询我的项目收藏(user)
+     * @return
+     */
+    List<Myprojects> getMyProjectsStore(Integer id);
 }

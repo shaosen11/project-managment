@@ -42,10 +42,10 @@
 							<i class="flaticon-interface"></i>
 						</div>
 					</div>
-					<div class="form-group form-floating-label">
-						<input type="text" name="captchaCode" id="captchaCode"  class="form-control input-border-bottom" autocomplete="off" required>
-						<label for="captchaCode" class="placeholder">验证码</label>
-						<img th:src="@{/kaptcha}" id="kaptcha" width="110px" height="40px"><br>
+					<div class="form-group form-floating-label row" >
+						&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="captchaCode" id="captchaCode" class="form-control input-border-bottom col-lg-7" autocomplete="off" required>
+						<label for="captchaCode" class="placeholder">&nbsp;&nbsp;&nbsp;&nbsp;验证码</label>
+						<img th:src="@{/kaptcha}" id="kaptcha" width="110px" height="40px" class="col-lg-4"><br>
 					</div>
 					<div class="row form-sub m-0">
 						<div class="custom-control custom-checkbox">

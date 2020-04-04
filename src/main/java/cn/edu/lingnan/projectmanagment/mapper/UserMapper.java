@@ -113,5 +113,11 @@ public interface UserMapper {
      * @return
      */
     Integer myProjectScheduleNum3(@Param("id")Integer id,@Param("schedule")String schedule);
+
+    /**
+     * 查询我的项目收藏(user)
+     * @return
+     */
+    List<Myprojects> getMyProjectsStore(Integer id);
 }
 

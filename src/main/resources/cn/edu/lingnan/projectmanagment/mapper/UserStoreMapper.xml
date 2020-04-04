@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.lingnan.projectmanagment.mapper.UserStoreMapper">
+    <!--插入一条记录-->
+    <insert id="addUserStore">
+        insert into user_store
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="projectsId != null">projects_id,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="projectsId != null">#{projectsId},</if>
+        </trim>
+    </insert>
+
+    <select id="getOneUserStore" resultType="UserStore">
+        select * from user_store where user_id = #{userId} and projects_id = #{projectId}
+    </select>
+
+    <!--删除一条记录-->
+    <update id="deleteUserStore">
+        update user_store set delete_flag = 0 where user_id = #{userId} and projects_id = #{projectId}
+    </update>
+
+    <!--还原一条记录-->
+    <update id="reductionUserStore">
+        update user_store set delete_flag = 1 where user_id = #{userId} and projects_id = #{projectId}
+    </update>
+
+    <!--通过项目id查询被收藏数量-->
+    <select id="countProjectBeStored" resultType="Integer">
+        select count(*) from user_store
+        where projects_id = #{id} and delete_flag = 1
+    </select>
+</mapper>

@@ -14,4 +14,8 @@ public class Myprojects {
     private Integer updateCount;
     private Integer myUpdateCount;
     private String type;
+    private Integer likeCount;
+    private Integer storeCount;
+    private Integer storeFlag;
+    private Integer likeFlag;
 }

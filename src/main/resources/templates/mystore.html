@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Tables - Azzara Bootstrap 4 Admin Dashboard</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="../../assets/img/icon.ico" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: {"families":["Open+Sans:300,400,600,700"]},
+            custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"], urls: ['../../assets/css/fonts.css']},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a href="../index.html" class="logo">
+                <img src="../../assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true">我的收藏</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                        <div class="row" th:each="myproject:${myprojectstores}">
+                                            <div class="col-lg-10">
+                                                <a href="#">
+                                                    <h2 style="color: #145180">
+                                                        <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
+                                                    </h2>
+                                                </a>
+                                                <span style="color: #4e555b">
+                                                    <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
+                                                </span>&nbsp;&nbsp;
+                                                <span style="color: #4e555b">
+                                                    <i class="far fa-gem"></i>项目类型：[[${myproject.type}]]
+                                                </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span style="color: #4e555b">
+                                                    <i class="fab fa-codiepie"></i>项目进度：[[${myproject.schedule}]]
+                                                </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span style="color: #4e555b">
+                                                    <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                                </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span style="color: #4e555b">
+                                                    <i class="far fa-circle"></i>功能点：[[${myproject.functionPoints}]]
+                                                </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span style="color: #4e555b">
+                                                    <i class="far fa-check-circle"></i>已完成功能点：[[${myproject.completedFunctionPoints}]]
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <a th:href="@{/my_project_store_del/}+${#authentication.principal.id}+'/'+${myproject.projectId}"
+                                                   style="color: #F29F3F" th:if="${myproject.storeFlag} eq 1">
+                                                    <i class="fas fa-star"></i><span
+                                                        th:text="${myproject.storeCount}"></span>
+                                                </a>
+                                                <a th:href="@{/my_project_refrech/}+${#authentication.principal.id}+'/'+${myproject.projectId}"
+                                                   style="color: darkgrey" th:if="${myproject.storeFlag} eq 0">
+                                                    <i class="fas fa-star"></i><span
+                                                        th:text="${myproject.storeCount}"></span>
+                                                </a>
+                                                <a th:href="@{/my_project_store_del_like/}+${#authentication.principal.id}+'/'+${myproject.projectId}"
+                                                   style="color:#C1194E" th:if="${myproject.likeFlag} eq 1">
+                                                    <i class="fas fa-heart"></i><span>[[${myproject.likeCount}]]</span>
+                                                </a>
+                                                <a th:href="@{/my_project_store_like/}+${#authentication.principal.id}+'/'+${myproject.projectId}"
+                                                   style="color:darkgrey" th:if="${myproject.likeFlag} eq 0">
+                                                    <i class="fas fa-heart"></i><span>[[${myproject.likeCount}]]</span>
+                                                </a>
+                                            </div>
+                                            <hr style="color: #4C5B5C" size="3" width="98%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<!-- Echarts! -->
+<script th:src="@{/assets/js/echarts.min.js}"></script>
+
+<script type="text/javascript">
+    var pieCharts = echarts.init(document.getElementById("piechart"));
+    pieCharts.showLoading();
+    var names = [];
+    $.ajax({
+        type: "post",
+        async: true,
+        url: "/getMyProjectData/[[${#authentication.principal.id}]]",
+        data: [],
+        dataType: "json",
+        success: function (result) {
+            pieCharts.hideLoading();
+            if(result){
+                for(var i=0;i<result.length;i++){
+                    names.push(result[i].name);
+                }
+            }
+            pieCharts.setOption({
+                title: {
+                    text: '负责项目',
+                    subtext: '进度比',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: names
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                series: [
+                    {
+                        name: '数量',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: result
+                    }
+                ]
+            });
+        },
+        error: function (errorMsg) {
+            alert("图表数据请求失败！")
+            pieCharts.hideLoading();
+        }
+    })
+
+    var pieCharts2 = echarts.init(document.getElementById("piechart2"));
+    pieCharts2.showLoading();
+    var names2 = [];
+    $.ajax({
+        type: "post",
+        async: true,
+        url: "/getMyProjectData2/[[${#authentication.principal.id}]]",
+        data: [],
+        dataType: "json",
+        success: function (result) {
+            pieCharts2.hideLoading();
+            if(result){
+                for(var i=0;i<result.length;i++){
+                    names2.push(result[i].name);
+                }
+            }
+            pieCharts2.setOption({
+                title: {
+                    text: '负责项目',
+                    subtext: '进度比',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: names2
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                series: [
+                    {
+                        name: '数量',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: result
+                    }
+                ]
+            });
+        },
+        error: function (errorMsg) {
+            alert("图表数据请求失败！")
+            pieCharts2.hideLoading();
+        }
+    })
+
+    var pieCharts3 = echarts.init(document.getElementById("piechart3"));
+    pieCharts3.showLoading();
+    var names3 = [];
+    $.ajax({
+        type: "post",
+        async: true,
+        url: "/getMyProjectData3/[[${#authentication.principal.id}]]",
+        data: [],
+        dataType: "json",
+        success: function (result) {
+            pieCharts3.hideLoading();
+            if(result){
+                for(var i=0;i<result.length;i++){
+                    names3.push(result[i].name);
+                }
+            }
+            pieCharts3.setOption({
+                title: {
+                    text: '负责项目',
+                    subtext: '进度比',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: names3
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        magicType: {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                series: [
+                    {
+                        name: '数量',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: result
+                    }
+                ]
+
+            });
+        },
+        error: function (errorMsg) {
+            alert("图表数据请求失败！")
+            pieCharts3.hideLoading();
+        }
+    })
+
+    //选项卡Echart
+    var charts = new Array();
+    charts.push(pieCharts);
+    charts.push(pieCharts2);
+    charts.push(pieCharts3);
+    $(function(){
+        $(window).resize(function() {
+            for(var i = 0; i < charts.length; i++) {
+                charts[i].resize();
+            }
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            for(var i = 0; i < charts.length; i++) {
+                charts[i].resize();
+            }
+        });
+    })
+
+    function refrech() {
+        var url = "/my_project_refrech/[[${#authentication.principal.id}]]/1";
+        $('#div1').load(url);
+    }
+
+</script>
+</body>
+</html>
