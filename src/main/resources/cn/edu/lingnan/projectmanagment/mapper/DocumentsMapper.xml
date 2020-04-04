@@ -7,14 +7,14 @@
     <select id="getAll" resultType="Documents">
         select * from documents where delete_flag = 0 ORDER BY upload_time desc
     </select>
-    <select id="getVersionByName" resultType="Integer">
-        select version from documents where delete_flag = 0 and name = #{name} order by version desc limit 1
+    <select id="getVersionByProjectsIdAndName" resultType="Integer">
+        select version from documents where delete_flag = 0 and project_id = #{projectsId} and name = #{name} order by version desc limit 1
     </select>
     <select id="getByProjectsIdAndVersionAndName" resultType="Documents">
         select * from documents where delete_flag = 0 and project_id = #{projectsId} and version = #{version} and name = #{name}
     </select>
-    <select id="getByVersionFlagAndName" resultType="Documents">
-        select * from documents where delete_flag = 0 and version_flag = #{versionflag} and name = #{name}
+    <select id="getByProjectsIdAndVersionFlagAndName" resultType="Documents">
+        select * from documents where delete_flag = 0 and project_id = #{projectsId} and version_flag = #{versionflag} and name = #{name}
     </select>
 
     <update id="delete">

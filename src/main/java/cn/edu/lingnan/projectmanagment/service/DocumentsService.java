@@ -14,11 +14,11 @@ public interface DocumentsService {
 
     Documents getByProjectsIdAndVersionAndName(Integer projectsId, Integer version, String name);
 
-    Documents getByVersionFlagAndName(Integer versionflag, String name);
+    Documents getByProjectsIdAndVersionFlagAndName(Integer projectsId, Integer versionflag, String name);
 
     List<Documents> getAllByProjectId(Integer projectId);
 
-    Integer getVersionByName(String name);
+    Integer getVersionByProjectsIdAndName(Integer projectId, String name);
 
     boolean delete(Integer id);
 

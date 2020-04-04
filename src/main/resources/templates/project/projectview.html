@@ -325,8 +325,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+
+<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -336,28 +336,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="${ctx}/documents/upload" method="POST" enctype="multipart/form-data">
+                <form th:action="@{/document}" method="POST" enctype="multipart/form-data">
                     <div class="from-group" style="width: 100%">
                         <div class="form-group" style="width: 100%">
-                            <select class="form-control input-fixed" id="packageName1" name="packageName1">
-                            </select>
+                            <select class="form-control input-fixed" id="packageName1" name="packageName"></select>
                         </div>
                     </div>
-                    <input type="hidden" id="projectId" name="projectId" value="${projectId}">
-                    <input type="hidden" id="writer" name="writer" value="${loginUser.id}">
+                    <input type="hidden" name="projectId" th:value="${param.projectId}">
+                    <input type="hidden" name="userId" th:value="${param.userId}">
                     <div class="form-group">
                         <div class="input-group">
                             <input id='location' class="form-control" onclick="$('#i-file').click();">
-                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary"
-                                   onclick="$('#i-file').click();">
+                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();">
                         </div>
-                        <input type="file" name="file" id='i-file' onchange="$('#location').val($('#i-file').val());"
-                               style="display: none">
+                        <input type="file" name="files" id='i-file' onchange="$('#location').val($('#i-file').val());" style="display: none">
                     </div>
 
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage"
-                                  name="versionMessage" autocomplete="off"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage" name="versionMessage" autocomplete="off"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
@@ -368,6 +364,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -560,7 +557,7 @@
                             var li1 = document.createElement("li");
                             ul.append(li1);
                             var a1 = document.createElement("a");
-                            a1.href = '/document?userId=' + userId + '&projectId=' + projectId + '&filename=' + data[i].projectsPackageList[j].documentName;
+                            a1.href = '/document?userId=' + userId + '&projectId=' + projectId + '&documentName=' + data[i].projectsPackageList[j].documentName;
                             li1.appendChild(a1);
                             //创建span
                             var span1 = document.createElement("span");

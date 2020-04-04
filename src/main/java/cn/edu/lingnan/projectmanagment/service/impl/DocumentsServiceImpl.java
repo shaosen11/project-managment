@@ -30,13 +30,13 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     @Override
-    public Documents getByVersionFlagAndName(Integer versionflag, String name) {
-        return documentMapper.getByVersionFlagAndName(versionflag, name);
+    public Documents getByProjectsIdAndVersionFlagAndName(Integer projectsId, Integer versionflag, String name) {
+        return documentMapper.getByProjectsIdAndVersionFlagAndName(projectsId, versionflag, name);
     }
 
     @Override
-    public Integer getVersionByName(String name) {
-        return documentMapper.getVersionByName(name);
+    public Integer getVersionByProjectsIdAndName(Integer projectId, String name) {
+        return documentMapper.getVersionByProjectsIdAndName(projectId, name);
     }
 
     @Override

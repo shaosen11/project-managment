@@ -29,9 +29,10 @@ public class ProjectsCodeLineController {
             return projectsCodeLineService.update(projectsCodeLine);
         } else {
             //新建对象
-            projectsCodeLine.setProjectsId(projectsId);
-            projectsCodeLine.setCodeLineNumber(projectsService.getById(projectsId).getCodeLineNumber());
-            return projectsCodeLineService.insert(projectsCodeLine);
+            ProjectsCodeLine projectsCodeLine1 = new ProjectsCodeLine();
+            projectsCodeLine1.setProjectsId(projectsId);
+            projectsCodeLine1.setCodeLineNumber(projectsService.getById(projectsId).getCodeLineNumber());
+            return projectsCodeLineService.insert(projectsCodeLine1);
         }
     }
 }

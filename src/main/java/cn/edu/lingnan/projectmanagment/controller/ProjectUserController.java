@@ -121,7 +121,6 @@ public class ProjectUserController {
     }
 
     //如果codeLine大于0，代码增加
-    //小于0，代码减少
     //等于0，代码不变，上传次数增加
     public String update(Integer codeLine, Integer userId, Integer projectId) {
         System.out.println("代码改变行数：：：" + codeLine);

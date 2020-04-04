@@ -6,12 +6,15 @@ import cn.edu.lingnan.projectmanagment.controller.ProjectUserController;
 import cn.edu.lingnan.projectmanagment.mapper.ProjectsCodeLineMapper;
 import cn.edu.lingnan.projectmanagment.service.ProjectsPackageService;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
+import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class ProjectManagmentApplicationTests {
@@ -40,32 +43,32 @@ class ProjectManagmentApplicationTests {
     @Autowired
     DocumentsServiceImpl documentsService;
 
-    @Test
-    void contextLoads() {
+//    @Test
+//    void contextLoads() {
 //        UserRecord userRecord = new UserRecord();
 //        userRecord.setUserId(1);
 //        userRecord.setIp("192.168.1.1");
 //        userRecord.setOperateTime(new Date());
 //        userRecord.setOperateMassage("登录");
 //        userRecordService.insert(userRecord);
-    }
-    @Test
-    void test01(){
-        MyUserDetails byEmail = userService.findByEmail("1244785@qq.com");
-        System.out.println(byEmail);
-    }
-
-    @Test
-    void testGetProjectsIdByUserId(){
-        List<Projects> projectListByUserId = projectService.getProjectListByUserId(1);
-        System.out.println(projectListByUserId);
-    }
-
-    @Test
-    void testGetProjectsPackageListByProjectId(){
-        List<ProjectsPackageList> allPackagesListByProjects = projectsPackageService.getAllPackagesListByProjectId(1);
-        System.out.println(allPackagesListByProjects);
-    }
+//    }
+//    @Test
+//    void test01(){
+//        MyUserDetails byEmail = userService.findByEmail("1244785@qq.com");
+//        System.out.println(byEmail);
+//    }
+//
+//    @Test
+//    void testGetProjectsIdByUserId(){
+//        List<Projects> projectListByUserId = projectService.getProjectListByUserId(1);
+//        System.out.println(projectListByUserId);
+//    }
+//
+//    @Test
+//    void testGetProjectsPackageListByProjectId(){
+//        List<ProjectsPackageList> allPackagesListByProjects = projectsPackageService.getAllPackagesListByProjectId(1);
+//        System.out.println(allPackagesListByProjects);
+//    }
 
 //    @Test
 //    void t2(){
@@ -83,11 +86,5 @@ class ProjectManagmentApplicationTests {
 //        projectsCodeLine.setProjectsId(1);
 //        projectsCodeLine.setCodeLineNumber(12);
 //        projectsCodeLineService.update(projectsCodeLine);
-//    }
-
-//    @Test
-//    void t4(){
-//        Documents byProjectsIdAndVersionAndName = documentsService.getByProjectsIdAndVersionAndName(1, 18, "DocumentsController.java");
-//        System.out.println(byProjectsIdAndVersionAndName);
 //    }
 }

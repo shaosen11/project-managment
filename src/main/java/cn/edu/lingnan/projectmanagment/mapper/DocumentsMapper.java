@@ -19,9 +19,9 @@ public interface DocumentsMapper {
 
     Documents getByProjectsIdAndVersionAndName(@Param("projectsId") Integer projectsId, @Param("version") Integer version, @Param("name") String name);
 
-    Documents getByVersionFlagAndName(@Param("versionflag") Integer versionflag, @Param("name") String name);
+    Documents getByProjectsIdAndVersionFlagAndName(@Param("projectsId") Integer projectsId, @Param("versionflag") Integer versionflag, @Param("name") String name);
 
-    Integer getVersionByName(String name);
+    Integer getVersionByProjectsIdAndName(@Param("projectsId") Integer projectsId, @Param("name") String name);
 
     List<Documents> getAllByProjectId(Integer projectId);
 
