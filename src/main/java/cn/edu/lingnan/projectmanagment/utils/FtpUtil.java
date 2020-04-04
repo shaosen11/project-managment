@@ -26,7 +26,7 @@ public class FtpUtil {
     //密码
     private static final String FTP_BASEPATH = "/home/projectadmin";
 
-    public static String uploadFile(MultipartFile file, String fileName) throws IOException{
+    public static String uploadFile(MultipartFile file, String fileName, Integer projectsId) throws IOException{
         //获取上传文件的文件流
         InputStream inputStream = file.getInputStream();
         FTPClient ftp = new FTPClient();
@@ -40,8 +40,10 @@ public class FtpUtil {
                 return null;
             }
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-            ftp.makeDirectory(FTP_BASEPATH);
-            ftp.changeWorkingDirectory(FTP_BASEPATH);
+            String path = FTP_BASEPATH + "/projects/" + projectsId;
+            System.out.println(path);
+            System.out.println(ftp.makeDirectory(path));
+            System.out.println(ftp.changeWorkingDirectory(path));
             ftp.enterLocalPassiveMode();
             ftp.storeFile(fileName, inputStream);
             inputStream.close();

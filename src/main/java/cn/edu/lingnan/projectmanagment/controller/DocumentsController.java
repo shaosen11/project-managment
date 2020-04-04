@@ -171,11 +171,10 @@ public class DocumentsController {
             //写入服务器
             System.out.println("上传文件");
             //调用自定义的FTP工具类上传文件
-            String fileName = FtpUtil.uploadFile(file, newFileName);
+            String fileName = FtpUtil.uploadFile(file, newFileName, documents.getProjectId());
             if (!StringUtils.isEmpty(fileName)){
                 System.out.println("上传文件" + fileName);
             }
-            System.out.println("上传失败");
         }
         if (documents.getVersionFlag() == 2) {
             //获取文件名为filename和版本标识符为1的
