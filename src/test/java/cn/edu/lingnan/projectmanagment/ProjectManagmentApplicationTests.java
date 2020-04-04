@@ -43,9 +43,11 @@ class ProjectManagmentApplicationTests {
     @Autowired
     DocumentsServiceImpl documentsService;
 
-//    @Test
-//    void t1(){
-//        List<ProjectsCodeLine> allProjectsCodeLineByProjectId = projectsCodeLineService.getAllProjectsCodeLineByProjectId(1);
-//        System.out.println(allProjectsCodeLineByProjectId);
-//    }
+    @Test
+    void t1(){
+        List codeDevoteData = projectUserService.getCodeDevote(1);
+        System.out.println(codeDevoteData);
+        List codeInsertData = projectUserService.getCodeDevote(1);
+        System.out.println(codeInsertData);
+    }
 }

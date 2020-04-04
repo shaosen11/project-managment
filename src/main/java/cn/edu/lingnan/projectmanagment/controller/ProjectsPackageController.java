@@ -4,6 +4,7 @@ import cn.edu.lingnan.projectmanagment.bean.Documents;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsPackage;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsPackageList;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProjectsPackageController {
@@ -32,11 +35,22 @@ public class ProjectsPackageController {
         //创建projectsPackage对象
         System.out.println(projectsPackage);
         //处理包id
-        Integer packageId = projectsPackageService.getPackageIdByProjectId(projectsPackage.getProjectId()).getPackageId() + 1;
+        //还没有存在包
+        Integer packageId = null;
+        ProjectsPackage packageIdByProjectId = projectsPackageService.getPackageIdByProjectId(projectsPackage.getProjectId());
+        if(packageIdByProjectId == null){
+            packageId = 1;
+        }else {
+            packageId = packageIdByProjectId.getPackageId() + 1;
+        }
         System.out.println("packageId:::" + packageId);
         projectsPackage.setPackageId(packageId);
         projectsPackageService.insert(projectsPackage);
-        return "project/projectview";
+        Map<String,Object> pathMap = new HashMap<>();
+        pathMap.put("projectId", projectsPackage.getProjectId());
+        pathMap.put("userId", projectsPackage.getUserId());
+        String pathString = PathUtil.pathUtil(pathMap);
+        return "project/projectview" + pathString;
     }
 
     @ResponseBody

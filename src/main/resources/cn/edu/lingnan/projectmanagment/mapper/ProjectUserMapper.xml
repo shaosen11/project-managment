@@ -82,4 +82,32 @@
     <select id="getByUserIdAndProjectId" resultType="ProjectsUser">
         select * from projects_user where delete_flag = 1 and user_id = #{userId} and projects_id = #{projectId}
     </select>
+
+    <resultMap id="codeDevoteData" type="Echarts">
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+
+    <select id="getCodeDevote" resultMap="codeDevoteData">
+        SELECT c.username as name ,code_devote_line as value
+        from projects_user a, sys_user c
+        where a.user_id =c.id
+        and a.projects_id = #{project_id}
+        group by a.user_id
+        order by code_devote_line desc
+    </select>
+
+    <resultMap id="codeInsertData" type="Echarts">
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+    </resultMap>
+
+    <select id="getCodeInsert" resultType="Integer" resultMap="codeInsertData">
+        SELECT c.username as name ,code_update as value
+        from projects_user a,sys_user c
+        where a.user_id =c.id
+        and a.projects_id = #{project_id}
+        group by a.user_id
+        order by code_update desc
+    </select>
 </mapper>

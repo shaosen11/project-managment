@@ -1,5 +1,6 @@
 package cn.edu.lingnan.projectmanagment.mapper;
 
+import cn.edu.lingnan.projectmanagment.bean.Echarts;
 import cn.edu.lingnan.projectmanagment.bean.Projects;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -60,4 +61,18 @@ public interface ProjectUserMapper {
      * @return
      */
     ProjectsUser getByUserIdAndProjectId(Integer userId, Integer projectId);
+
+    /**
+     * 获取代码贡献量
+     * @param projectId
+     * @return
+     */
+    List<Echarts> getCodeDevote(Integer projectId);
+
+    /**
+     * 获取代码上传次数
+     * @param projectId
+     * @return
+     */
+    List<Echarts> getCodeInsert(Integer projectId);
 }

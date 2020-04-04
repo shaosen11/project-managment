@@ -1,5 +1,6 @@
 package cn.edu.lingnan.projectmanagment.service.impl;
 
+import cn.edu.lingnan.projectmanagment.bean.Echarts;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
 import cn.edu.lingnan.projectmanagment.mapper.ProjectUserMapper;
 import cn.edu.lingnan.projectmanagment.service.ProjectUserService;
@@ -51,5 +52,15 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     @Override
     public ProjectsUser getByUserIdAndProjectId(Integer userId, Integer projectId) {
         return projectUserMapper.getByUserIdAndProjectId(userId, projectId);
+    }
+
+    @Override
+    public List<Echarts> getCodeDevote(Integer projectId) {
+        return projectUserMapper.getCodeDevote(projectId);
+    }
+
+    @Override
+    public List<Echarts> getCodeInsert(Integer projectId) {
+        return projectUserMapper.getCodeInsert(projectId);
     }
 }
