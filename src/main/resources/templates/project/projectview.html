@@ -8,7 +8,9 @@
 
     <!-- Fonts and icons -->
     <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-
+    <!-- echarts -->
+    <script type="text/javascript" th:src="@{/assets/js/echarts.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
     <!-- CSS Files -->
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
@@ -18,7 +20,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 </head>
 
-<body onLoad="init()">
+<body>
 <div class="wrapper">
     <div class="main-header" data-background-color="purple">
         <!-- Logo Header -->
@@ -111,7 +113,7 @@
 							</span>
                         <h4 class="text-section">content</h4>
                     </li>
-                    <li class="nav-item" id="test">
+                    <li class="nav-item">
                         <a data-toggle="collapse" href="#base1">
                             <i class="fas fa-box"></i>
                             <p>项目</p>
@@ -122,79 +124,6 @@
                             </ul>
                         </div>
                     </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a data-toggle="collapse" href="#tables">-->
-<!--                            <i class="fas fa-table"></i>-->
-<!--                            <p>当前数据</p>-->
-<!--                            <span class="caret"></span>-->
-<!--                        </a>-->
-<!--                        <div class="collapse" id="tables">-->
-<!--                            <ul class="nav nav-collapse">-->
-<!--                                <c:if test="${loginUser.duty == '管理员'}">-->
-<!--                                    <li>-->
-<!--                                        <a th:href="${ctx}/user/list">-->
-<!--                                            <span class="sub-item">User</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                </c:if>-->
-<!--                                <li>-->
-<!--                                    <a th:href="${ctx}/projects/getAllProjects">-->
-<!--                                        <span class="sub-item">Projects</span>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                                <c:if test="${loginUser.duty == '项目经理'}">-->
-<!--                                    <li class="active">-->
-<!--                                        <a th:href="${ctx}/projects/getApplicant">-->
-<!--                                            <span class="sub-item">Check Projects</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                </c:if>-->
-<!--                                <li>-->
-<!--                                    <a th:href="${ctx}/userProjects/getAllUserProjects">-->
-<!--                                        <span class="sub-item">User Projects</span>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                    <c:if test="${loginUser.duty == '管理员'}">-->
-<!--                        <li class="nav-item">-->
-<!--                            <a data-toggle="collapse" th:href="#base">-->
-<!--                                <i class="fas fa-layer-group"></i>-->
-<!--                                <p>失效数据</p>-->
-<!--                                <span class="caret"></span>-->
-<!--                            </a>-->
-<!--                            <div class="collapse" id="base">-->
-<!--                                <ul class="nav nav-collapse">-->
-<!--                                    <li>-->
-<!--                                        <a th:href="${ctx}/user/getAllDeleteUser">-->
-<!--                                            <span class="sub-item">Deleted User</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <a th:href="${ctx}/projects/getAllDeleteProjects">-->
-<!--                                            <span class="sub-item">Deleted Projects</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <a th:href="${ctx}/userProjects/getAllDeleteUserProjects">-->
-<!--                                            <span class="sub-item">Deleted User_Projects</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <a th:href="${ctx}/documents/getAllDeleteDocuments">-->
-<!--                                            <span class="sub-item">Deleted Document</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li>-->
-<!--                                        <a th:href="${ctx}/documentsRecord/getAllDeleteDocumentsRecord">-->
-<!--                                            <span class="sub-item">Deleted DocumentsRecord</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                    </c:if>-->
                     <li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
@@ -212,9 +141,8 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>upload file</p>
                         </a>
-<!--                        <button class="btn btn-danger btn-round" type="button" data-toggle="modal" data-target="#uploadfile" data-id="edit" style="width: 50%">上传文件</button>-->
                     </li>
-                    <li class="nav-item" id="test">
+                    <li class="nav-item">
                         <a data-toggle="collapse" href="#base2">
                             <i class="fas fa-folder"></i>
                             <p>All Package</p>
@@ -712,87 +640,91 @@
     //         });
     //     }
     // })
-    // var lindCharts = echarts.init(document.getElementById("lindChart"));
-    // var xdata = [];
-    // var ydata = [];
-    //异步请求数据
-    // $.ajax({
-    //     type: "post",
-    //     async: true,
-    //     url: "${ctx}/userProjects/getLineChartDate?id=${projectId}",
-    //     data: [],
-    //     dataType: "json",
-    //     error: function (result) {
-    //     },
-    //     success: function (result) {
-    //         $(result).each(function (index, item) {
-    //             xdata.push(item.uploadTime);
-    //             ydata.push(item.sumCodeLine);
-    //         })
-    //         lindCharts.setOption({
-    //             title: {
-    //                 text: '项目代码行数变化',
-    //             },
-    //             tooltip: {
-    //                 trigger: 'axis',
-    //                 axisPointer: {
-    //                     type: 'cross'
-    //                 }
-    //             },
-    //             toolbox: {
-    //                 show: true,
-    //                 feature: {
-    //                     saveAsImage: {}
-    //                 }
-    //             },
-    //             xAxis: {
-    //                 type: 'category',
-    //                 boundaryGap: false,
-    //                 data: xdata
-    //             },
-    //             yAxis: {
-    //                 type: 'value',
-    //                 axisLabel: {
-    //                     formatter: '{value}'
-    //                 },
-    //                 axisPointer: {
-    //                     snap: true
-    //                 }
-    //             },
-    //             visualMap: {
-    //                 show: false,
-    //                 dimension: 0,
-    //                 pieces: [{
-    //                     lte: 6,
-    //                     color: 'green'
-    //                 }, {
-    //                     gt: 6,
-    //                     lte: 8,
-    //                     color: 'red'
-    //                 }, {
-    //                     gt: 8,
-    //                     lte: 14,
-    //                     color: 'green'
-    //                 }, {
-    //                     gt: 14,
-    //                     lte: 17,
-    //                     color: 'red'
-    //                 }, {
-    //                     gt: 17,
-    //                     color: 'green'
-    //                 }]
-    //             },
-    //             series: [
-    //                 {
-    //                     name: '代码行',
-    //                     type: 'line',
-    //                     smooth: true,
-    //                     data: ydata
-    //                 }
-    //             ]
-    //         });
-    //     }
-    // })
+</script>
+<script th:inline="javascript">
+    $(function () {
+        var projectId = [[${param.projectId}]];
+        var lindCharts = echarts.init(document.getElementById("lindChart"));
+        var xdata = [];
+        var ydata = [];
+        $.ajax({
+            type: "get",
+            async: true,
+            url: "/getLineChartDate?projectId=" + projectId,
+            data: [],
+            dataType: "json",
+            error: function (result) {
+            },
+            success: function (result) {
+                $(result).each(function (index, item) {
+                    xdata.push(item.uploadTimeString);
+                    ydata.push(item.codeLineNumber);
+                })
+                lindCharts.setOption({
+                    title: {
+                        text: '项目代码行数变化',
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        }
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: xdata
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value}'
+                        },
+                        axisPointer: {
+                            snap: true
+                        }
+                    },
+                    visualMap: {
+                        show: false,
+                        dimension: 0,
+                        pieces: [{
+                            lte: 6,
+                            color: 'green'
+                        }, {
+                            gt: 6,
+                            lte: 8,
+                            color: 'red'
+                        }, {
+                            gt: 8,
+                            lte: 14,
+                            color: 'green'
+                        }, {
+                            gt: 14,
+                            lte: 17,
+                            color: 'red'
+                        }, {
+                            gt: 17,
+                            color: 'green'
+                        }]
+                    },
+                    series: [
+                        {
+                            name: '代码行',
+                            type: 'line',
+                            smooth: true,
+                            data: ydata
+                        }
+                    ]
+                });
+            }
+        })
+    })
 </script>
 <script th:inline="javascript">
     $(function () {

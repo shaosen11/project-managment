@@ -4,6 +4,8 @@ import cn.edu.lingnan.projectmanagment.bean.ProjectsCodeLine;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Author shaosen
  * @Description //TODO
@@ -39,4 +41,11 @@ public interface ProjectsCodeLineMapper {
      * @return
      */
     boolean update(ProjectsCodeLine bean);
+
+    /**
+     * 查询项目所有代码行记录
+     * @param projectId
+     * @return
+     */
+    List<ProjectsCodeLine> getAllProjectsCodeLineByProjectId(Integer projectId);
 }

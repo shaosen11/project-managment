@@ -54,4 +54,10 @@
         </trim>
     </insert>
 
+    <select id="getAllProjectsCodeLineByProjectId" resultType="ProjectsCodeLine">
+        select * from projects_code_line
+        where delete_flag = 0 and projects_id = #{projectId}
+        ORDER BY upload_time ASC
+    </select>
+
 </mapper>

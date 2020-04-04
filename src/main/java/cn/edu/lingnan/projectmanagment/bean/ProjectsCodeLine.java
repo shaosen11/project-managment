@@ -16,4 +16,5 @@ public class ProjectsCodeLine {
     private Integer projectsId;
     private Integer codeLineNumber;
     private Date uploadTime;
+    private String uploadTimeString;
 }

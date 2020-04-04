@@ -2,6 +2,8 @@ package cn.edu.lingnan.projectmanagment.service;
 
 import cn.edu.lingnan.projectmanagment.bean.ProjectsCodeLine;
 
+import java.util.List;
+
 /**
  * @Author shaosen
  * @Description //TODO
@@ -35,4 +37,11 @@ public interface ProjectsCodeLineService {
      * @return
      */
     boolean update(ProjectsCodeLine bean);
+
+    /**
+     * 查询项目所有代码行记录
+     * @param projectId
+     * @return
+     */
+    List<ProjectsCodeLine> getAllProjectsCodeLineByProjectId(Integer projectId);
 }

@@ -3,8 +3,16 @@ package cn.edu.lingnan.projectmanagment.controller;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsCodeLine;
 import cn.edu.lingnan.projectmanagment.service.ProjectService;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsCodeLineServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author shaosen
@@ -34,5 +42,22 @@ public class ProjectsCodeLineController {
             projectsCodeLine1.setCodeLineNumber(projectsService.getById(projectsId).getCodeLineNumber());
             return projectsCodeLineService.insert(projectsCodeLine1);
         }
+    }
+
+    /**
+     * 项目总代码行折线图
+     * @param projectId
+     * @return
+     */
+    @GetMapping("/getLineChartDate")
+    @ResponseBody
+    public List getLineChartDate(Integer projectId) {
+        List<ProjectsCodeLine> projectsCodeLines = projectsCodeLineService.getAllProjectsCodeLineByProjectId(projectId);
+        for (ProjectsCodeLine item : projectsCodeLines) {
+            System.out.println(item);
+            item.setUploadTimeString(DateFromatUtil.getNowDateShort(item.getUploadTime()));
+        }
+        System.out.println(projectsCodeLines);
+        return projectsCodeLines;
     }
 }

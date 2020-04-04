@@ -44,47 +44,8 @@ class ProjectManagmentApplicationTests {
     DocumentsServiceImpl documentsService;
 
 //    @Test
-//    void contextLoads() {
-//        UserRecord userRecord = new UserRecord();
-//        userRecord.setUserId(1);
-//        userRecord.setIp("192.168.1.1");
-//        userRecord.setOperateTime(new Date());
-//        userRecord.setOperateMassage("登录");
-//        userRecordService.insert(userRecord);
-//    }
-//    @Test
-//    void test01(){
-//        MyUserDetails byEmail = userService.findByEmail("1244785@qq.com");
-//        System.out.println(byEmail);
-//    }
-//
-//    @Test
-//    void testGetProjectsIdByUserId(){
-//        List<Projects> projectListByUserId = projectService.getProjectListByUserId(1);
-//        System.out.println(projectListByUserId);
-//    }
-//
-//    @Test
-//    void testGetProjectsPackageListByProjectId(){
-//        List<ProjectsPackageList> allPackagesListByProjects = projectsPackageService.getAllPackagesListByProjectId(1);
-//        System.out.println(allPackagesListByProjects);
-//    }
-
-//    @Test
-//    void t2(){
-//        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(1,1);
-//        System.out.println(projectsUser);
-//        projectsUser.setCodeDevoteLine(1);
-//        projectsUser.setCodeUpdate(1);
-//        projectUserController.update(1,1,1);
-//    }
-
-//    @Test
-//    void t3(){
-//        ProjectsCodeLine projectsCodeLine = new ProjectsCodeLine();
-//        projectsCodeLine.setId(1);
-//        projectsCodeLine.setProjectsId(1);
-//        projectsCodeLine.setCodeLineNumber(12);
-//        projectsCodeLineService.update(projectsCodeLine);
+//    void t1(){
+//        List<ProjectsCodeLine> allProjectsCodeLineByProjectId = projectsCodeLineService.getAllProjectsCodeLineByProjectId(1);
+//        System.out.println(allProjectsCodeLineByProjectId);
 //    }
 }

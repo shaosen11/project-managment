@@ -6,6 +6,8 @@ import cn.edu.lingnan.projectmanagment.service.ProjectsCodeLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author shaosen
  * @Description //TODO
@@ -35,5 +37,10 @@ public class ProjectsCodeLineServiceImpl implements ProjectsCodeLineService {
     @Override
     public boolean update(ProjectsCodeLine projectsCodeLine) {
         return projectsCodeLineMapper.update(projectsCodeLine);
+    }
+
+    @Override
+    public List<ProjectsCodeLine> getAllProjectsCodeLineByProjectId(Integer projectId) {
+        return projectsCodeLineMapper.getAllProjectsCodeLineByProjectId(projectId);
     }
 }
