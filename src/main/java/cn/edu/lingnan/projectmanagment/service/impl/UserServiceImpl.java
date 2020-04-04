@@ -107,5 +107,10 @@ public class UserServiceImpl implements UserService {
     public Integer myProjectScheduleNum3(Integer id, String schedule) {
         return userMapper.myProjectScheduleNum3(id,schedule);
     }
+
+    @Override
+    public List<Myprojects> getMyProjectsStore(Integer id) {
+        return userMapper.getMyProjectsStore(id);
+    }
 }
 

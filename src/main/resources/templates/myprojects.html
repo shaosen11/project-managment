@@ -87,20 +87,38 @@
                                     <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
                                             <!-- 项目列表1 -->
                                             <div class="col-md-8 row" style="float: left">
-                                                <div class="col-md-12 row" th:each="myproject:${myprojects}">
+                                                <div class="col-md-12 row" th:each="myproject:${myprojects}" th:fragment="div1" id="div1">
                                                     <div class="col-lg-10">
-                                                        <a href="#"><h2 style="color: #376956" th:text="${myproject.projectName}"></h2></a>
-                                                        <span style="color: #4e555b">项目管理员：[[${myproject.chargeUser}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <span style="color: #4e555b">项目进度：[[${myproject.schedule}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <span style="color: #4e555b">上传次数：[[${myproject.updateCount}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <span style="color: #4e555b">我的上传次数：[[${myproject.myUpdateCount}]]</span>
+                                                        <a href="#">
+                                                            <h2 style="color: #145180">
+                                                                <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
+                                                            </h2>
+                                                        </a>
+                                                        <span style="color: #4e555b">
+                                                            <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
+                                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <span style="color: #4e555b">
+                                                            <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
+                                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <span style="color: #4e555b">
+                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <span style="color: #4e555b">
+                                                            <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
+                                                        </span>
                                                     </div>
                                                     <div class="col-lg-2">
-                                                        <a href="#" style="color: #F29F3F">
-                                                            <i class="fas fa-star"></i><span>16</span>
-                                                        </a>&nbsp;&nbsp;
-                                                        <a href="#" style="color:#C1194E">
-                                                            <i class="fas fa-heart"></i><span>10</span>
+                                                        <a th:href="@{/my_project_del_refrech/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color: #F29F3F" th:if="${myproject.storeFlag} eq 1"  >
+                                                            <i class="fas fa-star"></i><span th:text="${myproject.storeCount}"></span>
+                                                        </a>
+                                                        <a th:href="@{/my_project_refrech/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color: darkgrey" th:if="${myproject.storeFlag} eq 0">
+                                                            <i class="fas fa-star"></i><span th:text="${myproject.storeCount}"></span>
+                                                        </a>
+                                                        <a th:href="@{/my_project_del_refrech_like/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color:#C1194E" th:if="${myproject.likeFlag} eq 1">
+                                                            <i class="fas fa-heart"></i><span>[[${myproject.likeCount}]]</span>
+                                                        </a>
+                                                        <a th:href="@{/my_project_refrech_like/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color:darkgrey" th:if="${myproject.likeFlag} eq 0">
+                                                            <i class="fas fa-heart"></i><span>[[${myproject.likeCount}]]</span>
                                                         </a>
                                                     </div>
                                                     <hr style="color: #4C5B5C" size="3" width="96%">
@@ -118,19 +136,23 @@
                                         <div class="col-md-8 row" style="float: left">
                                             <div class="col-md-12 row" th:each="myproject:${mychargeprojects}">
                                                 <div class="col-lg-10">
-                                                    <a href="#"><h2 style="color: #376956" th:text="${myproject.projectName}"></h2></a>
-                                                    <span style="color: #4e555b">项目管理员：[[${myproject.chargeUser}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">项目进度：[[${myproject.schedule}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">上传次数：[[${myproject.updateCount}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">我的上传次数：[[${myproject.myUpdateCount}]]</span>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <a href="#" style="color: #F29F3F">
-                                                        <i class="fas fa-star"></i><span>16</span>
-                                                    </a>&nbsp;&nbsp;
-                                                    <a href="#" style="color:#C1194E">
-                                                        <i class="fas fa-heart"></i><span>10</span>
-                                                    </a>
+                                                    <a href="#">
+                                                    <h2 style="color: #145180">
+                                                        <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
+                                                    </h2>
+                                                </a>
+                                                    <span style="color: #4e555b">
+                                                        <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span style="color: #4e555b">
+                                                            <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span style="color: #4e555b">
+                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span style="color: #4e555b">
+                                                            <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
+                                                    </span>
                                                 </div>
                                                 <hr style="color: #4C5B5C" size="3" width="96%">
                                             </div>
@@ -146,19 +168,23 @@
                                         <div class="col-md-8 row" style="float: left">
                                             <div class="col-md-12 row" th:each="myproject:${myjoinprojects}">
                                                 <div class="col-lg-10">
-                                                    <a href="#"><h2 style="color: #376956" th:text="${myproject.projectName}"></h2></a>
-                                                    <span style="color: #4e555b">项目管理员：[[${myproject.chargeUser}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">项目进度：[[${myproject.schedule}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">上传次数：[[${myproject.updateCount}]]</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">我的上传次数：[[${myproject.myUpdateCount}]]</span>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <a href="#" style="color: #F29F3F">
-                                                        <i class="fas fa-star"></i><span>16</span>
-                                                    </a>&nbsp;&nbsp;
-                                                    <a href="#" style="color:#C1194E">
-                                                        <i class="fas fa-heart"></i><span>10</span>
+                                                    <a href="#">
+                                                        <h2 style="color: #145180">
+                                                            <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
+                                                        </h2>
                                                     </a>
+                                                    <span style="color: #4e555b">
+                                                        <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span style="color: #4e555b">
+                                                        <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span style="color: #4e555b">
+                                                        <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span style="color: #4e555b">
+                                                        <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
+                                                    </span>
                                                 </div>
                                                 <hr style="color: #4C5B5C" size="3" width="96%">
                                             </div>
@@ -202,7 +228,7 @@
 <!-- Echarts! -->
 <script th:src="@{/assets/js/echarts.min.js}"></script>
 
-<script >
+<script type="text/javascript">
     var pieCharts = echarts.init(document.getElementById("piechart"));
     pieCharts.showLoading();
     var names = [];
@@ -432,6 +458,11 @@
             }
         });
     })
+
+    function refrech() {
+        var url = "/my_project_refrech/[[${#authentication.principal.id}]]/1";
+        $('#div1').load(url);
+    }
 
 </script>
 </body>

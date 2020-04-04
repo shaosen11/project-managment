@@ -1,7 +1,7 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.ProjectsCodeLine;
-import cn.edu.lingnan.projectmanagment.service.ProjectService;
+import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsCodeLineServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
 import org.apache.ibatis.annotations.Param;
@@ -24,7 +24,7 @@ public class ProjectsCodeLineController {
     @Autowired
     private ProjectsCodeLineServiceImpl projectsCodeLineService;
     @Autowired
-    private ProjectService projectsService;
+    private ProjectsService projectsService;
 
     public boolean insert(Integer projectsId) {
         System.out.println("projectsId" + projectsId + "----------------------------------------");

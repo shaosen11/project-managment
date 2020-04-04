@@ -222,7 +222,7 @@
                             <li>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/my_projects/}+${#authentication.principal.id}">我的项目</a>
-                                <a class="dropdown-item" href="#">我的收藏</a>
+                                <a class="dropdown-item" th:href="@{/my_projects_store/}+${#authentication.principal.id}">我的收藏</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" th:href="@{/login_out}">Logout</a>
                             </li>

@@ -1,7 +1,7 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.Documents;
-import cn.edu.lingnan.projectmanagment.service.ProjectService;
+import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.FileUtil;
@@ -32,7 +32,7 @@ public class DocumentsController {
     @Autowired
     DocumentsServiceImpl documentsService;
     @Autowired
-    ProjectService projectService;
+    ProjectsService projectService;
     @Autowired
     ProjectsPackageServiceImpl projectsPakcageService;
     @Autowired

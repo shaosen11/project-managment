@@ -15,6 +15,8 @@ public class Projects {
     private Integer completedFunctionPoints;
     private Integer updateCount;
     private String type;
+    private Integer storeCount;
+    private Integer likeCount;
     private String characterization;
     private Date createTime;
     private Integer enabled;
