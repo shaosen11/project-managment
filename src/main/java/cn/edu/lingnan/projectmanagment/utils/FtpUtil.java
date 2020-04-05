@@ -35,7 +35,9 @@ public class FtpUtil {
             ftp.connect(FTP_ADDRESS, FTP_PORT);
             ftp.login(FTP_USERNAME, FTP_PASSWORD);
             reply = ftp.getReplyCode();
+            System.out.println("reply:::" + reply);
             if(!FTPReply.isPositiveCompletion(reply)){
+                System.out.println("FTP没有回应");
                 ftp.disconnect();
                 return null;
             }

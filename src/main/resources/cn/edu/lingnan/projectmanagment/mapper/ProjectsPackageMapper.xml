@@ -2,33 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.lingnan.projectmanagment.mapper.ProjectsPackageMapper">
     <select id="getById" resultType="ProjectsPackage">
-        select * from projects_package where delete_flag = 0 and id = #{id}
+        select * from projects_package where delete_flag = 1 and id = #{id}
     </select>
     <select id="getAllPackagesByProjects" resultType="ProjectsPackage">
-        select * from projects_package where delete_flag = 0 and project_id = #{projectId} group by package_id
+        select * from projects_package where delete_flag = 1 and project_id = #{projectId} group by package_id
     </select>
     <select id="getAllDocumentsByProjectsAndPackage" resultType="ProjectsPackage">
-        select * from projects_package where delete_flag = 0 and project_id = #{projectId} and package_id = #{packageId}
+        select * from projects_package where delete_flag = 1 and project_id = #{projectId} and package_id = #{packageId}
     </select>
     <select id="getPackageIdByProjectId" resultType="ProjectsPackage">
-        select * from projects_package where delete_flag = 0 and project_id = #{projectId} group by package_id order by
+        select * from projects_package where delete_flag = 1 and project_id = #{projectId} group by package_id order by
         package_id desc limit 1
     </select>
     <select id="getPackageByProjectIdAndPackageName" resultType="ProjectsPackage">
-        select * from projects_package where delete_flag = 0 and project_id = #{projectId} and package_name =
+        select * from projects_package where delete_flag = 1 and project_id = #{projectId} and package_name =
         #{PackageName} group by package_id
     </select>
     <select id="getDocumentsNameByProjectIdAndPackageNameAndDocumentsName" resultType="ProjectsPackage">
         select * from projects_package
-        where delete_flag = 0 and project_id = #{projectId} and package_name = #{PackageName} and document_name = #{DocumentName}
+        where delete_flag = 1 and project_id = #{projectId} and package_name = #{PackageName} and document_name = #{DocumentName}
     </select>
     <select id="getDocumentsNameByProjectIdAndDocumentsName" resultType="ProjectsPackage">
         select * from projects_package
-        where delete_flag = 0 and project_id = #{projectId} and document_name = #{documentName}
+        where delete_flag = 1 and project_id = #{projectId} and document_name = #{documentName}
     </select>
 
     <update id="delete">
-        update projects_package set delete_flag = 1 where id = #{id};
+        update projects_package set delete_flag = 0 where id = #{id};
     </update>
 
     <update id="update">
@@ -108,7 +108,7 @@
     </resultMap>
 
     <select id="getAllPackagesListByProjectId" resultMap="detailProjectsPackageList">
-        select * from projects_package where delete_flag = 0 and project_id = #{projectId} group by package_id
+        select * from projects_package where delete_flag = 1 and project_id = #{projectId} group by package_id
     </select>
 
 </mapper>

@@ -433,7 +433,7 @@
                     var li = document.createElement("li");
                     parentUL.appendChild(li);
                     var a = document.createElement("a");
-                    a.href = '/projects_view?projectId=' + data[i].id;
+                    a.href = '/projects_view?projectId=' + data[i].id + '&userId=' + userId;
                     a.innerHTML = data[i].name;
                     li.appendChild(a);
                 }
@@ -642,8 +642,6 @@
             }
         })
     })
-
-
 </script>
 <script th:inline="javascript">
     $(function () {
@@ -665,9 +663,6 @@
                     ydata.push(item.codeLineNumber);
                 })
                 lindCharts.setOption({
-                    // title: {
-                    //     text: '项目代码行数变化',
-                    // },
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {

@@ -136,7 +136,12 @@ public class ProjectUserController {
             System.out.println("用户代码增加了" + codeLine);
         }
         //修改代码上传次数
-        projectsUser.setCodeUpdate(projectsUser.getCodeUpdate() + 1);
+        Integer codeUpdate = projectsUser.getCodeUpdate();
+        if(codeUpdate == null){
+            projectsUser.setCodeUpdate(1);
+        }else {
+            projectsUser.setCodeUpdate( codeUpdate + 1);
+        }
         System.out.println(projectsUser);
         System.out.println("projectUser修改：" + projectUserService.editProjectUser(projectsUser));
         //修改系统代码量

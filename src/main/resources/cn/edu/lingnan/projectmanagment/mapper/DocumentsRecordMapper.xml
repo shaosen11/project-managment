@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.lingnan.projectmanagment.mapper.DocumentsRecordMapper">
     <select id="getById" resultType="DocumentsRecord">
-        select * from documents_record where delete_flag = 0 and id = #{id}
+        select * from documents_record where delete_flag = 1 and id = #{id}
     </select>
     <select id="getAllByProjectId" resultType="DocumentsRecord">
-        select * from documents_record where delete_flag = 0 and project_id = #{projectId} order by id desc
+        select * from documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc
     </select>
 
     <update id="delete">
-        update documents_record set delete_flag = 1 where id = #{id};
+        update documents_record set delete_flag = 0 where id = #{id};
     </update>
 
     <update id="update">
@@ -75,11 +75,11 @@
 
     <!--查找所有被注销记录-->
     <select id="getAllDeleteDocumentsRecord" resultType="DocumentsRecord">
-        select * from documents_record where delete_flag=1
+        select * from documents_record where delete_flag = 0
     </select>
 
     <!--撤消一条记录-->
     <update id="undo">
-        update documents_record set delete_flag = 0 where id = #{id}
+        update documents_record set delete_flag = 1 where id = #{id}
     </update>
 </mapper>

@@ -45,9 +45,7 @@ class ProjectManagmentApplicationTests {
 
     @Test
     void t1(){
-        List codeDevoteData = projectUserService.getCodeDevote(1);
-        System.out.println(codeDevoteData);
-        List codeInsertData = projectUserService.getCodeDevote(1);
-        System.out.println(codeInsertData);
+        List<ProjectsPackage> allPackagesByProjects = projectsPackageService.getAllPackagesByProjects(1);
+        System.out.println(allPackagesByProjects);
     }
 }

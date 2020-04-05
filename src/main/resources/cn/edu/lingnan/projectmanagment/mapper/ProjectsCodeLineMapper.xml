@@ -3,11 +3,11 @@
 <mapper namespace="cn.edu.lingnan.projectmanagment.mapper.ProjectsCodeLineMapper">
     <!--查询今天有没有记录-->
     <select id="getProjectsCodeLineByProjectIdAndToday" resultType="ProjectsCodeLine">
-        select * from projects_code_line where delete_flag = 0 and projects_id = #{projectsId} and to_days(upload_time)=to_days(current_date())
+        select * from projects_code_line where delete_flag = 1 and projects_id = #{projectsId} and to_days(upload_time)=to_days(current_date())
     </select>
     <!--查询最近的记录-->
     <select id="getProjectsCodeLineByProjectIdAndLastDay" resultType="ProjectsCodeLine">
-        select * from projects_code_line where delete_flag = 0 and projects_id = #{projectsId} and ORDER BY upload_time DESC
+        select * from projects_code_line where delete_flag = 1 and projects_id = #{projectsId} and ORDER BY upload_time DESC
     </select>
 
     <!--更新信息-->
@@ -56,7 +56,7 @@
 
     <select id="getAllProjectsCodeLineByProjectId" resultType="ProjectsCodeLine">
         select * from projects_code_line
-        where delete_flag = 0 and projects_id = #{projectId}
+        where delete_flag = 1 and projects_id = #{projectId}
         ORDER BY upload_time ASC
     </select>
 
