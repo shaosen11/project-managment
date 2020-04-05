@@ -122,18 +122,32 @@
 			</div>
 		</div>
 	</div>
+	<!--   Core JS Files   -->
 	<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-	<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
 	<script th:src="@{/assets/js/core/popper.min.js}"></script>
 	<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
-	<script th:src="@{/assets/js/ready.js}"></script>
+	<!-- jQuery UI -->
+	<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+	<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+	<!-- Sweet Alert -->
+	<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+	<!-- Bootstrap Toggle -->
+	<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+	<!-- jQuery Scrollbar -->
+	<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+	<!-- Datatables -->
+	<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+	<!-- Azzara JS -->
+	<script th:src="@{/assets/js/ready.min.js}"></script>
+	<!-- Azzara DEMO methods, don't include it in your project! -->
+	<script th:src="@{/assets/js/setting-demo.js}"></script>
 	<script th:inline="javascript">
-		window.onload = function (ev) {
+		$(function () {
 			var kaptchaImg = document.getElementById("kaptcha");
 			kaptchaImg.onclick = function (ev1) {
 				kaptchaImg.src = "/kaptcha?" + Math.floor(Math.random() * 100);
 			}
-		};
+		})
 		//登录按钮事件
 		function login() {
 			var email = $("#email").val();
@@ -154,9 +168,23 @@
 				},
 				success: function (json) {
 					if (json.ok) {
-						location.href = json.data;
+						swal("登录成功！", {
+							icon : "success",
+							buttons: false,
+							timer: 1500,
+						});
+						setTimeout(function(){
+							location.href = json.data;
+						},1500);
 					} else {
-						alert(json.message);
+						swal("登录失败！", json.message, {
+							icon : "error",
+							buttons: {
+								confirm: {
+									className : 'btn btn-danger'
+								}
+							},
+						});
 					}
 				},
 			})

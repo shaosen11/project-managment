@@ -691,6 +691,8 @@
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <script th:src="@{/assets/js/demo.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+
 <script type="text/javascript" th:inline="javascript">
 	$(function () {
 		var userId = [[${#authentication.principal.id}]];
@@ -715,5 +717,6 @@
 		})
 	})
 </script>
+
 </body>
 </html>
