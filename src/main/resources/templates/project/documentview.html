@@ -316,13 +316,11 @@
             </div>
             <div class="modal-body">
                 <form th:action="@{/document}" method="POST" enctype="multipart/form-data">
-                    <div class="from-group" style="width: 100%">
-                        <div class="form-group" style="width: 100%">
-                            <select class="form-control input-fixed" id="packageName1" name="packageName"></select>
-                        </div>
-                    </div>
                     <input type="hidden" name="projectId" th:value="${param.projectId}">
                     <input type="hidden" name="userId" th:value="${param.userId}">
+                    <div class="form-group">
+                        <select class="form-select-button" id="packageName1" name="packageName"></select>
+                    </div>
                     <div class="form-group">
                         <div class="input-group">
                             <input id='location' class="form-control" onclick="$('#i-file').click();">
@@ -330,7 +328,6 @@
                         </div>
                         <input type="file" name="files" id='i-file' onchange="$('#location').val($('#i-file').val());" style="display: none">
                     </div>
-
                     <div class="form-group">
                         <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage" name="versionMessage" autocomplete="off"></textarea>
                     </div>
@@ -587,9 +584,6 @@
                     $('#packageName1').selectpicker('val', '');
                     $("#packageName1").append(opts);
                     $("#packageName1").selectpicker("refresh");
-                    $('#packageName3').selectpicker('val', '');
-                    $("#packageName3").append(opts);
-                    $("#packageName3").selectpicker("refresh");
                 }
             });
         })

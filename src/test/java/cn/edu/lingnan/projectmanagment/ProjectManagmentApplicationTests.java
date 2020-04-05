@@ -43,9 +43,4 @@ class ProjectManagmentApplicationTests {
     @Autowired
     DocumentsServiceImpl documentsService;
 
-    @Test
-    void t1(){
-        List<ProjectsPackage> allPackagesByProjects = projectsPackageService.getAllPackagesByProjects(1);
-        System.out.println(allPackagesByProjects);
-    }
 }
