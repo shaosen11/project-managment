@@ -35,7 +35,7 @@ public class CaptchaCodeFilter extends OncePerRequestFilter {
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain)
             throws ServletException, IOException {
-        if(StringUtils.equals("/loginUser", httpServletRequest.getRequestURI())
+        if(StringUtils.equals("/login_user", httpServletRequest.getRequestURI())
             && StringUtils.equalsIgnoreCase(httpServletRequest.getMethod(), "post")){
             //验证谜底与用户输入是否匹配
             try {
@@ -55,6 +55,7 @@ public class CaptchaCodeFilter extends OncePerRequestFilter {
         HttpSession session = request.getRequest().getSession();
 
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "captchaCode");
+        System.out.println("验证码：" + codeInRequest);
         //判断验证码是否为空
         if (StringUtils.isEmpty(codeInRequest)) {
             throw new SessionAuthenticationException("验证码不能为空");

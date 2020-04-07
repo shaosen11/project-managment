@@ -8,15 +8,6 @@
 
 	<!-- Fonts and icons -->
 	<script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-<!--	<script>-->
-<!--		WebFont.load({-->
-<!--			google: {"families":["Open+Sans:300,400,600,700"]},-->
-<!--			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},-->
-<!--			active: function() {-->
-<!--				sessionStorage.fonts = true;-->
-<!--			}-->
-<!--		});-->
-<!--	</script>-->
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
@@ -696,13 +687,11 @@
 <script type="text/javascript" th:inline="javascript">
 	$(function () {
 		var userId = [[${#authentication.principal.id}]];
-		console.log(userId);
 		$.ajax({
 			url: "/user_prjects?userId=" + userId,
 			type: "get",
 			datatype: "json",
 			success: function (data) {
-				console.log(data);
 				var parentUL = document.getElementById("projectsul");
 				for (var i = 0; i < data.length; i++) {
 					//创建二级li
@@ -717,6 +706,25 @@
 		})
 	})
 </script>
+<script>
+	$(document).ready(function () {
+		var content = {};
+		content.message = '你有xxx条消息待处理';
+		content.title = '提醒';
+		content.icon = 'fa fa-bell';
+		content.url = 'index.html';
+		content.target = '_blank';
 
+		$.notify(content,{
+			type: 'info',
+			placement: {
+				from: 'bottom',
+				align: 'right'
+			},
+			time: 1000,
+			delay: 0,
+		});
+	})
+</script>
 </body>
 </html>
