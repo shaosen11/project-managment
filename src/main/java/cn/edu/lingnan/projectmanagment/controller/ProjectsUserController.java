@@ -133,14 +133,14 @@ public class ProjectsUserController {
         }
     }
 
-    //查询所有注销项目用户信息
-    @GetMapping("/del_project_user_list")
-    public String deletedProjectUserList(Model model){
-        List<ProjectsUser> list = projectUserService.getDelProjectUserList();
-        model.addAttribute("delprojectuserlist",list);
-        System.out.println("查询所有已注销项目用户"+list);
-        return "deleted/delprojectuser";
-    }
+//    //查询所有注销项目用户信息
+//    @GetMapping("/del_project_user_list")
+//    public String deletedProjectUserList(Model model){
+//        List<ProjectsUser> list = projectUserService.getDelProjectUserList();
+//        model.addAttribute("delprojectuserlist",list);
+//        System.out.println("查询所有已注销项目用户"+list);
+//        return "deleted/delprojectuser";
+//    }
 
     //还原项目用户
     @ResponseBody
