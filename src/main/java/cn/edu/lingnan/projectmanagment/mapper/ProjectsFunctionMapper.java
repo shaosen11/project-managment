@@ -22,6 +22,12 @@ public interface ProjectsFunctionMapper {
     ProjectsFunction getOneProjectFunction(Integer id);
 
     /**
+     * 查询一条项目功能点信息,包括已注销
+     * @return
+     */
+    ProjectsFunction getById(Integer id);
+
+    /**
      * 查询项目功能点数量
      * @return
      */

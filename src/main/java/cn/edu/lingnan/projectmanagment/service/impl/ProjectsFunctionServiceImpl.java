@@ -24,6 +24,11 @@ public class ProjectsFunctionServiceImpl implements ProjectsFunctionService {
     }
 
     @Override
+    public ProjectsFunction getById(Integer id) {
+        return projectsFunctionMapper.getById(id);
+    }
+
+    @Override
     public Integer countProjectFunctionByProjectId(Integer id) {
         return projectsFunctionMapper.countProjectFunctionByProjectId(id);
     }

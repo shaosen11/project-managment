@@ -111,6 +111,8 @@
                                             <th>项目类型</th>
                                             <th>项目描述</th>
                                             <th>创建时间</th>
+                                            <th>收藏次数</th>
+                                            <th>点赞次数</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                         </thead>
@@ -127,6 +129,8 @@
                                             <th>项目类型</th>
                                             <th>项目描述</th>
                                             <th>创建时间</th>
+                                            <th>收藏次数</th>
+                                            <th>点赞次数</th>
                                             <th>Action</th>
                                         </tr>
                                         </tfoot>
@@ -143,13 +147,13 @@
                                             <td th:text="${project.type}"></td>
                                             <td th:text="${project.characterization}"></td>
                                             <td th:text="${#dates.format(project.createTime,'yyyy-MM-dd')}"></td>
+                                            <td th:text="${project.storeCount}"></td>
+                                            <td th:text="${project.likeCount}"></td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <form th:action="@{/reduction_project/}+${project.id}" th:method="post">
-                                                        <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-success">
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success" th:onclick="reductionProject([[${project.id}]])" >
                                                             <i class="fa fa-check"></i>
                                                         </button>
-                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -233,6 +237,62 @@
 
         });
     });
+
+    //还原项目
+    function reductionProject(projectId){
+        swal({
+            icon : "warning",
+            title: "您确定要还原该项目吗?",
+            text: "请谨慎操作！",
+            type: "warning",
+            buttons:{
+                cancel: {
+                    visible: true,
+                    text : '取消',
+                    className: 'btn btn-danger'
+                },
+                confirm: {
+                    text : '确定还原',
+                    className : 'btn btn-success'
+                }
+            },
+            closeOnConfirm: false,
+        }).then(
+            function (isConfirm) {
+                if (!isConfirm) return;
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/reduction_project",
+                        data: {"id": projectId},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                swal("还原成功！", {
+                                    icon : "success",
+                                    buttons: false,
+                                    timer: 1500,
+                                });
+                                setTimeout(function(){
+                                    location.href = "/del_project_list";
+                                },1500);
+                            }
+                            else {
+                                swal("还原失败！",{
+                                    icon: "error",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger'
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }
+                );
+            }
+        );
+    }
 </script>
 <script type="text/javascript" th:inline="javascript">
     //加载用户所有项目

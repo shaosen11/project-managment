@@ -92,7 +92,6 @@
 								<div class="card-header">
 									<div class="d-flex align-items-center">
 										<h4 class="card-title">用户信息</h4>
-										<p style="color: darkred" th:text="${addresult}" th:if="${not #strings.isEmpty(addresult)}"></p>
 										<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
 											<i class="fa fa-plus"></i>
 											Add User
@@ -116,7 +115,6 @@
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
-												<form th:action="@{/add_user}" method="post" onSubmit="return checkAddUserForm()" >
 												<div class="modal-body">
 													<p class="small">Create a new User using this form, make sure you fill them all</p>
 														<div class="row">
@@ -182,10 +180,9 @@
 														</div>
 												</div>
 												<div class="modal-footer no-bd">
-													<button type="submit" class="btn btn-primary">Add</button>
+													<button type="button" class="btn btn-primary" onclick="addUser()">Add</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 												</div>
-												</form>
 											</div>
 										</div>
 									</div>
@@ -206,7 +203,6 @@
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
-												<form th:action="@{/edit_user}" method="post" onsubmit="return checkEditUserForm()">
 													<div class="modal-body">
 															<div class="row">
 																<div class="col-md-6 pr-0">
@@ -225,8 +221,7 @@
 																<div class="col-md-6">
 																	<div class="form-group form-group-default">
 																		<label>Email</label>
-																		<input id="editEmail" name="email" type="text" class="form-control" onBlur="checkEditEmail()">
-																		<span class="default" style="color: #3c763d" id="emailError">请输入邮箱</span>
+																		<input id="editEmail" name="email" type="text" class="form-control" readonly="readonly">
 																	</div>
 																</div>
 																<div class="col-md-6">
@@ -266,10 +261,9 @@
 															</div>
 													</div>
 													<div class="modal-footer no-bd">
-														<button type="submit" class="btn btn-primary">Edit</button>
+														<button type="button" class="btn btn-primary" onclick="updateUser()">Edit</button>
 														<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 													</div>
-												</form>
 											</div>
 										</div>
 									</div>
@@ -284,7 +278,7 @@
 													<th>邮箱</th>
 													<th>电话</th>
 													<th>生日</th>
-													<th>性别(1男0女)</th>
+													<th>性别</th>
 													<th>地址</th>
 													<th>介绍</th>
 													<th style="width: 10%">Action</th>
@@ -310,7 +304,8 @@
 													<td th:text="${user.email}"></td>
 													<td th:text="${user.phone}"></td>
 													<td th:text="${#dates.format(user.birthday,'yyyy-MM-dd')}"></td>
-													<td th:text="${user.gender}"></td>
+													<td th:text="${user.gender}==1?'男':'女'" th:if="${not #strings.isEmpty(user.gender)}"></td>
+													<td th:text="${user.gender}" th:if="${#strings.isEmpty(user.gender)}"></td>
 													<td th:text="${user.address}"></td>
 													<td th:text="${user.introduce}"></td>
 													<td>
@@ -318,11 +313,9 @@
 															<button class="btn btn-primary btn-link ml-auto" data-toggle="modal" data-target="#editRowModal" onclick="editUser(this)">
 																<i class="fa fa-edit"></i>
 															</button>
-															<form th:action="@{/delete_user/}+${user.id}" th:method="post">
-																<button type="submit"  data-toggle="tooltip" title="" class="btn btn-link btn-danger">
-																	<i class="fa fa-times"></i>
-																</button>
-															</form>
+															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" th:onclick="deleteUser([[${user.id}]])">
+																<i class="fa fa-times"></i>
+															</button>
 														</div>
 													</td>
 												</tr>
@@ -406,8 +399,7 @@
 
 			});
 		});
-	</script>
-	<script>
+
 		function editUser(obj){
 			var $td= $(obj).parents('tr').children('td');
 			var td_id = $td.eq(0).text();
@@ -418,6 +410,12 @@
 			var td_gender = $td.eq(5).text();
 			var td_address = $td.eq(6).text();
 			var td_introduce = $td.eq(7).text();
+			if(td_gender == "男"){
+				td_gender = 1;
+			}
+			if(td_gender == "女"){
+				td_gender = 0;
+			}
 
 			$("#editId").val(td_id);
 			$("#editName").val(td_name);
@@ -427,6 +425,179 @@
 			$("#editGender").val(td_gender);
 			$("#editAddress").val(td_address);
 			$("#editIntroduce").val(td_introduce);
+		}
+
+		// 删除用户
+		function deleteUser(userId){
+			swal({
+					icon : "warning",
+					title: "您确定要删除该用户吗?",
+					text: "请谨慎操作！",
+					type: "warning",
+					buttons:{
+							cancel: {
+								visible: true,
+								text : '取消',
+								className: 'btn btn-danger'
+							},
+							confirm: {
+								text : '确定删除',
+								className : 'btn btn-success'
+							}
+						},
+					closeOnConfirm: false,
+				}).then(
+					function (isConfirm) {
+						if (!isConfirm) return;
+						$.ajax(
+								{
+									type: "POST",
+									url: "/delete_user",
+									data: {"id": userId},
+									dataType: "json",
+									success: function (data) {
+										if (data) {
+											swal("删除成功！", {
+												icon : "success",
+												buttons: false,
+												timer: 1500,
+											});
+											setTimeout(function(){
+												location.href = "/user_list";
+											},1500);
+										}
+										else {
+											swal("删除失败！",{
+												icon: "error",
+												buttons: {
+													confirm: {
+														className: 'btn btn-danger'
+													}
+												}
+											})
+										}
+									}
+								}
+						);
+					}
+			);
+		}
+
+		//添加用户
+		function addUser() {
+			var username = $("#addName").val();
+			var password = $("#addPassword").val();
+			var email = $("#addEmail").val();
+			var phone = $("#addPhone").val();
+			var gender = null;
+			for (var i = 0; i < document.getElementsByName("gender").length; i++)
+			{
+				if(document.getElementsByName("gender")[i].checked)
+				{
+					gender = document.getElementsByName("gender")[i].value;
+				}
+			}
+			var birthday = $("#addBirthday").val();
+			var address = $("#addAddress").val();
+			var introduce = $("#addIntroduce").val();
+			if(!checkAddUserForm()){
+				return;
+			}else{
+				$.ajax(
+						{
+							type: "POST",
+							url: "/add_user",
+							data: {
+								"username": username,
+								"password": password,
+								"email": email,
+								"phone": phone,
+								"gender": gender,
+								"birthday": birthday,
+								"address": address,
+								"introduce": introduce
+							},
+							dataType: "json",
+							success: function (data) {
+								if (data) {
+									swal("添加成功！", {
+										icon : "success",
+										buttons: false,
+										timer: 1500,
+									});
+									setTimeout(function(){
+										location.href = "/user_list";
+									},1500);
+								}
+								else {
+									swal("添加失败！","该邮箱已被绑定!",{
+										icon: "error",
+										buttons: {
+											confirm: {
+												className: 'btn btn-danger'
+											}
+										}
+									})
+								}
+							}
+						}
+				);
+			}
+		}
+
+		//修改用户
+		function updateUser() {
+			var id = $("#editId").val();
+			var username = $("#editName").val();
+			var email = $("#editEmail").val();
+			var phone = $("#editPhone").val();
+			var gender = $("#editGender").val();
+			var birthday = $("#editBirthday").val();
+			var address = $("#editAddress").val();
+			var introduce = $("#editIntroduce").val();
+			if(!checkEditUserForm()){
+				return;
+			}else{
+				$.ajax(
+						{
+							type: "POST",
+							url: "/edit_user",
+							data: {
+								"id": id,
+								"username": username,
+								"email": email,
+								"phone": phone,
+								"gender": gender,
+								"birthday": birthday,
+								"address": address,
+								"introduce": introduce
+							},
+							dataType: "json",
+							success: function (data) {
+								if (data) {
+									swal("修改成功！", {
+										icon : "success",
+										buttons: false,
+										timer: 1500,
+									});
+									setTimeout(function(){
+										location.href = "/user_list";
+									},1500);
+								}
+								else {
+									swal("修改失败！",{
+										icon: "error",
+										buttons: {
+											confirm: {
+												className: 'btn btn-danger'
+											}
+										}
+									})
+								}
+							}
+						}
+				);
+			}
 		}
 	</script>
 	<script type="text/javascript" th:inline="javascript">

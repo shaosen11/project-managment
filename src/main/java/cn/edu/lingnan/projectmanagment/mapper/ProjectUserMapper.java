@@ -63,6 +63,18 @@ public interface ProjectUserMapper {
     ProjectsUser getByUserIdAndProjectId(Integer userId, Integer projectId);
 
     /**
+     * 通过Id查询
+     * @return
+     */
+    ProjectsUser getById(Integer id);
+
+    /**
+     * 通过Id查询已注销的记录
+     * @return
+     */
+    ProjectsUser getDelById(Integer id);
+
+    /**
      * 获取代码贡献量
      * @param projectId
      * @return

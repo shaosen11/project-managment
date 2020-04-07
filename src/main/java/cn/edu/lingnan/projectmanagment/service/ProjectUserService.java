@@ -13,6 +13,18 @@ public interface ProjectUserService {
     List<ProjectsUser> getProjectUserList();
 
     /**
+     * 通过Id查询
+     * @return
+     */
+    ProjectsUser getById(Integer id);
+
+    /**
+     * 通过Id查询已注销的记录
+     * @return
+     */
+    ProjectsUser getDelById(Integer id);
+
+    /**
      * 添加项目用户信息
      * @param projectsUser
      * @return

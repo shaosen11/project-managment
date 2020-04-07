@@ -137,11 +137,9 @@
                                             <td th:text="${projectfunction.userName}"></td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <form th:action="@{/reduction_project_function/}+${projectfunction.id}" th:method="post">
-                                                        <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-success">
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success" th:onclick="reductionProjectFunction([[${projectfunction.id}]])">
                                                             <i class="fa fa-check"></i>
                                                         </button>
-                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -225,6 +223,72 @@
 
         });
     });
+
+    // 还原
+    function reductionProjectFunction(projectFunctionId){
+        swal({
+            icon : "warning",
+            title: "您确定要还原该记录吗?",
+            text: "请谨慎操作！",
+            type: "warning",
+            buttons:{
+                cancel: {
+                    visible: true,
+                    text : '取消',
+                    className: 'btn btn-danger'
+                },
+                confirm: {
+                    text : '确定还原',
+                    className : 'btn btn-success'
+                }
+            },
+            closeOnConfirm: false,
+        }).then(
+            function (isConfirm) {
+                if (!isConfirm) return;
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/reduction_project_function",
+                        data: {"id": projectFunctionId},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 1) {
+                                swal("还原成功！", {
+                                    icon : "success",
+                                    buttons: false,
+                                    timer: 1500,
+                                });
+                                setTimeout(function(){
+                                    location.href = "/del_project_function_list";
+                                },1500);
+                            }
+                            else if(data == 2){
+                                swal("还原失败！","该项目不存在!",{
+                                    icon: "error",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger'
+                                        }
+                                    }
+                                })
+                            }
+                            else {
+                                swal("还原失败！",{
+                                    icon: "error",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger'
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }
+                );
+            }
+        );
+    }
 </script>
 <script type="text/javascript" th:inline="javascript">
     //加载用户所有项目

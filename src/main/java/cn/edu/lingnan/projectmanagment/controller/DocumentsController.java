@@ -41,7 +41,7 @@ public class DocumentsController {
     @Autowired
     ProjectsPackageController projectsPackageController;
     @Autowired
-    ProjectUserController projectUserController;
+    ProjectsUserController projectsUserController;
     @Autowired
     ProjectsCodeLineController projectsCodeLineController;
 
@@ -154,7 +154,7 @@ public class DocumentsController {
                 //第一次插入统计代码行
                 //修改代码贡献量
                 Integer codeLine = documents.getCodeLineNumber();
-                System.out.println("代码行修改：" + projectUserController.update(codeLine, documents.getUserId(), documents.getProjectId()));
+                System.out.println("代码行修改：" + projectsUserController.update(codeLine, documents.getUserId(), documents.getProjectId()));
                 //插入ProjectsCodeLine表
                 System.out.println("插入reocrd:::" + projectsCodeLineController.insert(documents.getProjectId()));
             }
@@ -232,7 +232,7 @@ public class DocumentsController {
             System.out.println("修改d2文件确定号：" + documentsService.update(d2));
             //修改代码贡献量
             Integer codeLine = d2.getCodeLineNumber() - d1.getCodeLineNumber();
-            System.out.println("代码行修改：" + projectUserController.update(codeLine, d2.getUserId(), d2.getProjectId()));
+            System.out.println("代码行修改：" + projectsUserController.update(codeLine, d2.getUserId(), d2.getProjectId()));
             //插入projectcodeline表
             projectsCodeLineController.insert(d1.getProjectId());
             //插入日志表

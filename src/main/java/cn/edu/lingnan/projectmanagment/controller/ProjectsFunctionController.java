@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -35,12 +36,13 @@ public class ProjectsFunctionController {
 
     //添加项目功能点
     @Transactional
+    @ResponseBody
     @PostMapping("/add_project_function")
-    public String addProjectFunction(ProjectsFunction projectsFunction, Model model){
+    public Integer addProjectFunction(ProjectsFunction projectsFunction){
         Projects projects = projectService.getById(projectsFunction.getProjectsId());
         if(projects == null){
-            model.addAttribute("addmsg","该项目不存在！");
             System.out.println("该项目不存在");
+            return 2;
         }else{
             try{
                 Integer functionid = projectsFunctionService.findMaxFunctionId(projectsFunction.getProjectsId());
@@ -58,30 +60,29 @@ public class ProjectsFunctionController {
                     projectService.editProject(projects1);
                     projectService.updateSchedule(projects1);
                     System.out.println("项目信息："+projects1);
+                    return 1;
                 }else{
                     System.out.println("添加项目功能点信息失败！");
-                    model.addAttribute("addmsg","添加项目功能信息失败！");
+                    return 3;
                 }
             }catch (Exception e){
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 System.out.println("添加项目功能点信息失败！");
-                model.addAttribute("addmsg","添加项目功能信息失败！");
+                return 3;
             }
         }
-        List<ProjectsFunction> list = projectsFunctionService.getProjectFunctionList();
-        model.addAttribute("projectsfunctionlist",list);
-        System.out.println("查询所有项目功能点信息:"+list);
-        return "tables/projectsfunctionlist";
     }
 
     //删除项目功能点
     @Transactional
-    @PostMapping("/del_project_function/{id}")
-    public String delProjectFunction(@PathVariable("id")Integer id,Model model){
+    @ResponseBody
+    @PostMapping("/del_project_function")
+    public Boolean delProjectFunction(Integer id){
         try{
             ProjectsFunction projectsFunction = projectsFunctionService.getOneProjectFunction(id);
             System.out.println("projectsFunction="+projectsFunction);
             Boolean flag =  projectsFunctionService.deleteProjectFunction(id);
+            System.out.println("删除项目功能点信息:"+ id + flag);
             if (flag){
                 System.out.println("删除项目功能点信息成功！");
                 Projects projects1 =  projectService.getById(projectsFunction.getProjectsId());
@@ -89,30 +90,28 @@ public class ProjectsFunctionController {
                 projectService.editProject(projects1);
                 projectService.updateSchedule(projects1);
                 System.out.println("项目信息："+projects1);
+                return true;
             }else{
                 System.out.println("删除项目功能点信息失败！");
+                return false;
             }
-            System.out.println("删除项目功能点信息:"+ id + flag);
         }catch (Exception e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             System.out.println("事务回滚，删除项目功能点信息失败！");
-            model.addAttribute("addmsg","删除项目功能信息失败！");
+            return false;
         }
-        List<ProjectsFunction> list = projectsFunctionService.getProjectFunctionList();
-        model.addAttribute("projectsfunctionlist",list);
-        System.out.println("查询所有项目功能点信息:"+list);
-        return "tables/projectsfunctionlist";
     }
 
     //修改项目功能点信息
     @Transactional
+    @ResponseBody
     @PostMapping("/edit_project_function")
-    public String editProjectFunction(ProjectsFunction projectsFunction, Model model){
+    public Integer editProjectFunction(ProjectsFunction projectsFunction){
         try{
             Projects projects = projectService.getById(projectsFunction.getProjectsId());
             if(projects == null){
-                model.addAttribute("addmsg","该项目不存在！");
                 System.out.println("该项目不存在");
+                return 2;
             }else {
                 ProjectsFunction projectsFunction1 = projectsFunctionService.getOneProjectFunction(projectsFunction.getId());
                 //projectsFunction修改后；projectsFunction1修改前
@@ -149,19 +148,17 @@ public class ProjectsFunctionController {
                         projectService.updateSchedule(projects2);
                         System.out.println("修改后项目信息更新：" + projects2);
                     }
+                    return 1;
                 } else {
                     System.out.println("修改项目功能点信息失败！");
+                    return 3;
                 }
             }
         }catch (Exception e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             System.out.println("事务回滚，修改项目功能点信息失败！");
-            model.addAttribute("addmsg","修改项目功能点信息失败！");
+            return 3;
         }
-        List<ProjectsFunction> list = projectsFunctionService.getProjectFunctionList();
-        model.addAttribute("projectsfunctionlist",list);
-        System.out.println("查询所有项目功能点信息:"+list);
-        return "tables/projectsfunctionlist";
     }
 
     //查询所有注销项目功能点信息
@@ -175,31 +172,35 @@ public class ProjectsFunctionController {
 
     //还原项目功能点
     @Transactional
-    @PostMapping("/reduction_project_function/{id}")
-    public String reductionProjectFunction(@PathVariable("id")Integer id,Model model){
+    @ResponseBody
+    @PostMapping("/reduction_project_function")
+    public Integer reductionProjectFunction(Integer id){
         try{
-            Boolean flag =  projectsFunctionService.reductionProjectFunction(id);
-            if (flag){
-                System.out.println("还原项目功能点信息成功！");
-                ProjectsFunction projectsFunction = projectsFunctionService.getOneProjectFunction(id);
-                System.out.println("projectsFunction="+projectsFunction);
-                Projects projects1 =  projectService.getById(projectsFunction.getProjectsId());
-                projects1.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects1.getId()));
-                projectService.editProject(projects1);
-                projectService.updateSchedule(projects1);
-                System.out.println("项目信息："+projects1);
+            ProjectsFunction projectsFunction = projectsFunctionService.getById(id);
+            Projects projects = projectService.getByIdAndNoDel(projectsFunction.getProjectsId());
+            if(projects== null){
+                System.out.println("该项目不存在！");
+                return 2;
             }else{
-                System.out.println("还原项目功能点信息失败！");
+                Boolean flag =  projectsFunctionService.reductionProjectFunction(id);
+                System.out.println("还原项目功能点:"+id+flag);
+                if (flag){
+                    System.out.println("还原项目功能点信息成功！");
+                    System.out.println("projectsFunction="+projectsFunction);
+                    projects.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects.getId()));
+                    projectService.editProject(projects);
+                    projectService.updateSchedule(projects);
+                    System.out.println("项目信息："+projects);
+                    return 1;
+                }else{
+                    System.out.println("还原项目功能点信息失败！");
+                    return 3;
+                }
             }
-            System.out.println("还原项目功能点:"+id+flag);
         }catch (Exception e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             System.out.println("事务回滚，还原项目功能点信息失败！");
-            model.addAttribute("msg","还原项目功能点信息失败！");
+            return 3;
         }
-        List<ProjectsFunction> list = projectsFunctionService.getDelProjectFunctionList();
-        model.addAttribute("delprojectfunctionlist",list);
-        System.out.println("查询所有已注销项目功能点"+list);
-        return "deleted/delprojectfunction";
     }
 }

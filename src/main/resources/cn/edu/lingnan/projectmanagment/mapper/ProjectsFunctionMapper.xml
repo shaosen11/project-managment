@@ -35,6 +35,10 @@
         where pf.delete_flag = 1 and pf.id = #{id}
     </select>
 
+    <select id="getById" resultType="ProjectsFunction">
+        select * from projects_function where id = #{id}
+    </select>
+
     <!--查找所有被注销项目功能点信息-->
     <resultMap id="delpflist" type="ProjectsFunction">
         <result column="id" property="id"></result>

@@ -131,16 +131,15 @@
                                             <td th:text="${user.email}"></td>
                                             <td th:text="${user.phone}"></td>
                                             <td th:text="${#dates.format(user.birthday,'yyyy-MM-dd')}"></td>
-                                            <td th:text="${user.gender==0?'女':'男'}"></td>
+                                            <td th:text="${user.gender}==1?'男':'女'" th:if="${not #strings.isEmpty(user.gender)}"></td>
+                                            <td th:text="${user.gender}" th:if="${#strings.isEmpty(user.gender)}"></td>
                                             <td th:text="${user.address}"></td>
                                             <td th:text="${user.introduce}"></td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <form th:action="@{/reduction/}+${user.id}" th:method="post">
-                                                        <button type="submit" data-toggle="tooltip" title="" class="btn btn-link btn-success">
+                                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success" th:onclick="reductionUser([[${user.id}]])">
                                                             <i class="fa fa-check"></i>
                                                         </button>
-                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
@@ -224,6 +223,62 @@
 
         });
     });
+
+    // 还原用户
+    function reductionUser(userId){
+        swal({
+            icon : "warning",
+            title: "您确定要还原该用户吗?",
+            text: "请谨慎操作！",
+            type: "warning",
+            buttons:{
+                cancel: {
+                    visible: true,
+                    text : '取消',
+                    className: 'btn btn-danger'
+                },
+                confirm: {
+                    text : '确定还原',
+                    className : 'btn btn-success'
+                }
+            },
+            closeOnConfirm: false,
+        }).then(
+            function (isConfirm) {
+                if (!isConfirm) return;
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/reduction",
+                        data: {"id": userId},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                swal("还原成功！", {
+                                    icon : "success",
+                                    buttons: false,
+                                    timer: 1500,
+                                });
+                                setTimeout(function(){
+                                    location.href = "/deleted_user_list";
+                                },1500);
+                            }
+                            else {
+                                swal("还原失败！",{
+                                    icon: "error",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger'
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }
+                );
+            }
+        );
+    }
 </script>
 <script type="text/javascript" th:inline="javascript">
     //加载用户所有项目

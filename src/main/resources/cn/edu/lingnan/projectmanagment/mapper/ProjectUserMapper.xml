@@ -83,6 +83,14 @@
         select * from projects_user where delete_flag = 1 and user_id = #{userId} and projects_id = #{projectId}
     </select>
 
+    <select id="getById" resultType="ProjectsUser">
+        select * from projects_user where delete_flag = 1 and id = #{id}
+    </select>
+
+    <select id="getDelById" resultType="ProjectsUser">
+        select * from projects_user where delete_flag = 0 and id = #{id}
+    </select>
+
     <resultMap id="codeDevoteData" type="Echarts">
         <result column="name" property="name"/>
         <result column="value" property="value"/>

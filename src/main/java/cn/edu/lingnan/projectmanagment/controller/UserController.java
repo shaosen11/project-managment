@@ -235,8 +235,9 @@ public class UserController {
     }
 
     //添加用户2
+    @ResponseBody
     @PostMapping("/add_user")
-    public String addUser2(MyUserDetails myUserDetails,Model model){
+    public Boolean addUser2(MyUserDetails myUserDetails){
         System.out.println("添加用户："+myUserDetails);
         MyUserDetails flag = userService.findByEmail(myUserDetails.getEmail());
         System.out.println("addflag="+flag+" email="+myUserDetails.getEmail());
@@ -245,32 +246,39 @@ public class UserController {
             myUserDetails.setPassword(password);
             userService.addUser2(myUserDetails);
             System.out.println("添加用户成功！");
+            return true;
         }else{
             System.out.println("添加失败，该邮箱已被绑定！");
-            model.addAttribute("addresult","添加失败，该邮箱已被绑定！");
+            return false;
         }
-        return "tables/userlist";
     }
 
     //删除用户
-    @PostMapping("/delete_user/{id}")
-    public String deleteUser(@PathVariable("id")Integer id){
+    @ResponseBody
+    @PostMapping("/delete_user")
+    public Boolean deleteUser(Integer id){
         Boolean flag =  userService.deleteUser(id);
         System.out.println("删除用户:"+id+flag);
-        return "redirect:user_list";
+        if(flag){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //修改用户信息
+    @ResponseBody
     @PostMapping("/edit_user")
-    public String editUser(MyUserDetails myUserDetails, Model model){
+    public Boolean editUser(MyUserDetails myUserDetails){
         System.out.println("editUser:用户："+myUserDetails);
         Boolean flag = userService.editUser(myUserDetails);
         if(flag){
             System.out.println("修改成功");
+            return true;
         }else{
             System.out.println("修改失败");
+            return false;
         }
-        return "redirect:user_list";
     }
 
     //查询所有注销用户信息
@@ -283,11 +291,16 @@ public class UserController {
     }
 
     //还原用户
-    @PostMapping("/reduction/{id}")
-    public String reductionUser(@PathVariable("id")Integer id){
+    @ResponseBody
+    @PostMapping("/reduction")
+    public Boolean reductionUser(Integer id){
         Boolean flag =  userService.reductionUser(id);
         System.out.println("删除用户:"+id+flag);
-        return "redirect:../deleteduserList";
+        if(flag){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
