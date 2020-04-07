@@ -3,7 +3,9 @@ package cn.edu.lingnan.projectmanagment.controller;
 import cn.edu.lingnan.projectmanagment.bean.DocumentsRecord;
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.Projects;
+import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
+import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProjectController {
@@ -64,7 +68,6 @@ public class ProjectController {
         model.addAttribute("documentsRecordlist", documentsRecordList);
         return "project/projectview";
     }
-
 
     //添加项目
     @PostMapping("/add_project")
@@ -145,5 +148,32 @@ public class ProjectController {
         Boolean flag =  projectService.reductionProject(id);
         System.out.println("还原项目:"+id+flag);
         return "redirect:../del_project_list";
+    }
+
+    @GetMapping("/newprojectview")
+    public String newProjectView(){
+        return "project/newprojectview";
+    }
+
+    @PostMapping("/projects")
+    public String newprojects(Projects projects){
+        System.out.println("新建项目:::" + projects);
+        //设置项目初始状态
+        projects.setSchedule("未开始");
+        //插入数据库
+        projectService.addProject(projects);
+        //查找项目ID
+        projects = projectService.getNewProjectByProject(projects.getName(), projects.getChargeUserId(), projects.getCharacterization());
+        System.out.println(projects);
+        //插入projectuser表
+        ProjectsUser projectsUser = new ProjectsUser();
+        projectsUser.setProjectsId(projects.getId());
+        projectsUser.setUserId(projects.getChargeUserId());
+        projectUserService.addProjectUser(projectsUser);
+        Map<String,Object> pathMap = new HashMap<>();
+        pathMap.put("projectId", projects.getId());
+        pathMap.put("userId", projects.getChargeUserId());
+        String pathString = PathUtil.pathUtil(pathMap);
+        return "redirect:projects_view" + pathString;
     }
 }

@@ -55,7 +55,6 @@ public class CaptchaCodeFilter extends OncePerRequestFilter {
         HttpSession session = request.getRequest().getSession();
 
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "captchaCode");
-        System.out.println("验证码：" + codeInRequest);
         //判断验证码是否为空
         if (StringUtils.isEmpty(codeInRequest)) {
             throw new SessionAuthenticationException("验证码不能为空");

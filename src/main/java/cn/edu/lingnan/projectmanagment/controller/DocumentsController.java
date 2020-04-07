@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.Documents;
+import cn.edu.lingnan.projectmanagment.bean.Projects;
 import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
@@ -167,6 +168,17 @@ public class DocumentsController {
             System.out.println("插入日志数据库:::" + documentsRecordController.insert(documents, ip, 1));
             //插入文件包表数据库
             System.out.println("插入文件包表数据库：：：" + projectsPackageController.insertpackage(documents, packageName));
+            //修改项目上传次数
+            Projects projects = projectService.getById(projectId);
+            System.out.println(projects);
+            Integer projectsUpdateCount = projects.getUpdateCount();
+            if(projectsUpdateCount == null){
+                projects.setUpdateCount(1);
+            } else {
+                projects.setUpdateCount(projectsUpdateCount + 1);
+            }
+            projects.setLastUpdateTime(new Date());
+            projectService.editProject(projects);
             //写入服务器
             System.out.println("上传文件");
             //调用自定义的FTP工具类上传文件
@@ -231,6 +243,9 @@ public class DocumentsController {
             System.out.println("修改d2文件确定号：" + documentsService.update(d2));
             documentsRecordController.insert(d2, ip, 2);
         }
+        Projects projects = projectService.getById(projectsId);
+        projects.setLastUpdateTime(new Date());
+        projectService.editProject(projects);
         Map<String,Object> pathMap = new HashMap<>();
         pathMap.put("projectId", d2.getProjectId());
         pathMap.put("documentName", d2.getName());

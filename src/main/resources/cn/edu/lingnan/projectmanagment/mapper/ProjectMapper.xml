@@ -48,6 +48,7 @@
             <if test="functionPoints != null">function_points = #{functionPoints},</if>
             <if test="completedFunctionPoints != null">completed_function_points = #{completedFunctionPoints},</if>
             <if test="updateCount != null">update_count = #{updateCount},</if>
+            <if test="lastUpdateTime != null">last_update_time = #{lastUpdateTime},</if>
             <if test="type != null">type = #{type},</if>
             <if test="characterization != null">characterization = #{characterization},</if>
             <if test="storeCount != null">store_count = #{storeCount},</if>
@@ -94,5 +95,9 @@
         END
         where enabled = 1 and id = #{id}
     </update>
+
+    <select id="getNewProjectByProject" resultType="Projects">
+       select * from projects where name = #{projectName} and charge_user_id = #{chargeUserId} and characterization = #{projectCharacterization}
+    </select>
 
 </mapper>

@@ -62,4 +62,9 @@ public class ProjectServiceImpl implements ProjectsService {
     public Projects getAdminByUserIdAndProjectId(Integer userId, Integer projectId) {
         return projectMapper.getAdminByUserIdAndProjectId(userId, projectId);
     }
+
+    @Override
+    public Projects getNewProjectByProject(String projectName, Integer chargeUserId, String projectCharacterization) {
+        return projectMapper.getNewProjectByProject(projectName, chargeUserId, projectCharacterization);
+    }
 }
