@@ -30,23 +30,7 @@ function checkAddUserForm(){
 function checkEditUserForm(){
     var nametip = checkEditName();
     var phonetip = checkEditPhone();
-    var emailip = checkEditEmail();
-    return nametip && phonetip && emailip;
-}
-
-function checkAddProjectForm(){
-    var nametip = checkProjectName();
-    var idtip = checkChargeUserId();
-    var typetip = checkFunctionPoints();
-    return nametip && idtip && typetip;
-}
-
-function checkEditProjectForm(){
-    var nametip = checkEditProjectName();
-    var useridtip = checkEditChargeUserId();
-    var pointip = checkEditFunctionPoints();
-    var cpointip = checkEditComFunctionPoints();
-    return nametip && useridtip && pointip &&cpointip;
+    return nametip && phonetip;
 }
 
 //验证用户名
@@ -207,104 +191,4 @@ function checkEditPhone(){
     }
 }
 
-//Project
-//项目名
-function checkProjectName(){
-    var projectName = document.getElementById('addName');
-    var nameErr = document.getElementById('pnameErr');
-    if (projectName.value.length == 0) {
-        nameErr.innerHTML = "项目名不能为空"
-        nameErr.className = "error"
-        return false;
-    }
-    else{
-        nameErr.innerHTML="OK"
-        nameErr.className="success"
-        return true;
-    }
-}
 
-function checkEditProjectName(){
-    var projectName = document.getElementById('editName');
-    var nameErr = document.getElementById('editNameErr');
-    if (projectName.value.length == 0) {
-        nameErr.innerHTML = "项目名不能为空"
-        nameErr.className = "error"
-        return false;
-    }
-    else{
-        nameErr.innerHTML="OK"
-        nameErr.className="success"
-        return true;
-    }
-}
-
-function checkChargeUserId() {
-    var projectUserId = document.getElementById('addChargeUserId');
-    var userIdErr = document.getElementById('pchargeUserIdErr');
-    if (projectUserId.value.length == 0) {
-        userIdErr.innerHTML = "项目负责人不能为空"
-        userIdErr.className = "error"
-        return false;
-    } else {
-        userIdErr.innerHTML = "OK"
-        userIdErr.className = "success"
-        return true;
-    }
-}
-
-function checkEditChargeUserId() {
-    var projectUserId = document.getElementById('editChargeUserId');
-    var userIdErr = document.getElementById('editUserIdErr');
-    if (projectUserId.value.length == 0) {
-        userIdErr.innerHTML = "项目负责人不能为空"
-        userIdErr.className = "error"
-        return false;
-    } else {
-        userIdErr.innerHTML = "OK"
-        userIdErr.className = "success"
-        return true;
-    }
-}
-
-function checkFunctionPoints() {
-    var projectType = document.getElementById('addFunctionPoints');
-    var typeErr = document.getElementById('pfunctionPointsErr');
-    if (projectType.value.length == 0) {
-        typeErr.innerHTML = "功能点不能为空"
-        typeErr.className = "error"
-        return false;
-    } else {
-        typeErr.innerHTML = "OK"
-        typeErr.className = "success"
-        return true;
-    }
-}
-
-function checkEditFunctionPoints() {
-    var projectType = document.getElementById('editFunctionPoints');
-    var typeErr = document.getElementById('editFunctionPointsErr');
-    if (projectType.value.length == 0) {
-        typeErr.innerHTML = "功能点不能为空"
-        typeErr.className = "error"
-        return false;
-    } else {
-        typeErr.innerHTML = "OK"
-        typeErr.className = "success"
-        return true;
-    }
-}
-
-function checkEditComFunctionPoints() {
-    var projectType = document.getElementById('editCompletedFunctionPoints');
-    var typeErr = document.getElementById('editCompletedFunctionPointsErr');
-    if (projectType.value.length == 0) {
-        typeErr.innerHTML = "功能点不能为空"
-        typeErr.className = "error"
-        return false;
-    } else {
-        typeErr.innerHTML = "OK"
-        typeErr.className = "success"
-        return true;
-    }
-}

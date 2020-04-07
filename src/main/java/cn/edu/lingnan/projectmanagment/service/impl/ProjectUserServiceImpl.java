@@ -20,6 +20,16 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     }
 
     @Override
+    public ProjectsUser getById(Integer id) {
+        return projectUserMapper.getById(id);
+    }
+
+    @Override
+    public ProjectsUser getDelById(Integer id) {
+        return projectUserMapper.getDelById(id);
+    }
+
+    @Override
     public boolean addProjectUser(ProjectsUser projectsUser) {
         return projectUserMapper.addProjectUser(projectsUser);
     }

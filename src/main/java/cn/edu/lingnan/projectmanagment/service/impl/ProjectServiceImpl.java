@@ -19,6 +19,11 @@ public class ProjectServiceImpl implements ProjectsService {
     }
 
     @Override
+    public Projects getByIdAndNoDel(Integer id) {
+        return projectMapper.getByIdAndNoDel(id);
+    }
+
+    @Override
     public List<Projects> getProjectList() {
         return projectMapper.getProjectList();
     }

@@ -92,7 +92,6 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">项目信息</h4>
-                                    <p style="color: darkred" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
                                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                                         <i class="fa fa-plus"></i>
                                         Add Project
@@ -116,22 +115,19 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form th:action="@{/add_project}" method="post" onsubmit="return checkAddProjectForm()" >
                                                 <div class="modal-body">
                                                     <p class="small">Create a new Project using this form, make sure you fill them all</p>
                                                     <div class="row">
                                                         <div class="col-md-6 pr-0">
                                                             <div class="form-group form-group-default">
                                                                 <label>项目名</label>
-                                                                <input id="addName" name="name" type="text" class="form-control" onBlur="checkProjectName()">
-                                                                <span class="default" style="color: #3c763d" id="pnameErr">*</span>
+                                                                <input id="addName" name="name" type="text" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default">
                                                                 <label>项目管理员</label>
-                                                                <input id="addChargeUserId" name="chargeUserId" type="number" class="form-control" onBlur="checkChargeUserId()">
-                                                                <span class="default" style="color: #3c763d" id="pchargeUserIdErr">*</span>
+                                                                <input id="addChargeUserId" name="chargeUserId" type="number" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -156,10 +152,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer no-bd">
-                                                    <button type="submit" class="btn btn-primary">Add</button>
+                                                    <button type="button" class="btn btn-primary" onclick="addProject()">Add</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                 </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +175,6 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form th:action="@{/edit_project}" method="post" onsubmit="return checkEditProjectForm()">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-md-6 pr-0">
@@ -192,15 +186,13 @@
                                                         <div class="col-md-6 pr-0">
                                                             <div class="form-group form-group-default">
                                                                 <label>项目名</label>
-                                                                <input id="editName" name="name"type="text" class="form-control" onBlur="checkEditProjectName()">
-                                                                <span class="default" style="color: #3c763d" id="editNameErr">*</span>
+                                                                <input id="editName" name="name"type="text" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default">
                                                                 <label>项目管理员</label>
-                                                                <input id="editChargeUserId" name="chargeUserId" type="number" class="form-control" onBlur="checkEditChargeUserId()">
-                                                                <span class="default" style="color: #3c763d" id="editUserIdErr">*</span>
+                                                                <input id="editChargeUserId" name="chargeUserId" type="number" class="form-control" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -224,7 +216,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer no-bd">
-                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                    <button type="button" class="btn btn-primary" onclick="updateProject()">Update</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                 </div>
                                             </form>
@@ -232,7 +224,7 @@
                                     </div>
                                 </div>
 
-                                <!-- 用户信息表单 -->
+                                <!-- 项目信息表单 -->
                                 <div class="table-responsive">
                                     <table id="add-row" class="display table table-striped table-hover" >
                                         <thead>
@@ -248,6 +240,8 @@
                                             <th>项目类型</th>
                                             <th>项目描述</th>
                                             <th>创建时间</th>
+                                            <th>收藏次数</th>
+                                            <th>点赞次数</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                         </thead>
@@ -264,6 +258,8 @@
                                             <th>项目类型</th>
                                             <th>项目描述</th>
                                             <th>创建时间</th>
+                                            <th>收藏次数</th>
+                                            <th>点赞次数</th>
                                             <th>Action</th>
                                         </tr>
                                         </tfoot>
@@ -280,16 +276,16 @@
                                             <td th:text="${project.type}"></td>
                                             <td th:text="${project.characterization}"></td>
                                             <td th:text="${#dates.format(project.createTime,'yyyy-MM-dd')}"></td>
+                                            <td th:text="${project.storeCount}"></td>
+                                            <td th:text="${project.likeCount}"></td>
                                             <td>
                                                 <div class="form-button-action">
                                                     <button class="btn btn-primary btn-link ml-auto" data-toggle="modal" data-target="#editRowModal" onclick="editProject(this)">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
-                                                    <form th:action="@{/del_project/}+${project.id}" th:method="post">
-                                                        <button type="submit"  data-toggle="tooltip" title="" class="btn btn-link btn-danger">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </form>
+                                                    <button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-danger" th:onclick="deleteProject([[${project.id}]])" >
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -324,6 +320,9 @@
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <script th:src="@{/assets/js/formcheck.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/assets/js/myjs.js}"></script>
 <script >
     $(document).ready(function() {
@@ -371,8 +370,7 @@
 
         });
     });
-</script>
-<script>
+
     function editProject(obj){
         var $td= $(obj).parents('tr').children('td');
         var td_id = $td.eq(0).text();
@@ -392,6 +390,170 @@
         $("#editCompletedFunctionPoints").val(td_completedFunctionPoints);
         $("#editType").val(td_type);
         $("#editCharacterization").val(td_characterization);
+    }
+
+    //删除项目
+    function deleteProject(projectId){
+        swal({
+            icon : "warning",
+            title: "您确定要删除该项目吗?",
+            text: "请谨慎操作！",
+            type: "warning",
+            buttons:{
+                cancel: {
+                    visible: true,
+                    text : '取消',
+                    className: 'btn btn-danger'
+                },
+                confirm: {
+                    text : '确定删除',
+                    className : 'btn btn-success'
+                }
+            },
+            closeOnConfirm: false,
+        }).then(
+            function (isConfirm) {
+                if (!isConfirm) return;
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/del_project",
+                        data: {"id": projectId},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                swal("删除成功！", {
+                                    icon : "success",
+                                    buttons: false,
+                                    timer: 1500,
+                                });
+                                setTimeout(function(){
+                                    location.href = "/projects_list";
+                                },1500);
+                            }
+                            else {
+                                swal("删除失败！",{
+                                    icon: "error",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger'
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }
+                );
+            }
+        );
+    }
+
+    //添加项目
+    function addProject() {
+        var name = $("#addName").val();
+        var chargeUserId = $("#addChargeUserId").val();
+        var type = $("#addType").val();
+        var characterization = $("#addDesciption").val();
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/add_project",
+                    data: {
+                        "name": name,
+                        "chargeUserId": chargeUserId,
+                        "type": type,
+                        "characterization": characterization
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == 2) {
+                            swal("添加成功！",{
+                                icon : "success",
+                                buttons: false,
+                                timer: 1500,
+                            });
+                            setTimeout(function(){
+                                location.href = "/projects_list";
+                            },1500);
+                        }
+                        else if(data == 1){
+                            swal("添加失败！","该项目负责人不存在!",{
+                                icon: "error",
+                                buttons: {
+                                    confirm: {
+                                        className: 'btn btn-danger'
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            swal("添加失败！",{
+                                icon: "error",
+                                buttons: {
+                                    confirm: {
+                                        className: 'btn btn-danger'
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+            );
+    }
+
+    //修改用户
+    function updateProject() {
+        var id = $("#editId").val();
+        var name = $("#editName").val();
+        var chargeUserId = $("#editChargeUserId").val();
+        var type = $("#editType").val();
+        var characterization = $("#editCharacterization").val();
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/edit_project",
+                    data: {
+                        "id": id,
+                        "name": name,
+                        "chargeUserId": chargeUserId,
+                        "type": type,
+                        "characterization": characterization
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == 2) {
+                            swal("修改成功！", {
+                                icon : "success",
+                                buttons: false,
+                                timer: 1500,
+                            });
+                            setTimeout(function(){
+                                location.href = "/projects_list";
+                            },1500);
+                        }
+                        else if (data == 1){
+                            swal("修改失败！","该项目负责人不存在!",{
+                                icon: "error",
+                                buttons: {
+                                    confirm: {
+                                        className: 'btn btn-danger'
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            swal("修改失败！",{
+                                icon: "error",
+                                buttons: {
+                                    confirm: {
+                                        className: 'btn btn-danger'
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+            );
     }
 </script>
 </body>

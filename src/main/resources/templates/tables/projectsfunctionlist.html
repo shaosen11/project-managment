@@ -92,7 +92,6 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">项目功能点信息</h4>
-                                    <p style="color: darkred" th:text="${addmsg}" th:if="${not #strings.isEmpty(addmsg)}"></p>
                                     <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
                                         <i class="fa fa-plus"></i>
                                         Add ProjectFunction
@@ -116,29 +115,27 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form th:action="@{/add_project_function}" method="post" >
                                                 <div class="modal-body">
                                                     <p class="small">Create a new ProjectFunction using this form, make sure you fill them all</p>
                                                     <div class="row">
                                                         <div class="col-md-6 pr-0">
                                                             <div class="form-group form-group-default">
                                                                 <label>项目ID</label>
-                                                                <input id="addProjectId" name="projectsId" type="number" class="form-control" required>
+                                                                <input id="addProjectId" name="projectsId" type="number" class="form-control" required >
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 pr-0">
                                                             <div class="form-group form-group-default">
                                                                 <label>功能名称</label>
-                                                                <input id="addFunctionName" name="functionName" type="text" class="form-control" required>
+                                                                <input id="addFunctionName" name="functionName" type="text" class="form-control" required >
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer no-bd">
-                                                    <button type="submit" class="btn btn-primary">Add</button>
+                                                    <button type="button" class="btn btn-primary" onclick="addProjectFunction()">Add</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                 </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +156,6 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form th:action="@{/edit_project_function}" method="post">
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-md-6 pr-0">
@@ -198,10 +194,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer no-bd">
-                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                    <button type="button" class="btn btn-primary" onclick="updateProjectFunction()">Update</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                 </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +210,7 @@
                                             <th>项目ID</th>
                                             <th>项目名</th>
                                             <th>功能名</th>
-                                            <th>功能状态(1=完成,0=未完成)</th>
+                                            <th>功能状态</th>
                                             <th>用户ID</th>
                                             <th>实现功能用户名</th>
                                             <th style="width: 10%">Action</th>
@@ -239,7 +234,7 @@
                                             <td th:text="${projectfunction.projectsId}"></td>
                                             <td th:text="${projectfunction.projectName}"></td>
                                             <td th:text="${projectfunction.functionName}"></td>
-                                            <td th:text="${projectfunction.functionStatus}"></td>
+                                            <td th:text="${projectfunction.functionStatus}==1?'已完成':'未完成'"></td>
                                             <td th:text="${projectfunction.userId}"></td>
                                             <td th:text="${projectfunction.userName}"></td>
                                             <td>
@@ -247,11 +242,9 @@
                                                     <button class="btn btn-primary btn-link ml-auto" data-toggle="modal" data-target="#editRowModal" onclick="editProjectFunction(this)">
                                                         <i class="fa fa-edit"></i>
                                                     </button>
-                                                    <form th:action="@{/del_project_function/}+${projectfunction.id}" th:method="post">
-                                                        <button type="submit"  data-toggle="tooltip" title="" class="btn btn-link btn-danger">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </form>
+                                                    <button type="button"  data-toggle="tooltip" title="" class="btn btn-link btn-danger" th:onclick="deleteProjectFunction([[${projectfunction.id}]])">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -286,6 +279,9 @@
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <script th:src="@{/assets/js/formcheck.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/assets/js/myjs.js}"></script>
 <script >
     $(document).ready(function() {
@@ -333,8 +329,7 @@
 
         });
     });
-</script>
-<script>
+
     function editProjectFunction(obj){
         var $td= $(obj).parents('tr').children('td');
         var td_id = $td.eq(0).text();
@@ -342,12 +337,177 @@
         var td_funname = $td.eq(3).text();
         var td_funstatus = $td.eq(4).text();
         var td_uid = $td.eq(5).text();
+        if(td_funstatus == "完成"){
+            td_funstatus = 1;
+        }else if(td_funstatus = "未完成"){
+            td_funstatus = 0;
+        }
 
         $("#editId").val(td_id);
         $("#editProjectId").val(td_pid);
         $("#editFunctionName").val(td_funname);
         $("#editFunctionStatus").val(td_funstatus);
         $("#editUserId").val(td_uid);
+    }
+
+    //删除项目功能
+    function deleteProjectFunction(projectFunctionId){
+        swal({
+            icon : "warning",
+            title: "您确定要删除该记录吗?",
+            text: "请谨慎操作！",
+            type: "warning",
+            buttons:{
+                cancel: {
+                    visible: true,
+                    text : '取消',
+                    className: 'btn btn-danger'
+                },
+                confirm: {
+                    text : '确定删除',
+                    className : 'btn btn-success'
+                }
+            },
+            closeOnConfirm: false,
+        }).then(
+            function (isConfirm) {
+                if (!isConfirm) return;
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/del_project_function",
+                        data: {"id": projectFunctionId},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data) {
+                                swal("删除成功！", {
+                                    icon : "success",
+                                    buttons: false,
+                                    timer: 1500,
+                                });
+                                setTimeout(function(){
+                                    location.href = "/project_function_list";
+                                },1500);
+                            }
+                            else {
+                                swal("删除失败！",{
+                                    icon: "error",
+                                    buttons: {
+                                        confirm: {
+                                            className: 'btn btn-danger'
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }
+                );
+            }
+        );
+    }
+
+    //添加项目功能
+    function addProjectFunction() {
+        var projectsId = $("#addProjectId").val();
+        var functionName = $("#addFunctionName").val();
+        $.ajax(
+            {
+                type: "POST",
+                url: "/add_project_function",
+                data: {
+                    "projectsId": projectsId,
+                    "functionName": functionName
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data == 1) {
+                        swal("添加成功！",{
+                            icon : "success",
+                            buttons: false,
+                            timer: 1500,
+                        });
+                        setTimeout(function(){
+                            location.href = "/project_function_list";
+                        },1500);
+                    }
+                    else if(data == 2){
+                        swal("添加失败！","该项目不存在!",{
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: 'btn btn-danger'
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        swal("添加失败！",{
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: 'btn btn-danger'
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        );
+    }
+
+    //修改项目功能
+    function updateProjectFunction() {
+        var id = $("#editId").val();
+        var projectsId = $("#editProjectId").val();
+        var functionName = $("#editFunctionName").val();
+        var functionStatus = $("#editFunctionStatus").val();
+        var userId = $("#editUserId").val();
+        $.ajax(
+            {
+                type: "POST",
+                url: "/edit_project_function",
+                data: {
+                    "id": id,
+                    "projectsId": projectsId,
+                    "functionName": functionName,
+                    "functionStatus": functionStatus,
+                    "userId": userId
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data == 1) {
+                        swal("修改成功！",{
+                            icon : "success",
+                            buttons: false,
+                            timer: 1500,
+                        });
+                        setTimeout(function(){
+                            location.href = "/project_function_list";
+                        },1500);
+                    }
+                    else if(data == 2){
+                        swal("修改失败！","该项目不存在!",{
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: 'btn btn-danger'
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        swal("修改失败！",{
+                            icon: "error",
+                            buttons: {
+                                confirm: {
+                                    className: 'btn btn-danger'
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        );
     }
 </script>
 </body>

@@ -12,6 +12,12 @@ public interface ProjectsService {
     Projects getById(Integer id);
 
     /**
+     * 查询一条没有被注销项目信息
+     * @return
+     */
+    Projects getByIdAndNoDel(Integer id);
+
+    /**
      * 查询所有项目信息
      * @return
      */

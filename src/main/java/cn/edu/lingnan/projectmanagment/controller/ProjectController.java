@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class ProjectController {
     public String projectList(Model model){
         List<Projects> list = projectService.getProjectList();
         model.addAttribute("projectlist",list);
-        System.out.println("查询所有用户"+list);
+        System.out.println("查询所有项目"+list);
         return "tables/projectlist";
     }
 
@@ -67,67 +68,63 @@ public class ProjectController {
 
 
     //添加项目
+    @ResponseBody
     @PostMapping("/add_project")
-    public String addProject(Projects project, Model model){
+    public Integer addProject(Projects project){
         System.out.println("待添加项目："+project+" ChargeUserId="+project.getChargeUserId());
         if (userService.findById(project.getChargeUserId()) == null){
-            model.addAttribute("msg","该项目负责人不存在！");
             System.out.println("该项目负责人不存在");
+            return 1;
         }else{
             project.setSchedule("未开始");
             System.out.println("添加项目："+project);
             Boolean flag = projectService.addProject(project);
             if (flag){
                 System.out.println("添加项目成功！");
+                return 2;
             }else{
                 System.out.println("添加项目失败！");
+                return 3;
             }
         }
-        List<Projects> list = projectService.getProjectList();
-        model.addAttribute("projectlist",list);
-        System.out.println("查询所有用户"+list);
-        return "tables/projectlist";
     }
 
     //删除项目
     @Transactional
-    @PostMapping("/del_project/{id}")
-    public String deleteProject(@PathVariable("id")Integer id,Model model){
+    @ResponseBody
+    @PostMapping("/del_project")
+    public Boolean deleteProject(Integer id){
         try{
             projectUserService.deleteProjectUserByProjectsId(id);
             projectsFunctionService.deleteProjectFunctionByProjectsId(id);
             projectService.deleteProject(id);
         }catch (Exception e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            model.addAttribute("msg","删除失败！");
             System.out.println("事务回滚，删除失败！");
+            return false;
         }
-        List<Projects> list = projectService.getProjectList();
-        model.addAttribute("projectlist",list);
-        System.out.println("查询所有用户"+list);
-        return "tables/projectlist";
+        return true;
     }
 
     //修改项目信息
+    @ResponseBody
     @PostMapping("/edit_project")
-    public String editProject(Projects project, Model model){
+    public Integer editProject(Projects project){
         MyUserDetails myUserDetails = userService.findById(project.getChargeUserId());
         if (myUserDetails == null){
-            model.addAttribute("msg","该项目负责人不存在！");
             System.out.println("该项目负责人不存在");
+            return 1;
         }else{
             System.out.println("editproject项目："+project);
             Boolean flag = projectService.editProject(project);
             if(flag){
                 System.out.println("修改项目信息成功");
+                return 2;
             }else{
                 System.out.println("修改项目信息失败");
+                return 3;
             }
         }
-        List<Projects> list = projectService.getProjectList();
-        model.addAttribute("projectlist",list);
-        System.out.println("查询所有用户"+list);
-        return "tables/projectlist";
     }
 
     //查询所有注销项目信息
@@ -140,10 +137,15 @@ public class ProjectController {
     }
 
     //还原用户项目
-    @PostMapping("/reduction_project/{id}")
-    public String reductionProject(@PathVariable("id")Integer id){
+    @ResponseBody
+    @PostMapping("/reduction_project")
+    public Boolean reductionProject(Integer id){
         Boolean flag =  projectService.reductionProject(id);
         System.out.println("还原项目:"+id+flag);
-        return "redirect:../del_project_list";
+        if(flag){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

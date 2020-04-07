@@ -6,6 +6,11 @@
         select * from projects where id = #{id}
     </select>
 
+    <!--根据id查找一条没有被注销记录-->
+    <select id="getByIdAndNoDel" resultType="Projects">
+        select * from projects where id = #{id} and enabled = 1
+    </select>
+
     <select id="getAdminByUserIdAndProjectId" resultType="Projects">
         select * from projects where charge_user_id = #{userId} and id = #{projectId}
     </select>
