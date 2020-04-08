@@ -69,8 +69,6 @@ public class FileUtil {
     //获取文件路径
     public static String DocumentsGetAddrress(Documents documents) {
         System.out.println("文件" + documents);
-//        String address = "http://202.192.134.80:8080/upload/" + documents.getSerialNumber() + "-" + documents.getName();
-//        String address = "http://localhost:8080/upload/" + documents.getSerialNumber() + "-" + documents.getName();
         String address = "http://47.98.240.31/files/projects/" + documents.getProjectId() + "/"+ documents.getSerialNumber() + "-" + documents.getName();
         System.out.println("文件路径：：" + address);
         return address;

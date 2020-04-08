@@ -16,8 +16,6 @@
     <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
     <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
 
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 </head>
 
 <body>
@@ -162,6 +160,62 @@
             <div class="page-inner">
                 <h4 class="page-title">项目详情</h4>
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Feed Activity</div>
+                            </div>
+                            <div class="card-body">
+                                <ol class="activity-feed">
+                                    <li class="feed-item feed-item-secondary">
+                                        <time class="date" datetime="9-25">Sep 25</time>
+                                        <span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-success">
+                                        <time class="date" datetime="9-24">Sep 24</time>
+                                        <span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-info">
+                                        <time class="date" datetime="9-23">Sep 23</time>
+                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-warning">
+                                        <time class="date" datetime="9-21">Sep 21</time>
+                                        <span class="text">Responded to need <a href="#">"In-Kind Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-danger">
+                                        <time class="date" datetime="9-18">Sep 18</time>
+                                        <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item">
+                                        <time class="date" datetime="9-17">Sep 17</time>
+                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <div class="card-title">项目日志</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- 分页容器：显示数据 -->
+                                <div id="htmlDiv"></div>
+                                <!-- 分页容器： 显示分页按钮-->
+                                <div class="text-right mt-3 mb-3">
+                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                    <ul id="mypage" class="pagination"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <!-- 折线图-->
                     <div class="col-md-8">
                         <div class="card">
@@ -260,9 +314,9 @@
 
 <div th:replace="commom/bar :: newprojectpackage"></div>
 <!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
 <script th:src="@{/assets/js/core/popper.min.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
 <!-- jQuery UI -->
 <script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
 <script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
@@ -279,6 +333,8 @@
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/assets/js/myjs.js}"></script>
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+
 <script>
     $(document).ready(function () {
         $('#basic-datatables').DataTable({});
@@ -371,8 +427,6 @@
     package_list(projectId);
 </script>
 <script type="text/javascript" th:inline="javascript">
-
-
     $(function () {
         var projectId = [[${param.projectId}]];
         var pieCharts2 = echarts.init(document.getElementById("reduceChart"));
@@ -618,6 +672,81 @@
             return false;
         }
     }
+</script>
+<script type="text/javascript">
+    $(function() {
+        var projectId = [[${param.projectId}]];
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type : "get",
+                url : "/documentRecordPage",
+                dataType : "json",
+                data : {
+                    page : '1',
+                    projectId : projectId
+                }, //参数：当前页为1
+                success : function(data) {
+                    appendHtml(data.list)//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion : 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage : data.page, //当前页数
+                        totalPages : data.totalPage, //总页数
+                        numberOfPages : data.pageSize,//每页记录数
+                        itemTexts : function(type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked : function(event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url : "/documentRecordPage",
+                                type : "get",
+                                dataType : "json",
+                                data : {
+                                    "page" : page,
+                                    projectId : projectId
+                                },
+                                success : function(data) {
+                                    appendHtml(data.list);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $('#mypage').bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+
+        function appendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+            var tableShow = '';
+            for (var i = 0; i < list.length; i++) {
+                tableShow += '<div class="d-flex">\n' +
+                    '                <div class="avatar avatar-online">\n' +
+                    '                    <span class="avatar-title rounded-circle border border-white bg-info">J</span>\n' +
+                    '                </div>\n' +
+                    '                <div class="flex-1 ml-3 pt-1">\n' +
+                    '                    <h5 class="text-uppercase fw-bold mb-1">' + list[i].userId + '<span class="text-info pl-3"> ' + list[i].ip + ' </span></h5>\n' +
+                    '                    <span class="text-muted">' + list[i].operateMessage +'</span>\n' +
+                    '                </div>\n' +
+                    '                <div class="float-right pt-1">\n' +
+                    '                    <small class="text-muted">'+ list[i].operateTime +'</small>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '            <div class="separator-dashed"></div>'
+            }
+            $('#htmlDiv').html(tableShow)
+        }
+    });
 </script>
 </body>
 </html>

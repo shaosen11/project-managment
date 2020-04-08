@@ -82,4 +82,14 @@
     <update id="undo">
         update documents_record set delete_flag = 1 where id = #{id}
     </update>
+
+    <!-- 查询总记录数 -->
+    <select id="count" resultType="int">
+        select count(*) from documents_record  where delete_flag = 1 and project_id = #{projectId}
+    </select>
+
+    <!-- 查询分页数据 -->
+    <select id="getPage" resultType="DocumentsRecord">
+	    SELECT * FROM documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}
+</select>
 </mapper>

@@ -52,4 +52,14 @@ public class DocumentsRecordServiceImpl implements DocumentsRecordService {
     public boolean undo(Integer id) {
         return documentsRecordMapper.undo(id);
     }
+
+    @Override
+    public Integer count(Integer projectId) {
+        return documentsRecordMapper.count(projectId);
+    }
+
+    @Override
+    public List<DocumentsRecord> getPage(Integer projectId, Integer offset, Integer pageSize) {
+        return documentsRecordMapper.getPage(projectId, offset, pageSize);
+    }
 }

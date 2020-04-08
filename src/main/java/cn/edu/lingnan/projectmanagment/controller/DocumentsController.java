@@ -279,4 +279,11 @@ public class DocumentsController {
         return "redirect:document";
     }
 
+    @GetMapping("/download")
+    public String download(Documents documents){
+        System.out.println(documents);
+        documents = documentsService.getById(documents.getId());
+        String downloadPath = "/files/projects/" + documents.getProjectId() + "/" + documents.getSerialNumber() + "-" + documents.getName();
+        return downloadPath;
+    }
 }

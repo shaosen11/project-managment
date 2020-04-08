@@ -227,7 +227,7 @@
                                             </div>
                                         </div>
                                         <div class="form-row col-md-3">
-                                            <a th:href="@{/upload/${documents1.serialNumber}-${documents1.name}}" class="col-md-4">
+                                            <a th:href="@{/download(id=${documents1.getId()})}" class="col-md-4">
                                                 <button class="btn btn-secondary btn-round col-md-12">
                                                 <span class="btn-label">
                                                     <i class="fas fa-cloud-download-alt"></i>

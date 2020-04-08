@@ -23,4 +23,8 @@ public interface DocumentsRecordService {
     List<DocumentsRecord> getAllDeleteDocumentsRecord();
 
     boolean undo(Integer id);
+
+    Integer count(Integer projectId);
+
+    List<DocumentsRecord> getPage(Integer projectId, Integer offset, Integer pageSize);
 }
