@@ -295,26 +295,8 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     //加载用户所有项目
-    $(function () {
-        var userId = [[${#authentication.principal.id}]];
-        $.ajax({
-            url: "/user_prjects?userId=" + userId,
-            type: "get",
-            datatype: "json",
-            success: function (data) {
-                var parentUL = document.getElementById("projectsul");
-                for (var i = 0; i < data.length; i++) {
-                    //创建二级li
-                    var li = document.createElement("li");
-                    parentUL.appendChild(li);
-                    var a = document.createElement("a");
-                    a.href = '/projects_view?projectId=' + data[i].id + '&userId=' + userId;
-                    a.innerHTML = data[i].name;
-                    li.appendChild(a);
-                }
-            }
-        })
-    })
+    var userId = [[${#authentication.principal.id}]];
+    user_prjects(userId);
 </script>
 </body>
 </html>

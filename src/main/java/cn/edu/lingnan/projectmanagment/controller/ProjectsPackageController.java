@@ -1,8 +1,12 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.Documents;
+import cn.edu.lingnan.projectmanagment.bean.Projects;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsPackage;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsPackageList;
+import cn.edu.lingnan.projectmanagment.service.ProjectService;
+import cn.edu.lingnan.projectmanagment.service.ProjectsService;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,8 @@ public class ProjectsPackageController {
     @Autowired
     private ProjectsPackageServiceImpl projectsPackageService;
 
+    @Autowired
+    private ProjectServiceImpl projectService;
 
     @GetMapping("/projectsPackages")
     @ResponseBody
@@ -47,11 +53,15 @@ public class ProjectsPackageController {
         System.out.println("packageId:::" + packageId);
         projectsPackage.setPackageId(packageId);
         projectsPackageService.insert(projectsPackage);
+        //修改项目最近更新时间
+        Projects projects = projectService.getById(projectsPackage.getProjectId());
+        projects.setLastUpdateTime(new Date());
+        projectService.editProject(projects);
         Map<String,Object> pathMap = new HashMap<>();
         pathMap.put("projectId", projectsPackage.getProjectId());
         pathMap.put("userId", projectsPackage.getUserId());
         String pathString = PathUtil.pathUtil(pathMap);
-        return "project/projectview" + pathString;
+        return "redirect:projects_view" + pathString;
     }
 
     @ResponseBody

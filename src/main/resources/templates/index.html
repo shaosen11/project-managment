@@ -685,33 +685,16 @@
 <script th:src="@{/assets/js/myjs.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
-	$(function () {
-		var userId = [[${#authentication.principal.id}]];
-		$.ajax({
-			url: "/user_prjects?userId=" + userId,
-			type: "get",
-			datatype: "json",
-			success: function (data) {
-				var parentUL = document.getElementById("projectsul");
-				for (var i = 0; i < data.length; i++) {
-					//创建二级li
-					var li = document.createElement("li");
-					parentUL.appendChild(li);
-					var a = document.createElement("a");
-					a.href = '/projects_view?projectId=' + data[i].id + '&userId=' + userId;
-					a.innerHTML = data[i].name;
-					li.appendChild(a);
-				}
-			}
-		})
-	})
+	//加载用户所有项目
+	var userId = [[${#authentication.principal.id}]];
+	user_prjects(userId);
 </script>
 <script>
 	$(document).ready(function () {
 		var content = {};
 		content.message = '你有xxx条消息待处理';
 		content.title = '提醒';
-		content.icon = 'fa fa-bell';
+		content.icon = 'flaticon-alarm-1';
 		content.url = 'index.html';
 		content.target = '_blank';
 
@@ -722,7 +705,6 @@
 				align: 'right'
 			},
 			time: 1000,
-			delay: 0,
 		});
 	})
 </script>

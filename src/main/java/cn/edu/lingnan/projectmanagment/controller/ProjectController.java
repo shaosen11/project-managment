@@ -1,13 +1,14 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
-import cn.edu.lingnan.projectmanagment.bean.DocumentsRecord;
-import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
-import cn.edu.lingnan.projectmanagment.bean.Projects;
-import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
+import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +66,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_view")
-    public String projectView(@Param("projectId") Integer projectId, Model model){
+    public String projectView(Integer projectId, Model model){
         System.out.println("项目id " + projectId);
         List<DocumentsRecord> documentsRecordList = documentsRecordService.getAllByProjectId(projectId);
         model.addAttribute("documentsRecordlist", documentsRecordList);
@@ -153,7 +156,17 @@ public class ProjectController {
     }
 
     @GetMapping("/newprojectview")
-    public String newProjectView(){
+    public String newProjectView(HttpServletRequest request, Model model){
+        //1.从HttpServletRequest中获取SecurityContextImpl对象
+        SecurityContextImpl securityContextImpl = (SecurityContextImpl) request.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+        //2.从SecurityContextImpl中获取Authentication对象
+        Authentication authentication = securityContextImpl.getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails)authentication.getPrincipal();
+        System.out.println(userDetails);
+        //我所有项目
+        List<Myprojects> myprojectsList = userService.getMyProjects(userDetails.getId());
+        System.out.println("userid:"+userDetails.getId()+" 我的项目："+myprojectsList);
+        model.addAttribute("myprojects",myprojectsList);
         return "project/newprojectview";
     }
 

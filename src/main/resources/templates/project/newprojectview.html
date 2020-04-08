@@ -54,36 +54,70 @@
         <div class="content">
             <div class="page-inner">
                 <div class="row">
-                    <div class="card col-md-12">
-                        <div class="card-header">
-                            <div class="card-title">新建项目</div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">新建项目</div>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/projects}" method="post">
+                                    <input type="hidden" id="chargeUserId" name="chargeUserId" th:value="${#authentication.principal.id!=null}?${#authentication.principal.id}">
+                                    <label class="mb-3"><b>项目信息</b></label>
+                                    <div class="form-group form-floating-label">
+                                        <input id="name" name="name" type="text" class="form-control input-border-bottom" required autocomplete="off">
+                                        <label for="name" class="placeholder">项目名称</label>
+                                    </div>
+                                    <label>项目类型</label>
+                                    <select class="form-control" id="type" name="type">
+                                        <option value="Web应用开发">Web应用开发</option>
+                                        <option value="大数据">大数据</option>
+                                        <option value="物联网">物联网</option>
+                                        <option value="人工智能">人工智能</option>
+                                        <option value="微信小程序">微信小程序</option>
+                                    </select>
+                                    <div class="dropdown-divider"></div>
+                                    <label class="mb-3"><b>项目描述</b></label>
+                                    <div class="form-group form-group-default">
+                                        <textarea class="form-control" id="characterization" name="characterization" placeholder="这家伙很懒，什么都没有留下" rows="5" autocomplete="off"></textarea>
+                                    </div>
+                                    <div class="text-right mt-3 mb-3">
+                                        <button class="btn btn-secondary" type="submit">新建</button>
+                                        <button class="btn btn-info" type="reset">重置</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <form th:action="@{/projects}" method="post">
-                                <input type="hidden" name="chargeUserId" th:value="${#authentication.principal.id!=null}?${#authentication.principal.id}">
-                                <label class="mb-3"><b>项目信息</b></label>
-                                <div class="form-group form-floating-label">
-                                    <input id="Name" name="name" type="text" class="form-control input-border-bottom" required>
-                                    <label for="Name" class="placeholder">项目名称</label>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">我的项目</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-md-12 row" th:each="myproject:${myprojects}" th:fragment="div1" id="div1">
+                                    <div class="col-md-12">
+                                        <a th:href="@{/projects_view(projectId=${myproject.projectId},userId=${#authentication.principal.id})}">
+                                            <h2 style="color: #145180">
+                                                <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
+                                            </h2>
+                                        </a>
+                                        <span style="color: #4e555b">
+                                            <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span style="color: #4e555b">
+                                            <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span style="color: #4e555b">
+                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span style="color: #4e555b">
+                                            <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
+                                        </span>
+                                        <div class="dropdown-divider"></div>
+                                    </div>
                                 </div>
-                                <label>项目类型</label>
-                                <select class="form-control" id="formGroupDefaultSelect" name="type">
-                                    <option value="Web应用开发">Web应用开发</option>
-                                    <option value="大数据">大数据</option>
-                                    <option value="物联网">物联网</option>
-                                    <option value="人工智能">人工智能</option>
-                                    <option value="微信小程序">微信小程序</option>
-                                </select>
-                                <div class="dropdown-divider"></div>
-                                <label class="mb-3"><b>项目描述</b></label>
-                                <div class="form-group form-group-default">
-                                    <textarea class="form-control" name="characterization" placeholder="这家伙很懒，什么都没有留下" rows="5" autocomplete="off"></textarea>
-                                </div>
-                                <div class="text-right mt-3 mb-3">
-                                    <button class="btn btn-success" type="submit">新建</button>
-                                    <button class="btn btn-danger" type="reset">重置</button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,24 +225,49 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     //加载用户所有项目
-    $(function () {
-        var userId = [[${#authentication.principal.id}]];
+    var userId = [[${#authentication.principal.id}]];
+    user_prjects(userId);
+</script>
+<script type="text/javascript" th:inline="javascript">
+    $(function newProjects() {
+        var chargeUserId = $("#chargeUserId").val();
+        var name = $("#name").val();
+        var type = $("#type").val();
+        var characterization = $("#characterization").val();
+        console.log(chargeUserId + name + type + characterization);
+        if (name === "" || characterization === ""){
+            return;
+        }
         $.ajax({
-            url: "/user_prjects?userId=" + userId,
-            type: "get",
-            datatype: "json",
-            success: function (data) {
-                var parentUL = document.getElementById("projectsul");
-                for (var i = 0; i < data.length; i++) {
-                    //创建二级li
-                    var li = document.createElement("li");
-                    parentUL.appendChild(li);
-                    var a = document.createElement("a");
-                    a.href = '/projects_view?projectId=' + data[i].id + '&userId=' + userId;
-                    a.innerHTML = data[i].name;
-                    li.appendChild(a);
+            type: "POST",
+            url: "/projects",
+            data: {
+                "chargeUserId": chargeUserId,
+                "name": name,
+                "type": type,
+                "characterization": characterization
+            },
+            success: function (json) {
+                if (json.ok) {
+                    swal("创建成功！", {
+                        icon : "success",
+                        buttons: false,
+                        timer: 1500,
+                    });
+                    setTimeout(function(){
+                        location.href = json.data;
+                    },1500);
+                } else {
+                    swal("创建失败！", json.message, {
+                        icon : "error",
+                        buttons: {
+                            confirm: {
+                                className : 'btn btn-danger'
+                            }
+                        },
+                    });
                 }
-            }
+            },
         })
     })
 </script>

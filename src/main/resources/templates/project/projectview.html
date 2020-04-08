@@ -256,72 +256,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">填写版本信息</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">x</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{/document}" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="projectId" th:value="${param.projectId}">
-                    <input type="hidden" name="userId" th:value="${param.userId}">
-                    <div class="form-group">
-                        <select class="form-select-button" id="packageName1" name="packageName"></select>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input id='location' class="form-control" onclick="$('#i-file').click();">
-                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();">
-                        </div>
-                        <input type="file" name="files" id='i-file' onchange="$('#location').val($('#i-file').val());" style="display: none">
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage" name="versionMessage" autocomplete="off"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-                        <input type="submit" class="btn btn-primary" value="提交">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="commom/bar :: uploadfilemodel"></div>
 
-<div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form th:action="@{/projectsPackage}" method="post" onSubmit="return submitPackageCheck();">
-                <input type="hidden" id="newPackageProjectId" name="projectId" th:value="${param.projectId}">
-                <input type="hidden" id="newPackageUserId" name="userId" th:value="${#authentication.principal.id}">
-<!--                <input type="hidden" id="filename" name="filename" value="${filename}">-->
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabe">新建包</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="form-row">
-                            <label>包名称:</label>
-                            <input class="form-control" id="packageName" name="packageName" type="text"
-                                   placeholder="请输入包名" autocomplete="off">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">取消</button>
-                    <button class="btn btn-primary" type="submit">注册</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<div th:replace="commom/bar :: newprojectpackage"></div>
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
 <script th:src="@{/assets/js/core/popper.min.js}"></script>
@@ -339,7 +276,6 @@
 <script th:src="@{/assets/js/ready.min.js}"></script>
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap-select.min.js}"></script>
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/assets/js/myjs.js}"></script>
@@ -420,104 +356,22 @@
 </script>
 <script type="text/javascript" th:inline="javascript">
     //加载用户所有项目
-    $(function () {
-        var userId = [[${#authentication.principal.id}]];
-        $.ajax({
-            url: "/user_prjects?userId=" + userId,
-            type: "get",
-            datatype: "json",
-            success: function (data) {
-                var parentUL = document.getElementById("projectsul");
-                for (var i = 0; i < data.length; i++) {
-                    //创建二级li
-                    var li = document.createElement("li");
-                    parentUL.appendChild(li);
-                    var a = document.createElement("a");
-                    a.href = '/projects_view?projectId=' + data[i].id + '&userId=' + userId;
-                    a.innerHTML = data[i].name;
-                    li.appendChild(a);
-                }
-            }
-        })
-    })
+    var userId = [[${#authentication.principal.id}]];
+    user_prjects(userId);
+</script>
+<script type="text/javascript" th:inline="javascript">
     //加载包结构
-    $(function () {
-        var projectId = [[${param.projectId}]];
-        var userId = [[${#authentication.principal.id}]];
-        $.ajax({
-            url: "/projectsPackages?projectId=" + projectId,
-            type: "get",
-            datatype: "json",
-            success: function (data) {
-                var parentUL = document.getElementById("packageul");
-                for (var i = 0; i < data.length; i++) {
-                    //创建一级目录
-                    var li = document.createElement("li");
-                    li.className = 'nav-item';
-                    parentUL.appendChild(li);
-                    //创建超链接
-                    var a = document.createElement("a");
-                    a.setAttribute('data-toggle', 'collapse');
-                    a.href = "#package" + i;
-                    li.appendChild(a);
-                    //创建i
-                    var i1 = document.createElement("i");
-                    i1.className = 'fas fa-file-code';
-                    a.appendChild(i1);
-                    //创建P
-                    var p = document.createElement("p");
-                    p.innerHTML = data[i].packageName;
-                    a.appendChild(p);
-                    //创建span
-                    var span = document.createElement("span");
-                    span.className = 'caret';
-                    a.appendChild(span);
-                    //创建div
-                    var div = document.createElement("div");
-                    div.className = 'collapse';
-                    div.id = "package" + i;
-                    li.appendChild(div);
-                    //创建ul
-                    var ul = document.createElement("ul");
-                    ul.className = 'nav nav-collapse';
-                    div.appendChild(ul);
-                    for (var j = 0; j < data[i].projectsPackageList.length; j++) {
-                        if (data[i].projectsPackageList[j].documentName != null) {
-                            //创建二级li
-                            var li1 = document.createElement("li");
-                            ul.append(li1);
-                            var a1 = document.createElement("a");
-                            a1.href = '/document?userId=' + userId + '&projectId=' + projectId + '&documentName=' + data[i].projectsPackageList[j].documentName;
-                            li1.appendChild(a1);
-                            //创建span
-                            var span1 = document.createElement("span");
-                            span1.className = "sub-item";
-                            span1.innerHTML = data[i].projectsPackageList[j].documentName;
-                            a1.appendChild(span1);
-                        }
-                    }
-                }
-            }
-        })
-    })
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    projects_package(projectId, userId);
+</script>
+<script type="text/javascript" th:inline="javascript">
+    //包列表
+    var projectId = [[${param.projectId}]];
+    package_list(projectId);
+</script>
+<script type="text/javascript" th:inline="javascript">
 
-    $(function () {
-        var projectId = [[${param.projectId}]];
-        $.ajax({
-            url: '/projectsPackages?projectId=' + projectId,
-            type: "get",
-            dataType: "json",
-            success: function (data) {
-                var opts = "";
-                for (var i = 0; i < data.length; i++) {
-                    opts += "<option value='" + data[i].packageName + "'>" + data[i].packageName + "</option>";
-                }
-                $('#packageName1').selectpicker('val', '');
-                $("#packageName1").append(opts);
-                $("#packageName1").selectpicker("refresh");
-            }
-        });
-    })
 
     $(function () {
         var projectId = [[${param.projectId}]];
@@ -727,15 +581,15 @@
         $("#packageName").keyup(function () {
             setTimeout('checkPackage()', 1000);
         })
-    })
+    }
+
+    )
     //检查包名是否存在
     var packageFlag = false;
     function checkPackage() {
         var projectId = $("#newPackageProjectId").val();
         var packageName = $("#packageName").val();
         var packageNamecss = $("#packageName");
-        console.log(projectId.concat());
-        console.log(packageName);
         $.ajax({
             type: "get",
             url: "projectsPackage",
@@ -757,7 +611,10 @@
     //检查注册页面是否填写完成
     function submitPackageCheck() {
         if(!packageFlag){
-            alert("包名已存在");
+            swal("包名已存在，换个名字试试", {
+                buttons: false,
+                timer: 1500,
+            });
             return false;
         }
     }
