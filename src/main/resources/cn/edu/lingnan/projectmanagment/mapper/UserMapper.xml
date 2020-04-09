@@ -36,6 +36,7 @@
             <if test="gender != null">gender = #{gender},</if>
             <if test="address != null">address = #{address},</if>
             <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="photo != null">photo = #{photo},</if>
             <if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="enabled != null">enabled = #{enabled},</if>
@@ -92,6 +93,7 @@
             <if test="birthday != null">birthday = #{birthday},</if>
             <if test="address != null">address = #{address},</if>
             <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="photo != null">photo = #{photo},</if>
         </trim>
         where id = #{id}
     </update>

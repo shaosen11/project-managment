@@ -42,7 +42,12 @@ public class FtpUtil {
                 return null;
             }
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-            String path = FTP_BASEPATH + "/projects/" + projectsId;
+            String path = FTP_BASEPATH;
+            if(projectsId != null){
+                path += "/projects/" + projectsId;
+            }else{
+                path += "/photo";
+            }
             System.out.println(path);
             System.out.println(ftp.makeDirectory(path));
             System.out.println(ftp.changeWorkingDirectory(path));

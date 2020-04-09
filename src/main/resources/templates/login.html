@@ -168,18 +168,18 @@
 					"captchaCode": captchaCode,
 					"remember-me": rememberME
 				},
-				success: function (json) {
-					if (json.ok) {
-						swal("登录成功！", {
+				success: function (data) {
+					if (data.ok) {
+						swal(data.message, {
 							icon : "success",
 							buttons: false,
 							timer: 1500,
 						});
 						setTimeout(function(){
-							location.href = json.data;
+							location.href = data.data;
 						},1500);
 					} else {
-						swal("登录失败！", json.message, {
+						swal("登录失败！", data.message, {
 							icon : "error",
 							buttons: {
 								confirm: {

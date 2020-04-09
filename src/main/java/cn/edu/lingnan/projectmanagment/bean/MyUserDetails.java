@@ -24,6 +24,7 @@ public class MyUserDetails implements UserDetails, Serializable {
     private Integer gender;
     private String address;
     private String introduce;
+    private String photo;
     private Date lastLoginTime;
     private Date createTime;
     private String validataCode;

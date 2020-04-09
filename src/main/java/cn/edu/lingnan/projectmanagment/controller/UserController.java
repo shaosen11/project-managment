@@ -9,8 +9,13 @@ import cn.edu.lingnan.projectmanagment.service.impl.MyUserDetailsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserRoleServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
+import cn.edu.lingnan.projectmanagment.utils.FileUtil;
+import cn.edu.lingnan.projectmanagment.utils.FtpUtil;
+import cn.edu.lingnan.projectmanagment.utils.IPUtil;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +31,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -303,4 +310,28 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @PostMapping("/photo")
+    public AJaxResponse photot(MultipartFile[] files, Integer userId) throws IOException {
+        System.out.println("用户id："+userId);
+        for (MultipartFile file : files) {
+            String photouuid = UUID.randomUUID().toString();
+            photouuid = photouuid.replace("-", "");
+            //获取文件名
+            String oldFileName = file.getOriginalFilename();
+            //拼接文件名，防止冲突
+            String newFileName = photouuid + "-" + oldFileName;
+            MyUserDetails myUserDetails = userService.findById(userId);
+            myUserDetails.setPhoto(newFileName);
+            userService.updateUser(myUserDetails);
+            //写入服务器
+            System.out.println("上传文件开始");
+            //调用自定义的FTP工具类上传文件
+            String fileName = FtpUtil.uploadFile(file, newFileName, null);
+            if (!StringUtils.isEmpty(fileName)){
+                System.out.println("上传文件:" + fileName);
+            }
+        }
+        return AJaxResponse.success("/userprofile","修改头像成功");
+    }
 }
