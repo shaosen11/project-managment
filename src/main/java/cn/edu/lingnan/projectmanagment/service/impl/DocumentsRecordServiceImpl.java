@@ -54,12 +54,21 @@ public class DocumentsRecordServiceImpl implements DocumentsRecordService {
     }
 
     @Override
-    public Integer count(Integer projectId) {
-        return documentsRecordMapper.count(projectId);
+    public Integer getDocumentsRecordCountByProjectId(Integer projectId) {
+        return documentsRecordMapper.getDocumentsRecordCountByProjectId(projectId);
+    }
+    @Override
+    public Integer getDocumentsRecordCountByProjectIdAndUserId(Integer projectId, Integer userId) {
+        return documentsRecordMapper.getDocumentsRecordCountByProjectIdAndUserId(projectId, userId);
     }
 
     @Override
-    public List<DocumentsRecord> getPage(Integer projectId, Integer offset, Integer pageSize) {
-        return documentsRecordMapper.getPage(projectId, offset, pageSize);
+    public List<DocumentsRecord> getDocumentsRecordPageByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return documentsRecordMapper.getDocumentsRecordPageByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public List<DocumentsRecord> getDocumentsRecordPageByProjectIdAndUserId(Integer projectId, Integer userId,Integer offset, Integer pageSize) {
+        return documentsRecordMapper.getDocumentsRecordPageByProjectIdAndUserId(projectId, userId, offset, pageSize);
     }
 }

@@ -84,12 +84,37 @@
     </update>
 
     <!-- 查询总记录数 -->
-    <select id="count" resultType="int">
+    <select id="getDocumentsRecordCountByProjectId" resultType="int">
         select count(*) from documents_record  where delete_flag = 1 and project_id = #{projectId}
     </select>
 
-    <!-- 查询分页数据 -->
-    <select id="getPage" resultType="DocumentsRecord">
-	    SELECT * FROM documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}
-</select>
+    <select id="getDocumentsRecordCountByProjectIdAndUserId" resultType="int">
+        select count(*) from documents_record  where delete_flag = 1 and project_id = #{projectId} and user_id = #{userId}
+    </select>
+
+
+
+<!--    &lt;!&ndash; 查询分页数据 &ndash;&gt;-->
+<!--    <select id="getPage" resultType="DocumentsRecord">-->
+<!--	    SELECT * FROM documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}-->
+<!--    </select>-->
+
+    <!--查找所有项目功能点信息-->
+    <resultMap id="documentRecordList" type="DocumentsRecord">
+        <result column="id" property="id"></result>
+        <result column="project_id" property="projectId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="operate_time" property="operateTime"></result>
+        <result column="ip" property="ip"></result>
+        <result column="operate_message" property="operateMessage"></result>
+        <collection property="myUserDetails" column="{id=user_id}" select="cn.edu.lingnan.projectmanagment.mapper.MyUserDetailsMapper.findById"></collection>
+        <collection property="projectsUser" column="{userId=user_id,projectId=project_id}" select="cn.edu.lingnan.projectmanagment.mapper.ProjectUserMapper.getByUserIdAndProjectId"></collection>
+    </resultMap>
+    <select id="getDocumentsRecordPageByProjectId" resultMap="documentRecordList">
+        select * from documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}
+    </select>
+
+    <select id="getDocumentsRecordPageByProjectIdAndUserId" resultMap="documentRecordList">
+        select * from documents_record where delete_flag = 1 and project_id = #{projectId} and user_id = #{userId} order by id desc limit #{offset},#{pageSize}
+    </select>
 </mapper>

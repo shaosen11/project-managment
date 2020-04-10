@@ -1,14 +1,14 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
-import cn.edu.lingnan.projectmanagment.bean.Echarts;
-import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
-import cn.edu.lingnan.projectmanagment.bean.Projects;
-import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
+import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author shaosen
@@ -211,5 +213,60 @@ public class ProjectsUserController {
         List<Echarts> codeInsertList = projectUserService.getCodeInsert(projectId);
         System.out.println(codeInsertList);
         return codeInsertList;
+    }
+
+    @GetMapping("/project_user_view")
+    public String projectUserView(Integer projectId){
+        return "project/projectuserview";
+    }
+
+    /**
+     * 加载项目人员和人才市场
+     * @param page
+     * @param projectId
+     * @param market
+     * @return
+     */
+    @GetMapping("/projectUserPage")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> pages(Integer page, Integer projectId, Integer market) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        int pageSize = 5;
+        try {
+            Integer count = null;
+            if(market == null){
+                count = projectUserService.getCountByProjectId(projectId);
+            }else {
+                count = projectUserService.getCountNoInProjectByProjectId(projectId);
+            }
+            Integer totalPage = count / pageSize;
+            if (count % pageSize != 0) {
+                totalPage++;
+            }
+            if (page > totalPage){
+                return null;
+            }
+            int offset = (page - 1) * pageSize;
+            List<ProjectsUser> projectsUserList = null;
+            List<MyUserDetails> myUserDetailsList = null;
+            if(market == null){
+                projectsUserList = projectUserService.getAllProjectsUserByProjectId(projectId, offset, pageSize);
+                map.put("list", projectsUserList);
+            }else {
+                myUserDetailsList = projectUserService.getProjectsUserNoInProjectByProjectId(projectId, offset, pageSize);
+                map.put("list", myUserDetailsList);
+            }
+            // 封装数据，并返回
+            map.put("page", page);
+            map.put("pageSize", pageSize);
+            map.put("totalPage", totalPage);
+
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

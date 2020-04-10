@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.service;
 
 import cn.edu.lingnan.projectmanagment.bean.Echarts;
+import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
 
 import java.util.List;
@@ -82,4 +83,32 @@ public interface ProjectUserService {
      * @return
      */
     List<Echarts> getCodeInsert(Integer projectId);
+
+    /**
+     * 查询项目总共人数
+     * @param projectId
+     * @return
+     */
+    Integer getCountByProjectId(Integer projectId);
+
+    /**
+     * 通过项目id查找所有项目成员
+     * @param projectId
+     * @return
+     */
+    List<ProjectsUser> getAllProjectsUserByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 查询项目总共人数
+     * @param projectId
+     * @return
+     */
+    Integer getCountNoInProjectByProjectId(Integer projectId);
+
+    /**
+     * 通过项目id查找不在项目的成员
+     * @param projectId
+     * @return
+     */
+    List<MyUserDetails> getProjectsUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize);
 }

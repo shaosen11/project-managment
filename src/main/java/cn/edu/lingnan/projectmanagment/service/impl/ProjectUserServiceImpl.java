@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.service.impl;
 
 import cn.edu.lingnan.projectmanagment.bean.Echarts;
+import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
 import cn.edu.lingnan.projectmanagment.mapper.ProjectUserMapper;
 import cn.edu.lingnan.projectmanagment.service.ProjectUserService;
@@ -73,4 +74,25 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     public List<Echarts> getCodeInsert(Integer projectId) {
         return projectUserMapper.getCodeInsert(projectId);
     }
+
+    @Override
+    public Integer getCountByProjectId(Integer projectId) {
+        return projectUserMapper.getCountByProjectId(projectId);
+    }
+
+    @Override
+    public List<ProjectsUser> getAllProjectsUserByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectUserMapper.getAllProjectsUserByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public Integer getCountNoInProjectByProjectId(Integer projectId) {
+        return projectUserMapper.getCountNoInProjectByProjectId(projectId);
+    }
+
+    @Override
+    public List<MyUserDetails> getProjectsUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectUserMapper.getProjectsUserNoInProjectByProjectId(projectId, offset, pageSize);
+    }
+
 }

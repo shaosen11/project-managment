@@ -23,6 +23,7 @@ public class MyUserDetails implements UserDetails, Serializable {
     private Date birthday;
     private Integer gender;
     private String address;
+    private String tag;
     private String introduce;
     private String photo;
     private Date lastLoginTime;

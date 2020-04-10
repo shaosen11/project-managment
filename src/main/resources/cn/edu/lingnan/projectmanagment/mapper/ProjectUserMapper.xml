@@ -79,7 +79,7 @@
         </trim>
     </insert>
 
-    <select id="getByUserIdAndProjectId" resultType="ProjectsUser">
+    <select id="getByUserIdAndProjectId" resultMap="ProjectsUserList">
         select * from projects_user where delete_flag = 1 and user_id = #{userId} and projects_id = #{projectId}
     </select>
 
@@ -117,5 +117,47 @@
         and a.projects_id = #{project_id}
         group by a.user_id
         order by code_update desc
+    </select>
+
+    <select id="getCountByProjectId" resultType="int">
+        select count(*)
+        from projects_user
+        where delete_flag = 1 and projects_id = #{projectId}
+    </select>
+
+    <!--查找所有项目功能点信息-->
+    <resultMap id="ProjectsUserList" type="ProjectsUser">
+        <result column="id" property="id"></result>
+        <result column="projects_id" property="projectsId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="duty_code" property="dutyCode"></result>
+        <result column="code_devote_line" property="codeDevoteLine"></result>
+        <result column="code_update" property="codeUpdate"></result>
+        <collection property="myUserDetails" column="{id=user_id}" select="cn.edu.lingnan.projectmanagment.mapper.MyUserDetailsMapper.findById">
+        </collection>
+        <collection property="projectsUserDuty" column="{id=duty_code}" select="cn.edu.lingnan.projectmanagment.mapper.ProjectsUserDutyMapper.getById">
+        </collection>
+    </resultMap>
+    <select id="getAllProjectsUserByProjectId" resultMap="ProjectsUserList">
+        select * from projects_user where delete_flag = 1 and projects_id = #{projectId} order by code_devote_line desc limit #{offset},#{pageSize};
+    </select>
+
+    <select id="getCountNoInProjectByProjectId" resultType="int">
+        select count(*)
+        from sys_user
+         WHERE id not in
+            (select user_id
+             from projects_user
+             where delete_flag = 1 and projects_id = #{projectId} );
+    </select>
+
+    <select id="getProjectsUserNoInProjectByProjectId" resultType="MyUserDetails">
+        select *
+        from sys_user
+         WHERE id not in
+            (select user_id
+             from projects_user
+             where delete_flag = 1 and projects_id = #{projectId} )
+             limit #{offset},#{pageSize}
     </select>
 </mapper>

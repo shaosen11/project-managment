@@ -54,10 +54,8 @@ public class ProjectsCodeLineController {
     public List getLineChartDate(Integer projectId) {
         List<ProjectsCodeLine> projectsCodeLines = projectsCodeLineService.getAllProjectsCodeLineByProjectId(projectId);
         for (ProjectsCodeLine item : projectsCodeLines) {
-            System.out.println(item);
             item.setUploadTimeString(DateFromatUtil.getNowDateShort(item.getUploadTime()));
         }
-        System.out.println(projectsCodeLines);
         return projectsCodeLines;
     }
 }

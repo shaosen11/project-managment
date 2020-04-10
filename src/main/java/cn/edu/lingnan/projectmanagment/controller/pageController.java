@@ -25,16 +25,22 @@ public class pageController {
 
     @GetMapping("/documentRecordPage")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> news(Integer page, Integer projectId) {
+    public ResponseEntity<Map<String, Object>> pages(Integer page, Integer projectId, Integer userId) {
         System.out.println("当前页：" + page);
         System.out.println("当前项目：" + projectId);
+        System.out.println("用户:" + userId);
         Map<String, Object> map = new HashMap<String, Object>();
         // 每页显示条数
         int pageSize = 5;
 
         try {
             // 获取总条目数
-            int count = documentsRecordService.count(projectId);
+            Integer count = null;
+            if(userId == 0){
+                count = documentsRecordService.getDocumentsRecordCountByProjectId(projectId);
+            }else {
+                count = documentsRecordService.getDocumentsRecordCountByProjectIdAndUserId(projectId, userId);
+            }
             // 计算总页数
             int totalPage = count / pageSize;
             // 不满一页的数据按一页计算
@@ -48,7 +54,12 @@ public class pageController {
             // 计算sql需要的起始索引
             int offset = (page - 1) * pageSize;
             // 根据起始索引和页面大小去查询数据
-            List<DocumentsRecord> list = documentsRecordService.getPage(projectId, offset, pageSize);
+            List<DocumentsRecord> list = null;
+            if(userId == 0){
+                list = documentsRecordService.getDocumentsRecordPageByProjectId(projectId, offset, pageSize);
+            } else {
+                list = documentsRecordService.getDocumentsRecordPageByProjectIdAndUserId(projectId, userId, offset, pageSize);
+            }
             // 封装数据，并返回
             map.put("page", page);
             map.put("pageSize", pageSize);

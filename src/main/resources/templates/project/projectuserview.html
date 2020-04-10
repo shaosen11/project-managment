@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <!-- echarts -->
+    <script type="text/javascript" th:src="@{/assets/js/echarts.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a th:href="index.html" class="logo">
+                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-wrapper scrollbar-inner">
+            <div class="sidebar-background"></div>
+            <div class="sidebar-content">
+                <div class="user">
+                    <div class="avatar-sm float-left mr-2">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                        <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}==null">
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                    <span th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">
+									用户名
+									<span class="user-level">Administrator</span>
+									<span class="caret"></span>
+								</span>
+                        </a>
+                        <div class="clearfix"></div>
+
+                        <div class="collapse in" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a th:href="@{/userprofile}">
+                                        <span class="link-collapse">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#edit">
+                                        <span class="link-collapse">Edit Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#settings">
+                                        <span class="link-collapse">Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a th:href="index.html">
+                            <i class="fas fa-home"></i>
+                            <p>主页</p>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">infromation</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="index.html">
+                            <i class="far fa-comment-dots"></i>
+                            <p>message</p>
+                            <span class="badge badge-count">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">content</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#base1">
+                            <i class="fas fa-box"></i>
+                            <p>项目</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="base1">
+                            <ul class="nav nav-collapse" id="projectsul"></ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#base">
+                            <i class="fas fa-user-friends"></i>
+                            <p>合作伙伴</p>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">package</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="modal" data-target="#addpackage">
+                            <i class="fas fa-plus-square"></i>
+                            <p>new package</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="modal" data-target="#uploadfile">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>upload file</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#base2">
+                            <i class="fas fa-folder"></i>
+                            <p>All Package</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="base2">
+                            <ul class="nav nav-collapse" id="packageul">
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <h4 class="page-title">人员管理</h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">项目人员</div>
+                            </div>
+                            <div class="card-body pb-0">
+                                <!-- 分页容器：显示数据 -->
+                                <div id="projectUserDiv"></div>
+                                <!-- 分页容器： 显示分页按钮-->
+                                <div class="text-right mt-3 mb-3">
+                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                    <ul id="projectUserPage" class="pagination"></ul>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                    <div class="col-md-12" id="topProductsChart" style="height: 300px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title fw-mediumbold">人才市场</div>
+                                <div class="card-list">
+                                    <div class="card-body pb-0">
+                                        <!-- 分页容器：显示数据 -->
+                                        <div id="UserDiv"></div>
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-right mt-3 mb-3">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="UserPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="commom/bar :: uploadfilemodel"></div>
+
+<div th:replace="commom/bar :: newprojectpackage"></div>
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+
+<!--加载用户所有项目-->
+<script type="text/javascript" th:inline="javascript">
+    var userId = [[${#authentication.principal.id}]];
+    user_prjects(userId);
+</script>
+<!--加载包结构-->
+<script type="text/javascript" th:inline="javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    projects_package(projectId, userId);
+</script>
+<!--包列表-->
+<script type="text/javascript" th:inline="javascript">
+    var projectId = [[${param.projectId}]];
+    package_list(projectId);
+</script>
+<!--检查包名-->
+<script th:inline="javascript">
+    $(function () {
+        $("#packageName").keyup(function () {
+            setTimeout('checkPackage()', 1000);
+        })
+    }
+    )
+    //检查包名是否存在
+    var packageFlag = false;
+    function checkPackage() {
+        var projectId = $("#newPackageProjectId").val();
+        var packageName = $("#packageName").val();
+        var packageNamecss = $("#packageName");
+        $.ajax({
+            type: "get",
+            url: "projectsPackage",
+            data: {
+                "projectId" : projectId,
+                "packageName" : packageName
+            },
+            success:function (json) {
+                if (!json){
+                    packageNamecss.css('borderColor','red');
+                    packageFlag = false;
+                }else {
+                    packageNamecss.css('borderColor','');
+                    packageFlag = true;
+                }
+            }
+        })
+    }
+    //检查注册页面是否填写完成
+    function submitPackageCheck() {
+        if(!packageFlag){
+            swal("包名已存在，换个名字试试", {
+                buttons: false,
+                timer: 1500,
+            });
+            return false;
+        }
+    }
+</script>
+<!--柱状图-->
+<script type="text/javascript">
+    $(function () {
+        // var topProductsChart = document.getElementById('topProductsChart').getContext('2d');
+        var projectId = [[${param.projectId}]];
+        var barCharts = echarts.init(document.getElementById("topProductsChart"));
+        var xdata = [];
+        var ydata = [];
+        $.ajax({
+            type: "get",
+            async: true,
+            url: "/getCodeDevoteData?projectId=" + projectId,
+            data: [],
+            dataType: "json",
+            success: function (result) {
+                $(result).each(function (index, item) {
+                    xdata.push(item.name);
+                    ydata.push(item.value);
+                })
+                barCharts.setOption({
+                    color: ['#3398DB'],
+                    tooltip: {
+                        formatter: "{a} <br/>{b} : {c} ",
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            magicType: {
+                                show: true,
+                                type: ['pie', 'funnel'],
+                                option: {
+                                    funnel: {
+                                        x: '25%',
+                                        width: '50%',
+                                        funnelAlign: 'left',
+                                        max: 1548
+                                    }
+                                }
+                            },
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        axisTick: {show: false},
+                        data: xdata
+                    },
+                    yAxis: {
+                        type: 'value',
+                    },
+                    calculable: true,
+                    series: [{
+                        type: 'bar',
+                        name: "代码行",
+                        data: result
+                    }]
+                });
+            }
+        })
+    })
+
+
+</script>
+<!--加载人才市场-->
+<script type="text/javascript">
+    $(function () {
+        var projectId = [[${param.projectId}]];
+        addpage(projectId, null, projectUserDiv, projectUserPage);
+        addpage(projectId, 1, UserDiv, UserPage);
+    })
+    function addpage(projectId, market, div, ul){
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type : "get",
+                url : "/projectUserPage",
+                dataType : "json",
+                data : {
+                    page : '1',
+                    projectId : projectId,
+                    market : market
+                }, //参数：当前页为1
+                success : function(data) {
+                    appendHtml(data.list)//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion : 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage : data.page, //当前页数
+                        totalPages : data.totalPage, //总页数
+                        numberOfPages : data.pageSize,//每页记录数
+                        itemTexts : function(type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked : function(event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url : "/projectUserPage",
+                                type : "get",
+                                dataType : "json",
+                                data : {
+                                    "page" : page,
+                                    projectId : projectId,
+                                    market : market
+                                },
+                                success : function(data) {
+                                    appendHtml(data.list);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+        function appendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+            $(div).html("");
+            var tableShow = '';
+            for (var i = 0; i < list.length; i++) {
+                if(market == null){
+                    tableShow += '                         <div class="d-flex">\n' +
+                        '                                    <div class="avatar">\n' +
+                        '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
+                        '                                    </div>\n' +
+                        '                                    <div class="flex-1 pt-1 ml-2">\n' +
+                        '                                        <h5 class="fw-bold mb-1">'+ list[i].projectsUserDuty.dutyName + '</h5>\n' +
+                        '                                        <small class="text-muted">'+ list[i].myUserDetails.username + '</small>\n' +
+                        '                                    </div>\n' +
+                        '                                    <div class="d-flex ml-auto align-items-center">\n' +
+                        '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
+                        '                                    </div>\n' +
+                        '                                </div>\n' +
+                        '                                <div class="separator-dashed"></div>'
+                }else {
+                    tableShow += '<div class="item-list">\n' +
+                        '               <div class="avatar">\n' +
+                        '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
+                        '               </div>\n' +
+                        '               <div class="info-user ml-3">\n' +
+                        '               <div class="username"> ' + list[i].username + '</div>\n' +
+                        '                   <div class="status">' + list[i].tag + '</div>\n' +
+                        '               </div>\n' +
+                        '               <button class="btn btn-icon btn-primary btn-round btn-sm">\n' +
+                        '                   <i class="fa fa-plus"></i>\n' +
+                        '               </button>\n' +
+                        '             </div>'
+                }
+            }
+            $(div).html(tableShow)
+        }
+    }
+</script>
+</body>
+</html>

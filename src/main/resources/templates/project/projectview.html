@@ -67,7 +67,7 @@
                         <div class="collapse in" id="collapseExample">
                             <ul class="nav">
                                 <li>
-                                    <a href="#profile">
+                                    <a th:href="@{/userprofile}">
                                         <span class="link-collapse">My Profile</span>
                                     </a>
                                 </li>
@@ -118,9 +118,14 @@
                             <span class="caret"></span>
                         </a>
                         <div class="collapse" id="base1">
-                            <ul class="nav nav-collapse" id="projectsul">
-                            </ul>
+                            <ul class="nav nav-collapse" id="projectsul"></ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/project_user_view(projectId=${param.projectId})}">
+                            <i class="fas fa-user-friends"></i>
+                            <p>合作伙伴</p>
+                        </a>
                     </li>
                     <li class="nav-section">
 							<span class="sidebar-mini-icon">
@@ -159,62 +164,7 @@
         <div class="content">
             <div class="page-inner">
                 <h4 class="page-title">项目详情</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Feed Activity</div>
-                            </div>
-                            <div class="card-body">
-                                <ol class="activity-feed">
-                                    <li class="feed-item feed-item-secondary">
-                                        <time class="date" datetime="9-25">Sep 25</time>
-                                        <span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-success">
-                                        <time class="date" datetime="9-24">Sep 24</time>
-                                        <span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-info">
-                                        <time class="date" datetime="9-23">Sep 23</time>
-                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-warning">
-                                        <time class="date" datetime="9-21">Sep 21</time>
-                                        <span class="text">Responded to need <a href="#">"In-Kind Opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-danger">
-                                        <time class="date" datetime="9-18">Sep 18</time>
-                                        <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item">
-                                        <time class="date" datetime="9-17">Sep 17</time>
-                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-head-row">
-                                    <div class="card-title">项目日志</div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <!-- 分页容器：显示数据 -->
-                                <div id="htmlDiv"></div>
-                                <!-- 分页容器： 显示分页按钮-->
-                                <div class="text-right mt-3 mb-3">
-                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                    <ul id="mypage" class="pagination"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <!-- 折线图-->
                     <div class="col-md-8">
@@ -257,15 +207,91 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <c:forEach items="${information}" var="projects">
-                                            <div style="text-align: center">${projects.name}的总贡献量为:${projects.codeDevote}，一共上交了${projects.codeInsert}次；</div>
-                                        </c:forEach>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Feed Activity</div>
+                            </div>
+                            <div class="card-body">
+                                <ol class="activity-feed">
+                                    <li class="feed-item feed-item-secondary">
+                                        <time class="date" datetime="9-25">Sep 25</time>
+                                        <span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-success">
+                                        <time class="date" datetime="9-24">Sep 24</time>
+                                        <span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-info">
+                                        <time class="date" datetime="9-23">Sep 23</time>
+                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-warning">
+                                        <time class="date" datetime="9-21">Sep 21</time>
+                                        <span class="text">Responded to need <a href="#">"In-Kind Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-danger">
+                                        <time class="date" datetime="9-18">Sep 18</time>
+                                        <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item">
+                                        <time class="date" datetime="9-17">Sep 17</time>
+                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!--项目日志-->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <div class="card-title">项目日志</div>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-tab-today" data-toggle="pill" href="#pills-today" role="tab" aria-selected="true">全部</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-tab-week" data-toggle="pill" href="#pills-week" role="tab" aria-selected="false">我的</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content mt-2 mb-3">
+                                    <div class="tab-pane fade show active" id="pills-today" role="tabpanel" aria-labelledby="pills-tab-today">
+                                        <!-- 分页容器：显示数据 -->
+                                        <div id="allDiv"></div>
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-right mt-3 mb-3">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="allPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-week" role="tabpanel" aria-labelledby="pills-tab-week">
+                                        <!-- 分页容器：显示数据 -->
+                                        <div id="myDiv"></div>
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-right mt-3 mb-3">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="myPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--操作记录-->
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
@@ -410,22 +436,23 @@
         changeContainer(id1, id2);
     }
 </script>
+<!--加载用户所有项目-->
 <script type="text/javascript" th:inline="javascript">
-    //加载用户所有项目
     var userId = [[${#authentication.principal.id}]];
     user_prjects(userId);
 </script>
+<!--加载包结构-->
 <script type="text/javascript" th:inline="javascript">
-    //加载包结构
     var projectId = [[${param.projectId}]];
     var userId = [[${#authentication.principal.id}]];
     projects_package(projectId, userId);
 </script>
+<!--包列表-->
 <script type="text/javascript" th:inline="javascript">
-    //包列表
     var projectId = [[${param.projectId}]];
     package_list(projectId);
 </script>
+<!--饼图-->
 <script type="text/javascript" th:inline="javascript">
     $(function () {
         var projectId = [[${param.projectId}]];
@@ -450,13 +477,12 @@
                     legend: {
                         orient: 'vertical',
                         left: 'left',
-                        data: ['第一名', '第二名', '第三名']
+                        data: result
                     },
                     toolbox: {
                         show: true,
                         feature: {
                             mark: {show: true},
-                            dataView: {show: true, readOnly: false},
                             magicType: {
                                 show: true,
                                 type: ['pie', 'funnel'],
@@ -510,13 +536,12 @@
                     legend: {
                         orient: 'vertical',
                         x: 'left',
-                        data: ["第一名", "第二名", "第三名"]
+                        data: result
                     },
                     toolbox: {
                         show: true,
                         feature: {
                             mark: {show: true},
-                            dataView: {show: true, readOnly: false},
                             magicType: {
                                 show: true,
                                 type: ['pie', 'funnel'],
@@ -536,10 +561,9 @@
                     calculable: true,
                     series: [
                         {
-                            name: '数量',
+                            name: '代码行',
                             type: 'pie',
                             radius: '55%',
-                            center: ['50%', '60%'],
                             data: result
                         }
                     ]
@@ -548,6 +572,7 @@
         })
     })
 </script>
+<!--折线图-->
 <script th:inline="javascript">
     $(function () {
         var projectId = [[${param.projectId}]];
@@ -560,8 +585,6 @@
             url: "/getLineChartDate?projectId=" + projectId,
             data: [],
             dataType: "json",
-            error: function (result) {
-            },
             success: function (result) {
                 $(result).each(function (index, item) {
                     xdata.push(item.uploadTimeString);
@@ -599,22 +622,22 @@
                         dimension: 0,
                         pieces: [{
                             lte: 6,
-                            color: 'green'
+                            color: "#6f42c1"
                         }, {
                             gt: 6,
                             lte: 8,
-                            color: 'red'
+                            color: "#6f42c1"
                         }, {
                             gt: 8,
                             lte: 14,
-                            color: 'green'
+                            color: "#6f42c1"
                         }, {
                             gt: 14,
                             lte: 17,
-                            color: 'red'
+                            color: "#6f42c1"
                         }, {
                             gt: 17,
-                            color: 'green'
+                            color: "#6f42c1"
                         }]
                     },
                     series: [
@@ -630,13 +653,13 @@
         })
     })
 </script>
+<!--检查包名-->
 <script th:inline="javascript">
     $(function () {
         $("#packageName").keyup(function () {
             setTimeout('checkPackage()', 1000);
         })
     }
-
     )
     //检查包名是否存在
     var packageFlag = false;
@@ -673,9 +696,16 @@
         }
     }
 </script>
+<!--项目日志分页-->
 <script type="text/javascript">
-    $(function() {
+    var userIdFlag = [[${#authentication.principal.id}]];
+    $(function () {
         var projectId = [[${param.projectId}]];
+        var userId = [[${#authentication.principal.id}]];
+        addpage(projectId, 0, allDiv, allPage);
+        addpage(projectId, userId, myDiv, myPage);
+    })
+    function addpage(projectId, userId, div, ul){
         pageStart();//开始分页
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
@@ -684,7 +714,8 @@
                 dataType : "json",
                 data : {
                     page : '1',
-                    projectId : projectId
+                    projectId : projectId,
+                    userId : userId
                 }, //参数：当前页为1
                 success : function(data) {
                     appendHtml(data.list)//处理第一页的数据
@@ -714,7 +745,8 @@
                                 dataType : "json",
                                 data : {
                                     "page" : page,
-                                    projectId : projectId
+                                    projectId : projectId,
+                                    userId : userId
                                 },
                                 success : function(data) {
                                     appendHtml(data.list);//处理数据
@@ -722,20 +754,28 @@
                             });
                         }
                     };
-                    $('#mypage').bootstrapPaginator(options);//设置分页
+                    $(ul).bootstrapPaginator(options);//设置分页
                 }
             });
         }
-
         function appendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+            $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
+                console.log(list[i]);
                 tableShow += '<div class="d-flex">\n' +
-                    '                <div class="avatar avatar-online">\n' +
-                    '                    <span class="avatar-title rounded-circle border border-white bg-info">J</span>\n' +
+                    '                <div class="avatar avatar-online">\n';
+                if (list[i].projectsUser.dutyCode == 1){
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-secondary"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                } else if (list[i].projectsUser.dutyCode == 2){
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-primary"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                } else if(list[i].projectsUser.dutyCode == 3){
+                    tableShow += '                    <span class="avatar-title rounded-circle border border-white bg-info"> ' + list[i].projectsUser.projectsUserDuty.dutyName[0].toUpperCase() + ' </span>\n'
+                }
+                tableShow +=
                     '                </div>\n' +
                     '                <div class="flex-1 ml-3 pt-1">\n' +
-                    '                    <h5 class="text-uppercase fw-bold mb-1">' + list[i].userId + '<span class="text-info pl-3"> ' + list[i].ip + ' </span></h5>\n' +
+                    '                    <h5 class="text-uppercase fw-bold mb-1">' + list[i].myUserDetails.username + '<span class="text-info pl-3"> ip:' + list[i].ip + ' </span></h5>\n' +
                     '                    <span class="text-muted">' + list[i].operateMessage +'</span>\n' +
                     '                </div>\n' +
                     '                <div class="float-right pt-1">\n' +
@@ -744,9 +784,9 @@
                     '            </div>\n' +
                     '            <div class="separator-dashed"></div>'
             }
-            $('#htmlDiv').html(tableShow)
+            $(div).html(tableShow)
         }
-    });
+    }
 </script>
 </body>
 </html>

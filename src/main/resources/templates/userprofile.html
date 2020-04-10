@@ -375,6 +375,7 @@
     <script type="text/javascript" th:inline="javascript">
         //加载用户所有项目
         var userId = [[${#authentication.principal.id}]];
+        user_prjects(userId);
     </script>
     <script>
         var userId = [[${#authentication.principal.id}]];
