@@ -147,8 +147,8 @@
 													</div>
 												</div>
 												<div class="text-right mt-3 mb-3">
-													<button class="btn btn-primary" type="submit">保存</button>
-													<button class="btn btn-secondary" type="reset">重置</button>
+													<button class="btn btn-secondary" type="submit">保存</button>
+													<button class="btn btn-primary" type="reset">重置</button>
 												</div>
 											</form>
 										</div>
@@ -423,5 +423,12 @@
 			}
 		});
     </script>
+	<!--加载消息-->
+	<script th:inline="javascript">
+		$(function () {
+			var userId = [[${#authentication.principal.id}]];
+			nav_message(userId);
+		})
+	</script>
 </body>
 </html>

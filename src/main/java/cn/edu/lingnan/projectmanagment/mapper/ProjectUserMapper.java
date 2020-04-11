@@ -116,4 +116,10 @@ public interface ProjectUserMapper {
      * @return
      */
     List<MyUserDetails> getProjectsUserNoInProjectByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过userId查询
+     * @return
+     */
+    List<ProjectsUser> getByUserId(Integer userId);
 }

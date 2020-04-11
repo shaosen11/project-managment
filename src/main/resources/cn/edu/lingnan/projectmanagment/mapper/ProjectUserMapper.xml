@@ -160,4 +160,8 @@
              where delete_flag = 1 and projects_id = #{projectId} )
              limit #{offset},#{pageSize}
     </select>
+
+    <select id="getByUserId" resultMap="ProjectsUserList">
+        select * from projects_user where delete_flag = 1 and user_id = #{userId}
+    </select>
 </mapper>

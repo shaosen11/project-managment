@@ -3,22 +3,24 @@ function login_out() {
         title: '你确定?',
         text: "你正在要退出系统!",
         type: 'warning',
-        buttons:{
+        buttons: {
             confirm: {
-                text : '是的，退出!',
-                className : 'btn btn-success'
+                text: '是的，退出!',
+                className: 'btn btn-success',
+                className: 'btn btn-secondary'
             },
             cancel: {
                 visible: true,
                 text: '不，取消',
-                className: 'btn btn-danger'
+                className: 'btn btn-primary'
             }
         }
     }).then((Delete) => {
-        if (Delete) {
+        if(Delete) {
             window.location.href = "/login_out"
         }
-    })
+    }
+)
 }
 
 function user_prjects(userId) {
@@ -114,4 +116,34 @@ function package_list(projectId) {
             }
         }
     });
+}
+
+function nav_message(userId) {
+    $.ajax({
+        type: "post",
+        url: "/myMessage",
+        dataType: "json",
+        data: {
+            userId: userId,
+        },
+        success: function (list) {
+            $(myNotification).html("");
+            var messagelist = '';
+            for (var i = 0; i < list.length && i < 4; i++) {
+                messagelist += '<a href="#">\n' +
+                    '              <div class="col-md-3">\n' +
+                    '             <div class="notif-icon '+ list[i].messageType.background + ' col-auto"> <i class="fa ' + list[i].messageType.icon + '"></i> </div>\n' +
+                    '              </div>\n' +
+                    '              <div class="col-md-9">\n' +
+                    '              <div class="notif-content">\n' +
+                    '                 <span class="block">' + list[i].message + '</span>\n' +
+                    '                 <span class="time">' + list[i].time + '</span>\n' +
+                    '              </div>\n' +
+                    '              </div>\n' +
+
+                    '           </a>'
+            }
+            $(myNotification).html(messagelist);
+        }
+    })
 }

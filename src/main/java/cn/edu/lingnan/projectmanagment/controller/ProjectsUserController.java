@@ -1,9 +1,12 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
+import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
+import cn.edu.lingnan.projectmanagment.service.impl.MessageServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
 import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,19 +40,22 @@ public class ProjectsUserController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private MessageServiceImpl messageService;
+
     @GetMapping("user_prjects")
     @ResponseBody
-    public List getProjectsByUserId(@Param("userId") Integer userId){
+    public List getProjectsByUserId(@Param("userId") Integer userId) {
         List<Projects> projectListByUserId = projectService.getProjectListByUserId(userId);
         return projectListByUserId;
     }
 
     //查询所有项目用户信息
     @GetMapping("/project_user_list")
-    public String projectUserList(Model model){
+    public String projectUserList(Model model) {
         List<ProjectsUser> list = projectUserService.getProjectUserList();
-        model.addAttribute("projectuserlist",list);
-        System.out.println("查询所有项目用户信息:"+list);
+        model.addAttribute("projectuserlist", list);
+        System.out.println("查询所有项目用户信息:" + list);
         return "tables/projectuserlist";
     }
 
@@ -56,33 +63,30 @@ public class ProjectsUserController {
     //添加项目用户
     @ResponseBody
     @PostMapping("/add_project_user")
-    public Integer addProjectUser(ProjectsUser projectsUser){
-        System.out.println("待添加项目用户信息："+projectsUser);
+    public Integer addProjectUser(ProjectsUser projectsUser) {
+        System.out.println("待添加项目用户信息：" + projectsUser);
         Projects projects = projectService.getById(projectsUser.getProjectsId());
         MyUserDetails myUserDetails = userService.findById(projectsUser.getUserId());
-        ProjectsUser projectsUser1 = projectUserService.getByUserIdAndProjectId(projectsUser.getUserId(),projectsUser.getProjectsId());
-        if(projects == null){
+        ProjectsUser projectsUser1 = projectUserService.getByUserIdAndProjectId(projectsUser.getUserId(), projectsUser.getProjectsId());
+        if (projects == null) {
             System.out.println("该项目不存在");
             return 1;
-        }
-        else if (myUserDetails == null){
+        } else if (myUserDetails == null) {
             System.out.println("该用户不存在！");
             return 2;
-        }
-        else if(projectsUser1 != null){
+        } else if (projectsUser1 != null) {
             System.out.println("项目用户信息已存在！");
             return 4;
-        }
-        else if(projects != null && myUserDetails != null){
+        } else if (projects != null && myUserDetails != null) {
             Boolean flag = projectUserService.addProjectUser(projectsUser);
-            if (flag){
+            if (flag) {
                 System.out.println("添加项目用户信息成功！");
                 return 3;
-            }else{
+            } else {
                 System.out.println("添加项目用户信息失败！");
                 return 5;
             }
-        }else{
+        } else {
             return null;
         }
     }
@@ -90,12 +94,12 @@ public class ProjectsUserController {
     //删除项目用户
     @ResponseBody
     @PostMapping("/del_project_user")
-    public Boolean delProjectUser(Integer id){
-        Boolean flag =  projectUserService.deleteProjectUser(id);
-        System.out.println("删除项目用户信息:"+ id + flag);
-        if (flag){
+    public Boolean delProjectUser(Integer id) {
+        Boolean flag = projectUserService.deleteProjectUser(id);
+        System.out.println("删除项目用户信息:" + id + flag);
+        if (flag) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -103,34 +107,32 @@ public class ProjectsUserController {
     //修改项目用户信息
     @ResponseBody
     @PostMapping("/edit_project_user")
-    public Integer editProjectUser(ProjectsUser projectsUser){
-        System.out.println("待修改项目用户信息："+projectsUser);
+    public Integer editProjectUser(ProjectsUser projectsUser) {
+        System.out.println("待修改项目用户信息：" + projectsUser);
         Projects projects = projectService.getById(projectsUser.getProjectsId());
         MyUserDetails myUserDetails = userService.findById(projectsUser.getUserId());
-        if(projects == null){
+        if (projects == null) {
             System.out.println("该项目不存在");
             return 1;
-        }
-        else if (myUserDetails == null){
+        } else if (myUserDetails == null) {
             System.out.println("该用户不存在！");
             return 2;
-        }
-        else if(projects != null && myUserDetails != null){
+        } else if (projects != null && myUserDetails != null) {
             ProjectsUser projectsUser1 = projectUserService.getById(projectsUser.getId());
-            if(projectsUser1 != null){
+            if (projectsUser1 != null) {
                 System.out.println("该记录已存在!");
                 return 4;
-            }else{
+            } else {
                 Boolean flag = projectUserService.editProjectUser(projectsUser);
-                if(flag){
+                if (flag) {
                     System.out.println("修改项目用户信息成功");
                     return 3;
-                }else{
+                } else {
                     System.out.println("修改项目用户信息失败");
                     return 5;
                 }
             }
-        }else{
+        } else {
             return null;
         }
     }
@@ -147,24 +149,24 @@ public class ProjectsUserController {
     //还原项目用户
     @ResponseBody
     @PostMapping("/reduction_project_user")
-    public Integer reductionProjectUser(Integer id){
+    public Integer reductionProjectUser(Integer id) {
         ProjectsUser projectsUser = projectUserService.getDelById(id);
-        System.out.println("带还原的projectsUser"+projectsUser);
+        System.out.println("带还原的projectsUser" + projectsUser);
         Projects projects = projectService.getByIdAndNoDel(projectsUser.getProjectsId());
-        if (projects == null){
+        if (projects == null) {
             System.out.println("该项目不存在！");
             return 2;
-        }else{
+        } else {
             MyUserDetails myUserDetails = userService.findById(projectsUser.getUserId());
-            if(myUserDetails == null){
+            if (myUserDetails == null) {
                 System.out.println("该用户不存在！");
                 return 3;
-            }else{
-                Boolean flag =  projectUserService.reductionProjectUser(id);
-                System.out.println("还原项目用户:"+id+flag);
-                if (flag){
+            } else {
+                Boolean flag = projectUserService.reductionProjectUser(id);
+                System.out.println("还原项目用户:" + id + flag);
+                if (flag) {
                     return 1;
-                }else {
+                } else {
                     return 4;
                 }
             }
@@ -185,10 +187,10 @@ public class ProjectsUserController {
         }
         //修改代码上传次数
         Integer codeUpdate = projectsUser.getCodeUpdate();
-        if(codeUpdate == null){
+        if (codeUpdate == null) {
             projectsUser.setCodeUpdate(1);
-        }else {
-            projectsUser.setCodeUpdate( codeUpdate + 1);
+        } else {
+            projectsUser.setCodeUpdate(codeUpdate + 1);
         }
         System.out.println(projectsUser);
         System.out.println("projectUser修改：" + projectUserService.editProjectUser(projectsUser));
@@ -216,12 +218,13 @@ public class ProjectsUserController {
     }
 
     @GetMapping("/project_user_view")
-    public String projectUserView(Integer projectId){
+    public String projectUserView(Integer projectId) {
         return "project/projectuserview";
     }
 
     /**
      * 加载项目人员和人才市场
+     *
      * @param page
      * @param projectId
      * @param market
@@ -234,25 +237,25 @@ public class ProjectsUserController {
         int pageSize = 5;
         try {
             Integer count = null;
-            if(market == null){
+            if (market == null) {
                 count = projectUserService.getCountByProjectId(projectId);
-            }else {
+            } else {
                 count = projectUserService.getCountNoInProjectByProjectId(projectId);
             }
             Integer totalPage = count / pageSize;
             if (count % pageSize != 0) {
                 totalPage++;
             }
-            if (page > totalPage){
+            if (page > totalPage) {
                 return null;
             }
             int offset = (page - 1) * pageSize;
             List<ProjectsUser> projectsUserList = null;
             List<MyUserDetails> myUserDetailsList = null;
-            if(market == null){
+            if (market == null) {
                 projectsUserList = projectUserService.getAllProjectsUserByProjectId(projectId, offset, pageSize);
                 map.put("list", projectsUserList);
-            }else {
+            } else {
                 myUserDetailsList = projectUserService.getProjectsUserNoInProjectByProjectId(projectId, offset, pageSize);
                 map.put("list", myUserDetailsList);
             }
@@ -268,5 +271,23 @@ public class ProjectsUserController {
             return new ResponseEntity<Map<String, Object>>(
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/inviteUser")
+    @ResponseBody
+    public AJaxResponse inviteUser(Integer projectId, Integer fromUserId, Integer toUserId) {
+        //封装信息
+        Message message = new Message();
+        //查找项目
+        message.setFromUserId(fromUserId);
+        message.setToUserId(toUserId);
+        message.setTypeId(6);
+        Projects projects = projectService.getById(projectId);
+        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(fromUserId, projectId);
+        String msg = projects.getName() + "的" + projectsUser.getProjectsUserDuty().getDutyName() + projectsUser.getMyUserDetails().getUsername() + "邀请你一起开发";
+        message.setMessage(msg);
+        message.setTime(DateFromatUtil.getNowDate(new Date()));
+        messageService.insert(message);
+        return AJaxResponse.success("/project/projectuserview", "邀请成功");
     }
 }

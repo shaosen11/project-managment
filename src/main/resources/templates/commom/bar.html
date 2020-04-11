@@ -156,7 +156,7 @@
                             </li>
                             <li>
                                 <div class="notif-scroll scrollbar-outer">
-                                    <div class="notif-center">
+                                    <div class="notif-center" id="myNotification">
                                         <a href="#">
                                             <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
                                             <div class="notif-content">
@@ -225,7 +225,7 @@
                                     <div class="u-text">
                                         <h4 th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">用户名</h4>
                                         <p class="text-muted" th:text="${#authentication.principal.email!=null}?${#authentication.principal.email}">邮箱</p>
-                                        <a th:href="@{/userprofile}" class="btn btn-rounded btn-danger btn-sm">我的信息</a>
+                                        <a th:href="@{/userprofile}" class="btn btn-rounded btn-secondary btn-sm">我的信息</a>
                                     </div>
                                 </div>
                             </li>
@@ -257,7 +257,6 @@
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                                    
                                     <span th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">
 									用户名
 									<span class="user-level">Administrator</span>

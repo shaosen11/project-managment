@@ -299,5 +299,12 @@
     var userId = [[${#authentication.principal.id}]];
     user_prjects(userId);
 </script>
+<!--加载消息-->
+<script th:inline="javascript">
+    $(function () {
+        var userId = [[${#authentication.principal.id}]];
+        nav_message(userId);
+    })
+</script>
 </body>
 </html>

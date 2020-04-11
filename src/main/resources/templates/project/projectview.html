@@ -123,7 +123,7 @@
                     </li>
                     <li class="nav-item">
                         <a th:href="@{/project_user_view(projectId=${param.projectId})}">
-                            <i class="fas fa-user-friends"></i>
+                            <i class="fas fa-users"></i>
                             <p>合作伙伴</p>
                         </a>
                     </li>
@@ -573,7 +573,7 @@
     })
 </script>
 <!--折线图-->
-<script th:inline="javascript">
+<script type="text/javascript" th:inline="javascript">
     $(function () {
         var projectId = [[${param.projectId}]];
         var lindCharts = echarts.init(document.getElementById("lindChart"));
@@ -698,7 +698,6 @@
 </script>
 <!--项目日志分页-->
 <script type="text/javascript">
-    var userIdFlag = [[${#authentication.principal.id}]];
     $(function () {
         var projectId = [[${param.projectId}]];
         var userId = [[${#authentication.principal.id}]];
@@ -762,7 +761,6 @@
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
-                console.log(list[i]);
                 tableShow += '<div class="d-flex">\n' +
                     '                <div class="avatar avatar-online">\n';
                 if (list[i].projectsUser.dutyCode == 1){
@@ -787,6 +785,13 @@
             $(div).html(tableShow)
         }
     }
+</script>
+<!--加载消息-->
+<script th:inline="javascript">
+    $(function () {
+        var userId = [[${#authentication.principal.id}]];
+        nav_message(userId);
+    })
 </script>
 </body>
 </html>

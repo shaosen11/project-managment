@@ -95,4 +95,10 @@ public class ProjectUserServiceImpl implements ProjectUserService {
         return projectUserMapper.getProjectsUserNoInProjectByProjectId(projectId, offset, pageSize);
     }
 
+    @Override
+    public List<ProjectsUser> getByUserId(Integer userId) {
+        return projectUserMapper.getByUserId(userId);
+    }
+
+
 }

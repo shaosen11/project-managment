@@ -1,9 +1,6 @@
 package cn.edu.lingnan.projectmanagment;
 
-import cn.edu.lingnan.projectmanagment.bean.Documents;
-import cn.edu.lingnan.projectmanagment.bean.DocumentsRecord;
-import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
-import cn.edu.lingnan.projectmanagment.bean.ProjectsUser;
+import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.controller.ProjectsUserController;
 import cn.edu.lingnan.projectmanagment.service.DocumentsRecordService;
 import cn.edu.lingnan.projectmanagment.service.ProjectsPackageService;
@@ -44,8 +41,12 @@ class ProjectManagmentApplicationTests {
     @Autowired
     DocumentsRecordServiceImpl documentsRecordService;
 
+    @Autowired
+    MessageServiceImpl messageService;
+
     @Test
     void t1(){
-
+//        List<Message> byUserId = messageService.getByUserId(19);
+//        System.out.println(byUserId);
     }
 }

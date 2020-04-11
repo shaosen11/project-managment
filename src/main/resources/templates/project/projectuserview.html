@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Home</title>
-    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
 
     <!-- Fonts and icons -->
@@ -27,7 +27,8 @@
             <a th:href="index.html" class="logo">
                 <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
             </a>
-            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="fa fa-bars"></i>
 					</span>
@@ -52,8 +53,10 @@
             <div class="sidebar-content">
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
-                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
-                        <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}==null">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..."
+                             class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                        <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle"
+                             th:if="${#authentication.principal.photo}==null">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -123,8 +126,8 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a data-toggle="collapse" href="#base">
-                            <i class="fas fa-user-friends"></i>
+                        <a th:href="@{/project_user_view(projectId=${param.projectId})}">
+                            <i class="fas fa-users"></i>
                             <p>合作伙伴</p>
                         </a>
                     </li>
@@ -182,7 +185,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                    <div class="col-md-12" id="topProductsChart" style="height: 300px"></div>
+                                <div class="col-md-12" id="topProductsChart" style="height: 300px"></div>
                             </div>
                         </div>
                     </div>
@@ -254,13 +257,14 @@
 <!--检查包名-->
 <script th:inline="javascript">
     $(function () {
-        $("#packageName").keyup(function () {
-            setTimeout('checkPackage()', 1000);
-        })
-    }
+            $("#packageName").keyup(function () {
+                setTimeout('checkPackage()', 1000);
+            })
+        }
     )
     //检查包名是否存在
     var packageFlag = false;
+
     function checkPackage() {
         var projectId = $("#newPackageProjectId").val();
         var packageName = $("#packageName").val();
@@ -269,23 +273,24 @@
             type: "get",
             url: "projectsPackage",
             data: {
-                "projectId" : projectId,
-                "packageName" : packageName
+                "projectId": projectId,
+                "packageName": packageName
             },
-            success:function (json) {
-                if (!json){
-                    packageNamecss.css('borderColor','red');
+            success: function (json) {
+                if (!json) {
+                    packageNamecss.css('borderColor', 'red');
                     packageFlag = false;
-                }else {
-                    packageNamecss.css('borderColor','');
+                } else {
+                    packageNamecss.css('borderColor', '');
                     packageFlag = true;
                 }
             }
         })
     }
+
     //检查注册页面是否填写完成
     function submitPackageCheck() {
-        if(!packageFlag){
+        if (!packageFlag) {
             swal("包名已存在，换个名字试试", {
                 buttons: false,
                 timer: 1500,
@@ -360,36 +365,36 @@
             }
         })
     })
-
-
 </script>
 <!--加载人才市场-->
 <script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
     $(function () {
-        var projectId = [[${param.projectId}]];
         addpage(projectId, null, projectUserDiv, projectUserPage);
         addpage(projectId, 1, UserDiv, UserPage);
     })
-    function addpage(projectId, market, div, ul){
+
+    function addpage(projectId, market, div, ul) {
         pageStart();//开始分页
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
-                type : "get",
-                url : "/projectUserPage",
-                dataType : "json",
-                data : {
-                    page : '1',
-                    projectId : projectId,
-                    market : market
+                type: "get",
+                url: "/projectUserPage",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    projectId: projectId,
+                    market: market
                 }, //参数：当前页为1
-                success : function(data) {
+                success: function (data) {
                     appendHtml(data.list)//处理第一页的数据
                     var options = {//根据后台返回的分页相关信息，设置插件参数
-                        bootstrapMajorVersion : 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
-                        currentPage : data.page, //当前页数
-                        totalPages : data.totalPage, //总页数
-                        numberOfPages : data.pageSize,//每页记录数
-                        itemTexts : function(type, page, current) {//设置分页按钮显示字体样式
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
                             switch (type) {
                                 case "first":
                                     return "首页";
@@ -403,17 +408,17 @@
                                     return page;
                             }
                         },
-                        onPageClicked : function(event, originalEvent, type, page) {//分页按钮点击事件
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url : "/projectUserPage",
-                                type : "get",
-                                dataType : "json",
-                                data : {
-                                    "page" : page,
-                                    projectId : projectId,
-                                    market : market
+                                url: "/projectUserPage",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    "page": page,
+                                    projectId: projectId,
+                                    market: market
                                 },
-                                success : function(data) {
+                                success: function (data) {
                                     appendHtml(data.list);//处理数据
                                 }
                             });
@@ -423,25 +428,26 @@
                 }
             });
         }
+
         function appendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
-                if(market == null){
+                if (market == null) {
                     tableShow += '                         <div class="d-flex">\n' +
                         '                                    <div class="avatar">\n' +
                         '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
                         '                                    </div>\n' +
                         '                                    <div class="flex-1 pt-1 ml-2">\n' +
-                        '                                        <h5 class="fw-bold mb-1">'+ list[i].projectsUserDuty.dutyName + '</h5>\n' +
-                        '                                        <small class="text-muted">'+ list[i].myUserDetails.username + '</small>\n' +
+                        '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
+                        '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
                         '                                    </div>\n' +
                         '                                    <div class="d-flex ml-auto align-items-center">\n' +
                         '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
                         '                                    </div>\n' +
                         '                                </div>\n' +
                         '                                <div class="separator-dashed"></div>'
-                }else {
+                } else {
                     tableShow += '<div class="item-list">\n' +
                         '               <div class="avatar">\n' +
                         '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
@@ -450,8 +456,8 @@
                         '               <div class="username"> ' + list[i].username + '</div>\n' +
                         '                   <div class="status">' + list[i].tag + '</div>\n' +
                         '               </div>\n' +
-                        '               <button class="btn btn-icon btn-primary btn-round btn-sm">\n' +
-                        '                   <i class="fa fa-plus"></i>\n' +
+                        '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="invite(' + projectId + ',' + userId + ',' + list[i].id + ')">\n' +
+                        '                       <i class="fa fa-plus"></i>\n' +
                         '               </button>\n' +
                         '             </div>'
                 }
@@ -459,6 +465,35 @@
             $(div).html(tableShow)
         }
     }
+
+    function invite(projectId, fromUserId, toUserId) {
+        $.ajax({
+            type: "post",
+            url: "/inviteUser",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                fromUserId: fromUserId,
+                toUserId: toUserId
+            },
+            success: function (json) {
+                if (json.ok) {
+                    swal(json.message, {
+                        icon: "success",
+                        buttons: false,
+                        timer: 1500,
+                    });
+                }
+            }
+        })
+    }
+</script>
+<!--加载消息-->
+<script th:inline="javascript">
+    $(function () {
+        var userId = [[${#authentication.principal.id}]];
+        nav_message(userId);
+    })
 </script>
 </body>
 </html>

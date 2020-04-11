@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.lingnan.projectmanagment.mapper.MessageMapper">
+    <resultMap id="MessageList" type="Message">
+        <result column="id" property="id"></result>
+        <result column="type_id" property="typeId"></result>
+        <result column="from_user_id" property="fromUserId"></result>
+        <result column="to_user_id" property="toUserId"></result>
+        <result column="message" property="message"></result>
+        <result column="time" property="time"></result>
+        <result column="is_read" property="isRead"></result>
+        <result column="delete_flag" property="deleteFlag"></result>
+        <collection property="messageType" column="{id=type_id}" select="cn.edu.lingnan.projectmanagment.mapper.MessageTypeMapper.getById">
+        </collection>
+    </resultMap>
+   <select id="getByUserId" resultMap="MessageList">
+       select * from message where is_read = 1 and delete_flag = 1 and to_user_id = #{userId}
+   </select>
+
+    <!--插入一条记录-->
+    <insert id="insert">
+        insert into message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">type_id,</if>
+            <if test="messageType != null">message_type,</if>
+            <if test="fromUserId != null">from_user_id,</if>
+            <if test="toUserId != null">to_user_id,</if>
+            <if test="message != null">message,</if>
+            <if test="time != null">time,</if>
+            <if test="isRead != null">is_read,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">#{typeId},</if>
+            <if test="messageType != null">#{messageType},</if>
+            <if test="fromUserId != null">#{fromUserId},</if>
+            <if test="toUserId != null">#{toUserId},</if>
+            <if test="message != null">#{message},</if>
+            <if test="time != null">#{time},</if>
+            <if test="isRead != null">#{isRead},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+        </trim>
+    </insert>
+</mapper>
