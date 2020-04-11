@@ -9,12 +9,13 @@
         <result column="fid" property="functionId"></result>
         <result column="fname" property="functionName"></result>
         <result column="fstatus" property="functionStatus"></result>
-        <result column="uid" property="userId"></result>
-        <result column="uname" property="userName"></result>
+        <result column="puid" property="publishUserId"></result>
+        <result column="ruid" property="realizeUserId"></result>
     </resultMap>
     <select id="getProjectFunctionList" resultMap="pflist">
-        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname, pf.function_status as fstatus, pf.user_id as uid, su.username as uname
-        from projects_function pf left Join sys_user su on pf.user_id = su.id left Join projects p on pf.projects_id = p.id
+        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname,
+        pf.function_status as fstatus, pf.publish_user_id as puid, pf.realize_user_id as ruid
+        from projects_function pf left Join projects p on pf.projects_id = p.id
         where pf.delete_flag = 1
     </select>
 
@@ -26,12 +27,13 @@
         <result column="fid" property="functionId"></result>
         <result column="fname" property="functionName"></result>
         <result column="fstatus" property="functionStatus"></result>
-        <result column="uid" property="userId"></result>
-        <result column="uname" property="userName"></result>
+        <result column="puid" property="publishUserId"></result>
+        <result column="ruid" property="realizeUserId"></result>
     </resultMap>
     <select id="getOneProjectFunction" resultMap="onepflist">
-        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname, pf.function_status as fstatus, pf.user_id as uid, su.username as uname
-        from projects_function pf left Join sys_user su on pf.user_id = su.id left Join projects p on pf.projects_id = p.id
+        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname,
+        pf.function_status as fstatus, pf.publish_user_id as puid, pf.realize_user_id as ruid
+        from projects_function pf left Join projects p on pf.projects_id = p.id
         where pf.delete_flag = 1 and pf.id = #{id}
     </select>
 
@@ -47,25 +49,14 @@
         <result column="fid" property="functionId"></result>
         <result column="fname" property="functionName"></result>
         <result column="fstatus" property="functionStatus"></result>
-        <result column="uid" property="userId"></result>
-        <result column="uname" property="userName"></result>
+        <result column="puid" property="publishUserId"></result>
+        <result column="ruid" property="realizeUserId"></result>
     </resultMap>
     <select id="getDelProjectFunctionList" resultMap="delpflist">
-        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname, pf.function_status as fstatus, pf.user_id as uid, su.username as uname
-        from projects_function pf left Join sys_user su on pf.user_id = su.id left Join projects p on pf.projects_id = p.id
+        select pf.id as id, pf.projects_id as pid , p.name as pname, pf.function_id as fid, pf.function_name as fname,
+        pf.function_status as fstatus, pf.publish_user_id as puid, pf.realize_user_id as ruid
+        from projects_function pf left Join projects p on pf.projects_id = p.id
         where pf.delete_flag = 0
-    </select>
-
-    <!--通过项目id查询功能点数量-->
-    <select id="countProjectFunctionByProjectId" resultType="Integer">
-        select count(*) from projects_function
-        where projects_id = #{id} and delete_flag = 1
-    </select>
-
-    <!--通过项目id查询已完成的功能点数量-->
-    <select id="countCompletedProjectFunctionByProjectId" resultType="Integer">
-        select count(*) from projects_function
-        where projects_id = #{id} and delete_flag = 1 and function_status = 1
     </select>
 
     <!--删除一条记录-->
@@ -88,10 +79,11 @@
         update projects_function set
         <trim suffixOverrides=",">
             <if test="projectsId != null">projects_id = #{projectsId},</if>
-            <if test="userId != null">user_id = #{userId},</if>
             <if test="functionId != null">function_id = #{functionId},</if>
             <if test="functionName != null">function_name = #{functionName},</if>
             <if test="functionStatus != null">function_status = #{functionStatus},</if>
+            <if test="publishUserId != null">publish_user_id = #{publishUserId},</if>
+            <if test="realizeUserId != null">realize_user_id = #{realizeUserId},</if>
         </trim>
         where id = #{id}
     </update>
@@ -101,20 +93,110 @@
         insert into projects_function
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectsId != null">projects_id,</if>
-            <if test="userId != null">user_id,</if>
             <if test="functionId != null">function_id,</if>
             <if test="functionName != null">function_name,</if>
+            <if test="publishUserId != null">publish_user_id,</if>
+            <if test="realizeUserId != null">realize_user_id,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectsId != null">#{projectsId},</if>
-            <if test="userId != null">#{userId},</if>
             <if test="functionId != null">#{functionId},</if>
             <if test="functionName != null">#{functionName},</if>
+            <if test="publishUserId != null">#{publishUserId},</if>
+            <if test="realizeUserId != null">#{realizeUserId},</if>
         </trim>
     </insert>
     <!--插入记录前查找该项目最大功能点id-->
     <select id="findMaxFunctionId" resultType="Integer">
         select MAX(function_id) from projects_function where projects_id = #{id} group by projects_id
     </select>
+
+    <!--通过项目id查询功能点数量-->
+    <select id="countProjectFunctionByProjectId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{id} and delete_flag = 1
+    </select>
+
+    <!--通过项目id和status查询功能点数量-->
+    <select id="countByProjectIdAndStatus" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{id} and delete_flag = 1 and function_status = #{functionStatus}
+    </select>
+
+    <!--通过项目id和status查询指派给我的功能点数量-->
+    <select id="countProjectFunctionByProjectIdAndRealizeUserId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{projectId} and delete_flag = 1 and realize_user_id = #{userId} and function_status = #{functionStatus}
+    </select>
+
+    <!--通过项目id和status查询我发布的功能点数量-->
+    <select id="countProjectFunctionByProjectIdAndPublishUserId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{projectId} and delete_flag = 1 and publish_user_id = #{userId} and function_status = #{functionStatus}
+    </select>
+
+    <!--通过项目id和status查询我参与的功能点数量-->
+    <select id="countProjectFunctionByProjectIdAndUserId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{projectId} and delete_flag = 1 and function_status = #{functionStatus} and (publish_user_id = #{userId} or realize_user_id = #{userId})
+    </select>
+
+    <resultMap id="projectsFunction0" type="ProjectsFunction">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectsId"></result>
+        <result column="fid" property="functionId"></result>
+        <result column="fname" property="functionName"></result>
+        <result column="fstatus" property="functionStatus"></result>
+        <result column="puid" property="publishUserId"></result>
+        <result column="pusername" property="publishUserName"></result>
+        <result column="ruid" property="realizeUserId"></result>
+        <result column="rusername" property="realizeUserName"></result>
+    </resultMap>
+
+    <!-- 查询分页数据之全部功能 -->
+    <select id="getAllFunctionPage" resultMap="projectsFunction0">
+	    SELECT pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+               pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+               pf.realize_user_id as ruid, su2.username as rusername
+	    FROM projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                  left join sys_user su2 on pf.realize_user_id = su2.id
+	    where pf.delete_flag = 1 and pf.projects_id = #{projectId} and pf.function_status = #{functionStatus}
+	    order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+    <!-- 查询分页数据之指派给我的 -->
+    <select id="getFunctionByProjectIdAndRealizeUserId" resultMap="projectsFunction0">
+        select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+                pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+                pf.realize_user_id as ruid, su2.username as rusername
+        from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                    left join sys_user su2 on pf.realize_user_id = su2.id
+        where projects_id = #{projectsId} and pf.delete_flag = 1 and realize_user_id = #{realizeUserId} and pf.function_status = #{functionStatus}
+        order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+    <!-- 查询分页数据之我发布的 -->
+    <select id="getFunctionByProjectIdAndPublishUserId" resultMap="projectsFunction0">
+        select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+                pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+                pf.realize_user_id as ruid, su2.username as rusername
+        from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                    left join sys_user su2 on pf.realize_user_id = su2.id
+        where projects_id = #{projectsId} and pf.delete_flag = 1 and publish_user_id = #{publishUserId} and pf.function_status = #{functionStatus}
+        order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+    <!-- 查询分页数据之我参与的 -->
+    <select id="getFunctionByProjectIdAndUserId" resultMap="projectsFunction0">
+        select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+                pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+                pf.realize_user_id as ruid, su2.username as rusername
+        from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                  left join sys_user su2 on pf.realize_user_id = su2.id
+        where projects_id = #{projectsId} and pf.delete_flag = 1 and pf.function_status = #{functionStatus} and (publish_user_id = #{userId} or realize_user_id = #{userId})
+        order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+
 </mapper>

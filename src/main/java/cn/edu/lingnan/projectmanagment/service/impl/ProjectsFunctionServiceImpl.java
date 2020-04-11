@@ -34,14 +34,56 @@ public class ProjectsFunctionServiceImpl implements ProjectsFunctionService {
     }
 
     @Override
-    public Integer countCompletedProjectFunctionByProjectId(Integer id) {
-        return projectsFunctionMapper.countCompletedProjectFunctionByProjectId(id);
+    public Integer countByProjectIdAndStatus(Integer id, Integer functionStatus) {
+        return projectsFunctionMapper.countByProjectIdAndStatus(id,functionStatus);
+    }
+
+    @Override
+    public Integer countProjectFunctionByProjectIdAndRealizeUserId(Integer projectId, Integer userId, Integer functionStatus) {
+        return projectsFunctionMapper.countProjectFunctionByProjectIdAndRealizeUserId(projectId,userId,functionStatus);
+    }
+
+    @Override
+    public Integer countProjectFunctionByProjectIdAndPublishUserId(Integer projectId, Integer userId, Integer functionStatus) {
+        return projectsFunctionMapper.countProjectFunctionByProjectIdAndPublishUserId(projectId,userId,functionStatus);
+    }
+
+    @Override
+    public Integer countProjectFunctionByProjectIdAndUserId(Integer projectId, Integer userId, Integer functionStatus) {
+        return projectsFunctionMapper.countProjectFunctionByProjectIdAndUserId(projectId,userId,functionStatus);
+    }
+
+
+    @Override
+    public List<ProjectsFunction> getAllFunctionByProjectId(Integer id) {
+        return projectsFunctionMapper.getAllFunctionByProjectId(id);
     }
 
     @Override
     public Integer findMaxFunctionId(Integer id) {
         return projectsFunctionMapper.findMaxFunctionId(id);
     }
+
+    @Override
+    public List<ProjectsFunction> getAllFunctionPage(Integer projectId, Integer offset, Integer pageSize, Integer functionStatus) {
+        return projectsFunctionMapper.getAllFunctionPage(projectId,offset,pageSize,functionStatus);
+    }
+
+    @Override
+    public List<ProjectsFunction> getFunctionByProjectIdAndRealizeUserId(Integer projectsId, Integer offset, Integer pageSize, Integer realizeUserId, Integer functionStatus) {
+        return projectsFunctionMapper.getFunctionByProjectIdAndRealizeUserId(projectsId,offset,pageSize,realizeUserId,functionStatus);
+    }
+
+    @Override
+    public List<ProjectsFunction> getFunctionByProjectIdAndPublishUserId(Integer projectsId, Integer offset, Integer pageSize, Integer publishUserId, Integer functionStatus) {
+        return projectsFunctionMapper.getFunctionByProjectIdAndPublishUserId(projectsId,offset,pageSize,publishUserId,functionStatus);
+    }
+
+    @Override
+    public List<ProjectsFunction> getFunctionByProjectIdAndUserId(Integer projectsId, Integer offset, Integer pageSize, Integer userId, Integer functionStatus) {
+        return projectsFunctionMapper.getFunctionByProjectIdAndUserId(projectsId,offset,pageSize,userId,functionStatus);
+    }
+
 
     @Override
     public boolean addProjectFunction(ProjectsFunction projectsFunction) {

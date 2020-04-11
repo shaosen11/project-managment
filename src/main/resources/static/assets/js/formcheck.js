@@ -33,6 +33,11 @@ function checkEditUserForm(){
     return nametip && phonetip;
 }
 
+function checkAddFunction(){
+    var nametip = checkFunctionName();
+    return nametip;
+}
+
 //验证用户名
 function checkUserName(){
     var username = document.getElementById('addName');
@@ -96,6 +101,7 @@ function checkPassword(){
         return true;
     }
 }
+
 //确认密码
 function ConfirmPassword(){
     var userpasswd = document.getElementById('password');
@@ -112,6 +118,7 @@ function ConfirmPassword(){
         return true;
     }
 }
+
 //验证邮箱
 function checkEmail(){
     var useremail = document.getElementById('addEmail');
@@ -133,6 +140,7 @@ function checkEmail(){
         return true;
     }
 }
+
 //验证邮箱2
 function checkEditEmail() {
     var useremail = document.getElementById('editEmail');
@@ -153,6 +161,7 @@ function checkEditEmail() {
         return true;
     }
 }
+
 //验证手机号
 function checkPhone(){
     var userphone = document.getElementById('addPhone');
@@ -174,6 +183,7 @@ function checkPhone(){
         return true;
     }
 }
+
 //验证手机号2
 function checkEditPhone(){
     var userphone = document.getElementById('editPhone');
@@ -191,4 +201,19 @@ function checkEditPhone(){
     }
 }
 
+//验证功能名称
+function checkFunctionName(){
+    var name = document.getElementById('addName');
+    var errname = document.getElementById('nameErr');
+    if(name.value.length == 0){
+        errname.innerHTML="不能为空"
+        errname.className="error"
+        return false;
+    }
+    else{
+        errname.innerHTML="OK"
+        errname.className="success";
+        return true;
+    }
+}
 

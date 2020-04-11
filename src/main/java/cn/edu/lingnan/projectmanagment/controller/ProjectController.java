@@ -66,12 +66,26 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_view")
-    public String projectView(Integer projectId, Model model){
+    public String projectView(@Param("projectId")Integer projectId,@Param("userId")Integer userId, Model model){
         System.out.println("项目id " + projectId);
+        model.addAttribute("projectId",projectId);
         List<DocumentsRecord> documentsRecordList = documentsRecordService.getAllByProjectId(projectId);
         model.addAttribute("documentsRecordlist", documentsRecordList);
+        //获取进度条
+        Integer data1 = projectsFunctionService.countProjectFunctionByProjectId(projectId);
+        if(data1 == 0){
+            model.addAttribute("projectFunctionData",0);
+            System.out.println("data1="+data1);
+        }else{
+            Integer data2 = projectsFunctionService.countByProjectIdAndStatus(projectId,2);
+            Integer data3 = projectsFunctionService.countByProjectIdAndStatus(projectId,3);
+            Integer projectFunctionData = ((data2+data3)*100)/data1;
+            model.addAttribute("projectFunctionData",projectFunctionData);
+            System.out.println("data1="+data1+" data2="+data2+" data3="+data3+" projectFunctionData="+projectFunctionData);
+        }
         return "project/projectview";
     }
+
 
     //添加项目
     @ResponseBody

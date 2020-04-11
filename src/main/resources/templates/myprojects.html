@@ -86,43 +86,8 @@
                                 <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
                                     <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
                                             <!-- 项目列表1 -->
-                                            <div class="col-md-8 row" style="float: left">
-                                                <div class="col-md-12 row" th:each="myproject:${myprojects}" th:fragment="div1" id="div1">
-                                                    <div class="col-lg-10">
-                                                        <a th:href="@{/projects_view(projectId=${myproject.projectId},userId=${#authentication.principal.id})}">
-                                                            <h2 style="color: #145180">
-                                                                <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
-                                                            </h2>
-                                                        </a>
-                                                        <span style="color: #4e555b">
-                                                            <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
-                                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <span style="color: #4e555b">
-                                                            <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
-                                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <span style="color: #4e555b">
-                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
-                                                        </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <span style="color: #4e555b">
-                                                            <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
-                                                        </span>
-                                                    </div>
-                                                    <div class="col-lg-2">
-                                                        <a th:href="@{/my_project_del_refrech/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color: #F29F3F" th:if="${myproject.storeFlag} eq 1"  >
-                                                            <i class="fas fa-star"></i><span th:text="${myproject.storeCount}"></span>
-                                                        </a>
-                                                        <a th:href="@{/my_project_refrech/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color: darkgrey" th:if="${myproject.storeFlag} eq 0">
-                                                            <i class="fas fa-star"></i><span th:text="${myproject.storeCount}"></span>
-                                                        </a>
-                                                        <a th:href="@{/my_project_del_refrech_like/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color:#C1194E" th:if="${myproject.likeFlag} eq 1">
-                                                            <i class="fas fa-heart"></i><span>[[${myproject.likeCount}]]</span>
-                                                        </a>
-                                                        <a th:href="@{/my_project_refrech_like/}+${#authentication.principal.id}+'/'+${myproject.projectId}" style="color:darkgrey" th:if="${myproject.likeFlag} eq 0">
-                                                            <i class="fas fa-heart"></i><span>[[${myproject.likeCount}]]</span>
-                                                        </a>
-                                                    </div>
-                                                    <hr style="color: #4C5B5C" size="3" width="96%">
-                                                </div>
+                                            <div class="col-md-8 row" style="float: left" id="myProjectAll">
+
                                             </div>
 
                                             <!-- 饼图1 -->
@@ -469,6 +434,145 @@
         $('#div1').load(url);
     }
 
+</script>
+<script type="text/javascript">
+    //加载我的项目
+    var userId = [[${#authentication.principal.id}]];
+    $.ajax(
+        {
+            type: "Get",
+            url: "/my_project_all",
+            data: {
+                userId: userId,
+            },
+            dataType: "json",
+            success: function (data) {
+                myprojectAppendHtml(data);
+            }
+        }
+    );
+
+    function myprojectAppendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var userId = [[${#authentication.principal.id}]];
+        var tableShow = '';
+        for (var i = 0; i < list.length; i++) {
+            if(list[i].storeFlag==1){
+                var storecolor = "#F29F3F";
+                var storefunction = "cancelstore";
+            }else if(list[i].storeFlag==0){
+                var storecolor = "darkgrey";
+                var storefunction = "addstore";
+            }
+            if(list[i].likeFlag==1){
+                var likecolor = "#C1194E";
+                var likefunction = "cancellike";
+            }else if(list[i].likeFlag==0){
+                var likecolor = "darkgrey";
+                var likefunction = "addlike";
+            }
+
+         tableShow +=
+                '<div class="col-md-12 row">\n' +
+                '<div class="col-lg-10">\n' +
+                '<a onclick="projectview(' + list[i].projectId + ',' + userId + ')">\n' +
+                '<h2 style="color: #145180">\n' +
+                '<i class="fas fa-file-alt"></i>&nbsp;' + list[i].projectName +
+                '</h2>\n' +
+                '</a>\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="fas fa-user-tie"></i>项目管理员：' + list[i].chargeUser +
+                '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="fab fa-codiepie"></i>&nbsp;项目进度：' + list[i].schedule +
+                '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="far fa-arrow-alt-circle-up"></i>上传次数：' + list[i].updateCount +
+                '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<span style="color: #4e555b">\n' +
+                '<i class="far fa-arrow-alt-circle-up"></i>我的上传次数：' + list[i].myUpdateCount +
+                '</span>\n' +
+                '</div>\n' +
+                '<div class="col-lg-2">\n' +
+                '<a onclick="' + storefunction + '(' + userId + ',' + list[i].projectId + ')" style="color: ' + storecolor + '">\n'+
+                '<i class="fas fa-star"></i><span>' + list[i].storeCount + '</span>\n' +
+                '</a>\n' +
+                '<a onclick="' + likefunction + '(' + userId + ',' + list[i].projectId + ')" style="color:' + likecolor + '">\n' +
+                 '<i class="fas fa-heart"></i><span>' + list[i].likeCount + '</span>\n' +
+                '</a>\n' +
+                '</div>\n' +
+                '<hr style="color: #4C5B5C" size="3" width="96%">\n' +
+                '</div>\n'
+        }
+        $('#myProjectAll').html(tableShow)
+    }
+
+    function cancelstore(userId,projectId) {
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_del_refrech",
+                data: {
+                    userId: userId,
+                    projectId: projectId
+                },
+                dataType: "json",
+                success: function (data) {
+                    myprojectAppendHtml(data);
+                }
+            }
+        );
+    }
+
+    function addstore(userId,projectId) {
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_refrech",
+                data: {
+                    userId: userId,
+                    projectId: projectId
+                },
+                dataType: "json",
+                success: function (data) {
+                    myprojectAppendHtml(data);
+                }
+            }
+        );
+    }
+
+    function cancellike(userId,projectId) {
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_del_refrech_like",
+                data: {
+                    userId: userId,
+                    projectId: projectId
+                },
+                dataType: "json",
+                success: function (data) {
+                    myprojectAppendHtml(data);
+                }
+            }
+        );
+    }
+
+    function addlike(userId,projectId) {
+        $.ajax(
+            {
+                type: "Get",
+                url: "/my_project_refrech_like",
+                data: {
+                    userId: userId,
+                    projectId: projectId
+                },
+                dataType: "json",
+                success: function (data) {
+                    myprojectAppendHtml(data);
+                }
+            }
+        );
+    }
 </script>
 <script type="text/javascript" th:inline="javascript">
     //加载用户所有项目

@@ -1,9 +1,10 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
-import cn.edu.lingnan.projectmanagment.bean.Projects;
-import cn.edu.lingnan.projectmanagment.bean.ProjectsFunction;
+import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,9 @@ public class ProjectsFunctionController {
     @Autowired
     private ProjectServiceImpl projectService;
 
+    @Autowired
+    private UserServiceImpl userService;
+
     //查询所有项目功能点信息
     @GetMapping("/project_function_list")
     public String projectFunctionList(Model model){
@@ -40,10 +44,27 @@ public class ProjectsFunctionController {
     @PostMapping("/add_project_function")
     public Integer addProjectFunction(ProjectsFunction projectsFunction){
         Projects projects = projectService.getById(projectsFunction.getProjectsId());
+        System.out.println("projectsFunction="+projectsFunction);
         if(projects == null){
             System.out.println("该项目不存在");
             return 2;
         }else{
+            if(projectsFunction.getPublishUserId() != null){
+                MyUserDetails myUserDetails = userService.findById(projectsFunction.getPublishUserId());
+                if(myUserDetails == null){
+                    System.out.println("发布用户不存在！");
+                    return 3;
+                }else {
+                    if(projectsFunction.getRealizeUserId() != null){
+                        MyUserDetails myUserDetails2 = userService.findById(projectsFunction.getRealizeUserId());
+                        if (myUserDetails2 == null){
+                            System.out.println("实现用户不存在！");
+                            return 4;
+                        }
+                    }
+
+                }
+            }
             try{
                 Integer functionid = projectsFunctionService.findMaxFunctionId(projectsFunction.getProjectsId());
                 if(functionid == null){
@@ -63,12 +84,12 @@ public class ProjectsFunctionController {
                     return 1;
                 }else{
                     System.out.println("添加项目功能点信息失败！");
-                    return 3;
+                    return 5;
                 }
             }catch (Exception e){
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 System.out.println("添加项目功能点信息失败！");
-                return 3;
+                return 5;
             }
         }
     }
@@ -77,7 +98,7 @@ public class ProjectsFunctionController {
     @Transactional
     @ResponseBody
     @PostMapping("/del_project_function")
-    public Boolean delProjectFunction(Integer id){
+    public Boolean delProjectFunction(Integer id) {
         try{
             ProjectsFunction projectsFunction = projectsFunctionService.getOneProjectFunction(id);
             System.out.println("projectsFunction="+projectsFunction);
@@ -87,6 +108,8 @@ public class ProjectsFunctionController {
                 System.out.println("删除项目功能点信息成功！");
                 Projects projects1 =  projectService.getById(projectsFunction.getProjectsId());
                 projects1.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects1.getId()));
+                int count = projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),2)+projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),3);
+                projects1.setCompletedFunctionPoints(count);
                 projectService.editProject(projects1);
                 projectService.updateSchedule(projects1);
                 System.out.println("项目信息："+projects1);
@@ -113,9 +136,24 @@ public class ProjectsFunctionController {
                 System.out.println("该项目不存在");
                 return 2;
             }else {
+                if(projectsFunction.getPublishUserId() != null){
+                    MyUserDetails myUserDetails = userService.findById(projectsFunction.getPublishUserId());
+                    if(myUserDetails == null){
+                        System.out.println("发布用户不存在！");
+                        return 3;
+                    }else {
+                        if(projectsFunction.getRealizeUserId() != null){
+                            MyUserDetails myUserDetails2 = userService.findById(projectsFunction.getRealizeUserId());
+                            if (myUserDetails2 == null){
+                                System.out.println("实现用户不存在！");
+                                return 4;
+                            }
+                        }
+                    }
+                }
                 ProjectsFunction projectsFunction1 = projectsFunctionService.getOneProjectFunction(projectsFunction.getId());
                 //projectsFunction修改后；projectsFunction1修改前
-                if (projectsFunction.getProjectsId() == projectsFunction1.getProjectsId()) {//如果修改了项目id
+                if (projectsFunction.getProjectsId() != projectsFunction1.getProjectsId()) {//如果修改了项目id
                     Integer functionid = projectsFunctionService.findMaxFunctionId(projectsFunction.getProjectsId());
                     projectsFunction.setFunctionId(functionid + 1);
                     System.out.println("FunctionId=" + projectsFunction.getFunctionId());
@@ -130,20 +168,23 @@ public class ProjectsFunctionController {
                         //原来的项目的功能点、已完成功能点更新
                         Projects projects1 = projectService.getById(projectsFunction1.getProjectsId());
                         projects1.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects1.getId()));
-                        projects1.setCompletedFunctionPoints(projectsFunctionService.countCompletedProjectFunctionByProjectId(projects1.getId()));
+                        int count = projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),2) + projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),3);
+                        projects1.setCompletedFunctionPoints(count);
                         projectService.editProject(projects1);
                         System.out.println("修改前项目信息更新：" + projects1);
                         //更改后的项目的功能点、已完成功能点更新
                         Projects projects2 = projectService.getById(projectsFunction.getProjectsId());
                         projects2.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects2.getId()));
-                        projects2.setCompletedFunctionPoints(projectsFunctionService.countCompletedProjectFunctionByProjectId(projects2.getId()));
+                        int count2 = projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),2) + projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),3);
+                        projects2.setCompletedFunctionPoints(count2);
                         projectService.editProject(projects2);
                         System.out.println("修改后项目信息更新：" + projects2);
                         projectService.updateSchedule(projects1);
                         projectService.updateSchedule(projects2);
                     } else {
                         Projects projects2 = projectService.getById(projectsFunction.getProjectsId());
-                        projects2.setCompletedFunctionPoints(projectsFunctionService.countCompletedProjectFunctionByProjectId(projects2.getId()));
+                        int count2 = projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),2) + projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),3);
+                        projects2.setCompletedFunctionPoints(count2);
                         projectService.editProject(projects2);
                         projectService.updateSchedule(projects2);
                         System.out.println("修改后项目信息更新：" + projects2);
@@ -188,6 +229,8 @@ public class ProjectsFunctionController {
                     System.out.println("还原项目功能点信息成功！");
                     System.out.println("projectsFunction="+projectsFunction);
                     projects.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects.getId()));
+                    int count = projectsFunctionService.countByProjectIdAndStatus(projects.getId(),2)+projectsFunctionService.countByProjectIdAndStatus(projects.getId(),3);
+                    projects.setCompletedFunctionPoints(count);
                     projectService.editProject(projects);
                     projectService.updateSchedule(projects);
                     System.out.println("项目信息："+projects);
@@ -203,4 +246,5 @@ public class ProjectsFunctionController {
             return 3;
         }
     }
+
 }

@@ -10,7 +10,9 @@ public class ProjectsFunction {
     private Integer functionId;
     private String functionName;
     private Integer functionStatus;
-    private Integer userId;
-    private String userName;
+    private Integer publishUserId;
+    private String publishUserName;
+    private Integer realizeUserId;
+    private String realizeUserName;
     private Integer deleteFlag;
 }

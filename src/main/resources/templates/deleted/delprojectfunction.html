@@ -92,11 +92,10 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <h4 class="card-title">已注销项目功能</h4>
-                                    <p style="color: darkred" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <!-- 项目用户信息表单 -->
+                                <!-- 信息表单 -->
                                 <div class="table-responsive">
                                     <table id="add-row" class="display table table-striped table-hover" >
                                         <thead>
@@ -106,9 +105,9 @@
                                             <th>项目名</th>
                                             <th>功能ID</th>
                                             <th>功能名</th>
-                                            <th>功能状态(1=完成,0=未完成)</th>
-                                            <th>用户ID</th>
-                                            <th>实现功能用户名</th>
+                                            <th>功能状态</th>
+                                            <th>发布用户</th>
+                                            <th>实现用户</th>
                                             <th style="width: 10%">Action</th>
                                         </tr>
                                         </thead>
@@ -120,8 +119,8 @@
                                             <th>功能ID</th>
                                             <th>功能名</th>
                                             <th>功能状态</th>
-                                            <th>用户ID</th>
-                                            <th>实现功能用户名</th>
+                                            <th>发布用户</th>
+                                            <th>实现用户</th>
                                             <th>Action</th>
                                         </tr>
                                         </tfoot>
@@ -132,9 +131,12 @@
                                             <td th:text="${projectfunction.projectName}"></td>
                                             <td th:text="${projectfunction.functionId}"></td>
                                             <td th:text="${projectfunction.functionName}"></td>
-                                            <td th:text="${projectfunction.functionStatus}"></td>
-                                            <td th:text="${projectfunction.userId}"></td>
-                                            <td th:text="${projectfunction.userName}"></td>
+                                            <td th:text="待办的" th:if="${projectfunction.functionStatus} == 0"></td>
+                                            <td th:text="进行中" th:if="${projectfunction.functionStatus} == 1"></td>
+                                            <td th:text="已完成" th:if="${projectfunction.functionStatus} == 2"></td>
+                                            <td th:text="已验收" th:if="${projectfunction.functionStatus} == 3"></td>
+                                            <td th:text="${projectfunction.publishUserId}"></td>
+                                            <td th:text="${projectfunction.realizeUserId}"></td>
                                             <td>
                                                 <div class="form-button-action">
                                                         <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-success" th:onclick="reductionProjectFunction([[${projectfunction.id}]])">
