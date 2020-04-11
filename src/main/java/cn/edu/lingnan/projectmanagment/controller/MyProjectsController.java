@@ -6,6 +6,7 @@ import cn.edu.lingnan.projectmanagment.service.impl.UserLikeServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserStoreServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MyProjectsController {
@@ -34,9 +36,9 @@ public class MyProjectsController {
     @GetMapping("/my_projects/{id}")
     public String myProjects(@PathVariable("id")Integer id, Model model){
         //我所有项目
-        List<Myprojects> myprojectsList = userService.getMyProjects(id);
-        System.out.println("userid:"+id+" 我的项目："+myprojectsList);
-        model.addAttribute("myprojects",myprojectsList);
+//        List<Myprojects> myprojectsList = userService.getMyProjects(id);
+//        System.out.println("userid:"+id+" 我的项目："+myprojectsList);
+//        model.addAttribute("myprojects",myprojectsList);
         //我负责的项目
         List<Myprojects> mychargeprojectsList = userService.getMyChargeProjects(id);
         System.out.println("userid:"+id+" 我负责的项目："+mychargeprojectsList);
@@ -96,70 +98,91 @@ public class MyProjectsController {
         return list3;
     }
 
+    //我的全部项目
+    @GetMapping("/my_project_all")
+    @ResponseBody
+    public List myProjectsAll(Integer userId){
+        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
+        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
+        return myprojectsList;
+    }
+
     //我的项目--收藏
-    @GetMapping("/my_project_refrech/{userId}/{projectId}")
-    public String myProjectsRefrech(@PathVariable("userId")Integer id,@PathVariable("projectId")Integer projectId,Model model){
-        UserStore userStore = userStoreService.getOneUserStore(id,projectId);
+    @ResponseBody
+    @GetMapping("/my_project_refrech")
+    public List myProjectsRefrech(Integer userId, Integer projectId){
+        UserStore userStore = userStoreService.getOneUserStore(userId,projectId);
         if(userStore == null){
             UserStore userStore1 = new UserStore();
-            userStore1.setUserId(id);
+            userStore1.setUserId(userId);
             userStore1.setProjectsId(projectId);
             System.out.println("添加UserStore"+userStore1);
             userStoreService.addUserStore(userStore1);
         }else{
-            userStoreService.reductionUserStore(id,projectId);
+            userStoreService.reductionUserStore(userId,projectId);
         }
         Integer storenum = userStoreService.countProjectBeStored(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setStoreCount(storenum);
         System.out.println("收藏项目"+projects);
         projectService.editProject(projects);
-        return "redirect:/my_projects/"+id;
+        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
+        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
+        return myprojectsList;
     }
 
     //我的项目--取消收藏
-    @GetMapping("/my_project_del_refrech/{userId}/{projectId}")
-    public String myProjectsDelRefrech(@PathVariable("userId")Integer id,@PathVariable("projectId")Integer projectId,Model model){
-        userStoreService.deleteUserStore(id,projectId);
+    @ResponseBody
+    @GetMapping("/my_project_del_refrech")
+    public List myProjectsDelRefrech(Integer userId,Integer projectId){
+        userStoreService.deleteUserStore(userId,projectId);
         Integer storenum = userStoreService.countProjectBeStored(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setStoreCount(storenum);
         System.out.println("取消收藏项目"+projects);
         projectService.editProject(projects);
-        return "redirect:/my_projects/"+id;
+        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
+        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
+        return myprojectsList;
     }
 
     //我的项目--点赞
-    @GetMapping("/my_project_refrech_like/{userId}/{projectId}")
-    public String myProjectsRefrechLike(@PathVariable("userId")Integer id,@PathVariable("projectId")Integer projectId,Model model){
-        UserLike userLike = userLikeService.getOneUserLike(id,projectId);
+    @ResponseBody
+    @GetMapping("/my_project_refrech_like")
+    public List myProjectsRefrechLike(Integer userId,Integer projectId){
+        UserLike userLike = userLikeService.getOneUserLike(userId,projectId);
         if(userLike == null){
             UserLike userLike1 = new UserLike();
-            userLike1.setUserId(id);
+            userLike1.setUserId(userId);
             userLike1.setProjectsId(projectId);
             System.out.println("添加UserStore"+userLike1);
             userLikeService.addUserLike(userLike1);
         }else{
-            userLikeService.reductionUserLike(id,projectId);
+            userLikeService.reductionUserLike(userId,projectId);
         }
         Integer storenum = userLikeService.countProjectBeLiked(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setLikeCount(storenum);
         System.out.println("点赞项目"+projects);
         projectService.editProject(projects);
-        return "redirect:/my_projects/"+id;
+        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
+        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
+        return myprojectsList;
     }
 
     //我的项目--取消点赞
-    @GetMapping("/my_project_del_refrech_like/{userId}/{projectId}")
-    public String myProjectsDelRefrechLike(@PathVariable("userId")Integer id,@PathVariable("projectId")Integer projectId,Model model){
-        userLikeService.deleteUserLike(id,projectId);
+    @ResponseBody
+    @GetMapping("/my_project_del_refrech_like")
+    public List myProjectsDelRefrechLike(Integer userId,Integer projectId){
+        userLikeService.deleteUserLike(userId,projectId);
         Integer likenum = userLikeService.countProjectBeLiked(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setLikeCount(likenum);
         System.out.println("取消点赞项目"+projects);
         projectService.editProject(projects);
-        return "redirect:/my_projects/"+id;
+        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
+        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
+        return myprojectsList;
     }
 
     //查看我的项目收藏

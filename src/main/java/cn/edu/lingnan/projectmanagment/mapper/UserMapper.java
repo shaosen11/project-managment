@@ -2,13 +2,11 @@ package cn.edu.lingnan.projectmanagment.mapper;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.Myprojects;
-import cn.edu.lingnan.projectmanagment.bean.UserRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author shaosen

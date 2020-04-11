@@ -4,7 +4,6 @@ import cn.edu.lingnan.projectmanagment.bean.Documents;
 import cn.edu.lingnan.projectmanagment.bean.Projects;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsPackage;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsPackageList;
-import cn.edu.lingnan.projectmanagment.service.ProjectService;
 import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
