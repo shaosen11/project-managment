@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class ProjectController {
@@ -66,11 +63,9 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_view")
-    public String projectView(@Param("projectId")Integer projectId,@Param("userId")Integer userId, Model model){
+    public String projectView(@Param("projectId")Integer projectId, Model model){
         System.out.println("项目id " + projectId);
         model.addAttribute("projectId",projectId);
-        List<DocumentsRecord> documentsRecordList = documentsRecordService.getAllByProjectId(projectId);
-        model.addAttribute("documentsRecordlist", documentsRecordList);
         //获取进度条
         Integer data1 = projectsFunctionService.countProjectFunctionByProjectId(projectId);
         if(data1 == 0){
@@ -199,6 +194,10 @@ public class ProjectController {
         projectsUser.setProjectsId(projects.getId());
         projectsUser.setUserId(projects.getChargeUserId());
         projectUserService.addProjectUser(projectsUser);
+        //插入project_code_line表
+        ProjectsCodeLine projectsCodeLine = new ProjectsCodeLine();
+        projectsCodeLine.setProjectsId(projects.getId());
+        projectsCodeLine.setUploadTime(new Date());
         Map<String,Object> pathMap = new HashMap<>();
         pathMap.put("projectId", projects.getId());
         pathMap.put("userId", projects.getChargeUserId());
