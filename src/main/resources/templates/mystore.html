@@ -93,7 +93,7 @@
                                                     <i class="fab fa-codiepie"></i>项目进度：[[${myproject.schedule}]]
                                                 </span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <span style="color: #4e555b">
-                                                    <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                                    <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.codeUpdateCount}]]
                                                 </span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <span style="color: #4e555b">
                                                     <i class="far fa-circle"></i>功能点：[[${myproject.functionPoints}]]
@@ -396,12 +396,17 @@
     }
 
 </script>
-    <!--加载消息-->
-    <script th:inline="javascript">
-        $(function () {
-            var userId = [[${#authentication.principal.id}]];
-            nav_message(userId);
-        })
-    </script>
+<!--加载用户所有项目-->
+<script type="text/javascript" th:inline="javascript">
+    var userId = [[${#authentication.principal.id}]];
+    user_prjects(userId);
+</script>
+<!--加载消息-->
+<script th:inline="javascript">
+    $(function () {
+        var userId = [[${#authentication.principal.id}]];
+        nav_message(userId);
+    })
+</script>
 </body>
 </html>

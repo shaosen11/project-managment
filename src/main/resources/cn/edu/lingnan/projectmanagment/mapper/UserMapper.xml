@@ -113,7 +113,7 @@
         <result column="chargeUserId" property="chargeUserId"></result>
         <result column="chargeUser" property="chargeUser"></result>
         <result column="schedule" property="schedule"></result>
-        <result column="updateCount" property="updateCount"></result>
+        <result column="codeUpdateCount" property="codeUpdateCount"></result>
         <result column="myUpdateCount" property="myUpdateCount"></result>
         <result column="storeCount" property="storeCount"></result>
         <result column="likeCount" property="likeCount"></result>
@@ -122,7 +122,7 @@
     </resultMap>
     <select id="getMyProjects" resultMap="myprojects">
         select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
-               p.schedule as schedule, p.update_count as updateCount, pu.code_update as myUpdateCount,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
                p.store_count as storeCount, p.like_count as likeCount,
                (select count(*) from user_store us where us.user_id = su.id and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
                (select count(*) from user_like ul where ul.user_id = su.id and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
@@ -138,7 +138,7 @@
         <result column="chargeUserId" property="chargeUserId"></result>
         <result column="chargeUser" property="chargeUser"></result>
         <result column="schedule" property="schedule"></result>
-        <result column="updateCount" property="updateCount"></result>
+        <result column="codeUpdateCount" property="codeUpdateCount"></result>
         <result column="myUpdateCount" property="myUpdateCount"></result>
         <result column="storeCount" property="storeCount"></result>
         <result column="likeCount" property="likeCount"></result>
@@ -147,7 +147,7 @@
     </resultMap>
     <select id="getMyChargeProjects" resultMap="mychargeprojects">
         select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
-               p.schedule as schedule, p.update_count as updateCount, pu.code_update as myUpdateCount,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
                p.store_count as storeCount, p.like_count as likeCount,
                (select count(*) from user_store us where us.user_id = su.id and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
                (select count(*) from user_like ul where ul.user_id = su.id and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
@@ -163,7 +163,7 @@
         <result column="chargeUserId" property="chargeUserId"></result>
         <result column="chargeUser" property="chargeUser"></result>
         <result column="schedule" property="schedule"></result>
-        <result column="updateCount" property="updateCount"></result>
+        <result column="codeUpdateCount" property="codeUpdateCount"></result>
         <result column="myUpdateCount" property="myUpdateCount"></result>
         <result column="storeCount" property="storeCount"></result>
         <result column="likeCount" property="likeCount"></result>
@@ -172,7 +172,7 @@
     </resultMap>
     <select id="getMyJoinProjects" resultMap="myjoinprojects">
         select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
-               p.schedule as schedule, p.update_count as updateCount, pu.code_update as myUpdateCount,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
                p.store_count as storeCount, p.like_count as likeCount,
                (select count(*) from user_store us where us.user_id = su.id and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
                (select count(*) from user_like ul where ul.user_id = su.id and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
@@ -206,7 +206,7 @@
         <result column="chargeUserId" property="chargeUserId"></result>
         <result column="chargeUser" property="chargeUser"></result>
         <result column="schedule" property="schedule"></result>
-        <result column="updateCount" property="updateCount"></result>
+        <result column="codeUpdateCount" property="codeUpdateCount"></result>
         <result column="storeCount" property="storeCount"></result>
         <result column="likeCount" property="likeCount"></result>
         <result column="storeFlag" property="storeFlag"></result>
@@ -217,7 +217,7 @@
     </resultMap>
     <select id="getMyProjectsStore" resultMap="myprojectsstore">
         select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
-               p.schedule as schedule, p.update_count as updateCount, p.store_count as storeCount, p.like_count as likeCount,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, p.store_count as storeCount, p.like_count as likeCount,
                (select count(*) from user_store us where us.user_id = #{id} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
                (select count(*) from user_like ul where ul.user_id = #{id} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag,
                p.type as type, p.function_points as functionPoints, p.completed_function_points as completedFunctionPoints

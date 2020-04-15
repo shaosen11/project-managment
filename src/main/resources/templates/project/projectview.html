@@ -56,7 +56,7 @@
             <div class="sidebar-content">
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
-                        <img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -884,8 +884,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="avatar avatar-xxl" style="margin: auto">
-                                                    <img th:src="@{/assets/img/jm_denis.jpg}" alt="..."
-                                                         class="avatar-img rounded-circle">
+                                                    <img id="personInformationPhoto" alt="..." class="avatar-img rounded-circle">
                                                 </div>
                                             </div>
                                             <div class="separator-dashed col-md-12"></div>
@@ -1907,6 +1906,7 @@
                 codeUpdateCile(json.codeUpdateRatio);
                 $("#personInformationName").text(json.myUserDetails.username);
                 $("#personInformationEmail").text(json.myUserDetails.email);
+                $("#personInformationPhoto").attr("src", "/files/photo/" +  json.myUserDetails.photo);
                 appendFinishFunction(projectId, userId);
                 appendDevelopIngFunction(projectId, userId);
             }

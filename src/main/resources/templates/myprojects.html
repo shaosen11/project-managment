@@ -114,7 +114,7 @@
                                                             <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
                                                     </span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <span style="color: #4e555b">
-                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.codeUpdateCount}]]
                                                     </span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <span style="color: #4e555b">
                                                             <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
@@ -146,7 +146,7 @@
                                                         <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
                                                     </span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <span style="color: #4e555b">
-                                                        <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.updateCount}]]
+                                                        <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.codeUpdateCount}]]
                                                     </span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <span style="color: #4e555b">
                                                         <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
@@ -574,8 +574,8 @@
         );
     }
 </script>
+<!--加载用户所有项目-->
 <script type="text/javascript" th:inline="javascript">
-    //加载用户所有项目
     var userId = [[${#authentication.principal.id}]];
     user_prjects(userId);
 </script>

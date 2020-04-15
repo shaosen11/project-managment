@@ -11,7 +11,7 @@ public class Myprojects {
     private String schedule;
     private Integer functionPoints;
     private Integer completedFunctionPoints;
-    private Integer updateCount;
+    private Integer codeUpdateCount;
     private Integer myUpdateCount;
     private String type;
     private Integer likeCount;
