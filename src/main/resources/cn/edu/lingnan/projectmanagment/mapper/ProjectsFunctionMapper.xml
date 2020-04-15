@@ -199,4 +199,13 @@
 	    desc limit #{offset},#{pageSize}
     </select>
 
+    <!-- 查询所有指派给我的功能点 -->
+    <select id="getAllFunctionByProjectIdAndRealizeUserId" resultMap="projectsFunction0">
+        select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+                pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+                pf.realize_user_id as ruid, su2.username as rusername
+        from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                    left join sys_user su2 on pf.realize_user_id = su2.id
+        where projects_id = #{projectsId} and pf.delete_flag = 1 and realize_user_id = #{realizeUserId} and pf.function_status = #{functionStatus}
+    </select>
 </mapper>

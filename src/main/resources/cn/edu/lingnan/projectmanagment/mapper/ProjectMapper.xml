@@ -49,10 +49,10 @@
             <if test="name != null">name = #{name},</if>
             <if test="chargeUserId != null">charge_user_id = #{chargeUserId},</if>
             <if test="codeLineNumber != null">code_line_number = #{codeLineNumber},</if>
+            <if test="codeUpdateCount != null">code_update_count = #{codeUpdateCount},</if>
             <if test="schedule != null">schedule = #{schedule},</if>
             <if test="functionPoints != null">function_points = #{functionPoints},</if>
             <if test="completedFunctionPoints != null">completed_function_points = #{completedFunctionPoints},</if>
-            <if test="updateCount != null">update_count = #{updateCount},</if>
             <if test="lastUpdateTime != null">last_update_time = #{lastUpdateTime},</if>
             <if test="type != null">type = #{type},</if>
             <if test="characterization != null">characterization = #{characterization},</if>
@@ -69,6 +69,7 @@
             <if test="name != null">name,</if>
             <if test="chargeUserId != null">charge_user_id,</if>
             <if test="codeLineNumber != null">code_line_number,</if>
+            <if test="codeUpdateCount != null">code_update_count,</if>
             <if test="schedule != null">schedule,</if>
             <if test="functionPoints != null">function_points,</if>
             <if test="completedFunctionPoints != null">completed_function_points,</if>
@@ -81,6 +82,7 @@
             <if test="name != null">#{name},</if>
             <if test="chargeUserId != null">#{chargeUserId},</if>
             <if test="codeLineNumber != null">#{codeLineNumber},</if>
+            <if test="codeUpdateCount != null">#{codeUpdateCount},</if>
             <if test="schedule != null">#{schedule},</if>
             <if test="functionPoints != null">#{functionPoints},</if>
             <if test="completedFunctionPoints != null">#{completedFunctionPoints},</if>

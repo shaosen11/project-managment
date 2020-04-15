@@ -290,4 +290,14 @@ public class ProjectsUserController {
         messageService.insert(message);
         return AJaxResponse.success("/project/projectuserview", "邀请成功");
     }
+
+    @GetMapping("/projectsUser")
+    @ResponseBody
+    public ProjectsUser projectsUser(Integer projectId, Integer userId){
+        Projects projects = projectService.getById(projectId);
+        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
+        projectsUser.setCodeDevoteLineRatio((double) projectsUser.getCodeDevoteLine()/(double) projects.getCodeLineNumber()*100);
+        projectsUser.setCodeUpdateRatio((double)projectsUser.getCodeUpdate()/(double)projects.getCodeUpdateCount()*100);
+        return projectsUser;
+    }
 }

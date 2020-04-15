@@ -126,4 +126,13 @@ public interface ProjectsFunctionService {
      * @return
      */
     List<ProjectsFunction> getFunctionByProjectIdAndUserId(Integer projectsId,Integer offset,Integer pageSize,Integer userId,Integer functionStatus);
+
+    /**
+     * 通过项目id查询指派给我的的功能（不分页）
+     * @param projectsId
+     * @param realizeUserId
+     * @param functionStatus
+     * @return
+     */
+    List<ProjectsFunction> getFunctionByProjectIdAndRealizeUserId(Integer projectsId,Integer realizeUserId,Integer functionStatus);
 }

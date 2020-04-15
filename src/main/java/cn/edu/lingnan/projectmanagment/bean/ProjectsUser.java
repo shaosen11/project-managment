@@ -9,7 +9,9 @@ public class ProjectsUser {
     private Integer userId;
     private Integer dutyCode;
     private Integer codeDevoteLine;
+    private Double codeDevoteLineRatio;
     private Integer codeUpdate;
+    private Double codeUpdateRatio;
     private Integer deleteFlag;
     private MyUserDetails myUserDetails;
     private ProjectsUserDuty projectsUserDuty;

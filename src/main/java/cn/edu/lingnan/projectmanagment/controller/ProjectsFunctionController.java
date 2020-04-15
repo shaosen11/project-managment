@@ -30,10 +30,10 @@ public class ProjectsFunctionController {
 
     //查询所有项目功能点信息
     @GetMapping("/project_function_list")
-    public String projectFunctionList(Model model){
+    public String projectFunctionList(Model model) {
         List<ProjectsFunction> list = projectsFunctionService.getProjectFunctionList();
-        model.addAttribute("projectsfunctionlist",list);
-        System.out.println("查询所有项目功能点信息:"+list);
+        model.addAttribute("projectsfunctionlist", list);
+        System.out.println("查询所有项目功能点信息:" + list);
         return "tables/projectsfunctionlist";
     }
 
@@ -42,22 +42,22 @@ public class ProjectsFunctionController {
     @Transactional
     @ResponseBody
     @PostMapping("/add_project_function")
-    public Integer addProjectFunction(ProjectsFunction projectsFunction){
+    public Integer addProjectFunction(ProjectsFunction projectsFunction) {
         Projects projects = projectService.getById(projectsFunction.getProjectsId());
-        System.out.println("projectsFunction="+projectsFunction);
-        if(projects == null){
+        System.out.println("projectsFunction=" + projectsFunction);
+        if (projects == null) {
             System.out.println("该项目不存在");
             return 2;
-        }else{
-            if(projectsFunction.getPublishUserId() != null){
+        } else {
+            if (projectsFunction.getPublishUserId() != null) {
                 MyUserDetails myUserDetails = userService.findById(projectsFunction.getPublishUserId());
-                if(myUserDetails == null){
+                if (myUserDetails == null) {
                     System.out.println("发布用户不存在！");
                     return 3;
-                }else {
-                    if(projectsFunction.getRealizeUserId() != null){
+                } else {
+                    if (projectsFunction.getRealizeUserId() != null) {
                         MyUserDetails myUserDetails2 = userService.findById(projectsFunction.getRealizeUserId());
-                        if (myUserDetails2 == null){
+                        if (myUserDetails2 == null) {
                             System.out.println("实现用户不存在！");
                             return 4;
                         }
@@ -65,28 +65,28 @@ public class ProjectsFunctionController {
 
                 }
             }
-            try{
+            try {
                 Integer functionid = projectsFunctionService.findMaxFunctionId(projectsFunction.getProjectsId());
-                if(functionid == null){
+                if (functionid == null) {
                     functionid = 0;
                 }
-                functionid = functionid+1;
+                functionid = functionid + 1;
                 projectsFunction.setFunctionId(functionid);
                 Boolean flag = projectsFunctionService.addProjectFunction(projectsFunction);
-                System.out.println("添加项目功能点信息："+projectsFunction);
-                if (flag){
+                System.out.println("添加项目功能点信息：" + projectsFunction);
+                if (flag) {
                     System.out.println("添加项目功能点信息成功！");
-                    Projects projects1 =  projectService.getById(projectsFunction.getProjectsId());
+                    Projects projects1 = projectService.getById(projectsFunction.getProjectsId());
                     projects1.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects1.getId()));
                     projectService.editProject(projects1);
                     projectService.updateSchedule(projects1);
-                    System.out.println("项目信息："+projects1);
+                    System.out.println("项目信息：" + projects1);
                     return 1;
-                }else{
+                } else {
                     System.out.println("添加项目功能点信息失败！");
                     return 5;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 System.out.println("添加项目功能点信息失败！");
                 return 5;
@@ -99,26 +99,26 @@ public class ProjectsFunctionController {
     @ResponseBody
     @PostMapping("/del_project_function")
     public Boolean delProjectFunction(Integer id) {
-        try{
+        try {
             ProjectsFunction projectsFunction = projectsFunctionService.getOneProjectFunction(id);
-            System.out.println("projectsFunction="+projectsFunction);
-            Boolean flag =  projectsFunctionService.deleteProjectFunction(id);
-            System.out.println("删除项目功能点信息:"+ id + flag);
-            if (flag){
+            System.out.println("projectsFunction=" + projectsFunction);
+            Boolean flag = projectsFunctionService.deleteProjectFunction(id);
+            System.out.println("删除项目功能点信息:" + id + flag);
+            if (flag) {
                 System.out.println("删除项目功能点信息成功！");
-                Projects projects1 =  projectService.getById(projectsFunction.getProjectsId());
+                Projects projects1 = projectService.getById(projectsFunction.getProjectsId());
                 projects1.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects1.getId()));
-                int count = projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),2)+projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),3);
+                int count = projectsFunctionService.countByProjectIdAndStatus(projects1.getId(), 2) + projectsFunctionService.countByProjectIdAndStatus(projects1.getId(), 3);
                 projects1.setCompletedFunctionPoints(count);
                 projectService.editProject(projects1);
                 projectService.updateSchedule(projects1);
-                System.out.println("项目信息："+projects1);
+                System.out.println("项目信息：" + projects1);
                 return true;
-            }else{
+            } else {
                 System.out.println("删除项目功能点信息失败！");
                 return false;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             System.out.println("事务回滚，删除项目功能点信息失败！");
             return false;
@@ -129,22 +129,22 @@ public class ProjectsFunctionController {
     @Transactional
     @ResponseBody
     @PostMapping("/edit_project_function")
-    public Integer editProjectFunction(ProjectsFunction projectsFunction){
-        try{
+    public Integer editProjectFunction(ProjectsFunction projectsFunction) {
+        try {
             Projects projects = projectService.getById(projectsFunction.getProjectsId());
-            if(projects == null){
+            if (projects == null) {
                 System.out.println("该项目不存在");
                 return 2;
-            }else {
-                if(projectsFunction.getPublishUserId() != null){
+            } else {
+                if (projectsFunction.getPublishUserId() != null) {
                     MyUserDetails myUserDetails = userService.findById(projectsFunction.getPublishUserId());
-                    if(myUserDetails == null){
+                    if (myUserDetails == null) {
                         System.out.println("发布用户不存在！");
                         return 3;
-                    }else {
-                        if(projectsFunction.getRealizeUserId() != null){
+                    } else {
+                        if (projectsFunction.getRealizeUserId() != null) {
                             MyUserDetails myUserDetails2 = userService.findById(projectsFunction.getRealizeUserId());
-                            if (myUserDetails2 == null){
+                            if (myUserDetails2 == null) {
                                 System.out.println("实现用户不存在！");
                                 return 4;
                             }
@@ -168,14 +168,14 @@ public class ProjectsFunctionController {
                         //原来的项目的功能点、已完成功能点更新
                         Projects projects1 = projectService.getById(projectsFunction1.getProjectsId());
                         projects1.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects1.getId()));
-                        int count = projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),2) + projectsFunctionService.countByProjectIdAndStatus(projects1.getId(),3);
+                        int count = projectsFunctionService.countByProjectIdAndStatus(projects1.getId(), 2) + projectsFunctionService.countByProjectIdAndStatus(projects1.getId(), 3);
                         projects1.setCompletedFunctionPoints(count);
                         projectService.editProject(projects1);
                         System.out.println("修改前项目信息更新：" + projects1);
                         //更改后的项目的功能点、已完成功能点更新
                         Projects projects2 = projectService.getById(projectsFunction.getProjectsId());
                         projects2.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects2.getId()));
-                        int count2 = projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),2) + projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),3);
+                        int count2 = projectsFunctionService.countByProjectIdAndStatus(projects2.getId(), 2) + projectsFunctionService.countByProjectIdAndStatus(projects2.getId(), 3);
                         projects2.setCompletedFunctionPoints(count2);
                         projectService.editProject(projects2);
                         System.out.println("修改后项目信息更新：" + projects2);
@@ -183,7 +183,7 @@ public class ProjectsFunctionController {
                         projectService.updateSchedule(projects2);
                     } else {
                         Projects projects2 = projectService.getById(projectsFunction.getProjectsId());
-                        int count2 = projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),2) + projectsFunctionService.countByProjectIdAndStatus(projects2.getId(),3);
+                        int count2 = projectsFunctionService.countByProjectIdAndStatus(projects2.getId(), 2) + projectsFunctionService.countByProjectIdAndStatus(projects2.getId(), 3);
                         projects2.setCompletedFunctionPoints(count2);
                         projectService.editProject(projects2);
                         projectService.updateSchedule(projects2);
@@ -195,7 +195,7 @@ public class ProjectsFunctionController {
                     return 3;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             System.out.println("事务回滚，修改项目功能点信息失败！");
             return 3;
@@ -204,10 +204,10 @@ public class ProjectsFunctionController {
 
     //查询所有注销项目功能点信息
     @GetMapping("/del_project_function_list")
-    public String deletedProjectFunctionList(Model model){
+    public String deletedProjectFunctionList(Model model) {
         List<ProjectsFunction> list = projectsFunctionService.getDelProjectFunctionList();
-        model.addAttribute("delprojectfunctionlist",list);
-        System.out.println("查询所有已注销项目功能点"+list);
+        model.addAttribute("delprojectfunctionlist", list);
+        System.out.println("查询所有已注销项目功能点" + list);
         return "deleted/delprojectfunction";
     }
 
@@ -215,36 +215,50 @@ public class ProjectsFunctionController {
     @Transactional
     @ResponseBody
     @PostMapping("/reduction_project_function")
-    public Integer reductionProjectFunction(Integer id){
-        try{
+    public Integer reductionProjectFunction(Integer id) {
+        try {
             ProjectsFunction projectsFunction = projectsFunctionService.getById(id);
             Projects projects = projectService.getByIdAndNoDel(projectsFunction.getProjectsId());
-            if(projects== null){
+            if (projects == null) {
                 System.out.println("该项目不存在！");
                 return 2;
-            }else{
-                Boolean flag =  projectsFunctionService.reductionProjectFunction(id);
-                System.out.println("还原项目功能点:"+id+flag);
-                if (flag){
+            } else {
+                Boolean flag = projectsFunctionService.reductionProjectFunction(id);
+                System.out.println("还原项目功能点:" + id + flag);
+                if (flag) {
                     System.out.println("还原项目功能点信息成功！");
-                    System.out.println("projectsFunction="+projectsFunction);
+                    System.out.println("projectsFunction=" + projectsFunction);
                     projects.setFunctionPoints(projectsFunctionService.countProjectFunctionByProjectId(projects.getId()));
-                    int count = projectsFunctionService.countByProjectIdAndStatus(projects.getId(),2)+projectsFunctionService.countByProjectIdAndStatus(projects.getId(),3);
+                    int count = projectsFunctionService.countByProjectIdAndStatus(projects.getId(), 2) + projectsFunctionService.countByProjectIdAndStatus(projects.getId(), 3);
                     projects.setCompletedFunctionPoints(count);
                     projectService.editProject(projects);
                     projectService.updateSchedule(projects);
-                    System.out.println("项目信息："+projects);
+                    System.out.println("项目信息：" + projects);
                     return 1;
-                }else{
+                } else {
                     System.out.println("还原项目功能点信息失败！");
                     return 3;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             System.out.println("事务回滚，还原项目功能点信息失败！");
             return 3;
         }
     }
 
+    @GetMapping("/user_finish_function")
+    @ResponseBody
+    public List userFinishFunction(Integer projectId, Integer userId) {
+        List<ProjectsFunction> functionByProjectIdAndRealizeUserId1 = projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, userId, 2);
+        List<ProjectsFunction> functionByProjectIdAndRealizeUserId2 = projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, userId, 3);
+        functionByProjectIdAndRealizeUserId1.addAll(functionByProjectIdAndRealizeUserId2);
+        return functionByProjectIdAndRealizeUserId1;
+    }
+
+    @GetMapping("/user_developing_function")
+    @ResponseBody
+    public List userDevelopingFunction(Integer projectId, Integer userId) {
+        return projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, userId, 1);
+    }
 }

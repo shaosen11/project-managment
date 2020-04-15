@@ -10,10 +10,10 @@ public class Projects {
     private String name;
     private Integer chargeUserId;
     private Integer codeLineNumber;
+    private Integer codeUpdateCount;
     private String schedule;
     private Integer functionPoints;
     private Integer completedFunctionPoints;
-    private Integer updateCount;
     private Date lastUpdateTime;
     private String type;
     private Integer storeCount;

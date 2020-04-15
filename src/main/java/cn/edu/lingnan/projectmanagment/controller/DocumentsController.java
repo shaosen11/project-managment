@@ -171,11 +171,11 @@ public class DocumentsController {
             //修改项目上传次数
             Projects projects = projectService.getById(projectId);
             System.out.println(projects);
-            Integer projectsUpdateCount = projects.getUpdateCount();
-            if(projectsUpdateCount == null){
-                projects.setUpdateCount(1);
+            Integer projectsCodeUpdateCount = projects.getCodeUpdateCount();
+            if(projectsCodeUpdateCount == null){
+                projects.setCodeUpdateCount(1);
             } else {
-                projects.setUpdateCount(projectsUpdateCount + 1);
+                projects.setCodeUpdateCount(projectsCodeUpdateCount + 1);
             }
             projects.setLastUpdateTime(new Date());
             projectService.editProject(projects);

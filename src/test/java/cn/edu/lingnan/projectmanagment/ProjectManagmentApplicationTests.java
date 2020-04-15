@@ -44,9 +44,12 @@ class ProjectManagmentApplicationTests {
     @Autowired
     MessageServiceImpl messageService;
 
+    @Autowired
+    ProjectsFunctionServiceImpl projectsFunctionService;
+
     @Test
     void t1(){
-//        List<Message> byUserId = messageService.getByUserId(19);
-//        System.out.println(byUserId);
+//        List<ProjectsFunction> functionByProjectIdAndRealizeUserId = projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(1, 1, 2);
+//        System.out.println(functionByProjectIdAndRealizeUserId);
     }
 }

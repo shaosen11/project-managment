@@ -132,4 +132,12 @@ public interface ProjectsFunctionMapper {
      */
     List<ProjectsFunction> getFunctionByProjectIdAndUserId(@Param("projectsId")Integer projectsId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize,@Param("userId")Integer userId,@Param("functionStatus")Integer functionStatus);
 
+    /**
+     * 通过项目id查询指派给我的的功能
+     * @param projectsId
+     * @param realizeUserId
+     * @param functionStatus
+     * @return
+     */
+    List<ProjectsFunction> getAllFunctionByProjectIdAndRealizeUserId(Integer projectsId,Integer realizeUserId,Integer functionStatus);
 }

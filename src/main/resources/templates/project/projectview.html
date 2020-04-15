@@ -183,6 +183,7 @@
                     </li>
                 </ul>
                 <div class="tab-content mt-2 mb-3">
+                    <!--项目详情-->
                     <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel"
                          aria-labelledby="pills-one-tab-nobd">
                         <div class="row">
@@ -360,36 +361,48 @@
                         </div>
 
                     </div>
+                    <!--功能点详情-->
                     <div class="tab-pane fade" id="pills-two-nobd" role="tabpanel"
                          aria-labelledby="pills-two-tab-nobd">
                         <div class="row">
-                            <div class="col-md-2 card" style="height: 630px;">
-                                <h2 style="margin-top: 10px">功能
-                                    <button class="btn-xs btn-warning" data-toggle="modal"
-                                            data-target="#addFunction">
-                                            <span class="btn-label">
-                                                <i class="fas fa-plus"></i>
-                                            </span>
-                                        新建功能
-                                    </button>
-                                </h2>
-                                <!--进度条-->
-                                <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
-
-                                <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist"
-                                     aria-orientation="vertical" style="margin-top: 20px">
-                                    <a class="nav-link active" id="v-pills-one-tab" data-toggle="pill"
-                                       href="#v-pills-one" role="tab" aria-controls="v-pills-one"
-                                       aria-selected="true"><i class="fas fa-layer-group"></i>&nbsp;全部功能</a>
-                                    <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two"
-                                       role="tab" aria-controls="v-pills-two" aria-selected="false">指派给我的</a>
-                                    <a class="nav-link" id="v-pills-three-tab" data-toggle="pill"
-                                       href="#v-pills-three"
-                                       role="tab" aria-controls="v-pills-three" aria-selected="false">我发布的</a>
-                                    <a class="nav-link" id="v-pills-four-tab" data-toggle="pill"
-                                       href="#v-pills-four"
-                                       role="tab" aria-controls="v-pills-four" aria-selected="false">我参与的</a>
+                            <div class="col-md-2 card" style="height: 670px;">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h2 style="margin-top: 10px">功能</h2>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="text-right">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#addFunction">
+                                                <span class="btn-label">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                                    新建功能
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="card-body">
+                                    <!--进度条-->
+                                    <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
+
+                                    <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist"
+                                         aria-orientation="vertical" style="margin-top: 20px">
+                                        <a class="nav-link active" id="v-pills-one-tab" data-toggle="pill"
+                                           href="#v-pills-one" role="tab" aria-controls="v-pills-one"
+                                           aria-selected="true"><i class="fas fa-layer-group"></i>&nbsp;全部功能</a>
+                                        <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two"
+                                           role="tab" aria-controls="v-pills-two" aria-selected="false">指派给我的</a>
+                                        <a class="nav-link" id="v-pills-three-tab" data-toggle="pill"
+                                           href="#v-pills-three"
+                                           role="tab" aria-controls="v-pills-three" aria-selected="false">我发布的</a>
+                                        <a class="nav-link" id="v-pills-four-tab" data-toggle="pill"
+                                           href="#v-pills-four"
+                                           role="tab" aria-controls="v-pills-four" aria-selected="false">我参与的</a>
+                                    </div>
+                                </div>
+
                             </div>
                             <!--功能-->
                             <div class="col-md-10 tab-content" style="height: 630px;" id="v-pills-tabContent">
@@ -397,7 +410,7 @@
                                      aria-labelledby="v-pills-one-tab">
                                     <div class="col-md-12 row">
                                         <div class="col-md-3">
-                                            <div class="card" style="height: 630px;">
+                                            <div class="card" style="height: 670px;">
                                                 <div class="card-header"
                                                      style="background-color: rgba(245,232,200,0.5)">
                                                     <div class="card-title" style="color: black;">
@@ -410,6 +423,9 @@
                                                         <!-- 分页容器：显示数据 -->
                                                         <div id="todoDiv"></div>
                                                     </div>
+
+                                                </div>
+                                                <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
@@ -420,7 +436,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <div class="card" style="height: 630px;">
+                                            <div class="card" style="height: 670px;">
                                                 <div class="card-header"
                                                      style="background-color: rgba(157,211,250,0.5)">
                                                     <div class="card-title" style="color: black">
@@ -433,6 +449,8 @@
                                                         <!-- 分页容器：显示数据 -->
                                                         <div id="procesingDiv"></div>
                                                     </div>
+                                                </div>
+                                                <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
@@ -443,7 +461,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <div class="card" style="height: 630px;">
+                                            <div class="card" style="height: 670px;">
                                                 <div class="card-header"
                                                      style="background-color: rgba(118,126,199,0.5)">
                                                     <div class="card-title" style="color: black"><i
@@ -456,6 +474,9 @@
                                                         <!-- 分页容器：显示数据 -->
                                                         <div id="completedDiv"></div>
                                                     </div>
+
+                                                </div>
+                                                <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
@@ -466,7 +487,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <div class="card" style="height: 630px;">
+                                            <div class="card" style="height: 670px;">
                                                 <div class="card-header"
                                                      style="background-color: rgba(25,148,117,0.5)">
                                                     <div class="card-title" style="color: black"><i
@@ -480,6 +501,9 @@
                                                         <!-- 分页容器：显示数据 -->
                                                         <div id="acceptedDiv"></div>
                                                     </div>
+
+                                                </div>
+                                                <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
@@ -495,7 +519,7 @@
                                      aria-labelledby="v-pills-two-tab">
                                     <div class="col-md-12 row">
                                         <div class="col-md-3">
-                                            <div class="card" style="height: 630px;">
+                                            <div class="card" style="height: 670px;">
                                                 <div class="card-header"
                                                      style="background-color: rgba(245,232,200,0.5)">
                                                     <div class="card-title" style="color: black">
@@ -508,6 +532,8 @@
                                                         <!-- 分页容器：显示数据--指派 -->
                                                         <div id="assignTodoDiv"></div>
                                                     </div>
+                                                </div>
+                                                <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
@@ -531,6 +557,8 @@
                                                         <!-- 分页容器：显示数据 -->
                                                         <div id="assignProcesingDiv"></div>
                                                     </div>
+                                                </div>
+                                                <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
@@ -795,7 +823,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="card-title">项目人员</div>
+                                        <div class="card-title"><h1>项目人员</h1></div>
                                     </div>
                                     <div class="card-body pb-0">
                                         <!-- 分页容器：显示数据 -->
@@ -809,14 +837,18 @@
                                     <div class="card-footer">
                                         <div class="form-group col-md-12">
                                             <div class="card-header">
-                                                <span class="text-center text-capitalize mb-1 fw-bold"><h3>贡献量</h3></span>
+                                                <span class="text-center text-dark mb-1 fw-bold">
+                                                    <h2 id="personInformationDevelopment"></h2>
+                                                    <h2>贡献量</h2>
+                                                </span>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="card card-info bg-secondary-gradient ">
                                                         <div class="card-body">
                                                             <h4 class="mb-1 fw-bold">代码贡献量</h4>
-                                                            <div id="codeDevoteLine" class="chart-circle mt-4 mb-3"></div>
+                                                            <div id="codeDevoteLine"
+                                                                 class="chart-circle mt-4 mb-3"></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -836,20 +868,18 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="card-title">详细信息</div>
+                                        <div class="card-title"><h1>详细信息</h1></div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <div class="form-group form-group-default">
-                                                    <label>名称</label>
-                                                    <input type="text" class="form-control" name="username"
-                                                           placeholder="Name" autocomplete="off">
+                                                    <h3>名称：</h3>
+                                                    <span class="mb-1 fw-bold" id="personInformationName"></span>
                                                 </div>
                                                 <div class="form-group form-group-default">
-                                                    <label>邮箱</label>
-                                                    <input type="email" class="form-control" name="email"
-                                                           placeholder="Email" autocomplete="off" readonly="true">
+                                                    <h3>邮箱：</h3>
+                                                    <span class="mb-1 fw-bold" id="personInformationEmail"></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -858,40 +888,28 @@
                                                          class="avatar-img rounded-circle">
                                                 </div>
                                             </div>
-
+                                            <div class="separator-dashed col-md-12"></div>
                                             <div class="form-group col-md-12">
                                                 <div class="card-header">
-                                                    <span class="text-secondary mb-1 fw-bold"><h3>完成功能点</h3></span>
+                                                    <span class="mb-1 fw-bold"><h2>完成功能点</h2></span>
                                                 </div>
                                                 <div class="card-body">
-                                                    <p class="demo">
-                                                        <button class="btn btn-secondary">
-                                                        <span class="btn-label">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span>
-                                                            Secondary
-                                                        </button>
+                                                    <p class="demo" id="finishFunction">
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <div class="card-header">
-                                                    <span class="text-info mb-1 fw-bold"><h3>完成功能点</h3></span>
+                                                    <span class="mb-1 fw-bold"><h2>正在开发功能点</h2></span>
                                                 </div>
                                                 <div class="card-body">
-                                                    <p class="demo">
-                                                        <button class="btn btn-info">
-                                                        <span class="btn-label">
-                                                            <i class="fa fa-plus"></i>
-                                                        </span>
-                                                            Info
-                                                        </button>
+                                                    <p class="demo" id="developingFunction">
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <div class="card-header">
-                                                    <span class="text-warning mb-1 fw-bold"><h3>最近活动</h3></span>
+                                                    <span class="mb-1 fw-bold"><h2>最近活动</h2></span>
                                                 </div>
                                                 <div class="card-body">
                                                     <ol class="activity-feed">
@@ -905,7 +923,8 @@
                                                         </li>
                                                         <li class="feed-item feed-item-info">
                                                             <time class="date" datetime="9-23">Sep 23</time>
-                                                            <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
+                                                            <span class="text">Joined the group <a
+                                                                    href="single-group.php">"Boardsmanship Forum"</a></span>
                                                         </li>
                                                         <li class="feed-item feed-item-warning">
                                                             <time class="date" datetime="9-21">Sep 21</time>
@@ -917,7 +936,8 @@
                                                         </li>
                                                         <li class="feed-item">
                                                             <time class="date" datetime="9-17">Sep 17</time>
-                                                            <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
+                                                            <span class="text">Attending the event <a
+                                                                    href="single-event.php">"Some New Event"</a></span>
                                                         </li>
                                                     </ol>
                                                 </div>
@@ -1763,6 +1783,7 @@
                 }, //参数：当前页为1
                 success: function (data) {
                     appendPersonManagerHtml(data.list)//处理第一页的数据
+                    appendPersonInformationHtml(data.list[0].userId)
                     var options = {//根据后台返回的分页相关信息，设置插件参数
                         bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
                         currentPage: data.page, //当前页数
@@ -1807,92 +1828,152 @@
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
-                if (market == null) {
-                    tableShow += '                         <div class="d-flex">\n' +
-                        '                                    <div class="avatar">\n' +
-                        '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
-                        '                                    </div>\n' +
-                        '                                    <div class="flex-1 pt-1 ml-2">\n' +
-                        '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
-                        '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
-                        '                                    </div>\n' +
-                        '                                    <div class="d-flex ml-auto align-items-center">\n' +
-                        '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
-                        '                                    </div>\n' +
-                        '                                </div>\n' +
-                        '                                <div class="separator-dashed"></div>'
-                } else {
-                    tableShow += '<div class="item-list">\n' +
-                        '               <div class="avatar">\n' +
-                        '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
-                        '               </div>\n' +
-                        '               <div class="info-user ml-3">\n' +
-                        '               <div class="username"> ' + list[i].username + '</div>\n' +
-                        '                   <div class="status">' + list[i].tag + '</div>\n' +
-                        '               </div>\n' +
-                        '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="invite(' + projectId + ',' + userId + ',' + list[i].id + ')">\n' +
-                        '                       <i class="fa fa-plus"></i>\n' +
-                        '               </button>\n' +
-                        '             </div>'
-                }
+                tableShow += '                         <div class="d-flex" onclick="javascript:appendPersonInformationHtml(' + list[i].userId + ')">\n' +
+                    '                                    <div class="avatar">\n' +
+                    '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="flex-1 pt-1 ml-2">\n' +
+                    '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
+                    '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="d-flex ml-auto align-items-center">\n' +
+                    '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
+                    '                                    </div>\n' +
+                    '                                </div>\n' +
+                    '                                <div class="separator-dashed"></div>'
             }
             $(div).html(tableShow)
         }
+
+
+    }
+</script>
+<!--比例图-->
+<script type="text/javascript">
+    function codeLineCicle(radius) {
+        // Cicle Chart
+        Circles.create({
+            id: 'codeDevoteLine',
+            radius: 50,
+            value: radius,
+            maxValue: 100,
+            width: 5,
+            text: function (value) {
+                return value + '%';
+            },
+            colors: ['#6677ee', '#fff'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
     }
 
-    function invite(projectId, fromUserId, toUserId) {
+    function codeUpdateCile(radius) {
+        // Cicle Chart
+        Circles.create({
+            id: 'codeUpdate',
+            radius: 50,
+            value: radius,
+            maxValue: 100,
+            width: 5,
+            text: function (value) {
+                return value + '%';
+            },
+            colors: ['#36a3f7', '#fff'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
+    }
+</script>
+<!--人员信息-->
+<script type="text/javascript">
+    function appendPersonInformationHtml(userId) {
         $.ajax({
-            type: "post",
-            url: "/inviteUser",
+            type: "get",
+            url: "/projectsUser",
             dataType: "json",
             data: {
                 projectId: projectId,
-                fromUserId: fromUserId,
-                toUserId: toUserId
+                userId: userId
             },
             success: function (json) {
-                if (json.ok) {
-                    swal(json.message, {
-                        icon: "success",
-                        buttons: false,
-                        timer: 1500,
-                    });
-                }
+                $("#personInformationDevelopment").text(json.myUserDetails.username);
+                codeLineCicle(json.codeDevoteLineRatio);
+                codeUpdateCile(json.codeUpdateRatio);
+                $("#personInformationName").text(json.myUserDetails.username);
+                $("#personInformationEmail").text(json.myUserDetails.email);
+                appendFinishFunction(projectId, userId);
+                appendDevelopIngFunction(projectId, userId);
             }
         })
     }
 </script>
+<!--加载完成功能点-->
 <script type="text/javascript">
-    // Cicle Chart
-    Circles.create({
-        id:           'codeDevoteLine',
-        radius:       50,
-        value:        80,
-        maxValue:     100,
-        width:        5,
-        text:         function(value){return value + '%';},
-        colors:       ['#6677ee', '#fff'],
-        duration:     400,
-        wrpClass:     'circles-wrp',
-        textClass:    'circles-text',
-        styleWrapper: true,
-        styleText:    true
-    })
-    // Cicle Chart
-    Circles.create({
-        id:           'codeUpdate',
-        radius:       50,
-        value:        80,
-        maxValue:     100,
-        width:        5,
-        text:         function(value){return value + '%';},
-        colors:       ['#36a3f7', '#fff'],
-        duration:     400,
-        wrpClass:     'circles-wrp',
-        textClass:    'circles-text',
-        styleWrapper: true,
-        styleText:    true
-    })
+    function appendFinishFunction(projectId, userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_finish_function",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                appendFinishFunctionHtml(json);
+            }
+        })
+    }
+
+    function appendFinishFunctionHtml(list) {
+        $(finishFunction).html("");
+        var button = '';
+        for (var i = 0; i < list.length; i++) {
+            button += '<button class="btn btn-secondary">\n' +
+                '   <span class="btn-label">\n' +
+                '     <i class="fa fa-check"></i>\n' +
+                '   </span>\n' +
+                '   '+list[i].functionName+'\n' +
+                ' </button>'
+        }
+        $(finishFunction).html(button)
+    }
+</script>
+<!--加载完成功能点-->
+<script type="text/javascript">
+    function appendDevelopIngFunction(projectId, userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_developing_function",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                appendDevelopingFunctionHtml(json);
+            }
+        })
+    }
+
+    function appendDevelopingFunctionHtml(list) {
+        $(developingFunction).html("");
+        var button = '';
+        for (var i = 0; i < list.length; i++) {
+            button += '<button class="btn btn-info">\n' +
+                '   <span class="btn-label">\n' +
+                '     <i class="fa fa-sync-alt"></i>\n' +
+                '   </span>\n' +
+                '   '+list[i].functionName+'\n' +
+                ' </button>'
+        }
+        $(developingFunction).html(button)
+    }
 </script>
 </body>
 </html>
