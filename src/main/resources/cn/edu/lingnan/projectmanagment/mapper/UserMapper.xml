@@ -225,4 +225,15 @@
                          left join sys_user su on p.charge_user_id = su.id
         where p.enabled = 1 and us.user_id = #{id} and us.delete_flag = 1
     </select>
+
+
+    <resultMap id="MyUserDetailsAndProjectList" type="MyUserDetails">
+        <collection property="myprojectsList" column="{id=id}" select="cn.edu.lingnan.projectmanagment.mapper.UserMapper.getMyProjects">
+        </collection>
+        <collection property="userCodeUpdateRecordList" column="{userId=id}" select="cn.edu.lingnan.projectmanagment.mapper.UserCodeUpdateRecordMapper.getAllByUserId">
+        </collection>
+    </resultMap>
+    <select id="getMyUserDetailsByUserId" resultMap="MyUserDetailsAndProjectList">
+        select * from sys_user where enabled = 1 and id = #{userId}
+    </select>
 </mapper>

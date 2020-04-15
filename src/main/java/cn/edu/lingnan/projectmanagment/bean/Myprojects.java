@@ -2,6 +2,7 @@ package cn.edu.lingnan.projectmanagment.bean;
 
 import lombok.Data;
 
+
 @Data
 public class Myprojects {
     private Integer projectId;

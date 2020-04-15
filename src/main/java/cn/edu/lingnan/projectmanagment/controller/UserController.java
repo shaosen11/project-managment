@@ -330,4 +330,10 @@ public class UserController {
         }
         return AJaxResponse.success("/userprofile","修改头像成功");
     }
+
+    @ResponseBody
+    @GetMapping("/user_informetion")
+    public MyUserDetails userInformetion(Integer userId){
+        return userService.getMyUserDetailsByUserId(userId);
+    }
 }

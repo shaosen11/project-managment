@@ -47,9 +47,11 @@ class ProjectManagmentApplicationTests {
     @Autowired
     ProjectsFunctionServiceImpl projectsFunctionService;
 
+    @Autowired
+    UserCodeUpdateRecordServiceImpl userCodeUpdateRecordService;
     @Test
     void t1(){
-//        List<ProjectsFunction> functionByProjectIdAndRealizeUserId = projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(1, 1, 2);
-//        System.out.println(functionByProjectIdAndRealizeUserId);
+        MyUserDetails myUserDetailsByUserId = userService.getMyUserDetailsByUserId(1);
+        System.out.println(myUserDetailsByUserId);
     }
 }

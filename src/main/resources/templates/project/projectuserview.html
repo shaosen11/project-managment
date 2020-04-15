@@ -53,7 +53,8 @@
             <div class="sidebar-content">
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
-                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..."
+                             class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -164,42 +165,93 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <h4 class="page-title">人员管理</h4>
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title">项目人员</div>
+                                <div class="card-title fw-mediumbold"><h3>人才市场</h3></div>
                             </div>
-                            <div class="card-body pb-0">
-                                <!-- 分页容器：显示数据 -->
-                                <div id="projectUserDiv"></div>
-                                <!-- 分页容器： 显示分页按钮-->
-                                <div class="text-right mt-3 mb-3">
-                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                    <ul id="projectUserPage" class="pagination"></ul>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="col-md-12" id="topProductsChart" style="height: 300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
                             <div class="card-body">
-                                <div class="card-title fw-mediumbold">人才市场</div>
                                 <div class="card-list">
                                     <div class="card-body pb-0">
                                         <!-- 分页容器：显示数据 -->
                                         <div id="UserDiv"></div>
+                                    </div>
+                                    <div class="card-footer">
                                         <!-- 分页容器： 显示分页按钮-->
                                         <div class="text-right mt-3 mb-3">
                                             <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
                                             <ul id="UserPage" class="pagination"></ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header"><h3>概览</h3></div>
+                            <div class="card-body">
+                                <div class="card-body row">
+                                    <div class="col-md-6">
+                                        <h3>名称：</h3>
+                                        <div class="form-group form-group-default">
+                                            <span class="mb-1 fw-bold" id="personInformationName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3>邮箱：</h3>
+                                        <div class="form-group form-group-default">
+                                            <span class="mb-1 fw-bold" id="personInformationEmail"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <span class="mb-1 fw-bold"><h2>参与项目</h2></span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row" id="userProjects">
+                                    </div>
+                                </div>
+                                <div class="card-header"></div>
+                                <div class="card-body">
+                                    <div class="col-md-12" id="calendarDevote" style="height:200px;"></div>
+                                </div>
+                                <div class="card-header">
+                                    <span class="mb-1 fw-bold"><h2>最近活动</h2></span>
+                                </div>
+                                <div class="card-body">
+                                    <ol class="activity-feed">
+                                        <li class="feed-item feed-item-secondary">
+                                            <time class="date" datetime="9-25">Sep 25</time>
+                                            <span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-success">
+                                            <time class="date" datetime="9-24">Sep 24</time>
+                                            <span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-info">
+                                            <time class="date" datetime="9-23">Sep 23</time>
+                                            <span class="text">Joined the group <a
+                                                    href="single-group.php">"Boardsmanship Forum"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-warning">
+                                            <time class="date" datetime="9-21">Sep 21</time>
+                                            <span class="text">Responded to need <a
+                                                    href="#">"In-Kind Opportunity"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-danger">
+                                            <time class="date" datetime="9-18">Sep 18</time>
+                                            <span class="text">Created need <a
+                                                    href="#">"Volunteer Opportunity"</a></span>
+                                        </li>
+                                        <li class="feed-item">
+                                            <time class="date" datetime="9-17">Sep 17</time>
+                                            <span class="text">Attending the event <a
+                                                    href="single-event.php">"Some New Event"</a></span>
+                                        </li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
@@ -296,79 +348,11 @@
         }
     }
 </script>
-<!--柱状图-->
-<script type="text/javascript">
-    $(function () {
-        // var topProductsChart = document.getElementById('topProductsChart').getContext('2d');
-        var projectId = [[${param.projectId}]];
-        var barCharts = echarts.init(document.getElementById("topProductsChart"));
-        var xdata = [];
-        var ydata = [];
-        $.ajax({
-            type: "get",
-            async: true,
-            url: "/getCodeDevoteData?projectId=" + projectId,
-            data: [],
-            dataType: "json",
-            success: function (result) {
-                $(result).each(function (index, item) {
-                    xdata.push(item.name);
-                    ydata.push(item.value);
-                })
-                barCharts.setOption({
-                    color: ['#3398DB'],
-                    tooltip: {
-                        formatter: "{a} <br/>{b} : {c} ",
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            mark: {show: true},
-                            magicType: {
-                                show: true,
-                                type: ['pie', 'funnel'],
-                                option: {
-                                    funnel: {
-                                        x: '25%',
-                                        width: '50%',
-                                        funnelAlign: 'left',
-                                        max: 1548
-                                    }
-                                }
-                            },
-                            restore: {show: true},
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    xAxis: {
-                        type: 'category',
-                        axisTick: {show: false},
-                        data: xdata
-                    },
-                    yAxis: {
-                        type: 'value',
-                    },
-                    calculable: true,
-                    series: [{
-                        type: 'bar',
-                        name: "代码行",
-                        data: result
-                    }]
-                });
-            }
-        })
-    })
-</script>
 <!--加载人才市场-->
 <script type="text/javascript">
     var projectId = [[${param.projectId}]];
     var userId = [[${#authentication.principal.id}]];
     $(function () {
-        addpage(projectId, null, projectUserDiv, projectUserPage);
         addpage(projectId, 1, UserDiv, UserPage);
     })
 
@@ -386,6 +370,7 @@
                 }, //参数：当前页为1
                 success: function (data) {
                     appendHtml(data.list)//处理第一页的数据
+                    appendPersonInformationHtml(data.list[0].id)
                     var options = {//根据后台返回的分页相关信息，设置插件参数
                         bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
                         currentPage: data.page, //当前页数
@@ -430,34 +415,18 @@
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
-                if (market == null) {
-                    tableShow += '                         <div class="d-flex">\n' +
-                        '                                    <div class="avatar">\n' +
-                        '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
-                        '                                    </div>\n' +
-                        '                                    <div class="flex-1 pt-1 ml-2">\n' +
-                        '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
-                        '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
-                        '                                    </div>\n' +
-                        '                                    <div class="d-flex ml-auto align-items-center">\n' +
-                        '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
-                        '                                    </div>\n' +
-                        '                                </div>\n' +
-                        '                                <div class="separator-dashed"></div>'
-                } else {
-                    tableShow += '<div class="item-list">\n' +
-                        '               <div class="avatar">\n' +
-                        '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
-                        '               </div>\n' +
-                        '               <div class="info-user ml-3">\n' +
-                        '               <div class="username"> ' + list[i].username + '</div>\n' +
-                        '                   <div class="status">' + list[i].tag + '</div>\n' +
-                        '               </div>\n' +
-                        '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="invite(' + projectId + ',' + userId + ',' + list[i].id + ')">\n' +
-                        '                       <i class="fa fa-plus"></i>\n' +
-                        '               </button>\n' +
-                        '             </div>'
-                }
+                tableShow += '<div class="item-list" onclick="javascript:appendPersonInformationHtml(' + list[i].id + ')">\n' +
+                    '               <div class="avatar">\n' +
+                    '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
+                    '               </div>\n' +
+                    '               <div class="info-user ml-3">\n' +
+                    '               <div class="username"> ' + list[i].username + '</div>\n' +
+                    '                   <div class="status">' + list[i].tag + '</div>\n' +
+                    '               </div>\n' +
+                    '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="invite(' + projectId + ',' + userId + ',' + list[i].id + ')">\n' +
+                    '                       <i class="fa fa-plus"></i>\n' +
+                    '               </button>\n' +
+                    '             </div>'
             }
             $(div).html(tableShow)
         }
@@ -491,6 +460,145 @@
         var userId = [[${#authentication.principal.id}]];
         nav_message(userId);
     })
+</script>
+<!--人员信息-->
+<script type="text/javascript">
+    function appendPersonInformationHtml(userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_informetion",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                $("#personInformationName").text(json.username);
+                $("#personInformationEmail").text(json.email);
+                userProject(json.myprojectsList);
+                //获取当前年份
+                var myDate = new Date();
+                var tYear = myDate.getFullYear();
+                calendarDevote(tYear, json.userCodeUpdateRecordList);
+            }
+        })
+    }
+</script>
+<!--加载用户项目-->
+<script type="text/javascript">
+    function userProject(myprojectsList) {
+        $(userProjects).html("");
+        var userProjectDiv = '';
+        if (myprojectsList != null) {
+            for (var i = 0; i < myprojectsList.length && i < 2; i++) {
+                userProjectDiv += '<div class="col-md-6">\n' +
+                    '                                            <div class="form-group form-group-default">\n' +
+                    '                                                <div class="col-md-12 row">\n' +
+                    '                                                    <div class="col-md-8">\n' +
+                    '                                                        <a href="#">\n' +
+                    '                                                            <h2 style="color: #145180">\n' +
+                    '                                                                <i class="fas fa-file-alt"></i>' + myprojectsList[i].projectName + '\n' +
+                    '                                                            </h2>\n' +
+                    '                                                        </a>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-4 text-right">\n' +
+                    '                                                        <i class="fas fa-star"></i><span>1</span>\n' +
+                    '                                                        <i class="fas fa-heart"></i><span>2</span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                        <i class="fas fa-user-tie"></i>项目管理员：' + myprojectsList[i].chargeUser + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                            <i class="fab fa-codiepie"></i>项目进度：' + myprojectsList[i].schedule + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：' + myprojectsList[i].codeUpdateCount + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                            <i class="far fa-arrow-alt-circle-up"></i>他的上传次数：' + myprojectsList[i].myUpdateCount + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                </div>\n' +
+                    '                                            </div>\n' +
+                    '                                        </div>'
+            }
+        }
+        $(userProjects).html(userProjectDiv)
+    }
+</script>
+<!--日历图-->
+<script type="text/javascript">
+    function calendarDevote(year, json) {
+        var myChart = echarts.init(document.getElementById('calendarDevote'));
+
+        function getVirtulData(year) {
+            year = year;
+            var date = +echarts.number.parseDate(year + '-01-01');
+            var end = +echarts.number.parseDate(year + '-12-31');
+            var dayTime = 3600 * 24 * 1000;
+            var data = [];
+            for (var time = date, i = 0; time <= end ; time += dayTime) {
+                var timeString = echarts.format.formatTime('yyyy-MM-dd', time);
+                if ((i < json.length) && (timeString == echarts.format.formatTime('yyyy-MM-dd', json[i].time))) {
+                    data.push([
+                        timeString,
+                        json[i].codeUpdateCount
+                    ]);
+                    i++;
+                } else {
+                    data.push([
+                        timeString,
+                        0
+                    ]);
+                }
+            }
+            return data;
+        }
+
+        var option = {
+            title: {
+                top: 0,
+                left: 'center',
+                text: year + '每天提交代码次数'
+            },
+            tooltip: {},
+            visualMap: {
+                min: 0,
+                max: 10,
+                type: 'piecewise',
+                orient: 'horizontal',
+                left: 'center',
+                top: 30,
+                textStyle: {
+                    color: '#000'
+                },
+                inRange: {
+                    color: ['#eeeeee', '#177dff']
+                }
+            },
+            calendar: {
+                top: 80,
+                left: 30,
+                right: 30,
+                cellSize: ['auto', 12],
+                range: year,
+                yearLabel: {show: false}
+            },
+            series: {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                data: getVirtulData(year)
+            }
+        };
+        myChart.setOption(option);
+    }
 </script>
 </body>
 </html>

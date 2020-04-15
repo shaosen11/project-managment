@@ -118,4 +118,11 @@ public interface UserService {
      * @return
      */
     List<Myprojects> getMyProjectsStore(Integer id);
+
+    /**
+     * 查询user的信息和项目
+     * @param userId
+     * @return
+     */
+    MyUserDetails getMyUserDetailsByUserId(Integer userId);
 }

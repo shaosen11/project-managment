@@ -802,7 +802,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="card-title"><h1>项目人员</h1></div>
+                                        <div class="card-title"><h3>项目人员</h3></div>
                                     </div>
                                     <div class="card-body pb-0">
                                         <!-- 分页容器：显示数据 -->
@@ -847,17 +847,17 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="card-title"><h1>详细信息</h1></div>
+                                        <div class="card-title"><h3>概览</h3></div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-8">
+                                                <h3>名称：</h3>
                                                 <div class="form-group form-group-default">
-                                                    <h3>名称：</h3>
                                                     <span class="mb-1 fw-bold" id="personInformationName"></span>
                                                 </div>
+                                                <h3>邮箱：</h3>
                                                 <div class="form-group form-group-default">
-                                                    <h3>邮箱：</h3>
                                                     <span class="mb-1 fw-bold" id="personInformationEmail"></span>
                                                 </div>
                                             </div>
@@ -1292,7 +1292,7 @@
             dataType: "json",
             success: function (result) {
                 $(result).each(function (index, item) {
-                    xdata.push(item.uploadTimeString);
+                    xdata.push(echarts.format.formatTime('yyyy-MM-dd', item.uploadTime));
                     ydata.push(item.codeLineNumber);
                 })
                 lindCharts.setOption({
@@ -1744,7 +1744,6 @@
     var userId = [[${#authentication.principal.id}]];
     $(function () {
         addPersonManagerPage(projectId, null, projectUserDiv, projectUserPage);
-        addPersonManagerPage(projectId, 1, UserDiv, UserPage);
     })
 
     function addPersonManagerPage(projectId, market, div, ul) {
@@ -1892,7 +1891,7 @@
         })
     }
 </script>
-<!--加载完成功能点-->
+<!--加载开发功能点-->
 <script type="text/javascript">
     function appendFinishFunction(projectId, userId) {
         $.ajax({

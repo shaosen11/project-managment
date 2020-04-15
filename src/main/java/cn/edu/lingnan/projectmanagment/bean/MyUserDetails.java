@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author shaosen
@@ -30,6 +31,8 @@ public class MyUserDetails implements UserDetails, Serializable {
     private Date createTime;
     private String validataCode;
     private Timestamp outDate;
+    private List<Myprojects> myprojectsList;
+    private List<UserCodeUpdateRecord> userCodeUpdateRecordList;
     /**
      * 是否过期
      */

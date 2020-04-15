@@ -112,5 +112,10 @@ public class UserServiceImpl implements UserService {
     public List<Myprojects> getMyProjectsStore(Integer id) {
         return userMapper.getMyProjectsStore(id);
     }
+
+    @Override
+    public MyUserDetails getMyUserDetailsByUserId(Integer userId) {
+        return userMapper.getMyUserDetailsByUserId(userId);
+    }
 }
 
