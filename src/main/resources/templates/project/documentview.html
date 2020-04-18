@@ -101,9 +101,9 @@
                         <h4 class="text-section">infromation</h4>
                     </li>
                     <li class="nav-item">
-                        <a href="index.html">
+                        <a th:href="@{/projectmessage(projectId=${param.projectId},userId=${#authentication.principal.id})}">
                             <i class="far fa-comment-dots"></i>
-                            <p>message</p>
+                            <p>项目消息</p>
                             <span class="badge badge-count">5</span>
                         </a>
                     </li>

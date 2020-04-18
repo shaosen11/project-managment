@@ -56,7 +56,8 @@
             <div class="sidebar-content">
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
-                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..."
+                             class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -103,9 +104,9 @@
                         <h4 class="text-section">infromation</h4>
                     </li>
                     <li class="nav-item">
-                        <a th:href="index.html">
+                        <a th:href="@{/projectmessage(projectId=${param.projectId},userId=${#authentication.principal.id})}">
                             <i class="far fa-comment-dots"></i>
-                            <p>message</p>
+                            <p>项目消息</p>
                             <span class="badge badge-count">5</span>
                         </a>
                     </li>
@@ -331,7 +332,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="text-right">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#addFunction">
+                                                <button class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#addFunction">
                                                 <span class="btn-label">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
@@ -344,349 +346,20 @@
                                 <div class="card-body">
                                     <!--进度条-->
                                     <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
-
                                     <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist"
                                          aria-orientation="vertical" style="margin-top: 20px">
-                                        <a class="nav-link active" id="v-pills-one-tab" data-toggle="pill"
-                                           href="#v-pills-one" role="tab" aria-controls="v-pills-one"
-                                           aria-selected="true"><i class="fas fa-layer-group"></i>&nbsp;全部功能</a>
-                                        <a class="nav-link" id="v-pills-two-tab" data-toggle="pill" href="#v-pills-two"
-                                           role="tab" aria-controls="v-pills-two" aria-selected="false">指派给我的</a>
-                                        <a class="nav-link" id="v-pills-three-tab" data-toggle="pill"
-                                           href="#v-pills-three"
-                                           role="tab" aria-controls="v-pills-three" aria-selected="false">我发布的</a>
-                                        <a class="nav-link" id="v-pills-four-tab" data-toggle="pill"
-                                           href="#v-pills-four"
-                                           role="tab" aria-controls="v-pills-four" aria-selected="false">我参与的</a>
+                                        <a class="nav-link active" data-toggle="pill" href="#"
+                                           onclick="allFunctionPage()"><i class="fas fa-layer-group"></i>全部功能</a>
+                                        <a class="nav-link" data-toggle="pill" href="#" onclick="assignFunctionPage()">指派给我的</a>
+                                        <a class="nav-link" data-toggle="pill" href="#" onclick="publishFunctionPage()">我发布的</a>
+                                        <a class="nav-link" data-toggle="pill" href="#" onclick="joinFunctionPage()">我参与的</a>
                                     </div>
                                 </div>
 
                             </div>
                             <!--功能-->
                             <div class="col-md-10 tab-content" style="height: 630px;" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active row" id="v-pills-one" role="tabpanel"
-                                     aria-labelledby="v-pills-one-tab">
-                                    <div class="col-md-12 row">
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(245,232,200,0.5)">
-                                                    <div class="card-title" style="color: black;">
-                                                        <i class="far fa-surprise" style="color: #FF9933"></i>&nbsp;待办的
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="todoDiv"></div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="todoFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(157,211,250,0.5)">
-                                                    <div class="card-title" style="color: black">
-                                                        <i class="far fa-tired" style="color: #1F6FB5"></i>&nbsp;进行中
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="procesingDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="procesingFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(118,126,199,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="far fa-laugh-squint" style="color: #795DDE"></i>&nbsp;已完成
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="completedDiv"></div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="completedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(25,148,117,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="far fa-kiss-wink-heart"
-                                                            style="color: #007850"></i>&nbsp;已验收
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="acceptedDiv"></div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="acceptedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade row" id="v-pills-two" role="tabpanel"
-                                     aria-labelledby="v-pills-two-tab">
-                                    <div class="col-md-12 row">
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(245,232,200,0.5)">
-                                                    <div class="card-title" style="color: black">
-                                                        <i class="far fa-surprise" style="color: #FF9933"></i>&nbsp;待办的
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据--指派 -->
-                                                        <div id="assignTodoDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="assignTodoFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(157,211,250,0.5)">
-                                                    <div class="card-title" style="color: black">
-                                                        <i class="far fa-tired" style="color: #1F6FB5"></i>&nbsp;进行中
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="assignProcesingDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="assignProcesingFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(118,126,199,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="far fa-laugh-squint" style="color: #795DDE"></i>&nbsp;已完成
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="assignCompletedDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="assignCompletedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(25,148,117,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="far fa-kiss-wink-heart"
-                                                            style="color: #007850"></i>&nbsp;已验收
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="assignAcceptedDiv"></div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="assignAcceptedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade row" id="v-pills-three" role="tabpanel"
-                                     aria-labelledby="v-pills-three-tab">
-                                    <div class="col-md-12 row">
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(245,232,200,0.5)">
-                                                    <div class="card-title" style="color: black">
-                                                        <i class="far fa-surprise" style="color: #FF9933"></i>&nbsp;待办的
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据--发布 -->
-                                                        <div id="publishTodoDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="publishTodoFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(157,211,250,0.5)">
-                                                    <div class="card-title" style="color: black">
-                                                        <i class="far fa-tired" style="color: #1F6FB5"></i>&nbsp;进行中
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="publishProcesingDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="publishProcesingFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(118,126,199,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="far fa-laugh-squint" style="color: #795DDE"></i>&nbsp;已完成
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="publishCompletedDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="publishCompletedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(25,148,117,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="far fa-kiss-wink-heart"
-                                                            style="color: #007850"></i>&nbsp;已验收
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="publishAcceptedDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="publishAcceptedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade row" id="v-pills-four" role="tabpanel"
+                                <div class="tab-pane fade show active row" id="v-pills-four" role="tabpanel"
                                      aria-labelledby="v-pills-four-tab">
                                     <div class="col-md-12 row">
                                         <div class="col-md-3">
@@ -694,21 +367,21 @@
                                                 <div class="card-header"
                                                      style="background-color: rgba(245,232,200,0.5)">
                                                     <div class="card-title" style="color: black">
-                                                        <i class="far fa-surprise" style="color: #FF9933"></i>&nbsp;待办的
+                                                        <i class="fas fa-battery-empty" style="color: #FF9933"></i>&nbsp;待办的
                                                     </div>
                                                 </div>
                                                 <div class="card-body"
                                                      style="background-color: rgba(220,220,220,0.3)">
                                                     <div style="margin-top: -15px">
                                                         <!-- 分页容器：显示数据--参与 -->
-                                                        <div id="joinTodoDiv"></div>
+                                                        <div id="TodoDiv"></div>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="joinTodoFunctionPage"
+                                                        <ul id="TodoFunctionPage"
                                                             class="pagination pagination-sm"></ul>
                                                     </div>
                                                 </div>
@@ -719,21 +392,21 @@
                                                 <div class="card-header"
                                                      style="background-color: rgba(157,211,250,0.5)">
                                                     <div class="card-title" style="color: black">
-                                                        <i class="far fa-tired" style="color: #1F6FB5"></i>&nbsp;进行中
+                                                        <i class="fas fa-battery-half" style="color: #1F6FB5"></i>&nbsp;进行中
                                                     </div>
                                                 </div>
                                                 <div class="card-body"
                                                      style="background-color: rgba(220,220,220,0.3)">
                                                     <div style="margin-top: -15px">
                                                         <!-- 分页容器：显示数据 -->
-                                                        <div id="joinProcesingDiv"></div>
+                                                        <div id="ProcesingDiv"></div>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="joinProcesingFunctionPage"
+                                                        <ul id="ProcesingFunctionPage"
                                                             class="pagination pagination-sm"></ul>
                                                     </div>
                                                 </div>
@@ -744,21 +417,22 @@
                                                 <div class="card-header"
                                                      style="background-color: rgba(118,126,199,0.5)">
                                                     <div class="card-title" style="color: black"><i
-                                                            class="far fa-laugh-squint" style="color: #795DDE"></i>&nbsp;已完成
+                                                            class="fas fa-battery-three-quarters"
+                                                            style="color: #795DDE"></i>&nbsp;已完成
                                                     </div>
                                                 </div>
                                                 <div class="card-body"
                                                      style="background-color: rgba(220,220,220,0.3)">
                                                     <div style="margin-top: -15px">
                                                         <!-- 分页容器：显示数据 -->
-                                                        <div id="joinCompletedDiv"></div>
+                                                        <div id="CompletedDiv"></div>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="joinCompletedFunctionPage"
+                                                        <ul id="CompletedFunctionPage"
                                                             class="pagination pagination-sm"></ul>
                                                     </div>
                                                 </div>
@@ -769,7 +443,7 @@
                                                 <div class="card-header"
                                                      style="background-color: rgba(25,148,117,0.5)">
                                                     <div class="card-title" style="color: black"><i
-                                                            class="far fa-kiss-wink-heart"
+                                                            class="fas fa-battery-full"
                                                             style="color: #007850"></i>&nbsp;已验收
                                                     </div>
                                                 </div>
@@ -777,14 +451,14 @@
                                                      style="background-color: rgba(220,220,220,0.3)">
                                                     <div style="margin-top: -15px">
                                                         <!-- 分页容器：显示数据 -->
-                                                        <div id="joinAcceptedDiv"></div>
+                                                        <div id="AcceptedDiv"></div>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
                                                     <!-- 分页容器： 显示分页按钮-->
                                                     <div class="text-center">
                                                         <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="joinAcceptedFunctionPage"
+                                                        <ul id="AcceptedFunctionPage"
                                                             class="pagination pagination-sm"></ul>
                                                     </div>
                                                 </div>
@@ -863,7 +537,8 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="avatar avatar-xxl" style="margin: auto">
-                                                    <img id="personInformationPhoto" alt="..." class="avatar-img rounded-circle">
+                                                    <img id="personInformationPhoto" alt="..."
+                                                         class="avatar-img rounded-circle">
                                                 </div>
                                             </div>
                                             <div class="separator-dashed col-md-12"></div>
@@ -1496,134 +1171,110 @@
             $(div).html(tableShow)
         }
     }
-
-    //全部功能分页
+</script>
+<!--功能点分页-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    var functionStatusFlag = 0;
     $(function () {
-        var projectId = [[${param.projectId}]];
-        var url = "/allFunctionPage";
+        allFunctionPage();
+    })
 
-        var functionPage = $('#todoFunctionPage');
-        var divName = $('#todoDiv');
+    //全部功能点
+    function allFunctionPage() {
+        functionStatusFlag = 0;
+        var allFunctionUrl = "/allFunctionPage";
+        appendFuntion1(projectId, allFunctionUrl);
+    }
+
+    //分配给我的功能点
+    function assignFunctionPage() {
+        functionStatusFlag = 1;
+        var assignFunctionUrl = "/assignFunctionPage";
+        appendFuntion2(projectId, userId, assignFunctionUrl);
+    }
+
+    //我发布的功能点
+    function publishFunctionPage() {
+        functionStatusFlag = 2;
+        var publishFunctionUrl = "/publishFunctionPage";
+        appendFuntion2(projectId, userId, publishFunctionUrl);
+    }
+
+    //正在进行的功能点
+    function joinFunctionPage() {
+        functionStatusFlag = 3;
+        var joinFunctionUrl = "/joinFunctionPage";
+        appendFuntion2(projectId, userId, joinFunctionUrl);
+    }
+
+    //提取
+    function appendFuntion1(projectId, url) {
+        var functionPage = $('#TodoFunctionPage');
+        var divName = $('#TodoDiv');
+        $(divName).html("");
         var pagecolor = "#FF9933";
         var functionStatus = 0;
         functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
 
-        var functionPage2 = $('#procesingFunctionPage');
-        var divName2 = $('#procesingDiv');
+        var functionPage2 = $('#ProcesingFunctionPage');
+        var divName2 = $('#ProcesingDiv');
+        $(divName2).html("");
         var pagecolor2 = "#1F6FB5";
         var functionStatus2 = 1;
         functionPageStart(url, projectId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
 
-        var functionPage3 = $('#completedFunctionPage');
-        var divName3 = $('#completedDiv');
+        var functionPage3 = $('#CompletedFunctionPage');
+        var divName3 = $('#CompletedDiv');
+        $(divName3).html("");
         var pagecolor3 = "#795DDE";
         var functionStatus3 = 2;
         functionPageStart(url, projectId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
 
-        var functionPage4 = $('#acceptedFunctionPage');
-        var divName4 = $('#acceptedDiv');
+        var functionPage4 = $('#AcceptedFunctionPage');
+        var divName4 = $('#AcceptedDiv');
+        $(divName2).html("");
         var pagecolor4 = "#007850";
         var functionStatus4 = 3;
         functionPageStart(url, projectId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
-    });
+    }
 
-    //指派给我的--分页
-    $(function () {
-        var projectId = [[${param.projectId}]];
-        var userId = [[${#authentication.principal.id}]];
-        var url = "/assignFunctionPage";
-
-        var functionPage = $('#assignTodoFunctionPage');
-        var divName = $('#assignTodoDiv');
+    function appendFuntion2(projectId, userId, url) {
+        var functionPage = $('#TodoFunctionPage');
+        var divName = $('#TodoDiv');
+        $(divName).html("");
         var pagecolor = "#FF9933";
         var functionStatus = 0;
         functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
 
-        var functionPage2 = $('#assignProcesingFunctionPage');
-        var divName2 = $('#assignProcesingDiv');
+        var functionPage2 = $('#ProcesingFunctionPage');
+        var divName2 = $('#ProcesingDiv');
+        $(divName2).html("");
         var pagecolor2 = "#1F6FB5";
         var functionStatus2 = 1;
         functionPageStart2(url, projectId, userId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
 
-        var functionPage3 = $('#assignCompletedFunctionPage');
-        var divName3 = $('#assignCompletedDiv');
+        var functionPage3 = $('#CompletedFunctionPage');
+        var divName3 = $('#CompletedDiv');
+        $(divName3).html("");
         var pagecolor3 = "#795DDE";
         var functionStatus3 = 2;
         functionPageStart2(url, projectId, userId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
 
-        var functionPage4 = $('#assignAcceptedFunctionPage');
-        var divName4 = $('#assignAcceptedDiv');
+        var functionPage4 = $('#AcceptedFunctionPage');
+        var divName4 = $('#AcceptedDiv');
+        $(divName2).html("");
         var pagecolor4 = "#007850";
         var functionStatus4 = 3;
         functionPageStart2(url, projectId, userId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
-    });
+    }
 
-    //我发布的--分页
-    $(function () {
-        var projectId = [[${param.projectId}]];
-        var userId = [[${#authentication.principal.id}]];
-        var url = "/publishFunctionPage";
-
-        var functionPage = $('#publishTodoFunctionPage');
-        var divName = $('#publishTodoDiv');
-        var pagecolor = "#FF9933";
-        var functionStatus = 0;
-        functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
-
-        var functionPage2 = $('#publishProcesingFunctionPage');
-        var divName2 = $('#publishProcesingDiv');
-        var pagecolor2 = "#1F6FB5";
-        var functionStatus2 = 1;
-        functionPageStart2(url, projectId, userId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
-
-        var functionPage3 = $('#publishCompletedFunctionPage');
-        var divName3 = $('#publishCompletedDiv');
-        var pagecolor3 = "#795DDE";
-        var functionStatus3 = 2;
-        functionPageStart2(url, projectId, userId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
-
-        var functionPage4 = $('#publishAcceptedFunctionPage');
-        var divName4 = $('#publishAcceptedDiv');
-        var pagecolor4 = "#007850";
-        var functionStatus4 = 3;
-        functionPageStart2(url, projectId, userId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
-    });
-
-    //我参与的--分页
-    $(function () {
-        var projectId = [[${param.projectId}]];
-        var userId = [[${#authentication.principal.id}]];
-        var url = "/joinFunctionPage";
-
-        var functionPage = $('#joinTodoFunctionPage');
-        var divName = $('#joinTodoDiv');
-        var pagecolor = "#FF9933";
-        var functionStatus = 0;
-        functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
-
-        var functionPage2 = $('#joinProcesingFunctionPage');
-        var divName2 = $('#joinProcesingDiv');
-        var pagecolor2 = "#1F6FB5";
-        var functionStatus2 = 1;
-        functionPageStart2(url, projectId, userId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
-
-        var functionPage3 = $('#joinCompletedFunctionPage');
-        var divName3 = $('#joinCompletedDiv');
-        var pagecolor3 = "#795DDE";
-        var functionStatus3 = 2;
-        functionPageStart2(url, projectId, userId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
-
-        var functionPage4 = $('#joinAcceptedFunctionPage');
-        var divName4 = $('#joinAcceptedDiv');
-        var pagecolor4 = "#007850";
-        var functionStatus4 = 3;
-        functionPageStart2(url, projectId, userId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
-    });
 
 </script>
+<!--功能点进度条-->
 <script th:inline="javascript">
     // Cicle Chart
-    <!--进度条-->
     var data = [[${projectFunctionData}]];
     Circles.create({
         id: 'function-complete',
@@ -1643,36 +1294,26 @@
     })
 
     function refreshTodoFunction(projectsId) {
-        var userId = [[${#authentication.principal.id}]];
+        var functionPage = $('#TodoFunctionPage');
+        var divName = $('#TodoDiv');
+        $(divName).html("");
+        var pagecolor = "#FF9933";
+        var functionStatus = 0;
+        $(divName).html("");
+        if (functionStatusFlag == 0) {
+            var url = "/allFunctionPage";
+            functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+        } else {
+            if (functionStatusFlag == 1) {
+                var url = "/assignFunctionPage";
+            } else if (functionStatusFlag == 2) {
+                var url = "/publishFunctionPage";
+            } else if (functionStatusFlag == 3) {
+                var url = "/joinFunctionPage";
+            }
+            functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+        }
 
-        var url1 = "/allFunctionPage";
-        var functionPage1 = $('#todoFunctionPage');
-        var divName1 = $('#todoDiv');
-        var pagecolor1 = "#FF9933";
-        var functionStatus1 = 0;
-        functionPageStart(url1, projectsId, functionStatus1, functionPage1, divName1, pagecolor1);
-
-
-        var url2 = "/assignFunctionPage";
-        var functionPage2 = $('#assignTodoFunctionPage');
-        var divName2 = $('#assignTodoDiv');
-        var pagecolor2 = "#FF9933";
-        var functionStatus2 = 0;
-        functionPageStart2(url2, projectsId, userId, functionStatus2, functionPage2, divName2, pagecolor2);
-
-        var url3 = "/publishFunctionPage";
-        var functionPage3 = $('#publishTodoFunctionPage');
-        var divName3 = $('#publishTodoDiv');
-        var pagecolor3 = "#FF9933";
-        var functionStatus3 = 0;
-        functionPageStart2(url3, projectsId, userId, functionStatus3, functionPage3, divName3, pagecolor3);
-
-        var url4 = "/joinFunctionPage";
-        var functionPage4 = $('#joinTodoFunctionPage');
-        var divName4 = $('#joinTodoDiv');
-        var pagecolor4 = "#FF9933";
-        var functionStatus4 = 0;
-        functionPageStart2(url4, projectsId, userId, functionStatus4, functionPage4, divName4, pagecolor4);
     }
 
     //添加项目功能
@@ -1884,7 +1525,7 @@
                 codeUpdateCile(json.codeUpdateRatio);
                 $("#personInformationName").text(json.myUserDetails.username);
                 $("#personInformationEmail").text(json.myUserDetails.email);
-                $("#personInformationPhoto").attr("src", "/files/photo/" +  json.myUserDetails.photo);
+                $("#personInformationPhoto").attr("src", "/files/photo/" + json.myUserDetails.photo);
                 appendFinishFunction(projectId, userId);
                 appendDevelopIngFunction(projectId, userId);
             }
@@ -1916,7 +1557,7 @@
                 '   <span class="btn-label">\n' +
                 '     <i class="fa fa-check"></i>\n' +
                 '   </span>\n' +
-                '   '+list[i].functionName+'\n' +
+                '   ' + list[i].functionName + '\n' +
                 ' </button>'
         }
         $(finishFunction).html(button)
@@ -1947,7 +1588,7 @@
                 '   <span class="btn-label">\n' +
                 '     <i class="fa fa-sync-alt"></i>\n' +
                 '   </span>\n' +
-                '   '+list[i].functionName+'\n' +
+                '   ' + list[i].functionName + '\n' +
                 ' </button>'
         }
         $(developingFunction).html(button)

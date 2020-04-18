@@ -2,7 +2,6 @@ package cn.edu.lingnan.projectmanagment;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.controller.ProjectsUserController;
-import cn.edu.lingnan.projectmanagment.service.DocumentsRecordService;
 import cn.edu.lingnan.projectmanagment.service.ProjectsPackageService;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
 import org.junit.jupiter.api.Test;
@@ -49,9 +48,15 @@ class ProjectManagmentApplicationTests {
 
     @Autowired
     UserCodeUpdateRecordServiceImpl userCodeUpdateRecordService;
+
+    @Autowired
+    ProjectsMessageTypeServiceImpl projectsMessageTypeService;
+
+    @Autowired
+    ProjectsMessageServiceImpl projectsMessageService;
     @Test
     void t1(){
-        MyUserDetails myUserDetailsByUserId = userService.getMyUserDetailsByUserId(1);
-        System.out.println(myUserDetailsByUserId);
+//        List<ProjectsMessage> byProjectIdAndUserId = projectsMessageService.getByProjectIdAndUserId(1, 1, 0 ,5);
+//        System.out.println(byProjectIdAndUserId);
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.lingnan.projectmanagment.mapper.ProjectsMessageMapper">
+    <resultMap id="ProjectsMessageList" type="ProjectsMessage">
+        <result column="id" property="id"></result>
+        <result column="project_id" property="projectId"></result>
+        <result column="from_user_id" property="fromUserId"></result>
+        <result column="to_user_id" property="toUserId"></result>
+        <result column="type_id" property="typeId"></result>
+        <result column="message" property="message"></result>
+        <result column="time" property="time"></result>
+        <result column="is_read" property="isRead"></result>
+        <result column="delete_flag" property="deleteFlag"></result>
+        <collection property="projectsMessageType" column="{id=type_id}" select="cn.edu.lingnan.projectmanagment.mapper.ProjectsMessageTypeMapper.getById">
+        </collection>
+    </resultMap>
+   <select id="getByProjectIdAndUserId" resultMap="ProjectsMessageList">
+       select * from projects_message where is_read = 1 and delete_flag = 1 and project_id = #{projectId} and to_user_id = #{userId} order by time desc limit #{offset},#{pageSize}
+   </select>
+
+</mapper>

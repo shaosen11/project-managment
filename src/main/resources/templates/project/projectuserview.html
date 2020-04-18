@@ -101,9 +101,9 @@
                         <h4 class="text-section">infromation</h4>
                     </li>
                     <li class="nav-item">
-                        <a th:href="index.html">
+                        <a th:href="@{/projectmessage(projectId=${param.projectId},userId=${#authentication.principal.id})}">
                             <i class="far fa-comment-dots"></i>
-                            <p>message</p>
+                            <p>项目消息</p>
                             <span class="badge badge-count">5</span>
                         </a>
                     </li>
@@ -212,6 +212,9 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row" id="userProjects">
+                                        <div class="col-md-12">
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-header"></div>
@@ -489,7 +492,7 @@
     function userProject(myprojectsList) {
         $(userProjects).html("");
         var userProjectDiv = '';
-        if (myprojectsList != null) {
+        if (myprojectsList.length = 0) {
             for (var i = 0; i < myprojectsList.length && i < 2; i++) {
                 userProjectDiv += '<div class="col-md-6">\n' +
                     '                                            <div class="form-group form-group-default">\n' +
@@ -529,6 +532,12 @@
                     '                                            </div>\n' +
                     '                                        </div>'
             }
+        } else {
+            userProjectDiv += '<div class="form-group form-group-default">\n' +
+                '                                                <span class="text-center">\n' +
+                '                                                    <h1>暂无参与项目</h1>\n' +
+                '                                                </span>\n' +
+                '                                            </div>'
         }
         $(userProjects).html(userProjectDiv)
     }
@@ -544,7 +553,7 @@
             var end = +echarts.number.parseDate(year + '-12-31');
             var dayTime = 3600 * 24 * 1000;
             var data = [];
-            for (var time = date, i = 0; time <= end ; time += dayTime) {
+            for (var time = date, i = 0; time <= end; time += dayTime) {
                 var timeString = echarts.format.formatTime('yyyy-MM-dd', time);
                 if ((i < json.length) && (timeString == echarts.format.formatTime('yyyy-MM-dd', json[i].time))) {
                     data.push([
