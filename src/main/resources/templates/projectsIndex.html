@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Tables - Azzara Bootstrap 4 Admin Dashboard</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="../../assets/img/icon.ico" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: {"families":["Open+Sans:300,400,600,700"]},
+            custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"], urls: ['../../assets/css/fonts.css']},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a href="../index.html" class="logo">
+                <img src="../../assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true">推荐项目</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                        <!-- 项目列表1 -->
+                                        <div class="col-md-8 row" style="float: left">
+                                            <div class="col-md-12 row" th:each="projects:${projects}" th:fragment="div1" id="div1">
+                                                <div class="col-lg-10">
+                                                    <div>
+                                                    <a href="#">
+                                                        <h2 style="color: #145180">
+                                                            <i class="fas fa-file-alt"></i>&nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                            <span class ="glyphicon glyphicon-bookmark" style ="color:rgb(255，121，0);">
+                                                                &nbsp;[[${projects.type}]]
+                                                         </span>
+                                                        </h2>
+                                                    </a>
+                                                    </div>
+                                                    <span style="color: #4e555b">
+                                                            <i class="fas fa-user-tie"></i>项目详情：[[${projects.characterization}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <a th:href="@{/projects_index_del_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}" style="color: #F29F3F" th:if="${projects.storeFlag} eq 1"  >
+                                                        <i class="fas fa-star"></i><span th:text="${projects.storeCount}"></span>
+                                                    </a>
+                                                    <a th:href="@{/projects_index_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}" style="color: darkgrey" th:if="${projects.storeFlag} eq 0">
+                                                        <i class="fas fa-star"></i><span th:text="${projects.storeCount}"></span>
+                                                    </a>
+                                                </div>
+                                                <hr style="color: #4C5B5C" size="3" width="96%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true">推荐项目</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                        &lt;!&ndash; 项目列表1 &ndash;&gt;
+                                        <div class="col-md-8 row" style="float: left">
+                                            <div class="col-md-12 row" th:each="projects:${projects}" th:fragment="div1" id="div1">
+                                                <div class="col-lg-10">
+                                                    <div>
+                                                        <a href="#">
+                                                            <h2 style="color: #145180">
+                                                                <i class="fas fa-file-alt"></i>&nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                                <span class ="glyphicon glyphicon-bookmark" style ="color:rgb(255，121，0);">
+                                                                &nbsp;[[${projects.type}]]
+                                                         </span>
+                                                            </h2>
+                                                        </a>
+                                                    </div>
+                                                    <span style="color: #4e555b">
+                                                            <i class="fas fa-user-tie"></i>项目详情：[[${projects.characterization}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <a th:href="@{/projects_index_del_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}" style="color: #F29F3F" th:if="${projects.storeFlag} eq 1"  >
+                                                        <i class="fas fa-star"></i><span th:text="${projects.storeCount}"></span>
+                                                    </a>
+                                                    <a th:href="@{/projects_index_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}" style="color: darkgrey" th:if="${projects.storeFlag} eq 0">
+                                                        <i class="fas fa-star"></i><span th:text="${projects.storeCount}"></span>
+                                                    </a>
+                                                </div>
+                                                <hr style="color: #4C5B5C" size="3" width="96%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <!--<div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true">我的收藏</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                        <div class="row" th:each="projects:${projects}">
+                                            <div class="col-lg-10">
+                                                <a href="#">
+                                                    <h2 style="color: #145180">
+                                                        <i class="fas fa-file-alt"></i>&nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                    </h2>
+                                                    <span style="color: #4e555b">
+                                                                <i class="fab fa-codiepie"></i>&nbsp;[[${projects.type}]]
+                                                     </span>&nbsp;&nbsp;
+                                                </a>
+                                                <span style="color: #4e555b">
+                                                    <i class="fas fa-user-tie"></i>项目详情：[[${projects.characterization}]]
+                                                </span>&nbsp;&nbsp;
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <a th:href="@{/projects_index_del_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}"
+                                                   style="color: #F29F3F" th:if="${projects.storeFlag} eq 1">
+                                                    <i class="fas fa-star"></i><span
+                                                        th:text="${projects.storeCount}"></span>
+                                                </a>
+                                                <a th:href="@{/projects_index_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}"
+                                                   style="color: darkgrey" th:if="${projects.storeFlag} eq 0">
+                                                    <i class="fas fa-star"></i><span
+                                                        th:text="${projects.storeCount}"></span>
+                                                </a>
+
+                                            </div>
+                                            <hr style="color: #4C5B5C" size="3" width="98%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+</div>
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<!-- Echarts! -->
+<script th:src="@{/assets/js/echarts.min.js}"></script>
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+
+<script type="text/javascript">
+    //选项卡Echart
+    var charts = new Array();
+    charts.push(pieCharts);
+    charts.push(pieCharts2);
+    charts.push(pieCharts3);
+    $(function(){
+        $(window).resize(function() {
+            for(var i = 0; i < charts.length; i++) {
+                charts[i].resize();
+            }
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            for(var i = 0; i < charts.length; i++) {
+                charts[i].resize();
+            }
+        });
+    })
+
+    function refrech() {
+        var url = "/my_project_refrech/[[${#authentication.principal.id}]]/1";
+        $('#div1').load(url);
+    }
+
+</script>
+</body>
+</html>

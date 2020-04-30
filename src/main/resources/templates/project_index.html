@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Tables - Azzara Bootstrap 4 Admin Dashboard</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="../../assets/img/icon.ico" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: {"families":["Open+Sans:300,400,600,700"]},
+            custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"], urls: ['../../assets/css/fonts.css']},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+<style>
+
+    .defineAStyle  a:hover {
+        background: #909093;
+        color:#575962;
+        font-size: 15px;
+        border-radius :5px;
+        cursor:pointer;
+        text-decoration:none;
+    }
+      a.defineBStyle:hover {
+        color:#00bbff;
+        font-size: 18px;
+        cursor:pointer;
+        text-decoration:none;
+    }
+
+</style>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+</head>
+<body>
+<div class="wrapper">
+    <!--
+            Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
+    -->
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a href="../index.html" class="logo">
+                <img src="../../assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" >
+                            <div class="card-header" >
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist" style="width:70%; float: left">
+                                        <li class="nav-item" style="float: left">
+                                            <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true" onclick="showTable('theSecondTodayAndWeekShow','theFirsTodayAndWeekShow','allProjectsType','projectsRecommendation')">推荐项目</a>
+                                        </li>
+                                        <li class="nav-item" style="float: right">
+                                            <a class="nav-link" id="pills-four-tab-nobd" data-toggle="pill" href="#pills-four-nobd" role="tab" aria-controls="pills-four-nobd" aria-selected="false" onclick="showTable('theFirsTodayAndWeekShow','theSecondTodayAndWeekShow','allProjectsType1','projectsRecommendation1')">更多</a>
+                                        </li>
+                                    </ul>
+                                    <center id="theFirsTodayAndWeekShow" style="width:20%; float: left;">
+                                        <ul  class="nav nav-tabs nav-line nav-color-secondary" role="tablist" >
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-two-tab-nobd" data-toggle="pill" href="#pills-two-nobd" role="tab" aria-controls="pills-two-nobd"  onclick="showTwoTable('pills-three-nobd','pills-two-nobd')">今日热门</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-three-tab-nobd" data-toggle="pill" href="#pills-three-nobd" role="tab" aria-controls="pills-three-nobd"  onclick="showThreeTable('pills-three-nobd','pills-two-nobd')">本周热门</a>
+                                        </li>
+                                    </ul>
+                                    </center>
+                                    <center id="theSecondTodayAndWeekShow" style="width:20%; float: left;display:none;">
+                                        <ul  class="nav nav-tabs nav-line nav-color-secondary" role="tablist" >
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-five-tab-nobd" data-toggle="pill" href="#pills-five-nobd" role="tab" aria-controls="pills-five-nobd"  onclick="showTwoTable('pills-six-nobd','pills-five-nobd')">今日热门</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-six-tab-nobd" data-toggle="pill" href="#pills-six-nobd" role="tab" aria-controls="pills-six-nobd"  onclick="showThreeTable('pills-six-nobd','pills-five-nobd')">本周热门</a>
+                                        </li>
+                                    </ul>
+                                    </center>
+                                </div>
+                            </div>
+
+
+                            <div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
+                                        <!-- 指定项目类型列表 -->
+                                        <div id="allProjectsType" style="float: left;width: 68%; display: none" class="card-body" >
+                                            <div class="col-md-12 row" th:fragment="showAllProjectsTypeDiv" id="showAllProjectsTypeDiv" > </div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-right mt-3 mb-3">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="showAllProjectsTypePage" class="pagination"></ul>
+                                            </div>
+                                        </div>
+                                        <!-- 推荐项目列表 -->
+                                        <div id="projectsRecommendation" style="float: left;width: 65%" >
+                                            <div class="col-md-12 row" th:each="projects:${projects}" th:fragment="div1" id="div1">
+                                                <div class="col-lg-10">
+
+                                                        <span class="avatar avatar-online" style="float: left;width: 30px;height: 30px">
+                                                            <span class="avatar-title rounded-circle border border-white bg-info">[[${projects.firstname}]]</span>
+                                                        </span>
+
+                                                    <div style="float: left">
+                                                        <a class="defineBStyle" th:onclick="UpdateTraffs([[${projects.projectId}]])" href="javascript:void(0);" style="color: #145180;font-size: 18px">
+                                                            <span >
+
+                                                                
+                                                                kopp-/
+                                                                &nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                            </span>
+                                                        </a>
+                                                        <span class="defineAStyle" style ="color:#fd7e14">
+                                                                    <i class="fas fa-medal"></i>
+                                                                <a th:onclick="getSpecifiedType([[${projects.type}]],'allProjectsType','projectsRecommendation','showAllProjectsTypeDiv','showAllProjectsTypePage')">
+                                                                    <span style ="color:#575962;background: #f1f1f1;font-size: 15px;border-radius :5px;">
+                                                                        [[${projects.type}]]
+                                                                    </span>
+                                                                </a>
+                                                        </span>
+
+                                                        <div class ="glyphicon glyphicon-bookmark" style="color: #4e555b">
+                                                            [[${projects.characterization}]]
+                                                        </div>
+                                                        <div>
+                                                            <span class ="glyphicon glyphicon-bookmark" style="color: darkgrey" th:if="${projects.updateTime <=24 && projects.updateTime != null} ">
+                                                            [[${projects.updateTime}]]+小时前&nbsp;&nbsp;<i class="far fa-paper-plane"></i>&nbsp;&nbsp;
+                                                            </span>
+                                                            <span class ="glyphicon glyphicon-bookmark" style="color: darkgrey" th:text="更新于+${#dates.format(projects.updateDate, 'yyyy-MM-dd')}" th:if="${projects.updateDate} ne null"> </span>
+                                                            <span class ="glyphicon glyphicon-bookmark" style="color: darkgrey" th:text="更新于+${#dates.format(projects.createDate, 'yyyy-MM-dd')}" th:if="${projects.updateDate} eq null"> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2" >
+                                                    <i class="fas fa-eye" style="color: darkgrey"></i><span th:text="${projects.clickCount}" style="color: darkgrey"></span>
+                                                    <a th:href="@{/projects_index_del_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}" style="color: #F29F3F" th:if="${projects.storeFlag} eq 1"  >
+                                                        <i class="fas fa-star"></i><span th:text="${projects.storeCount}"></span>
+                                                    </a>
+                                                    <a th:href="@{/projects_index_refrech/}+${#authentication.principal.id}+'/'+${projects.projectId}" style="color: darkgrey" th:if="${projects.storeFlag} eq 0">
+                                                        <i class="fas fa-star"></i><span th:text="${projects.storeCount}"></span>
+                                                    </a>
+                                                    <a data-toggle="modal" data-target="#addRowModal" style="color: darkgrey" >
+                                                        <i class="fas fa-share-alt"></i>
+                                                    </a>
+                                                </div>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header no-bd">
+                                                                <h5 class="modal-title">
+                                                                <span class="fw-mediumbold">
+                                                                    Projects
+                                                                </span>
+                                                                <span class="fw-light">
+                                                                    Share
+                                                                </span>
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p class="small">You can copy the following links to share with friends</p>
+                                                                <form>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="form-group form-group-default">
+                                                                                <input id="copyContent" type="text" class="form-control" placeholder="fill name" th:value="@{/projects_index/}+${#authentication.principal.id}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div style="text-align:center; vertical-align:middle;">
+                                                                <button type="button" id="addRowButton" class="btn btn-primary" onClick="copyUrl2()">复制链接</button>
+                                                            </div>
+                                                            <div class="modal-footer no-bd"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr style="color: #4C5B5C" size="3" width="96%">
+                                            </div>
+                                        </div>
+                                        <div style="float: right;width: 30%">
+                                        <!-- 今日热门列表 -->
+                                        <div class="tab-pane fade show active" id="pills-two-nobd" role="tabpanel" aria-labelledby="pills-two-tab-nobd" >
+                                            <!-- 项目列表1 -->
+                                            <div th:each="projects:${todayProjects}">
+                                                <div class="col-lg-10">
+                                                        <a class="defineBStyle" th:onclick="UpdateTraffs([[${projects.projectId}]])" href="javascript:void(0);" style="color: #145180;font-size: 18px">
+                                                            <span >
+                                                                &nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                            </span>
+                                                        </a>
+                                                        <!--<span style ="color:#fd7e14">
+                                                           <i class="fas fa-medal"></i>
+                                                            <span style ="color:#9A9A9A;background: #d1d7e3;font-size: 15px">[[${projects.type}]]</span>
+                                                        </span>-->
+
+                                                    <div class ="glyphicon glyphicon-bookmark" style="color: #4e555b;margin-left: 2px;">
+                                                        &nbsp;[[${projects.characterization}]]
+                                                        </div>
+                                                </div>
+                                                <hr style="color: #4C5B5C" size="3" width="96%">
+                                            </div>
+                                        </div>
+                                        <!-- 本周热门列表 -->
+                                        <div class="tab-pane fade" id="pills-three-nobd" role="tabpanel" aria-labelledby="pills-three-tab-nobd" style="display: none" >
+                                            <!-- 项目列表2 -->
+                                            <div th:each="projects:${weekProjects}">
+                                                <div class="col-lg-18">
+                                                    <div>
+                                                        <a class="defineBStyle" th:onclick="UpdateTraffs([[${projects.projectId}]])" href="javascript:void(0);" style="color: #145180;font-size: 18px">
+                                                            <span >
+                                                                &nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                            </span>
+                                                        </a>
+                                                        <!--<span style ="color:#fd7e14">
+                                                           <i class="fas fa-medal"></i>
+                                                           <span style ="color:#9A9A9A;background: #d1d7e3;font-size: 15px">[[${projects.type}]]</span>
+                                                        </span>-->
+                                                    </div>
+                                                    <span class ="glyphicon glyphicon-bookmark" style="color: #4e555b;margin-left: 2px;">
+                                                            &nbsp;[[${projects.characterization}]]
+                                                    </span>&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                                <hr style="color: #4C5B5C" size="3" width="96%">
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                     <div class="tab-pane fade" id="pills-four-nobd" role="tabpanel" aria-labelledby="pills-four-tab-nobd">
+                                         <!-- 指定项目类型列表 -->
+                                         <div id="allProjectsType1" style="float: left;width: 68%; display: none" class="card-body" >
+                                             <div class="col-md-12 row" th:fragment="showAllProjectsTypeDiv1" id="showAllProjectsTypeDiv1" ></div>
+                                             <!-- 分页容器： 显示分页按钮-->
+                                             <div class="text-right mt-3 mb-3">
+                                                 <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                 <ul id="showAllProjectsTypePage1" class="pagination"></ul>
+                                             </div>
+
+                                         </div>
+                                         <!-- 更多列表 -->
+                                         <div id="projectsRecommendation1" style="float: left;width: 68%" class="card-body">
+                                             <div class="col-md-12 row" th:fragment="allDiv" id="allDiv" >
+
+                                             </div>
+                                             <!-- 分页容器： 显示分页按钮-->
+                                             <div class="text-right mt-3 mb-3">
+                                                 <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                 <ul id="allPage" class="pagination"></ul>
+                                             </div>
+                                         </div>
+                                         <div style="float: right;width: 30%">
+                                             <!-- 今日热门列表 -->
+                                             <div class="tab-pane fade show active" id="pills-five-nobd" role="tabpanel" aria-labelledby="pills-five-tab-nobd" >
+                                                 <!-- 项目列表1 -->
+                                                <!-- <div class="col-md-6 row" style="float: left">-->
+                                                     <div th:each="projects:${todayProjects}">
+                                                         <div class="col-lg-18">
+                                                             <div>
+                                                                <!-- <a th:onclick="UpdateTraffs([[${projects.projectId}]])" href="javascript:void(0);">
+                                                            <span style="color: #145180;font-size: 18px">
+                                                                &nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                            </span>
+                                                                 </a>-->
+                                                                 <a class="defineBStyle" th:onclick="UpdateTraffs([[${projects.projectId}]])" href="javascript:void(0);" style="color: #145180;font-size: 18px">
+                                                                 <span >
+                                                                    &nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                                 </span>
+                                                                 </a>
+                                                                 <!--<span style ="color:#fd7e14">
+                                                                    <i class="fas fa-medal"></i>
+                                                                     <span style ="color:#9A9A9A;background: #d1d7e3;font-size: 15px">[[${projects.type}]]</span>
+                                                                 </span>-->
+                                                             </div>
+                                                             <span class ="glyphicon glyphicon-bookmark" style="color: #4e555b;margin-left: 2px;">
+                                                             &nbsp;[[${projects.characterization}]]
+                                                        </span>
+                                                         </div>
+                                                         <hr style="color: #4C5B5C" size="3" width="96%">
+                                                     </div>
+                                                 <!--</div>-->
+                                             </div>
+                                             <!-- 本周热门列表 -->
+                                             <div class="tab-pane fade" id="pills-six-nobd" role="tabpanel" aria-labelledby="pills-six-tab-nobd" style="display: none" >
+                                                 <!-- 项目列表2 -->
+                                                 <!--<div class="col-md-12 row" style="float: left">-->
+                                                     <div th:each="projects:${weekProjects}">
+                                                         <div class="col-lg-18">
+                                                             <div >
+                                                                 <a class="defineBStyle" th:onclick="UpdateTraffs([[${projects.projectId}]])" href="javascript:void(0);" style="color: #145180;font-size: 18px">
+                                                                 <span >
+                                                                &nbsp;[[${projects.username}]]/[[${projects.name}]]
+                                                                 </span>
+                                                                 </a>
+                                                                 <!--<span style ="color:#fd7e14">
+                                                                    <i class="fas fa-medal"></i>
+                                                                    <span style ="color:#9A9A9A;background: #d1d7e3;font-size: 15px">[[${projects.type}]]</span>
+                                                                 </span>-->
+                                                             </div>
+                                                             <div class ="glyphicon glyphicon-bookmark" style="color: #4e555b;margin-left: 2px;">
+                                                                 &nbsp;[[${projects.characterization}]]
+                                                             </div>
+                                                         </div>
+                                                         <hr style="color: #4C5B5C" size="3" width="96%">
+                                                     </div>
+                                                <!-- </div>-->
+
+
+                                             </div>
+                                         </div>
+                                    </div>
+                                    </div>
+                            </div>
+
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+<!-- Chart JS -->
+<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+<!-- Chart Circle -->
+<script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<!-- 功能点分页 -->
+<script th:src="@{/assets/js/functionpage.js}"></script>
+
+
+<script >
+    $(document).ready(function() {
+        $('#basic-datatables').DataTable({
+        });
+
+        $('#multi-filter-select').DataTable( {
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        });
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+
+        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $('#addRowButton').click(function() {
+            $('#add-row').dataTable().fnAddData([
+                $("#addName").val(),
+                $("#addPosition").val(),
+                $("#addOffice").val(),
+                action
+            ]);
+            $('#addRowModal').modal('hide');
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    function UpdateTraffs(projectsId)
+    {
+        //alert(11);
+        alert(projectsId);
+        var projectsId=projectsId;
+        var http_request;
+        if (window.XMLHttpRequest)
+        {//对于Mozilla、Netscape、Safari等浏览器，创建XMLHttpRequest对象
+            http_request = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 对于Internet Explorer浏览器，创建XMLHttpRequest
+            try
+            {
+                http_request = new ActiveXObject("Msxml2.XMLHTTP");
+            }
+            catch (e)
+            {
+                try
+                {
+                    http_request = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch (e)
+                {}
+            }
+        }
+        http_request.open("GET","/projects_index_click/"+[[${#authentication.principal.id}]]+"/"+projectsId+"",false);
+        http_request.send();
+        location.replace(location.href);
+    }
+</script>
+
+<script type="text/javascript">
+    function copyUrl2()
+    {
+        var Url2=document.getElementById("copyContent");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("已复制好，可贴粘。");
+    }
+
+    function copyUrl3()
+    {
+        var Url2=document.getElementById("copyContent2");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("已复制好，可贴粘。");
+    }
+</script>
+
+<script th:inline="javascript" type="text/javascript">
+
+    function changeContainer(id1,id2){
+        //alert(333);
+        if(showSignIn==true) {
+            document.getElementById(id1).style.display="block";
+        }else{
+            document.getElementById(id1).style.display = "none";
+        }
+        if(showSignUp==true) {
+            document.getElementById(id2).style.display ="block";
+        }else{
+            document.getElementById(id2).style.display="none";
+        }
+    }
+
+    function changeContainer1(id1,id2,id3,id4){
+        //alert(333);
+        if(showSignIn==true) {
+            document.getElementById(id1).style.display="block";
+            document.getElementById(id3).style.display = "block";
+        }else{
+            document.getElementById(id1).style.display = "none";
+            document.getElementById(id3).style.display="none";
+        }
+        if(showSignUp==true) {
+            document.getElementById(id2).style.display ="block";
+            document.getElementById(id4).style.display="block";
+        }else{
+            document.getElementById(id2).style.display="none";
+            document.getElementById(id4).style.display="none";
+        }
+    }
+
+    function showTwoTable(id1,id2){
+        showSignUp = true;
+        showSignIn = false;
+        changeContainer(id1,id2);
+    }
+
+    function showThreeTable(id1,id2){
+        showSignUp = false;
+        showSignIn = true;
+        changeContainer(id1,id2);
+    }
+
+    function showTable(id1,id2,id3,id4){
+        showSignUp = true;
+        showSignIn = false;
+        changeContainer1(id1,id2,id3,id4);
+    }
+
+    function getSpecifiedType(type,id1,id2,div,ul) {
+        showSignUp = false;
+        showSignIn = true;
+        var id1=id1;
+        var id2=id2;
+        if (div != null){
+            changeContainer(id1,id2);
+            var projectsType=type;
+            var divId='#'+div;
+            var ulId='#'+ul;
+            var functionPage = $(divId);
+            var divName = $(ulId);
+            addSpecifiedTypePage(functionPage, divName,projectsType);
+        }else {
+            changeContainer(id1,id2);
+        }
+    }
+
+    function addSpecifiedTypePage(div, ul,projectsType) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "get",
+                url: "/getProjectsByTypePage",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    projectsType: projectsType
+                }, //参数：当前页为1
+                success: function (data) {
+                    appendSpecifiedTypePageHtml(data.list)//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/getProjectsByTypePage",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    "page": page,
+                                    projectsType: projectsType
+                                },
+                                success: function (data) {
+                                    appendSpecifiedTypePageHtml(data.list);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+
+        function appendSpecifiedTypePageHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+            $(div).html("");
+            var tableShow = '';
+            for (var i = 0; i < list.length; i++) {
+                console.log(list[i]);
+                var allProjectsType="'"+'projectsRecommendation1'+"'";
+                var projectsRecommendation= "'" +'allProjectsType1'+"'";
+                var showAllProjectsTypeDiv= "'" +'allDiv'+"'";
+                var showAllProjectsTypePage= "'" +'allPage'+"'";
+                var type= "'"+ list[i].type +"'";
+                var copyLink="/projects_index/"+[[${#authentication.principal.id}]];
+
+                if(list[i].updateTime <= 24 && list[i].updateTime != null){
+                    var updateTimeTextShow=list[i].updateTime + '小时前'+"&nbsp;&nbsp;<i class="+"far fa-paper-plane"+"></i>&nbsp;&nbsp";
+                }else {
+                    var updateTimeTextShow="";
+                }
+                if(list[i].updateDate !=null){
+                    var updateDate=list[i].updateDate;
+                    var date = new Date(updateDate);
+                    var year = date.getFullYear();
+                    var month = date.getMonth()+1;    //js从0开始取
+                    var date1 = date.getDate();
+                    var curTime =year+"年"+month+"月"+date1+"日";
+                    var updateDateTextShow="更新于"+curTime;
+                    var createDateTextShow="";
+                }else{
+                    var createDate=list[i].createDate;
+                    var date = new Date(createDate);
+                    var year = date.getFullYear();
+                    var month = date.getMonth()+1;    //js从0开始取
+                    var date1 = date.getDate();
+                    var curTime =year+"年"+month+"月"+date1+"日";
+                    var createDateTextShow="更新于"+curTime;
+                    var updateDateTextShow="";
+                }
+
+                if(list[i].storeFlag == 1){
+                    var storeColor="#F29F3F";
+                    var storeLink="/projects_index_del_refrech/"+[[${#authentication.principal.id}]]+'/'+list[i].projectId;
+                }else if(list[i].storeFlag == 0){
+                    var storeColor="darkgrey";
+                    var storeLink="/projects_index_refrech/"+[[${#authentication.principal.id}]]+'/'+list[i].projectId;
+                }
+                tableShow +=
+                    '    <div class="col-lg-10">\n' +
+
+                    '    <span class="avatar avatar-online" style="float: left;width: 30px;height: 30px">\n' +
+                    '    <span class="avatar-title rounded-circle border border-white bg-info">' + list[i].firstname + '</span>\n' +
+                    '    </span>\n' +
+
+                    '    <div style="float: left">\n' +
+                    '    <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')" href="javascript:void(0);">\n' +
+                    '    <span style="color: #145180;font-size: 18px">\n' +
+                    '    ' + list[i].username + '/' + list[i].name + '\n' +
+                    '    </span>\n' +
+                    '    </a>\n' +
+                    '    <span class="defineAStyle" style ="color:#fd7e14">\n' +
+                    '    <i class="fas fa-medal"></i>\n' +
+                    '    <a onclick="getSpecifiedType(' + list[i].type + ','+ allProjectsType +','+ projectsRecommendation +','+showAllProjectsTypeDiv+','+showAllProjectsTypePage+')">\n' +
+                    '    <span style ="color:#575962;background: #f1f1f1;font-size: 15px;border-radius :5px">\n' +
+                    '    ' + list[i].type + '\n' +
+                    '    </span>\n' +
+                    '    </a>\n' +
+                    '    </span>\n' +
+
+                    '    <div class ="glyphicon glyphicon-bookmark" style="color: #4e555b">\n' +
+                    '    ' + list[i].characterization + '\n' +
+                    '    </div>\n' +
+                    '    <div>\n' +
+                    '    <span id="showUpdateTime' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + updateTimeTextShow + '</span>\n' +
+                    '    <span id="showUpdateDate' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + updateDateTextShow + '</span>\n' +
+                    '    <span id="showCreateDate' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + createDateTextShow + '</span>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    <div class="col-lg-2" >\n' +
+                    '    <i class="fas fa-eye" style="color: darkgrey"></i><span style="color: darkgrey">' + list[i].clickCount + '</span>\n' +
+
+                    '    <a id="stored" href="' + storeLink + '" style="color: ' + storeColor + '">\n' +
+                    '    <i class="fas fa-star"></i><span>' + list[i].storeCount + '</span>\n' +
+                    '    </a>\n' +
+                    '    <a data-toggle="modal" data-target="#RowModal2" style="color: darkgrey" >\n' +
+                    '    <i class="fas fa-share-alt"></i>\n' +
+                    '    </a>\n' +
+                    '    </div>\n' +
+
+                    '    <div class="modal fade" id="RowModal2" tabindex="-1" role="dialog" aria-hidden="true">\n' +
+                    '    <div class="modal-dialog" role="document">\n' +
+                    '    <div class="modal-content">\n' +
+                    '    <div class="modal-header no-bd">\n' +
+                    '    <h5 class="modal-title">\n' +
+                    '    <span class="fw-mediumbold">\n' +
+                    '       Projects             \n' +
+                    '    </span>\n' +
+                    '    <span class="fw-light">\n' +
+                    '        Share\n' +
+                    '    </span>\n' +
+                    '    </h5>\n' +
+                    '    <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+                    '    <span aria-hidden="true">&times;</span>\n' +
+                    '    </button>\n' +
+                    '    </div> \n' +
+                    '    <div class="modal-body">\n' +
+                    '    <p class="small">You can copy the following links to share with friends</p>\n' +
+                    '    <form>\n' +
+                    '    <div class="row">\n' +
+                    '    <div class="col-sm-12">\n' +
+                    '    <div class="form-group form-group-default">\n' +
+                    '    <input id="copyContent2" type="text" class="form-control" placeholder="fill name" value="'+copyLink+'">\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </form>\n' +
+                    '    </div>\n' +
+                    '    <div style="text-align:center; vertical-align:middle;">\n' +
+                    '    <button type="button" id="addRowButton" class="btn btn-primary" onClick="copyUrl3()">复制链接</button>\n' +
+                    '    </div>\n' +
+                    '    <div class="modal-footer no-bd"></div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+
+                    '    <hr style="color: #4C5B5C" size="3" width="96%">'
+
+
+
+            }
+            $(div).html(tableShow)
+        }
+    }
+
+</script>
+
+<script th:inline="javascript" type="text/javascript">
+
+
+
+    $(function () {
+       // alert(111);
+        var functionPage = $('#allDiv');
+        var divName = $('#allPage');
+        addDocumentRecordPage(functionPage, divName);
+    })
+
+    function addDocumentRecordPage(div, ul) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "get",
+                url: "/projectsRecommendationPage",
+                dataType: "json",
+                data: {
+                    page: '1',
+                }, //参数：当前页为1
+                success: function (data) {
+                    appendDocumentRecordHtml(data.list)//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/projectsRecommendationPage",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    "page": page,
+                                },
+                                success: function (data) {
+                                    appendDocumentRecordHtml(data.list);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+
+        function appendDocumentRecordHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+            $(div).html("");
+            var tableShow = '';
+            for (var i = 0; i < list.length; i++) {
+                console.log(list[i]);
+                var allProjectsType="'"+'allProjectsType1'+"'";
+                var projectsRecommendation= "'" +'projectsRecommendation1'+"'";
+                var showAllProjectsTypeDiv= "'" +'showAllProjectsTypeDiv1'+"'";
+                var showAllProjectsTypePage= "'" +'showAllProjectsTypePage1'+"'";
+                var type= "'"+ list[i].type +"'";
+                var copyLink="/projects_index/"+[[${#authentication.principal.id}]];
+
+                if(list[i].updateTime <= 24 && list[i].updateTime != null){
+                    var updateTimeTextShow=list[i].updateTime + '小时前'+"&nbsp;&nbsp;<i class="+"far fa-paper-plane"+"></i>&nbsp;&nbsp";
+                }else {
+                    var updateTimeTextShow="";
+                }
+                if(list[i].updateDate !=null){
+                    var updateDate=list[i].updateDate;
+                    var date = new Date(updateDate);
+                    var year = date.getFullYear();
+                    var month = date.getMonth()+1;    //js从0开始取
+                    var date1 = date.getDate();
+                    var curTime =year+"年"+month+"月"+date1+"日";
+                    var updateDateTextShow="更新于"+curTime;
+                    var createDateTextShow="";
+                }else{
+                    var createDate=list[i].createDate;
+                    var date = new Date(createDate);
+                    var year = date.getFullYear();
+                    var month = date.getMonth()+1;    //js从0开始取
+                    var date1 = date.getDate();
+                    var curTime =year+"年"+month+"月"+date1+"日";
+                    var createDateTextShow="更新于"+curTime;
+                    var updateDateTextShow="";
+                }
+
+                if(list[i].storeFlag == 1){
+                    var storeColor="#F29F3F";
+                    var storeLink="/projects_index_del_refrech/"+[[${#authentication.principal.id}]]+'/'+list[i].projectId;
+                }else if(list[i].storeFlag == 0){
+                    var storeColor="darkgrey";
+                    var storeLink="/projects_index_refrech/"+[[${#authentication.principal.id}]]+'/'+list[i].projectId;
+                }
+                tableShow +=
+                    '    <div class="col-lg-10">\n' +
+
+                    '    <span class="avatar avatar-online" style="float: left;width: 30px;height: 30px">\n' +
+                    '    <span class="avatar-title rounded-circle border border-white bg-info">' + list[i].firstname + '</span>\n' +
+                    '    </span>\n' +
+
+                    '    <div style="float: left">\n' +
+                    '    <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')" href="javascript:void(0);">\n' +
+                    '    <span style="color: #145180;font-size: 18px">\n' +
+                    '    ' + list[i].username + '/' + list[i].name + '\n' +
+                    '    </span>\n' +
+                    '    </a>\n' +
+                    '    <span class="defineAStyle" style ="color:#fd7e14">\n' +
+                    '    <i class="fas fa-medal"></i>\n' +
+                    '    <a onclick="getSpecifiedType(' + type + ','+ allProjectsType +','+ projectsRecommendation +','+showAllProjectsTypeDiv+','+showAllProjectsTypePage+')" >\n' +
+                    '    <span style ="color:#575962;background: #f1f1f1;font-size: 15px;border-radius :5px">\n' +
+                    '    ' + list[i].type + '\n' +
+                    '    </span>\n' +
+                    '    </a>\n' +
+                    '    </span>\n' +
+
+                    '    <div class ="glyphicon glyphicon-bookmark" style="color: #4e555b">\n' +
+                    '    ' + list[i].characterization + '\n' +
+                    '    </div>\n' +
+                    '    <div>\n' +
+                    '    <span id="showUpdateTime' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + updateTimeTextShow + '</span>\n' +
+                    '    <span id="showUpdateDate' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + updateDateTextShow + '</span>\n' +
+                    '    <span id="showCreateDate' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + createDateTextShow + '</span>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    <div class="col-lg-2" >\n' +
+                    '    <i class="fas fa-eye" style="color: darkgrey"></i><span style="color: darkgrey">' + list[i].clickCount + '</span>\n' +
+
+                    '    <a id="stored" href="' + storeLink + '" style="color: ' + storeColor + '">\n' +
+                    '    <i class="fas fa-star"></i><span>' + list[i].storeCount + '</span>\n' +
+                    '    </a>\n' +
+                    '    <a data-toggle="modal" data-target="#RowModal2" style="color: darkgrey" >\n' +
+                    '    <i class="fas fa-share-alt"></i>\n' +
+                    '    </a>\n' +
+                    '    </div>\n' +
+
+                    '    <div class="modal fade" id="RowModal2" tabindex="-1" role="dialog" aria-hidden="true">\n' +
+                    '    <div class="modal-dialog" role="document">\n' +
+                    '    <div class="modal-content">\n' +
+                    '    <div class="modal-header no-bd">\n' +
+                    '    <h5 class="modal-title">\n' +
+                    '    <span class="fw-mediumbold">\n' +
+                    '       Projects             \n' +
+                    '    </span>\n' +
+                    '    <span class="fw-light">\n' +
+                    '        Share\n' +
+                    '    </span>\n' +
+                    '    </h5>\n' +
+                    '    <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+                    '    <span aria-hidden="true">&times;</span>\n' +
+                    '    </button>\n' +
+                    '    </div> \n' +
+                    '    <div class="modal-body">\n' +
+                    '    <p class="small">You can copy the following links to share with friends</p>\n' +
+                    '    <form>\n' +
+                    '    <div class="row">\n' +
+                    '    <div class="col-sm-12">\n' +
+                    '    <div class="form-group form-group-default">\n' +
+                    '    <input id="copyContent2" type="text" class="form-control" placeholder="fill name" value="'+copyLink+'">\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </form>\n' +
+                    '    </div>\n' +
+                    '    <div style="text-align:center; vertical-align:middle;">\n' +
+                    '    <button type="button" id="addRowButton" class="btn btn-primary" onClick="copyUrl3()">复制链接</button>\n' +
+                    '    </div>\n' +
+                    '    <div class="modal-footer no-bd"></div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+                    '    </div>\n' +
+
+                    '    <hr style="color: #4C5B5C" size="3" width="96%">'
+
+
+            }
+            $(div).html(tableShow)
+        }
+        }
+
+
+</script>
+
+</body>
+</html>l>
