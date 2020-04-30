@@ -20,3 +20,4 @@ public class ProjectsMessage {
     private Integer isRead;
     private Integer deleteFlag;
 }
+

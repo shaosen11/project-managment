@@ -21,3 +21,4 @@ public interface ProjectsMessageMapper {
      */
     List<ProjectsMessage> getByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize);
 }
+

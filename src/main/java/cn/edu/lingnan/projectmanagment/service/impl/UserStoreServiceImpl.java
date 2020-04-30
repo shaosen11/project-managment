@@ -6,6 +6,8 @@ import cn.edu.lingnan.projectmanagment.service.UserStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserStoreServiceImpl implements UserStoreService {
     @Autowired
@@ -34,5 +36,20 @@ public class UserStoreServiceImpl implements UserStoreService {
     @Override
     public Integer countProjectBeStored(Integer id) {
         return userStoreMapper.countProjectBeStored(id);
+    }
+
+    @Override
+    public Integer countUserByStored() {
+        return userStoreMapper.countUserByStored();
+    }
+
+    @Override
+    public List findTheFirstRecored() {
+        return userStoreMapper.findTheFirstRecored();
+    }
+
+    @Override
+    public UserStore findTheSurplusRecored(int i) {
+        return userStoreMapper.findTheSurplusRecored(i);
     }
 }

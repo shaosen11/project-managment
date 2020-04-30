@@ -119,3 +119,4 @@ public interface ProjectUserService {
     List<ProjectsUser> getByUserId(Integer userId);
 
 }
+

@@ -219,7 +219,7 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a href="../index.html">
+                        <a th:href="@{/projects_index/}+${#authentication.principal.id}">
                             <i class="fas fa-home"></i>
                             <p>主页</p>
                             <span class="badge badge-count">5</span>
@@ -240,8 +240,8 @@
                         <div class="collapse" id="base">
                             <ul class="nav nav-collapse">
                                 <li>
-                                    <a href="../components/avatars.html">
-                                        <span class="sub-item">Avatars</span>
+                                    <a th:href="@{/projects_index/}+${#authentication.principal.id}">
+                                        <span class="sub-item">项目页面</span>
                                     </a>
                                 </li>
                                 <li>

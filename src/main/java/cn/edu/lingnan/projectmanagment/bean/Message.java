@@ -22,3 +22,4 @@ public class Message {
     private Integer deleteFlag;
     private Integer needToDo;
 }
+

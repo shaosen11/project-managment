@@ -15,3 +15,4 @@ public interface UserRecordService {
      */
     boolean insert(UserRecord userRecord);
 }
+

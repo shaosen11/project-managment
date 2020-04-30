@@ -15,3 +15,4 @@ public class UserCodeUpdateRecord {
     private Date time;
     private Integer codeUpdateCount;
 }
+

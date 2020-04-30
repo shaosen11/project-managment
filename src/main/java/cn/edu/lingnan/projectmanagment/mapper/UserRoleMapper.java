@@ -19,3 +19,4 @@ public interface UserRoleMapper {
      */
     boolean insertUserRole(UserRole userRole);
 }
+

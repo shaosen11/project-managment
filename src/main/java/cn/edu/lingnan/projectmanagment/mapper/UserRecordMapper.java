@@ -14,3 +14,4 @@ import org.springframework.stereotype.Repository;
 public interface UserRecordMapper {
     boolean insert(UserRecord userRecord);
 }
+

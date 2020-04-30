@@ -15,3 +15,4 @@ public interface UserRoleService {
      */
     boolean insertUserRole(UserRole userRole);
 }
+

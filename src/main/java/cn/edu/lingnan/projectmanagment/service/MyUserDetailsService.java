@@ -29,3 +29,4 @@ public interface MyUserDetailsService extends UserDetailsService {
      */
     List<String> findAuthorityByRoleCodes(List<String> roleCodes);
 }
+

@@ -32,3 +32,4 @@ public interface DocumentsRecordService {
 
     List<DocumentsRecord> getDocumentsRecordPageByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize);
 }
+

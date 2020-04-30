@@ -17,3 +17,4 @@ public class ProjectsUser {
     private ProjectsUserDuty projectsUserDuty;
     private Projects projects;
 }
+

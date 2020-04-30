@@ -19,3 +19,4 @@ public interface MessageTypeMapper {
      */
     MessageType getById(Integer id);
 }
+

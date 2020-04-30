@@ -21,3 +21,4 @@ public interface UserCodeUpdateRecordMapper {
      */
     List<UserCodeUpdateRecord> getAllByUserId(Integer userId);
 }
+

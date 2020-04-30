@@ -52,3 +52,4 @@ public interface MessageMapper {
      */
     boolean update(Message message);
 }
+

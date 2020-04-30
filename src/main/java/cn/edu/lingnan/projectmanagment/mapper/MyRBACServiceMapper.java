@@ -19,3 +19,4 @@ public interface MyRBACServiceMapper {
     List<String> findUrlsByEmail(@Param("email") String email);
 
 }
+

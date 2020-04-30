@@ -36,3 +36,4 @@ public interface MyUserDetailsMapper {
      */
     List<String> findAuthorityByRoleCodes(@Param("roleCodes") List<String> roleCodes);
 }
+

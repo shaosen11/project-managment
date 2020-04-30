@@ -23,6 +23,7 @@
         insert into message
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="typeId != null">type_id,</if>
+            <if test="messageType != null">message_type,</if>
             <if test="fromUserId != null">from_user_id,</if>
             <if test="toUserId != null">to_user_id,</if>
             <if test="message != null">message,</if>
@@ -34,6 +35,7 @@
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="typeId != null">#{typeId},</if>
+            <if test="messageType != null">#{messageType},</if>
             <if test="fromUserId != null">#{fromUserId},</if>
             <if test="toUserId != null">#{toUserId},</if>
             <if test="message != null">#{message},</if>

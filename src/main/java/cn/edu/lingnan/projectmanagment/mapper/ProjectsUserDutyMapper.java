@@ -19,3 +19,4 @@ public interface ProjectsUserDutyMapper {
      */
     ProjectsUserDuty getById(Integer id);
 }
+

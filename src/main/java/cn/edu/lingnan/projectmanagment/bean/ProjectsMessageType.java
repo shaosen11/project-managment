@@ -15,3 +15,4 @@ public class ProjectsMessageType {
     private String background;
     private Integer deleteFlag;
 }
+

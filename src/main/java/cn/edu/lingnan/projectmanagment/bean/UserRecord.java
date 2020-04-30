@@ -18,3 +18,4 @@ public class UserRecord implements Serializable {
     private String operateMassage;
     private String ip;
 }
+

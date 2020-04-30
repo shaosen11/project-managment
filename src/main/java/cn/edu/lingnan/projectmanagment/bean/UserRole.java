@@ -12,3 +12,4 @@ public class UserRole {
     private Integer roleId;
     private Integer userId;
 }
+

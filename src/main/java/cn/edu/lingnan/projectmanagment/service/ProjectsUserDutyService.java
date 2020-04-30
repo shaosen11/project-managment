@@ -15,3 +15,4 @@ public interface ProjectsUserDutyService {
      */
     ProjectsUserDuty getById(Integer id);
 }
+

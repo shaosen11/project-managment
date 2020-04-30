@@ -107,4 +107,98 @@
        select * from projects where name = #{projectName} and charge_user_id = #{chargeUserId} and characterization = #{projectCharacterization}
     </select>
 
+    <!--查找所有项目-->
+    <select id="getProject" resultType="ProjectsRecommendation">
+        select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization,a.store_count as storeCount,a.click_count as clickCount,
+        (select count(*) from user_store us where us.user_id = b.id and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
+        hour(timediff(now(), last_update_time)) as updateTime,
+        DATE_FORMAT(last_update_time,'%Y-%m-%d') as updateDate,
+        DATE_FORMAT(a.create_time,'%Y-%m-%d') as createDate,
+        getFirstHanZiCode(b.username) as firstname
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.enabled = 1 and b.enabled=1
+        order by a.id desc limit #{pageNum},#{pageSize};
+    </select>
+
+    <!--更新信息-->
+    <update id="updateProjectClickNumber">
+        update projects set click_count = click_count+1 where id = #{projectId}
+    </update>
+
+    <resultMap id="getTodayProjectsInfo" type="map">
+        <result column="projectId" property="projectId"/>
+        <result column="userId" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="username" property="username"/>
+        <result column="type" property="type"/>
+        <result column="characterization" property="characterization"/>
+    </resultMap>
+    <!--获得今日点击量人数最多的项目信息-->
+    <select id="getTodayProject" resultMap="getTodayProjectsInfo">
+        select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.enabled = 1 and b.enabled=1
+              and a.id in(select DISTINCT projects_id from user_click where to_days(click_time) = to_days(now()))
+         order by click_count desc,like_count desc;
+    </select>
+
+    <resultMap id="getWeekProjectsInfo" type="map">
+        <result column="projectId" property="projectId"/>
+        <result column="userId" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="username" property="username"/>
+        <result column="type" property="type"/>
+        <result column="characterization" property="characterization"/>
+    </resultMap>
+    <!--获得本周点击量人数最多的项目信息-->
+    <select id="getWeekProject" resultMap="getWeekProjectsInfo">
+        select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.enabled = 1 and b.enabled=1
+            and a.id in(select DISTINCT projects_id from user_click  where click_time between date_sub(now(),interval 7 DAY) and now())
+        order by click_count desc,like_count desc;
+    </select>
+
+
+    <!--查找所有项目-->
+    <select id="getRecommendedCommodities" resultType="ProjectsRecommendation">
+        select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization,a.store_count as storeCount,a.click_count as clickCount,
+               (select count(*) from user_store us where us.user_id = b.id and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
+                hour(timediff(now(), last_update_time)) as updateTime,
+                DATE_FORMAT(last_update_time,'%Y-%m-%d') as updateDate,
+                DATE_FORMAT(a.create_time,'%Y-%m-%d') as createDate,
+                getFirstHanZiCode(b.username) as firstname
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.id=#{projecstId} and a.enabled = 1 and b.enabled=1
+        order by rand() limit 10;
+    </select>
+
+    <!--查找所有项目-->
+    <select id="countProjectsRecommendation" resultType="Integer">
+        select count(*)
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.enabled = 1 and b.enabled=1;
+    </select>
+
+    <!--查找指定类型的所有项目-->
+    <select id="getProjectsByType" resultType="ProjectsRecommendation">
+        select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization,a.store_count as storeCount,a.click_count as clickCount,
+        (select count(*) from user_store us where us.user_id = b.id and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
+        hour(timediff(now(), last_update_time)) as updateTime,
+        DATE_FORMAT(last_update_time,'%Y-%m-%d') as updateDate,
+        DATE_FORMAT(a.create_time,'%Y-%m-%d') as createDate,
+        getFirstHanZiCode(b.username) as firstname
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.type=#{type} and a.enabled = 1 and b.enabled=1
+        order by a.id desc limit #{pageNum},#{pageSize};
+    </select>
+
+    <!--查找所有项目-->
+    <select id="countProjectsNumberByType" resultType="Integer">
+        select count(*)
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.type=#{type} and a.enabled = 1 and b.enabled=1;
+    </select>
+
+
 </mapper>
