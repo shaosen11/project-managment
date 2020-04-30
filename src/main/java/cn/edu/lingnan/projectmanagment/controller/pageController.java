@@ -2,7 +2,9 @@ package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.DocumentsRecord;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsFunction;
+import cn.edu.lingnan.projectmanagment.bean.ProjectsRecommendation;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsRecordServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,9 @@ public class pageController {
 
     @Autowired
     ProjectsFunctionServiceImpl projectsFunctionService;
+
+    @Autowired
+    ProjectServiceImpl projectService;
 
     @GetMapping("/documentRecordPage")
     @ResponseBody
@@ -206,6 +211,86 @@ public class pageController {
             map.put("list", list);
             System.out.println("分页map"+map);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/projectsRecommendationPage")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> projectsRecommendationPage(Integer page, Integer projectId, Integer userId) {
+        System.out.println("joinFunctionPage::当前页：" + page );
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            int count = projectService.countProjectsRecommendation();
+            // 计算总页数
+            int totalPage = count / pageSize;
+            // 不满一页的数据按一页计算
+            if (count % pageSize != 0) {
+                totalPage++;
+            }
+            // 当页数大于总页数，直接返回
+            if (page > totalPage){
+                return null;
+            }
+            // 计算sql需要的起始索引
+            int offset = (page - 1) * pageSize;
+            // 根据起始索引和页面大小去查询数据
+            List<ProjectsRecommendation> list = projectService.getProject(offset, pageSize);
+            System.out.println("更多项目:::"+list);
+            // 封装数据，并返回
+            map.put("page", page);
+            map.put("pageSize", pageSize);
+            map.put("totalPage", totalPage);
+            map.put("list", list);
+
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getProjectsByTypePage")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getProjectsByTypePage(Integer page, String projectsType) {
+        System.out.println("getProjectsByTypePage::当前页：" + page+"，type::类型为：" + projectsType );
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            int count = projectService.countProjectsNumberByType(projectsType);
+            // 计算总页数
+            int totalPage = count / pageSize;
+            // 不满一页的数据按一页计算
+            if (count % pageSize != 0) {
+                totalPage++;
+            }
+            // 当页数大于总页数，直接返回
+            if (page > totalPage){
+                return null;
+            }
+            // 计算sql需要的起始索引
+            int offset = (page - 1) * pageSize;
+            // 根据起始索引和页面大小去查询数据
+            List<ProjectsRecommendation> list = projectService.getProjectsByType(offset, pageSize,projectsType);
+            System.out.println("指定类型项目:::"+list);
+            // 封装数据，并返回
+            map.put("page", page);
+            map.put("pageSize", pageSize);
+            map.put("totalPage", totalPage);
+            map.put("list", list);
+
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
         } catch (Exception e) {
             System.out.println("获取分页数据失败" + e);
             return new ResponseEntity<Map<String, Object>>(

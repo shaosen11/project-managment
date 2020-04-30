@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface UserStoreMapper {
@@ -39,4 +41,23 @@ public interface UserStoreMapper {
      * @return
      */
     Integer countProjectBeStored(Integer id);
+
+    /**
+     * 查询收藏总人数
+     * @return
+     */
+    Integer countUserByStored();
+
+    /**
+     * 查询第一条收藏记录
+     * @return
+     */
+    List findTheFirstRecored();
+
+    /**
+     * 查询剩余收藏记录
+     * @return
+     */
+    UserStore findTheSurplusRecored(int i);
+
 }

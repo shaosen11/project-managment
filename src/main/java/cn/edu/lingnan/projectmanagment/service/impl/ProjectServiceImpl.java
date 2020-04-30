@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.service.impl;
 
 import cn.edu.lingnan.projectmanagment.bean.Projects;
+import cn.edu.lingnan.projectmanagment.bean.ProjectsRecommendation;
 import cn.edu.lingnan.projectmanagment.mapper.ProjectMapper;
 import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +73,45 @@ public class ProjectServiceImpl implements ProjectsService {
     public Projects getNewProjectByProject(String projectName, Integer chargeUserId, String projectCharacterization) {
         return projectMapper.getNewProjectByProject(projectName, chargeUserId, projectCharacterization);
     }
+
+    @Override
+    public List<ProjectsRecommendation> getProject(Integer pageNum, Integer pageSize) {
+        return projectMapper.getProject(pageNum,pageSize);
+    }
+
+    @Override
+    public boolean updateProjectClickNumber(Integer projectId) {
+        return projectMapper.updateProjectClickNumber(projectId);
+    }
+
+    @Override
+    public List<Projects> getTodayProject() {
+        return projectMapper.getTodayProject();
+    }
+
+    @Override
+    public List<Projects> getWeekProject() {
+        return projectMapper.getWeekProject();
+    }
+
+    @Override
+    public List<ProjectsRecommendation> getRecommendedCommodities(Integer projectId) {
+        return projectMapper.getRecommendedCommodities(projectId);
+    }
+
+    @Override
+    public Integer countProjectsRecommendation() {
+        return projectMapper.countProjectsRecommendation();
+    }
+
+    @Override
+    public List<ProjectsRecommendation> getProjectsByType(Integer pageNum, Integer pageSize, String type) {
+        return projectMapper.getProjectsByType(pageNum,pageSize,type);
+    }
+
+    @Override
+    public Integer countProjectsNumberByType(String type) {
+        return projectMapper.countProjectsNumberByType(type);
+    }
+
 }

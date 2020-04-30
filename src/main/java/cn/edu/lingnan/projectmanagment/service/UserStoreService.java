@@ -3,6 +3,8 @@ package cn.edu.lingnan.projectmanagment.service;
 import cn.edu.lingnan.projectmanagment.bean.UserStore;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserStoreService {
     /**
      * 查询一条项目信息
@@ -34,4 +36,22 @@ public interface UserStoreService {
      * @return
      */
     Integer countProjectBeStored(Integer id);
+
+    /**
+     * 查询收藏总人数
+     * @return
+     */
+    Integer countUserByStored();
+
+    /**
+     * 查询第一条收藏记录
+     * @return
+     */
+    List findTheFirstRecored();
+
+    /**
+     * 查询剩余收藏记录
+     * @return
+     */
+    UserStore findTheSurplusRecored(int i);
 }

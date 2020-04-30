@@ -7,11 +7,13 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
             <if test="projectsId != null">projects_id,</if>
+            <if test="storeTime != null">store_time,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
             <if test="projectsId != null">#{projectsId},</if>
+            <if test="storeTime != null">#{storeTime},</if>
         </trim>
     </insert>
 
@@ -34,4 +36,31 @@
         select count(*) from user_store
         where projects_id = #{id} and delete_flag = 1
     </select>
+
+    <!--查询收藏总人数-->
+    <select id="countUserByStored" resultType="Integer">
+        select count(user_id) from user_store
+        where delete_flag = 1
+    </select>
+
+    <resultMap id="getTheFirstRecored" type="map">
+        <result column="userId" property="userId"/>
+        <result column="projectsId" property="projectsId"/>
+    </resultMap>
+    <!--查询第一条有效记录-->
+    <select id="findTheFirstRecored" resultMap="getTheFirstRecored">
+        select user_id as userId,projects_id as projectsId
+        from user_store
+        where delete_flag=1
+        limit 1;
+    </select>
+
+    <!--查询剩余有效记录-->
+    <select id="findTheSurplusRecored" resultType="UserStore">
+        select user_id as userId,projects_id as projectsId
+        from user_store
+        where delete_flag=1
+        limit #{i},1;
+    </select>
+
 </mapper>

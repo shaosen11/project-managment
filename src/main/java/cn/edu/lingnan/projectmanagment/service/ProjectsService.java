@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.service;
 
 import cn.edu.lingnan.projectmanagment.bean.Projects;
+import cn.edu.lingnan.projectmanagment.bean.ProjectsRecommendation;
 
 import java.util.List;
 
@@ -83,4 +84,48 @@ public interface ProjectsService {
      * @return
      */
     Projects getNewProjectByProject(String projectName, Integer chargeUserId, String projectCharacterization);
+
+    /**
+     * 查询所有项目主页信息
+     * @return
+     */
+    List<ProjectsRecommendation> getProject(Integer pageNum, Integer pageSize);
+
+    boolean updateProjectClickNumber(Integer projectId);
+
+    /**
+     * 获得今日点击量最多的项目信息。
+     * @return
+     */
+    List<Projects> getTodayProject();
+
+    /**
+     * 获得本周点击量以及收藏人数最多的项目信息。
+     * @return
+     */
+    List<Projects> getWeekProject();
+
+    /**
+     * 查询当前推荐商品信息
+     * @return
+     */
+    List<ProjectsRecommendation> getRecommendedCommodities(Integer projectId);
+
+    /**
+     * 查询推荐商品总记录数
+     * @return
+     */
+    Integer countProjectsRecommendation();
+
+    /**
+     * 查询所有指定类型的项目
+     * @return
+     */
+    List<ProjectsRecommendation> getProjectsByType(Integer pageNum, Integer pageSize,String type);
+
+    /**
+     * 统计指定类型的项目数
+     * @return
+     */
+    Integer countProjectsNumberByType(String type);
 }
