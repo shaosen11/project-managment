@@ -17,13 +17,13 @@ public class ProjectsUserCooperationServiceImpl implements ProjectsUserCooperati
     ProjectsUserCooperationMapper projectsUserCooperationMapper;
 
     @Override
-    public ProjectsUserCooperation getByProjectIdAndNotInProjectUserId(Integer projectId, Integer notInProjectUserId) {
-        return projectsUserCooperationMapper.getByProjectIdAndNotInProjectUserId(projectId, notInProjectUserId);
+    public ProjectsUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInvite(Integer projectId, Integer inProjectUserId, Integer notInProjectUserId, Integer invite) {
+        return projectsUserCooperationMapper.getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInvite(projectId, inProjectUserId, notInProjectUserId, invite);
     }
 
     @Override
-    public boolean insert(ProjectsUserCooperation projectsUserCooperation) {
-        return projectsUserCooperationMapper.insert(projectsUserCooperation);
+    public void insert(ProjectsUserCooperation projectsUserCooperation) {
+        projectsUserCooperationMapper.insert(projectsUserCooperation);
     }
 
     @Override

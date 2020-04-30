@@ -32,4 +32,14 @@ public class MessageServiceImpl implements MessageService {
     public boolean updateAllMessageIsReadByUserId(Integer userId, Integer isRead) {
         return messageMapper.updateAllMessageIsReadByUserId(userId, isRead);
     }
+
+    @Override
+    public Message getById(Integer id) {
+        return messageMapper.getById(id);
+    }
+
+    @Override
+    public boolean update(Message message) {
+        return messageMapper.update(message);
+    }
 }

@@ -59,6 +59,9 @@ class ProjectManagmentApplicationTests {
 
     @Autowired
     ProjectsUserCooperationServiceImpl projectsUserCooperationService;
+
+    @Autowired
+    MessageNeedToDoRelationshipServiceImpl messageNeedToDoRelationshipService;
     @Test
     void t1(){
     }

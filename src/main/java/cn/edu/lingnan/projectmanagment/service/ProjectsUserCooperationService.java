@@ -10,21 +10,26 @@ import cn.edu.lingnan.projectmanagment.bean.ProjectsUserCooperation;
 public interface ProjectsUserCooperationService {
     /**
      * 查找有没有邀请过此人
+     *
      * @param projectId
+     * @param inProjectUserId
      * @param notInProjectUserId
+     * @param invite
      * @return
      */
-    ProjectsUserCooperation getByProjectIdAndNotInProjectUserId(Integer projectId, Integer notInProjectUserId);
+    ProjectsUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInvite(Integer projectId, Integer inProjectUserId, Integer notInProjectUserId, Integer invite);
 
     /**
      * 插入一条邀请记录
+     *
      * @param projectsUserCooperation
      * @return
      */
-    boolean insert(ProjectsUserCooperation projectsUserCooperation);
+    void insert(ProjectsUserCooperation projectsUserCooperation);
 
     /**
      * 修改状态
+     *
      * @param projectsUserCooperation
      * @return
      */

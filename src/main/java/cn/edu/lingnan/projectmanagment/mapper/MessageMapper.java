@@ -36,4 +36,19 @@ public interface MessageMapper {
      * @return
      */
     boolean updateAllMessageIsReadByUserId(Integer userId, Integer isRead);
+
+    /**
+     * 通过id查找消息
+     *
+     * @param id
+     * @return
+     */
+    Message getById(Integer id);
+
+    /**
+     * 更新消息
+     * @param message
+     * @return
+     */
+    boolean update(Message message);
 }

@@ -19,11 +19,10 @@
    </select>
 
     <!--插入一条消息-->
-    <insert id="insert">
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         insert into message
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="typeId != null">type_id,</if>
-            <if test="messageType != null">message_type,</if>
             <if test="fromUserId != null">from_user_id,</if>
             <if test="toUserId != null">to_user_id,</if>
             <if test="message != null">message,</if>
@@ -35,7 +34,6 @@
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="typeId != null">#{typeId},</if>
-            <if test="messageType != null">#{messageType},</if>
             <if test="fromUserId != null">#{fromUserId},</if>
             <if test="toUserId != null">#{toUserId},</if>
             <if test="message != null">#{message},</if>
@@ -55,5 +53,41 @@
             </if>
         </trim>
         where delete_flag = 1 and to_user_id = #{userId} and need_to_do = 0
+    </update>
+
+    <select id="getById" resultType="Message">
+       select * from message where delete_flag = 1 and id = #{id}
+   </select>
+
+    <update id="update">
+        update message set
+        <trim suffixOverrides=",">
+
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test="fromUserId != null">
+                from_user_id = #{fromUserId},
+            </if>
+            <if test="toUserId != null">
+                to_user_id = #{toUserId},
+            </if>
+            <if test="message != null">
+                message = #{message},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="isRead != null">
+                is_read = #{isRead},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+            <if test="needToDo !=null">
+                need_to_do = #{needToDo}
+            </if>
+        </trim>
+        where delete_flag = 1 and id = #{id}
     </update>
 </mapper>

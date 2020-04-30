@@ -12,6 +12,7 @@ import java.util.List;
 public interface MessageService {
     /**
      * 通过userId查询所有消息
+     *
      * @param userId
      * @param needToDo
      * @return
@@ -20,6 +21,7 @@ public interface MessageService {
 
     /**
      * 插入一条消息
+     *
      * @param message
      * @return
      */
@@ -27,9 +29,26 @@ public interface MessageService {
 
     /**
      * 标记所有消息为已读
+     *
      * @param userId
      * @param isRead
      * @return
      */
     boolean updateAllMessageIsReadByUserId(Integer userId, Integer isRead);
+
+
+    /**
+     * 通过id查找消息
+     *
+     * @param id
+     * @return
+     */
+    Message getById(Integer id);
+
+    /**
+     * 更新消息
+     * @param message
+     * @return
+     */
+    boolean update(Message message);
 }
