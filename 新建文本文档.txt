@@ -1,0 +1,6 @@
+jdbc:mysql://47.98.240.31:3306/projectmanagment?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asi
+
+jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+————————————————
+版权声明：本文为CSDN博主「辣条z」的原创文章，遵循CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/q97052252/java/article/details/89042882
