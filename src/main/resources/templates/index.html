@@ -1,637 +1,668 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Home</title>
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
 
-	<!-- Fonts and icons -->
-	<script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
 
-	<!-- CSS Files -->
-	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
-	<link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
 
-	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 </head>
 <body>
-	<div class="wrapper">
-		<!--
-			Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
-		-->
-		<div class="main-header" data-background-color="purple">
-			<!-- Logo Header -->
-			<div class="logo-header">
-				
-				<a href="index.html" class="logo">
-					<img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
-				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+<div class="wrapper">
+    <!--
+        Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
+    -->
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a href="index.html" class="logo">
+                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="fa fa-bars"></i>
 					</span>
-				</button>
-				<button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
-				<div class="navbar-minimize">
-					<button class="btn btn-minimize btn-rounded">
-						<i class="fa fa-bars"></i>
-					</button>
-				</div>
-			</div>
-			<!-- End Logo Header -->
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
 
-			<!-- Navbar Header -->
-			<div th:replace="commom/bar :: topbar"></div>
-			<!-- End Navbar -->
-		</div>
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
 
-		<!-- Sidebar -->
-		<div th:replace="commom/bar :: sidebar"></div>
-		<!-- End Sidebar -->
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
 
-		<div class="main-panel">
-			<div class="content">
-				<div class="page-inner">
-					<div class="page-header">
-						<h4 class="page-title">全站统计</h4>
-						<div class="btn-group btn-group-page-header ml-auto">
-							<button type="button" class="btn btn-light btn-round btn-page-header-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fa fa-ellipsis-h"></i>
-							</button>
-							<div class="dropdown-menu">
-								<div class="arrow"></div>
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-6 col-md-3">
-							<div class="card card-stats card-round">
-								<div class="card-body ">
-									<div class="row align-items-center">
-										<div class="col-icon">
-											<div class="icon-big text-center icon-primary bubble-shadow-small">
-												<i class="fas fa-users"></i>
-											</div>
-										</div>
-										<div class="col col-stats ml-3 ml-sm-0">
-											<div class="numbers">
-												<p class="card-category">Visitors</p>
-												<h4 class="card-title">1,294</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="card card-stats card-round">
-								<div class="card-body">
-									<div class="row align-items-center">
-										<div class="col-icon">
-											<div class="icon-big text-center icon-info bubble-shadow-small">
-												<i class="far fa-newspaper"></i>
-											</div>
-										</div>
-										<div class="col col-stats ml-3 ml-sm-0">
-											<div class="numbers">
-												<p class="card-category">Subscribers</p>
-												<h4 class="card-title">1303</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="card card-stats card-round">
-								<div class="card-body">
-									<div class="row align-items-center">
-										<div class="col-icon">
-											<div class="icon-big text-center icon-success bubble-shadow-small">
-												<i class="far fa-chart-bar"></i>
-											</div>
-										</div>
-										<div class="col col-stats ml-3 ml-sm-0">
-											<div class="numbers">
-												<p class="card-category">Sales</p>
-												<h4 class="card-title">$ 1,345</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-3">
-							<div class="card card-stats card-round">
-								<div class="card-body">
-									<div class="row align-items-center">
-										<div class="col-icon">
-											<div class="icon-big text-center icon-secondary bubble-shadow-small">
-												<i class="far fa-check-circle"></i>
-											</div>
-										</div>
-										<div class="col col-stats ml-3 ml-sm-0">
-											<div class="numbers">
-												<p class="card-category">Order</p>
-												<h4 class="card-title">576</h4>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-8">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-head-row">
-										<div class="card-title">User Statistics</div>
-										<div class="card-tools">
-											<a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">全站统计</h4>
+                    <div class="btn-group btn-group-page-header ml-auto">
+                        <button type="button" class="btn btn-light btn-round btn-page-header-dropdown dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="arrow"></div>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ml-3 ml-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Visitors</p>
+                                            <h4 class="card-title">1,294</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-info bubble-shadow-small">
+                                            <i class="far fa-newspaper"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ml-3 ml-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Subscribers</p>
+                                            <h4 class="card-title">1303</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                                            <i class="far fa-chart-bar"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ml-3 ml-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Sales</p>
+                                            <h4 class="card-title">$ 1,345</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                            <i class="far fa-check-circle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ml-3 ml-sm-0">
+                                        <div class="numbers">
+                                            <p class="card-category">Order</p>
+                                            <h4 class="card-title">576</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <div class="card-title">User Statistics</div>
+                                    <div class="card-tools">
+                                        <a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
 												<span class="btn-label">
 													<i class="fa fa-pencil"></i>
 												</span>
-												Export
-											</a>
-											<a href="#" class="btn btn-info btn-border btn-round btn-sm">
+                                            Export
+                                        </a>
+                                        <a href="#" class="btn btn-info btn-border btn-round btn-sm">
 												<span class="btn-label">
 													<i class="fa fa-print"></i>
 												</span>
-												Print
-											</a>
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="chart-container" style="min-height: 375px">
-										<canvas id="statisticsChart"></canvas>
-									</div>
-									<div id="myChartLegend"></div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card card-secondary">
-								<div class="card-header">
-									<div class="card-title">Daily Sales</div>
-									<div class="card-category">March 25 - April 02</div>
-								</div>
-								<div class="card-body pb-0">
-									<div class="mb-4 mt-2">
-										<h1>$4,578.58</h1>
-									</div>
-									<div class="pull-in">
-										<canvas id="dailySalesChart"></canvas>
-									</div>
-								</div>
-							</div>
-							<div class="card card-info bg-info-gradient">
-								<div class="card-body">
-									<h4 class="mb-1 fw-bold">Tasks Progress</h4>
-									<div id="task-complete" class="chart-circle mt-4 mb-3"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row row-card-no-pd">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-head-row">
-										<h4 class="card-title">Users Geolocation</h4>
-										<div class="card-tools">
-											<button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-angle-down"></span></button>
-											<button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span class="fa fa-sync-alt"></span></button>
-											<button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-times"></span></button>
-										</div>
-									</div>
-									<p class="card-category">
-									Map of the distribution of users around the world</p>
-								</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-6">
-											<div class="table-responsive table-hover table-sales">
-												<table class="table">
-													<tbody>
-														<tr>
-															<td>
-																<div class="flag">
-																	<img th:src="@{/assets/img/flags/id.png}" alt="indonesia">
-																</div>
-															</td>
-															<td>Indonesia</td>
-															<td class="text-right">
-																2.320
-															</td>
-															<td class="text-right">
-																42.18%
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<div class="flag">
-																	<img th:src="@{/assets/img/flags/us.png}" alt="united states">
-																</div>
-															</td>
-															<td>USA</td>
-															<td class="text-right">
-																240
-															</td>
-															<td class="text-right">
-																4.36%
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<div class="flag">
-																	<img th:src="@{/assets/img/flags/au.png}" alt="australia">
-																</div>
-															</td>
-															<td>Australia</td>
-															<td class="text-right">
-																119
-															</td>
-															<td class="text-right">
-																2.16%
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<div class="flag">
-																	<img th:src="@{/assets/img/flags/ru.png}" alt="russia">
-																</div>
-															</td>
-															<td>Russia</td>
-															<td class="text-right">
-																1.081
-															</td>
-															<td class="text-right">
-																19.65%
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<div class="flag">
-																	<img th:src="@{/assets/img/flags/cn.png}" alt="china">
-																</div>
-															</td>
-															<td>China</td>
-															<td class="text-right">
-																1.100
-															</td>
-															<td class="text-right">
-																20%
-															</td>
-														</tr>
-														<tr>
-															<td>
-																<div class="flag">
-																	<img th:src="@{/assets/img/flags/br.png}" alt="brazil">
-																</div>
-															</td>
-															<td>Brasil</td>
-															<td class="text-right">
-																640
-															</td>
-															<td class="text-right">
-																11.63%
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="mapcontainer">
-												<div id="map-example" class="vmap"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">Top Products</div>
-								</div>
-								<div class="card-body pb-0">
-									<div class="d-flex">
-										<div class="avatar">
-											<img th:src="@{/assets/img/logoproduct.svg}" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h5 class="fw-bold mb-1">CSS</h5>
-											<small class="text-muted">Cascading Style Sheets</small>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$17</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar">
-											<img th:src="@{/assets/img/logoproduct2.svg}" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h5 class="fw-bold mb-1">J.CO Donuts</h5>
-											<small class="text-muted">The Best Donuts</small>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$300</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar">
-											<img th:src="@{/assets/img/logoproduct3.svg}" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
-											<h5 class="fw-bold mb-1">Ready Pro</h5>
-											<small class="text-muted">Bootstrap 4 Admin Dashboard</small>
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">+$350</h3>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="pull-in">
-										<canvas id="topProductsChart"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-body">
-									<div class="card-title fw-mediumbold">Suggested People</div>
-									<div class="card-list">
-										<div class="item-list">
-											<div class="avatar">
-												<img th:src="@{/assets/img/jm_denis.jpg}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Jimmy Denis</div>
-												<div class="status">Graphic Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-sm">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img th:src="@{/assets/img/chadengle.jpg}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Chad</div>
-												<div class="status">CEO Zeleaf</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-sm">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img th:src="@{/assets/img/talha.jpg}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Talha</div>
-												<div class="status">Front End Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-sm">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img th:src="@{/assets/img/mlane.jpg}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">John Doe</div>
-												<div class="status">Back End Developer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-sm">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img th:src="@{/assets/img/talha.jpg}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Talha</div>
-												<div class="status">Front End Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-sm">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img th:src="@{/assets/img/jm_denis.jpg}" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Jimmy Denis</div>
-												<div class="status">Graphic Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-sm">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card card-primary bg-primary-gradient bubble-shadow">
-								<div class="card-body">
-									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Active user right now</h4>
-									<h1 class="mb-4 fw-bold">17</h1>
-									<h4 class="mt-3 b-b1 pb-2 mb-5 fw-bold">Page view per minutes</h4>
-									<div id="activeUsersChart"></div>
-									<h4 class="mt-5 pb-3 mb-0 fw-bold">Top active pages</h4>
-									<ul class="list-unstyled">
-										<li class="d-flex justify-content-between pb-1 pt-1"><small>/product/readypro/index.html</small> <span>7</span></li>
-										<li class="d-flex justify-content-between pb-1 pt-1"><small>/product/azzara/demo.html</small> <span>10</span></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">Feed Activity</div>
-								</div>
-								<div class="card-body">
-									<ol class="activity-feed">
-										<li class="feed-item feed-item-secondary">
-											<time class="date" datetime="9-25">Sep 25</time>
-											<span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
-										</li>
-										<li class="feed-item feed-item-success">
-											<time class="date" datetime="9-24">Sep 24</time>
-											<span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
-										</li>
-										<li class="feed-item feed-item-info">
-											<time class="date" datetime="9-23">Sep 23</time>
-											<span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
-										</li>
-										<li class="feed-item feed-item-warning">
-											<time class="date" datetime="9-21">Sep 21</time>
-											<span class="text">Responded to need <a href="#">"In-Kind Opportunity"</a></span>
-										</li>
-										<li class="feed-item feed-item-danger">
-											<time class="date" datetime="9-18">Sep 18</time>
-											<span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
-										</li>
-										<li class="feed-item">
-											<time class="date" datetime="9-17">Sep 17</time>
-											<span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
-										</li>
-									</ol>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-head-row">
-										<div class="card-title">Support Tickets</div>
-										<div class="card-tools">
-											<ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
-												<li class="nav-item">
-													<a class="nav-link" id="pills-today" data-toggle="pill" href="#pills-today" role="tab" aria-selected="true">Today</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link active" id="pills-week" data-toggle="pill" href="#pills-week" role="tab" aria-selected="false">Week</a>
-												</li>
-												<li class="nav-item">
-													<a class="nav-link" id="pills-month" data-toggle="pill" href="#pills-month" role="tab" aria-selected="false">Month</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="d-flex">
-										<div class="avatar avatar-online">
-											<span class="avatar-title rounded-circle border border-white bg-info">J</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h5 class="text-uppercase fw-bold mb-1">Joko Subianto <span class="text-warning pl-3">pending</span></h5>
-											<span class="text-muted">I am facing some trouble with my viewport. When i start my</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">8:40 PM</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-offline">
-											<span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h5 class="text-uppercase fw-bold mb-1">Prabowo Widodo <span class="text-success pl-3">open</span></h5>
-											<span class="text-muted">I have some query regarding the license issue.</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">1 Day Ago</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-away">
-											<span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h5 class="text-uppercase fw-bold mb-1">Lee Chong Wei <span class="text-muted pl-3">closed</span></h5>
-											<span class="text-muted">Is there any update plan for RTL version near future?</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Days Ago</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-offline">
-											<span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h5 class="text-uppercase fw-bold mb-1">Peter Parker <span class="text-success pl-3">open</span></h5>
-											<span class="text-muted">I have some query regarding the license issue.</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Day Ago</small>
-										</div>
-									</div>
-									<div class="separator-dashed"></div>
-									<div class="d-flex">
-										<div class="avatar avatar-away">
-											<span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-										</div>
-										<div class="flex-1 ml-3 pt-1">
-											<h5 class="text-uppercase fw-bold mb-1">Logan Paul <span class="text-muted pl-3">closed</span></h5>
-											<span class="text-muted">Is there any update plan for RTL version near future?</span>
-										</div>
-										<div class="float-right pt-1">
-											<small class="text-muted">2 Days Ago</small>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			Copyright &copy; 2019.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-		</div>
-		
-		<!-- Custom template | don't include it in your project! -->
-		<div class="custom-template">
-			<div class="title">Settings</div>
-			<div class="custom-content">
-				<div class="switcher">
-					<div class="switch-block">
-						<h4>Topbar</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeMainHeaderColor" data-color="blue"></button>
-							<button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="green"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="orange"></button>
-							<button type="button" class="changeMainHeaderColor" data-color="red"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Background</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-							<button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-							<button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="custom-toggle">
-				<i class="flaticon-settings"></i>
-			</div>
-		</div>
-		<!-- End Custom template -->
-	</div>
+                                            Print
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" style="min-height: 375px">
+                                    <canvas id="statisticsChart"></canvas>
+                                </div>
+                                <div id="myChartLegend"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <div class="card-title">Daily Sales</div>
+                                <div class="card-category">March 25 - April 02</div>
+                            </div>
+                            <div class="card-body pb-0">
+                                <div class="mb-4 mt-2">
+                                    <h1>$4,578.58</h1>
+                                </div>
+                                <div class="pull-in">
+                                    <canvas id="dailySalesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-info bg-info-gradient">
+                            <div class="card-body">
+                                <h4 class="mb-1 fw-bold">Tasks Progress</h4>
+                                <div id="task-complete" class="chart-circle mt-4 mb-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-card-no-pd">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <h4 class="card-title">Users Geolocation</h4>
+                                    <div class="card-tools">
+                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span
+                                                class="fa fa-angle-down"></span></button>
+                                        <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span
+                                                class="fa fa-sync-alt"></span></button>
+                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span
+                                                class="fa fa-times"></span></button>
+                                    </div>
+                                </div>
+                                <p class="card-category">
+                                    Map of the distribution of users around the world</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="table-responsive table-hover table-sales">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="flag">
+                                                            <img th:src="@{/assets/img/flags/id.png}" alt="indonesia">
+                                                        </div>
+                                                    </td>
+                                                    <td>Indonesia</td>
+                                                    <td class="text-right">
+                                                        2.320
+                                                    </td>
+                                                    <td class="text-right">
+                                                        42.18%
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="flag">
+                                                            <img th:src="@{/assets/img/flags/us.png}"
+                                                                 alt="united states">
+                                                        </div>
+                                                    </td>
+                                                    <td>USA</td>
+                                                    <td class="text-right">
+                                                        240
+                                                    </td>
+                                                    <td class="text-right">
+                                                        4.36%
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="flag">
+                                                            <img th:src="@{/assets/img/flags/au.png}" alt="australia">
+                                                        </div>
+                                                    </td>
+                                                    <td>Australia</td>
+                                                    <td class="text-right">
+                                                        119
+                                                    </td>
+                                                    <td class="text-right">
+                                                        2.16%
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="flag">
+                                                            <img th:src="@{/assets/img/flags/ru.png}" alt="russia">
+                                                        </div>
+                                                    </td>
+                                                    <td>Russia</td>
+                                                    <td class="text-right">
+                                                        1.081
+                                                    </td>
+                                                    <td class="text-right">
+                                                        19.65%
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="flag">
+                                                            <img th:src="@{/assets/img/flags/cn.png}" alt="china">
+                                                        </div>
+                                                    </td>
+                                                    <td>China</td>
+                                                    <td class="text-right">
+                                                        1.100
+                                                    </td>
+                                                    <td class="text-right">
+                                                        20%
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="flag">
+                                                            <img th:src="@{/assets/img/flags/br.png}" alt="brazil">
+                                                        </div>
+                                                    </td>
+                                                    <td>Brasil</td>
+                                                    <td class="text-right">
+                                                        640
+                                                    </td>
+                                                    <td class="text-right">
+                                                        11.63%
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mapcontainer">
+                                            <div id="map-example" class="vmap"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Top Products</div>
+                            </div>
+                            <div class="card-body pb-0">
+                                <div class="d-flex">
+                                    <div class="avatar">
+                                        <img th:src="@{/assets/img/logoproduct.svg}" alt="..."
+                                             class="avatar-img rounded-circle">
+                                    </div>
+                                    <div class="flex-1 pt-1 ml-2">
+                                        <h5 class="fw-bold mb-1">CSS</h5>
+                                        <small class="text-muted">Cascading Style Sheets</small>
+                                    </div>
+                                    <div class="d-flex ml-auto align-items-center">
+                                        <h3 class="text-info fw-bold">+$17</h3>
+                                    </div>
+                                </div>
+                                <div class="separator-dashed"></div>
+                                <div class="d-flex">
+                                    <div class="avatar">
+                                        <img th:src="@{/assets/img/logoproduct2.svg}" alt="..."
+                                             class="avatar-img rounded-circle">
+                                    </div>
+                                    <div class="flex-1 pt-1 ml-2">
+                                        <h5 class="fw-bold mb-1">J.CO Donuts</h5>
+                                        <small class="text-muted">The Best Donuts</small>
+                                    </div>
+                                    <div class="d-flex ml-auto align-items-center">
+                                        <h3 class="text-info fw-bold">+$300</h3>
+                                    </div>
+                                </div>
+                                <div class="separator-dashed"></div>
+                                <div class="d-flex">
+                                    <div class="avatar">
+                                        <img th:src="@{/assets/img/logoproduct3.svg}" alt="..."
+                                             class="avatar-img rounded-circle">
+                                    </div>
+                                    <div class="flex-1 pt-1 ml-2">
+                                        <h5 class="fw-bold mb-1">Ready Pro</h5>
+                                        <small class="text-muted">Bootstrap 4 Admin Dashboard</small>
+                                    </div>
+                                    <div class="d-flex ml-auto align-items-center">
+                                        <h3 class="text-info fw-bold">+$350</h3>
+                                    </div>
+                                </div>
+                                <div class="separator-dashed"></div>
+                                <div class="pull-in">
+                                    <canvas id="topProductsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title fw-mediumbold">Suggested People</div>
+                                <div class="card-list">
+                                    <div class="item-list">
+                                        <div class="avatar">
+                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">Jimmy Denis</div>
+                                            <div class="status">Graphic Designer</div>
+                                        </div>
+                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="item-list">
+                                        <div class="avatar">
+                                            <img th:src="@{/assets/img/chadengle.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">Chad</div>
+                                            <div class="status">CEO Zeleaf</div>
+                                        </div>
+                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="item-list">
+                                        <div class="avatar">
+                                            <img th:src="@{/assets/img/talha.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">Talha</div>
+                                            <div class="status">Front End Designer</div>
+                                        </div>
+                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="item-list">
+                                        <div class="avatar">
+                                            <img th:src="@{/assets/img/mlane.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">John Doe</div>
+                                            <div class="status">Back End Developer</div>
+                                        </div>
+                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="item-list">
+                                        <div class="avatar">
+                                            <img th:src="@{/assets/img/talha.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">Talha</div>
+                                            <div class="status">Front End Designer</div>
+                                        </div>
+                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="item-list">
+                                        <div class="avatar">
+                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="info-user ml-3">
+                                            <div class="username">Jimmy Denis</div>
+                                            <div class="status">Graphic Designer</div>
+                                        </div>
+                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-primary bg-primary-gradient bubble-shadow">
+                            <div class="card-body">
+                                <h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Active user right now</h4>
+                                <h1 class="mb-4 fw-bold">17</h1>
+                                <h4 class="mt-3 b-b1 pb-2 mb-5 fw-bold">Page view per minutes</h4>
+                                <div id="activeUsersChart"></div>
+                                <h4 class="mt-5 pb-3 mb-0 fw-bold">Top active pages</h4>
+                                <ul class="list-unstyled">
+                                    <li class="d-flex justify-content-between pb-1 pt-1">
+                                        <small>/product/readypro/index.html</small>
+                                        <span>7</span></li>
+                                    <li class="d-flex justify-content-between pb-1 pt-1">
+                                        <small>/product/azzara/demo.html</small>
+                                        <span>10</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Feed Activity</div>
+                            </div>
+                            <div class="card-body">
+                                <ol class="activity-feed">
+                                    <li class="feed-item feed-item-secondary">
+                                        <time class="date" datetime="9-25">Sep 25</time>
+                                        <span class="text">Responded to need <a
+                                                href="#">"Volunteer opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-success">
+                                        <time class="date" datetime="9-24">Sep 24</time>
+                                        <span class="text">Added an interest <a
+                                                href="#">"Volunteer Activities"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-info">
+                                        <time class="date" datetime="9-23">Sep 23</time>
+                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-warning">
+                                        <time class="date" datetime="9-21">Sep 21</time>
+                                        <span class="text">Responded to need <a
+                                                href="#">"In-Kind Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-danger">
+                                        <time class="date" datetime="9-18">Sep 18</time>
+                                        <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item">
+                                        <time class="date" datetime="9-17">Sep 17</time>
+                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-head-row">
+                                    <div class="card-title">Support Tickets</div>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-today" data-toggle="pill"
+                                                   href="#pills-today" role="tab" aria-selected="true">Today</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="pills-week" data-toggle="pill"
+                                                   href="#pills-week" role="tab" aria-selected="false">Week</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="pills-month" data-toggle="pill"
+                                                   href="#pills-month" role="tab" aria-selected="false">Month</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="avatar avatar-online">
+                                        <span class="avatar-title rounded-circle border border-white bg-info">J</span>
+                                    </div>
+                                    <div class="flex-1 ml-3 pt-1">
+                                        <h5 class="text-uppercase fw-bold mb-1">Joko Subianto <span
+                                                class="text-warning pl-3">pending</span></h5>
+                                        <span class="text-muted">I am facing some trouble with my viewport. When i start my</span>
+                                    </div>
+                                    <div class="float-right pt-1">
+                                        <small class="text-muted">8:40 PM</small>
+                                    </div>
+                                </div>
+                                <div class="separator-dashed"></div>
+                                <div class="d-flex">
+                                    <div class="avatar avatar-offline">
+                                        <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
+                                    </div>
+                                    <div class="flex-1 ml-3 pt-1">
+                                        <h5 class="text-uppercase fw-bold mb-1">Prabowo Widodo <span
+                                                class="text-success pl-3">open</span></h5>
+                                        <span class="text-muted">I have some query regarding the license issue.</span>
+                                    </div>
+                                    <div class="float-right pt-1">
+                                        <small class="text-muted">1 Day Ago</small>
+                                    </div>
+                                </div>
+                                <div class="separator-dashed"></div>
+                                <div class="d-flex">
+                                    <div class="avatar avatar-away">
+                                        <span class="avatar-title rounded-circle border border-white bg-danger">L</span>
+                                    </div>
+                                    <div class="flex-1 ml-3 pt-1">
+                                        <h5 class="text-uppercase fw-bold mb-1">Lee Chong Wei <span
+                                                class="text-muted pl-3">closed</span></h5>
+                                        <span class="text-muted">Is there any update plan for RTL version near future?</span>
+                                    </div>
+                                    <div class="float-right pt-1">
+                                        <small class="text-muted">2 Days Ago</small>
+                                    </div>
+                                </div>
+                                <div class="separator-dashed"></div>
+                                <div class="d-flex">
+                                    <div class="avatar avatar-offline">
+                                        <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
+                                    </div>
+                                    <div class="flex-1 ml-3 pt-1">
+                                        <h5 class="text-uppercase fw-bold mb-1">Peter Parker <span
+                                                class="text-success pl-3">open</span></h5>
+                                        <span class="text-muted">I have some query regarding the license issue.</span>
+                                    </div>
+                                    <div class="float-right pt-1">
+                                        <small class="text-muted">2 Day Ago</small>
+                                    </div>
+                                </div>
+                                <div class="separator-dashed"></div>
+                                <div class="d-flex">
+                                    <div class="avatar avatar-away">
+                                        <span class="avatar-title rounded-circle border border-white bg-danger">L</span>
+                                    </div>
+                                    <div class="flex-1 ml-3 pt-1">
+                                        <h5 class="text-uppercase fw-bold mb-1">Logan Paul <span
+                                                class="text-muted pl-3">closed</span></h5>
+                                        <span class="text-muted">Is there any update plan for RTL version near future?</span>
+                                    </div>
+                                    <div class="float-right pt-1">
+                                        <small class="text-muted">2 Days Ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        Copyright &copy; 2019.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+    </div>
+
+    <!-- Custom template | don't include it in your project! -->
+    <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+            <div class="switcher">
+                <div class="switch-block">
+                    <h4>Topbar</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="changeMainHeaderColor" data-color="blue"></button>
+                        <button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="green"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="orange"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="red"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Background</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
+                        <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
+                        <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-toggle">
+            <i class="flaticon-settings"></i>
+        </div>
+    </div>
+    <!-- End Custom template -->
+</div>
 </div>
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
@@ -683,37 +714,70 @@
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <script th:src="@{/assets/js/demo.js}"></script>
 <script th:src="@{/assets/js/myjs.js}"></script>
-
+<!--加载用户所有项目-->
 <script type="text/javascript" th:inline="javascript">
-	//加载用户所有项目
-	var userId = [[${#authentication.principal.id}]];
-	user_prjects(userId);
+    var userId = [[${#authentication.principal.id}]];
+    user_prjects(userId);
 </script>
 <script>
-	$(document).ready(function () {
-		var content = {};
-		content.message = '你有xxx条消息待处理';
-		content.title = '提醒';
-		content.icon = 'flaticon-alarm-1';
-		content.url = 'index.html';
-		content.target = '_blank';
+    $(document).ready(function () {
+        var content = {};
+        content.message = '你有xxx条消息待处理';
+        content.title = '提醒';
+        content.icon = 'flaticon-alarm-1';
+        content.url = 'index.html';
+        content.target = '_blank';
 
-		$.notify(content,{
-			type: 'info',
-			placement: {
-				from: 'bottom',
-				align: 'right'
-			},
-			time: 1000,
-		});
-	})
+        $.notify(content, {
+            type: 'info',
+            placement: {
+                from: 'bottom',
+                align: 'right'
+            },
+            time: 1000,
+        });
+    })
 </script>
-	<!--加载消息-->
-	<script th:inline="javascript">
-		$(function () {
-			var userId = [[${#authentication.principal.id}]];
-			nav_message(userId);
-		})
-	</script>
+<!--加载消息-->
+<script th:inline="javascript">
+    $(function () {
+        my_message();
+        my_message_need_to_do();
+    })
+
+    function my_message_need_to_do() {
+        var divNumber = $('#myMessageNeedToDoNumber');
+        var divTitleName = $('#myMessageNeedToDoTitle');
+        var divName = $('#myMessageNeedToDo');
+        nav_message(userId, 1, divNumber, divTitleName, divName);
+    }
+
+    function my_message() {
+        var divName = $('#myMessage');
+        var divNumber = $('#myMessageNumber');
+        var divTitleName = $('');
+        nav_message(userId, 0, divNumber, divTitleName, divName);
+    }
+
+</script>
+<!--标记消息已读-->
+<script type="text/javascript">
+    function updateAllMessageIsRead() {
+        $.ajax({
+            type: "get",
+            url: "/updateAllMessageIsReadByUserId",
+            dataType: "json",
+            data: {
+                userId: userId,
+            },
+            success: function (result) {
+                console.log(result);
+               if(result){
+                   my_message();
+               }
+            }
+        })
+    }
+</script>
 </body>
 </html>

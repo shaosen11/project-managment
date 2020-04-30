@@ -1,434 +1,502 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Azzara Bootstrap 4 Admin Dashboard</title>
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
-	
-	<!-- Fonts and icons -->
-	<script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-	<script>
-		WebFont.load({
-			google: {"families":["Open+Sans:300,400,600,700"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},
-			active: function() {
-				sessionStorage.fonts = true;
-			}
-		});
-	</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Azzara Bootstrap 4 Admin Dashboard</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
 
-	<!-- CSS Files -->
-	<link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
-	<link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/fileinput.css}" media="all" type="text/css" />
-	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <script>
+        WebFont.load({
+            google: {"families": ["Open+Sans:300,400,600,700"]},
+            custom: {"families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/fileinput.css}" media="all" type="text/css"/>
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 </head>
 <body>
-	<div class="wrapper">
-		<!--
-				Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
-		-->
-		<div class="main-header" data-background-color="purple">
-			<!-- Logo Header -->
-			<div class="logo-header">
-				
-				<a href="index.html" class="logo">
-					<img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
-				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+<div class="wrapper">
+    <!--
+            Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
+    -->
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a href="index.html" class="logo">
+                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="fa fa-bars"></i>
 					</span>
-				</button>
-				<button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
-				<div class="navbar-minimize">
-					<button class="btn btn-minimize btn-rounded">
-						<i class="fa fa-bars"></i>
-					</button>
-				</div>
-			</div>
-			<!-- End Logo Header -->
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
 
-			<!-- Navbar Header -->
-			<div th:replace="commom/bar :: topbar"></div>
-			<!-- End Navbar -->
-		</div>
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
 
-		<!-- Sidebar -->
-		<div th:replace="commom/bar :: sidebar"></div>
-		<!-- End Sidebar -->
-		<div class="main-panel">
-			<div class="content">
-				<div class="page-inner">
-					<h4 class="page-title">用户简介</h4>
-					<div class="row">
-						<div class="col-md-8">
-							<div class="card card-with-nav">
-								<div class="card-header">
-									<div class="row row-nav-line">
-										<ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
-											<li class="nav-item">
-												<a class="nav-link active show" id="pills-home-tab-nobd" data-toggle="pill" href="#pills-profile-nobd" role="tab" aria-controls="pills-profile-nobd" aria-selected="true">个人信息</a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link" id="pills-profile-tab-nobd" data-toggle="pill" href="#pills-security-nobd" role="tab" aria-controls="pills-security-nobd" aria-selected="false">安全管理</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
-									<div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
-										<div class="tab-pane fade show active" id="pills-profile-nobd" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
-											<form th:action="@{/user}" method="post">
-												<input type="hidden" name="_method" value="put"/>
-												<input type="hidden" name="id" th:if="${#authentication.principal.id!=null}" th:value="${#authentication.principal.id}"/>
-												<div class="row mt-3">
-													<div class="col-md-6">
-														<div class="form-group form-group-default">
-															<label>名称</label>
-															<input type="text" class="form-control" name="username" placeholder="Name" autocomplete="off"
-																   th:value="${#authentication.principal.username!=null}?${#authentication.principal.username}">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group form-group-default">
-															<label>邮箱</label>
-															<input type="email" class="form-control" name="email" placeholder="Name" autocomplete="off"  readonly="true"
-																   th:value="${#authentication.principal.email!=null}?${#authentication.principal.email}">
-														</div>
-													</div>
-												</div>
-												<div class="row mt-3">
-													<div class="col-md-4">
-														<div class="form-group form-group-default">
-															<label>出生日期</label>
-															<input type="text" class="form-control" id="birthday" name="birthday" placeholder="Birth Date" autocomplete="off"
-																   th:value="${#authentication.principal.birthday!=null}?${#dates.format(#authentication.principal.birthday, 'yyyy-MM-dd')}">
-														</div>
-													</div>
-													<div class="col-md-4">
-														<div class="form-group form-group-default">
-															<label>性别</label>
-															<select class="form-control" id="gender" name="gender">
-																<option th:text="男" value="1" autocomplete="off"
-																		th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==1" >男</option>
-																<option th:text="女" value="0" autocomplete="off"
-																		th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==0">女</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-md-4">
-														<div class="form-group form-group-default">
-															<label>手机</label>
-															<input type="text" class="form-control" name="phone" placeholder="Phone" autocomplete="off"
-																   th:value="${#authentication.principal.phone!=null}?${#authentication.principal.phone}">
-														</div>
-													</div>
-												</div>
-												<div class="row mt-3">
-													<div class="col-md-12">
-														<div class="form-group form-group-default">
-															<label>地址</label>
-															<input type="text" class="form-control" name="address" placeholder="Address" autocomplete="off"
-																   th:value="${#authentication.principal.address!=null}?${#authentication.principal.address}">
-														</div>
-													</div>
-												</div>
-												<div class="row mt-3 mb-1">
-													<div class="col-md-12">
-														<div class="form-group form-group-default">
-															<label>关于我</label>
-															<textarea class="form-control" name="introduce" placeholder="这家伙很懒，什么都没有留下" rows="3" autocomplete="off"
-																	  th:value="${#authentication.principal.introduce!=null}?${#authentication.principal.introduce}"></textarea>
-														</div>
-													</div>
-												</div>
-												<div class="text-right mt-3 mb-3">
-													<button class="btn btn-secondary" type="submit">保存</button>
-													<button class="btn btn-primary" type="reset">重置</button>
-												</div>
-											</form>
-										</div>
-										<div class="tab-pane fade" id="pills-security-nobd" role="tabpanel" aria-labelledby="pills-security-tab-nobd">
-											<form th:action="@{/user}" method="post">
-												<input type="hidden" name="_method" value="put"/>
-												<input type="hidden" name="id" th:if="${#authentication.principal.id!=null}" th:value="${#authentication.principal.id}"/>
-												<div class="form-group form-floating-label">
-													<input  id="oldpassword" name="oldpassword" type="password" class="form-control input-border-bottom" required>
-													<label for="oldpassword" class="placeholder">旧密码</label>
-												</div>
-												<div class="form-group form-floating-label">
-													<input  id="password" name="password" type="password" class="form-control input-border-bottom" required>
-													<label for="password" class="placeholder">新密码</label>
-												</div>
-												<div class="form-group form-floating-label">
-													<input  id="confirmpassword" name="confirmpassword" type="password" class="form-control input-border-bottom" required>
-													<label for="confirmpassword" class="placeholder">确认密码</label>
-												</div>
-
-												<div class="text-right mt-3 mb-3">
-													<button class="btn btn-secondary" type="submit">保存</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card card-profile card-secondary">
-								<div class="card-header" style="background-image: url('../assets/img/blogpost.jpg')">
-									<div class="profile-picture">
-										<div class="avatar avatar-xl">
-                                            <a data-toggle="modal" data-target="#photo">
-												<img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
-												<img th:src="@{/assets/img/profile.jpg}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}==null">
-                                            </a>
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<div class="user-profile text-center">
-										<div class="name" th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}"></div>
-										<div class="job">Frontend Developer</div>
-										<div class="desc">A man who hates loneliness</div>
-										<div class="social-media">
-											<a class="btn btn-info btn-twitter btn-sm btn-link" href="#"> 
-												<span class="btn-label just-icon"><i class="flaticon-twitter"></i> </span>
-											</a>
-											<a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#"> 
-												<span class="btn-label just-icon"><i class="flaticon-google-plus"></i> </span> 
-											</a>
-											<a class="btn btn-primary btn-sm btn-link" rel="publisher" href="#"> 
-												<span class="btn-label just-icon"><i class="flaticon-facebook"></i> </span> 
-											</a>
-											<a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#"> 
-												<span class="btn-label just-icon"><i class="flaticon-dribbble"></i> </span> 
-											</a>
-										</div>
-										<div class="view-profile">
-											<a href="#" class="btn btn-secondary btn-block">View Full Profile</a>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="row user-stats text-center">
-										<div class="col">
-											<div class="number">125</div>
-											<div class="title">Post</div>
-										</div>
-										<div class="col">
-											<div class="number">25K</div>
-											<div class="title">Followers</div>
-										</div>
-										<div class="col">
-											<div class="number">134</div>
-											<div class="title">Following</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-
-        <!--上传文件model-->
-        <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="uploadfilemodel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">上传头像</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">x</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:action="@{/photo}" method="post" enctype="multipart/form-data">
-                            <div class="container kv-main">
-                                    <input type="hidden" name="userId" th:value="${#authentication.principal.id}">
-                                    <div class="form-group">
-                                        <input id="file-1" type="file" name="files" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">
-                                    </div>
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <h4 class="page-title">用户简介</h4>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card card-with-nav">
+                            <div class="card-header">
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-home-tab-nobd" data-toggle="pill"
+                                               href="#pills-profile-nobd" role="tab" aria-controls="pills-profile-nobd"
+                                               aria-selected="true">个人信息</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-profile-tab-nobd" data-toggle="pill"
+                                               href="#pills-security-nobd" role="tab"
+                                               aria-controls="pills-security-nobd" aria-selected="false">安全管理</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                    </form>
+                            <div class="card-body tab-pane fade show active" role="tabpanel"
+                                 aria-labelledby="pills-home-tab-nobd">
+                                <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-profile-nobd" role="tabpanel"
+                                         aria-labelledby="pills-home-tab-nobd">
+                                        <form th:action="@{/user}" method="post">
+                                            <input type="hidden" name="_method" value="put"/>
+                                            <input type="hidden" name="id" th:if="${#authentication.principal.id!=null}"
+                                                   th:value="${#authentication.principal.id}"/>
+                                            <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-group-default">
+                                                        <label>名称</label>
+                                                        <input type="text" class="form-control" name="username"
+                                                               placeholder="Name" autocomplete="off"
+                                                               th:value="${#authentication.principal.username!=null}?${#authentication.principal.username}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group form-group-default">
+                                                        <label>邮箱</label>
+                                                        <input type="email" class="form-control" name="email"
+                                                               placeholder="Name" autocomplete="off" readonly="true"
+                                                               th:value="${#authentication.principal.email!=null}?${#authentication.principal.email}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-md-4">
+                                                    <div class="form-group form-group-default">
+                                                        <label>出生日期</label>
+                                                        <input type="text" class="form-control" id="birthday"
+                                                               name="birthday" placeholder="Birth Date"
+                                                               autocomplete="off"
+                                                               th:value="${#authentication.principal.birthday!=null}?${#dates.format(#authentication.principal.birthday, 'yyyy-MM-dd')}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group form-group-default">
+                                                        <label>性别</label>
+                                                        <select class="form-control" id="gender" name="gender">
+                                                            <option th:text="男" value="1" autocomplete="off"
+                                                                    th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==1">
+                                                                男
+                                                            </option>
+                                                            <option th:text="女" value="0" autocomplete="off"
+                                                                    th:if="${#authentication.principal.gender!=null}and${#authentication.principal.gender}==0">
+                                                                女
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group form-group-default">
+                                                        <label>手机</label>
+                                                        <input type="text" class="form-control" name="phone"
+                                                               placeholder="Phone" autocomplete="off"
+                                                               th:value="${#authentication.principal.phone!=null}?${#authentication.principal.phone}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-md-12">
+                                                    <div class="form-group form-group-default">
+                                                        <label>地址</label>
+                                                        <input type="text" class="form-control" name="address"
+                                                               placeholder="Address" autocomplete="off"
+                                                               th:value="${#authentication.principal.address!=null}?${#authentication.principal.address}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3 mb-1">
+                                                <div class="col-md-12">
+                                                    <div class="form-group form-group-default">
+                                                        <label>关于我</label>
+                                                        <textarea class="form-control" name="introduce"
+                                                                  placeholder="这家伙很懒，什么都没有留下" rows="3"
+                                                                  autocomplete="off"
+                                                                  th:value="${#authentication.principal.introduce!=null}?${#authentication.principal.introduce}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-right mt-3 mb-3">
+                                                <button class="btn btn-secondary" type="submit">保存</button>
+                                                <button class="btn btn-primary" type="reset">重置</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="pills-security-nobd" role="tabpanel"
+                                         aria-labelledby="pills-security-tab-nobd">
+                                        <form th:action="@{/user}" method="post">
+                                            <input type="hidden" name="_method" value="put"/>
+                                            <input type="hidden" name="id" th:if="${#authentication.principal.id!=null}"
+                                                   th:value="${#authentication.principal.id}"/>
+                                            <div class="form-group form-floating-label">
+                                                <input id="oldpassword" name="oldpassword" type="password"
+                                                       class="form-control input-border-bottom" required>
+                                                <label for="oldpassword" class="placeholder">旧密码</label>
+                                            </div>
+                                            <div class="form-group form-floating-label">
+                                                <input id="password" name="password" type="password"
+                                                       class="form-control input-border-bottom" required>
+                                                <label for="password" class="placeholder">新密码</label>
+                                            </div>
+                                            <div class="form-group form-floating-label">
+                                                <input id="confirmpassword" name="confirmpassword" type="password"
+                                                       class="form-control input-border-bottom" required>
+                                                <label for="confirmpassword" class="placeholder">确认密码</label>
+                                            </div>
+
+                                            <div class="text-right mt-3 mb-3">
+                                                <button class="btn btn-secondary" type="submit">保存</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-profile card-secondary">
+                            <div class="card-header" style="background-image: url('../assets/img/blogpost.jpg')">
+                                <div class="profile-picture">
+                                    <div class="avatar avatar-xl">
+                                        <a data-toggle="modal" data-target="#photo">
+                                            <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}"
+                                                 alt="..." class="avatar-img rounded-circle"
+                                                 th:if="${#authentication.principal.photo}!=null">
+                                            <img th:src="@{/assets/img/profile.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle"
+                                                 th:if="${#authentication.principal.photo}==null">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="user-profile text-center">
+                                    <div class="name"
+                                         th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}"></div>
+                                    <div class="job">Frontend Developer</div>
+                                    <div class="desc">A man who hates loneliness</div>
+                                    <div class="social-media">
+                                        <a class="btn btn-info btn-twitter btn-sm btn-link" href="#">
+                                            <span class="btn-label just-icon"><i class="flaticon-twitter"></i> </span>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
+                                            <span class="btn-label just-icon"><i
+                                                    class="flaticon-google-plus"></i> </span>
+                                        </a>
+                                        <a class="btn btn-primary btn-sm btn-link" rel="publisher" href="#">
+                                            <span class="btn-label just-icon"><i class="flaticon-facebook"></i> </span>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
+                                            <span class="btn-label just-icon"><i class="flaticon-dribbble"></i> </span>
+                                        </a>
+                                    </div>
+                                    <div class="view-profile">
+                                        <a href="#" class="btn btn-secondary btn-block">View Full Profile</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row user-stats text-center">
+                                    <div class="col">
+                                        <div class="number">125</div>
+                                        <div class="title">Post</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="number">25K</div>
+                                        <div class="title">Followers</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="number">134</div>
+                                        <div class="title">Following</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-		<!-- Custom template | don't include it in your project! -->
-		<div class="custom-template">
-				<div class="title">Settings</div>
-				<div class="custom-content">
-					<div class="switcher">
-						<div class="switch-block">
-							<h4>Topbar</h4>
-							<div class="btnSwitch">
-								<button type="button" class="changeMainHeaderColor" data-color="blue"></button>
-								<button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
-								<button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
-								<button type="button" class="changeMainHeaderColor" data-color="green"></button>
-								<button type="button" class="changeMainHeaderColor" data-color="orange"></button>
-								<button type="button" class="changeMainHeaderColor" data-color="red"></button>
-							</div>
-						</div>
-						<div class="switch-block">
-							<h4>Background</h4>
-							<div class="btnSwitch">
-								<button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-								<button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-								<button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="custom-toggle">
-					<i class="flaticon-settings"></i>
-				</div>
-			</div>
-		<!-- End Custom template -->
-	</div>
-    <!--   Core JS Files   -->
-    <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-    <script th:src="@{/assets/js/core/popper.min.js}"></script>
-    <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
-    <!-- jQuery UI -->
-    <script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
-    <script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
-    <!-- Moment JS -->
-    <script th:src="@{/assets/js/plugin/moment/moment.min.js}"></script><!-- DateTimePicker -->
-    <script th:src="@{/assets/js/plugin/datepicker/bootstrap-datetimepicker.js}"></script>
-    <!-- Bootstrap Toggle -->
-    <script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
-    <!-- jQuery Scrollbar -->
-    <script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
-    <!-- Azzara JS -->
-    <script th:src="@{/assets/js/ready.min.js}"></script>
-    <!-- Azzara DEMO methods, don't include it in your project! -->
-    <script th:src="@{/assets/js/setting-demo.js}"></script>
+    </div>
 
-    <script th:src="@{/assets/js/setting-demo.js}"></script>
-    <!-- Sweet Alert -->
-    <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-    <script th:src="@{/assets/js/myjs.js}"></script>
-    <!-- fileinput -->
-    <script th:src="@{/assets/js/plugin/fileinput/fileinput.js}" type="text/javascript"></script>
-    <script th:src="@{/assets/js/plugin/fileinput/fileinput_locale_zh.js}" type="text/javascript"></script>
-    <script>
-        $('#datepicker').datetimepicker({
-            format: 'MM/DD/YYYY',
-        });
-    </script>
-    <script>
-        function saveUser() {
-            var email = $("#email").val();
-            var password = $("#password").val();
-            var captchaCode = $("#captchaCode").val();
-            var rememberME = $("#rememberme").is(":checked");
-            if (email === "" || password === ""){
-                return;
-            }
-            $.ajax({
-                type: "POST",
-                url: "/loginUser",
-                data: {
-                    "email": email,
-                    "password": password,
-                    "captchaCode": captchaCode,
-                    "remember-me": rememberME
-                },
-                success: function (json) {
-                    if (json.isok) {
-                        location.href = json.data;
-                    } else {
-                        alert(json.message);
-                    }
-                },
-            })
-        };
-    </script>
-    <script>
-        $(function () {
-            $("#confirmpassword").keyup(function () {
-                checkpassword();
-            })
-        })
+    <!--上传文件model-->
+    <div class="modal fade" id="photo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" th:fragment="uploadfilemodel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">上传头像</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/photo}" method="post" enctype="multipart/form-data">
+                        <div class="container kv-main">
+                            <input type="hidden" name="userId" th:value="${#authentication.principal.id}">
+                            <div class="form-group">
+                                <input id="file-1" type="file" name="files" multiple class="file"
+                                       data-overwrite-initial="false" data-min-file-count="2">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        function checkpassword() {
-            var password1 = $("#password").val();
-            var password2 = $("#confirmpassword").val();
-            var confirmpassword = $("#confirmpassword");
-            if (password1 != password2) {
-                confirmpassword.css('borderColor','red');
-                return false;
-            }else {
-                confirmpassword.css('borderColor','');
-            }
+    <!-- Custom template | don't include it in your project! -->
+    <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+            <div class="switcher">
+                <div class="switch-block">
+                    <h4>Topbar</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="changeMainHeaderColor" data-color="blue"></button>
+                        <button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="green"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="orange"></button>
+                        <button type="button" class="changeMainHeaderColor" data-color="red"></button>
+                    </div>
+                </div>
+                <div class="switch-block">
+                    <h4>Background</h4>
+                    <div class="btnSwitch">
+                        <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
+                        <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
+                        <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-toggle">
+            <i class="flaticon-settings"></i>
+        </div>
+    </div>
+    <!-- End Custom template -->
+</div>
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Moment JS -->
+<script th:src="@{/assets/js/plugin/moment/moment.min.js}"></script><!-- DateTimePicker -->
+<script th:src="@{/assets/js/plugin/datepicker/bootstrap-datetimepicker.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+<!-- fileinput -->
+<script th:src="@{/assets/js/plugin/fileinput/fileinput.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/plugin/fileinput/fileinput_locale_zh.js}" type="text/javascript"></script>
+<script>
+    $('#datepicker').datetimepicker({
+        format: 'MM/DD/YYYY',
+    });
+</script>
+<script>
+    function saveUser() {
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var captchaCode = $("#captchaCode").val();
+        var rememberME = $("#rememberme").is(":checked");
+        if (email === "" || password === "") {
+            return;
         }
-    </script>
-    <script type="text/javascript" th:inline="javascript">
-        //加载用户所有项目
-        var userId = [[${#authentication.principal.id}]];
-        user_prjects(userId);
-    </script>
-    <script>
-        var userId = [[${#authentication.principal.id}]];
-        var file = $()
-        $("#file-1").fileinput({
-            language: 'zh',
-			theme: "explorer-fa",                               // 主题
-			enctype: 'multipart/form-data',
-			uploadUrl: '/photo',
-			uploadExtraData: {'userId':userId},
-			uploadAsync: false,//异步上传
-			dropZoneEnabled:true,                          // 是否可拖拽
-			dropZoneTitle: '支持jgp和png',
-			uploadAsync: true, //默认异步上传
-			minFileCount: 1,                                        // 最小上传数量
-			maxFileCount: 1,
-            showCancel:false,                                       // 显示取消按钮
-            showUpload:false,
-			showPreview: true,              //展前预览
-			removeLabel:"移除",                          //移除按钮内容
-            browseLabel: '选择',                            // 浏览按钮内容
-            allowedFileExtensions : ['jpg', 'JPG', 'jpeg', 'JPEG', 'png'],
-            maxFileSize: 1000,
-            maxFilesNum: 10,
-            fileActionSettings: {                               // 在预览窗口中为新选择的文件缩略图设置文件操作的对象配置
-                showDownload: false,                                // 显示下载按钮
-                showZoom: false,                                    // 显示预览按钮
-                removeIcon: '<i class="fa fa-trash"></i>',   // 删除图标
-                uploadIcon: '<i class="fa fa-upload"></i>',     // 上传图标
+        $.ajax({
+            type: "POST",
+            url: "/loginUser",
+            data: {
+                "email": email,
+                "password": password,
+                "captchaCode": captchaCode,
+                "remember-me": rememberME
             },
-            slugCallback: function(filename) {
-                return filename.replace('(', '_').replace(']', '_');
+            success: function (json) {
+                if (json.isok) {
+                    location.href = json.data;
+                } else {
+                    alert(json.message);
+                }
+            },
+        })
+    };
+</script>
+<script>
+    $(function () {
+        $("#confirmpassword").keyup(function () {
+            checkpassword();
+        })
+    })
+
+    function checkpassword() {
+        var password1 = $("#password").val();
+        var password2 = $("#confirmpassword").val();
+        var confirmpassword = $("#confirmpassword");
+        if (password1 != password2) {
+            confirmpassword.css('borderColor', 'red');
+            return false;
+        } else {
+            confirmpassword.css('borderColor', '');
+        }
+    }
+</script>
+<script type="text/javascript" th:inline="javascript">
+    //加载用户所有项目
+    var userId = [[${#authentication.principal.id}]];
+    user_prjects(userId);
+</script>
+<script>
+    var userId = [[${#authentication.principal.id}]];
+    var file = $()
+    $("#file-1").fileinput({
+        language: 'zh',
+        theme: "explorer-fa",                               // 主题
+        enctype: 'multipart/form-data',
+        uploadUrl: '/photo',
+        uploadExtraData: {'userId': userId},
+        uploadAsync: false,//异步上传
+        dropZoneEnabled: true,                          // 是否可拖拽
+        dropZoneTitle: '支持jgp和png',
+        uploadAsync: true, //默认异步上传
+        minFileCount: 1,                                        // 最小上传数量
+        maxFileCount: 1,
+        showCancel: false,                                       // 显示取消按钮
+        showUpload: false,
+        showPreview: true,              //展前预览
+        removeLabel: "移除",                          //移除按钮内容
+        browseLabel: '选择',                            // 浏览按钮内容
+        allowedFileExtensions: ['jpg', 'JPG', 'jpeg', 'JPEG', 'png'],
+        maxFileSize: 1000,
+        maxFilesNum: 10,
+        fileActionSettings: {                               // 在预览窗口中为新选择的文件缩略图设置文件操作的对象配置
+            showDownload: false,                                // 显示下载按钮
+            showZoom: false,                                    // 显示预览按钮
+            removeIcon: '<i class="fa fa-trash"></i>',   // 删除图标
+            uploadIcon: '<i class="fa fa-upload"></i>',     // 上传图标
+        },
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    }).on("fileuploaded", function (event, data) {
+        var json = data.response;
+        if (json.ok) {
+            swal(json.message, {
+                icon: "success",
+                buttons: false,
+                timer: 1500,
+            });
+            setTimeout(function () {
+                location.href = json.data;
+            }, 1500);
+        }
+    });
+</script>
+<!--加载消息-->
+<script th:inline="javascript">
+    $(function () {
+        var userId = [[${#authentication.principal.id}]];
+        my_message();
+        my_message_need_to_do();
+    })
+
+    function my_message_need_to_do() {
+        var divNumber = $('#myMessageNeedToDoNumber');
+        var divTitleName = $('#myMessageNeedToDoTitle');
+        var divName = $('#myMessageNeedToDo');
+        nav_message(userId, 1, divNumber, divTitleName, divName);
+    }
+
+    function my_message() {
+        var divName = $('#myMessage');
+        var divNumber = $('#myMessageNumber');
+        var divTitleName = $('');
+        nav_message(userId, 0, divNumber, divTitleName, divName);
+    }
+
+</script>
+<!--标记消息已读-->
+<script type="text/javascript">
+    function updateAllMessageIsRead() {
+        $.ajax({
+            type: "get",
+            url: "/updateAllMessageIsReadByUserId",
+            dataType: "json",
+            data: {
+                userId: userId,
+            },
+            success: function (result) {
+                console.log(result);
+                if(result){
+                    my_message();
+                }
             }
-        }).on("fileuploaded", function(event, data) {
-        	var json = data.response;
-			if (json.ok) {
-				swal(json.message, {
-					icon : "success",
-					buttons: false,
-					timer: 1500,
-				});
-				setTimeout(function(){
-					location.href = json.data;
-				},1500);
-			}
-		});
-    </script>
-	<!--加载消息-->
-	<script th:inline="javascript">
-		$(function () {
-			var userId = [[${#authentication.principal.id}]];
-			nav_message(userId);
-		})
-	</script>
+        })
+    }
+</script>
 </body>
 </html>

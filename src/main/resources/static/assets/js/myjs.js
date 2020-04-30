@@ -118,32 +118,86 @@ function package_list(projectId) {
     });
 }
 
-function nav_message(userId) {
+function nav_message(userId, needToDo, divNumber, divTitleName, messageDiv) {
     $.ajax({
         type: "post",
         url: "/myMessage",
         dataType: "json",
         data: {
             userId: userId,
+            needToDo: needToDo,
         },
         success: function (list) {
-            $(myNotification).html("");
-            var messagelist = '';
-            for (var i = 0; i < list.length && i < 4; i++) {
-                messagelist += '<a href="#">\n' +
-                    '              <div class="col-md-3">\n' +
-                    '             <div class="notif-icon '+ list[i].messageType.background + ' col-auto"> <i class="fa ' + list[i].messageType.icon + '"></i> </div>\n' +
-                    '              </div>\n' +
-                    '              <div class="col-md-9">\n' +
-                    '              <div class="notif-content">\n' +
-                    '                 <span class="block">' + list[i].message + '</span>\n' +
-                    '                 <span class="time">' + list[i].time + '</span>\n' +
-                    '              </div>\n' +
-                    '              </div>\n' +
-
-                    '           </a>'
+            if (needToDo == 0) {
+                addMessage(list, divNumber, messageDiv);
+            } else if (needToDo == 1) {
+                addMessageToDo(list, divNumber, divTitleName, messageDiv)
             }
-            $(myNotification).html(messagelist);
         }
     })
 }
+
+function addMessageToDo(list, divNumber, divTitle, div) {
+    $(divNumber).html("");
+    $(divTitle).html("");
+    if (list.length != 0) {
+        var messageNumber = '';
+        messageNumber += '<span class="notification" id="">' + list.length + '</span>'
+        $(divNumber).html(messageNumber);
+        var messageTitle = '有'+list.length+'件事务需要处理';
+        $(divTitle).html(messageTitle);
+    }else {
+        var messageTitle = '你没有事务需要出处理';
+        $(divTitle).html(messageTitle);
+    }
+    $(div).html("");
+    var messagelist = '';
+    for (var i = 0; i < list.length && i < 4; i++) {
+        messagelist += '<a class="col-md-12" href="#">\n' +
+            '               <div class="row">' +
+            '                   <div class="col-md-3">\n' +
+            '                       <div class="notif-icon ' + list[i].messageType.background + ' col-auto">' +
+            '                           <i class="fa ' + list[i].messageType.icon + '"></i>' +
+            '                       </div>\n' +
+            '                   </div>\n' +
+            '                   <div class="col-md-9">\n' +
+            '                       <div class="notif-content">\n' +
+            '                           <span class="block">' + list[i].message + '</span>\n' +
+            '                           <span class="time">' + list[i].time + '</span>\n' +
+            '                       </div>\n' +
+            '                   </div>\n' +
+            '                   <button class="btn btn-secondary col-md-4 ml-auto mr-auto">同意</button>' +
+            '                   <button class="btn btn-primary col-md-4 ml-auto mr-auto">拒绝</button>' +
+            '               </div>' +
+            '           </a>'
+    }
+    $(div).html(messagelist);
+}
+
+function addMessage(list, divNumber, div) {
+    $(divNumber).html("");
+    if (list.length != 0) {
+        var messageNumber = '';
+        messageNumber += '<span class="notification" id="">' + list.length + '</span>'
+        $(divNumber).html(messageNumber);
+    }
+    $(div).html("");
+    var messagelist = '';
+    for (var i = 0; i < list.length && i < 4; i++) {
+        messagelist += '<a href="#">\n' +
+            '              <div class="col-md-3">\n' +
+            '                   <div class="notif-icon ' + list[i].messageType.background + ' col-auto">' +
+            '                       <i class="fa ' + list[i].messageType.icon + '"></i>' +
+            '                   </div>\n' +
+            '              </div>\n' +
+            '              <div class="col-md-9">\n' +
+            '                   <div class="notif-content">\n' +
+            '                       <span class="block">' + list[i].message + '</span>\n' +
+            '                       <span class="time">' + list[i].time + '</span>\n' +
+            '                   </div>\n' +
+            '              </div>\n' +
+            '           </a>'
+    }
+    $(div).html(messagelist);
+}
+

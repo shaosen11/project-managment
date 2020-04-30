@@ -17,13 +17,19 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService {
     @Autowired
     MessageMapper messageMapper;
+
     @Override
-    public List<Message> getByUserId(Integer userId) {
-        return messageMapper.getByUserId(userId);
+    public List<Message> getByUserId(Integer userId, Integer needToDo) {
+        return messageMapper.getByUserId(userId, needToDo);
     }
 
     @Override
     public boolean insert(Message message) {
         return messageMapper.insert(message);
+    }
+
+    @Override
+    public boolean updateAllMessageIsReadByUserId(Integer userId, Integer isRead) {
+        return messageMapper.updateAllMessageIsReadByUserId(userId, isRead);
     }
 }

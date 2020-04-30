@@ -20,4 +20,5 @@ public class Message {
     private String time;
     private Integer isRead;
     private Integer deleteFlag;
+    private Integer needToDo;
 }

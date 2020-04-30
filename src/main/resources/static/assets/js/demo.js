@@ -95,10 +95,10 @@ var statisticsChart = new Chart(ctx, {
 		}]
 	},
 	options : {
-		responsive: true, 
+	responsive: true,
 		maintainAspectRatio: false,
 		legend: {
-			display: false
+		display: false
 		},
 		tooltips: {
 			bodySpacing: 4,
@@ -153,16 +153,16 @@ var statisticsChart = new Chart(ctx, {
 	}
 });
 
-var myLegendContainer = document.getElementById("myChartLegend");
-
-// generate HTML legend
-myLegendContainer.innerHTML = statisticsChart.generateLegend();
-
-// bind onClick event to all LI-tags of the legend
-var legendItems = myLegendContainer.getElementsByTagName('li');
-for (var i = 0; i < legendItems.length; i += 1) {
-	legendItems[i].addEventListener("click", legendClickCallback, false);
-}
+// var myLegendContainer = document.getElementById("myChartLegend");
+//
+// // generate HTML legend
+// myLegendContainer.innerHTML = statisticsChart.generateLegend();
+//
+// // bind onClick event to all LI-tags of the legend
+// var legendItems = myLegendContainer.getElementsByTagName('li');
+// for (var i = 0; i < legendItems.length; i += 1) {
+// 	legendItems[i].addEventListener("click", legendClickCallback, false);
+// }
 
 var dailySalesChart = document.getElementById('dailySalesChart').getContext('2d');
 

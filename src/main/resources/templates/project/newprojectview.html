@@ -275,8 +275,43 @@
 <script th:inline="javascript">
     $(function () {
         var userId = [[${#authentication.principal.id}]];
-        nav_message(userId);
+        my_message();
+        my_message_need_to_do();
     })
+
+    function my_message_need_to_do() {
+        var divNumber = $('#myMessageNeedToDoNumber');
+        var divTitleName = $('#myMessageNeedToDoTitle');
+        var divName = $('#myMessageNeedToDo');
+        nav_message(userId, 1, divNumber, divTitleName, divName);
+    }
+
+    function my_message() {
+        var divName = $('#myMessage');
+        var divNumber = $('#myMessageNumber');
+        var divTitleName = $('');
+        nav_message(userId, 0, divNumber, divTitleName, divName);
+    }
+
+</script>
+<!--标记消息已读-->
+<script type="text/javascript">
+    function updateAllMessageIsRead() {
+        $.ajax({
+            type: "get",
+            url: "/updateAllMessageIsReadByUserId",
+            dataType: "json",
+            data: {
+                userId: userId,
+            },
+            success: function (result) {
+                console.log(result);
+                if(result){
+                    my_message();
+                }
+            }
+        })
+    }
 </script>
 </body>
 </html>

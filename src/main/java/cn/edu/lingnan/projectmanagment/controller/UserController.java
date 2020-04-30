@@ -69,7 +69,7 @@ public class UserController {
     JavaMailSenderImpl mailSender;
 
     @Autowired
-    cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler afterLoginOrLoginOutHandler;
+    cn.edu.lingnan.projectmanagment.utils.AfterLoginOrLoginOutHandler afterLoginOrLoginOutHandler;
 
     @ResponseBody
     @GetMapping("/user")

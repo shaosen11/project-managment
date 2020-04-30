@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Home</title>
-    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
 
     <!-- Fonts and icons -->
     <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
     <script>
         WebFont.load({
-            google: {"families":["Open+Sans:300,400,600,700"]},
-            custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},
-            active: function() {
+            google: {"families": ["Open+Sans:300,400,600,700"]},
+            custom: {"families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"]},
+            active: function () {
                 sessionStorage.fonts = true;
             }
         });
@@ -39,7 +39,8 @@
             <a href="../index.html" class="logo">
                 <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
             </a>
-            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="fa fa-bars"></i>
 					</span>
@@ -71,135 +72,57 @@
                 </div>
                 <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                     <li class="nav-item toggle-nav-search hidden-caret">
-                        <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
+                        <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button"
+                           aria-expanded="false" aria-controls="search-nav">
                             <i class="fa fa-search"></i>
                         </a>
                     </li>
                     <li class="nav-item dropdown hidden-caret">
-                        <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-envelope"></i>
+                        <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-edit"></i>
+                            <div id="myMessageNeedToDoNumber"></div>
                         </a>
                         <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
                             <li>
-                                <div class="dropdown-title d-flex justify-content-between align-items-center">
-                                    Messages
-                                    <a href="#" class="small">Mark all as read</a>
-                                </div>
+                                <div class="dropdown-title" id="myMessageNeedToDoTitle"></div>
                             </li>
                             <li>
                                 <div class="message-notif-scroll scrollbar-outer">
-                                    <div class="notif-center">
-                                        <a href="#">
-                                            <div class="notif-img">
-                                                <img th:src="@{/assets/img/jm_denis.jpg}" alt="Img Profile">
-                                            </div>
-                                            <div class="notif-content">
-                                                <span class="subject">Jimmy Denis</span>
-                                                <span class="block">
-														How are you ?
-													</span>
-                                                <span class="time">5 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-img">
-                                                <img th:src="@{/assets/img/chadengle.jpg}" alt="Img Profile">
-                                            </div>
-                                            <div class="notif-content">
-                                                <span class="subject">Chad</span>
-                                                <span class="block">
-														Ok, Thanks !
-													</span>
-                                                <span class="time">12 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-img">
-                                                <img th:src="@{/assets/img/mlane.jpg}" alt="Img Profile">
-                                            </div>
-                                            <div class="notif-content">
-                                                <span class="subject">Jhon Doe</span>
-                                                <span class="block">
-														Ready for the meeting today...
-													</span>
-                                                <span class="time">12 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-img">
-                                                <img th:src="@{/assets/img/talha.jpg}" alt="Img Profile">
-                                            </div>
-                                            <div class="notif-content">
-                                                <span class="subject">Talha</span>
-                                                <span class="block">
-														Hi, Apa Kabar ?
-													</span>
-                                                <span class="time">17 minutes ago</span>
-                                            </div>
-                                        </a>
+                                    <div class="notif-center" id="myMessageNeedToDo">
+
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i> </a>
+                                <a class="see-all" href="javascript:void(0);">See all messages<i
+                                        class="fa fa-angle-right"></i> </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown hidden-caret">
-                        <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-bell"></i>
-                            <span class="notification">4</span>
+                            <div id="myMessageNumber"></div>
                         </a>
                         <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                             <li>
-                                <div class="dropdown-title">You have 4 new notification</div>
+                                <div class="dropdown-title d-flex justify-content-between align-items-center">
+                                    消息
+                                    <a href="#" onclick="updateAllMessageIsRead()">标记所有已读</a>
+                                </div>
                             </li>
+
                             <li>
                                 <div class="notif-scroll scrollbar-outer">
-                                    <div class="notif-center" id="myNotification">
-                                        <a href="#">
-                                            <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
-                                            <div class="notif-content">
-													<span class="block">
-														New user registered
-													</span>
-                                                <span class="time">5 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
-                                            <div class="notif-content">
-													<span class="block">
-														Rahmad commented on Admin
-													</span>
-                                                <span class="time">12 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-img">
-                                                <img th:src="@{/assets/img/profile2.jpg}" alt="Img Profile">
-                                            </div>
-                                            <div class="notif-content">
-													<span class="block">
-														Reza send messages to you
-													</span>
-                                                <span class="time">12 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
-                                            <div class="notif-content">
-													<span class="block">
-														Farrah liked Admin
-													</span>
-                                                <span class="time">17 minutes ago</span>
-                                            </div>
-                                        </a>
+                                    <div class="notif-center" id="myMessage">
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i> </a>
+                                <a class="see-all" href="javascript:void(0);">See all notifications<i
+                                        class="fa fa-angle-right"></i> </a>
                             </li>
                         </ul>
                     </li>
@@ -211,26 +134,36 @@
                     <li class="nav-item dropdown hidden-caret">
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                             <div class="avatar-sm">
-                                <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                                <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}"
+                                     alt="..." class="avatar-img rounded-circle"
+                                     th:if="${#authentication.principal.photo}!=null">
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-user animated fadeIn">
                             <li>
                                 <div class="user-box">
                                     <div class="avatar-lg">
-                                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}"
+                                             alt="..." class="avatar-img rounded-circle"
+                                             th:if="${#authentication.principal.photo}!=null">
                                     </div>
                                     <div class="u-text">
-                                        <h4 th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">用户名</h4>
-                                        <p class="text-muted" th:text="${#authentication.principal.email!=null}?${#authentication.principal.email}">邮箱</p>
-                                        <a th:href="@{/userprofile}" class="btn btn-rounded btn-secondary btn-sm">我的信息</a>
+                                        <h4 th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">
+                                            用户名</h4>
+                                        <p class="text-muted"
+                                           th:text="${#authentication.principal.email!=null}?${#authentication.principal.email}">
+                                            邮箱</p>
+                                        <a th:href="@{/userprofile}"
+                                           class="btn btn-rounded btn-secondary btn-sm">我的信息</a>
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" th:href="@{/my_projects/}+${#authentication.principal.id}">我的项目</a>
-                                <a class="dropdown-item" th:href="@{/my_projects_store/}+${#authentication.principal.id}">我的收藏</a>
+                                <a class="dropdown-item"
+                                   th:href="@{/my_projects/}+${#authentication.principal.id}">我的项目</a>
+                                <a class="dropdown-item"
+                                   th:href="@{/my_projects_store/}+${#authentication.principal.id}">我的收藏</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" onclick="login_out()" href="#">退出</a>
                             </li>
@@ -250,7 +183,8 @@
             <div class="sidebar-content">
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
-                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..."
+                             class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -567,7 +501,8 @@
                 <div class="page-header">
                     <h4 class="page-title">全站统计</h4>
                     <div class="btn-group btn-group-page-header ml-auto">
-                        <button type="button" class="btn btn-light btn-round btn-page-header-dropdown dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-light btn-round btn-page-header-dropdown dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-ellipsis-h"></i>
                         </button>
                         <div class="dropdown-menu">
@@ -718,9 +653,12 @@
                                 <div class="card-head-row">
                                     <h4 class="card-title">Users Geolocation</h4>
                                     <div class="card-tools">
-                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-angle-down"></span></button>
-                                        <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span class="fa fa-sync-alt"></span></button>
-                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-times"></span></button>
+                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span
+                                                class="fa fa-angle-down"></span></button>
+                                        <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span
+                                                class="fa fa-sync-alt"></span></button>
+                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span
+                                                class="fa fa-times"></span></button>
                                     </div>
                                 </div>
                                 <p class="card-category">
@@ -749,7 +687,8 @@
                                                 <tr>
                                                     <td>
                                                         <div class="flag">
-                                                            <img th:src="@{/assets/img/flags/us.png}" alt="united states">
+                                                            <img th:src="@{/assets/img/flags/us.png}"
+                                                                 alt="united states">
                                                         </div>
                                                     </td>
                                                     <td>USA</td>
@@ -839,7 +778,8 @@
                             <div class="card-body pb-0">
                                 <div class="d-flex">
                                     <div class="avatar">
-                                        <img th:src="@{/assets/img/logoproduct.svg}" alt="..." class="avatar-img rounded-circle">
+                                        <img th:src="@{/assets/img/logoproduct.svg}" alt="..."
+                                             class="avatar-img rounded-circle">
                                     </div>
                                     <div class="flex-1 pt-1 ml-2">
                                         <h5 class="fw-bold mb-1">CSS</h5>
@@ -852,7 +792,8 @@
                                 <div class="separator-dashed"></div>
                                 <div class="d-flex">
                                     <div class="avatar">
-                                        <img th:src="@{/assets/img/logoproduct2.svg}" alt="..." class="avatar-img rounded-circle">
+                                        <img th:src="@{/assets/img/logoproduct2.svg}" alt="..."
+                                             class="avatar-img rounded-circle">
                                     </div>
                                     <div class="flex-1 pt-1 ml-2">
                                         <h5 class="fw-bold mb-1">J.CO Donuts</h5>
@@ -865,7 +806,8 @@
                                 <div class="separator-dashed"></div>
                                 <div class="d-flex">
                                     <div class="avatar">
-                                        <img th:src="@{/assets/img/logoproduct3.svg}" alt="..." class="avatar-img rounded-circle">
+                                        <img th:src="@{/assets/img/logoproduct3.svg}" alt="..."
+                                             class="avatar-img rounded-circle">
                                     </div>
                                     <div class="flex-1 pt-1 ml-2">
                                         <h5 class="fw-bold mb-1">Ready Pro</h5>
@@ -889,7 +831,8 @@
                                 <div class="card-list">
                                     <div class="item-list">
                                         <div class="avatar">
-                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..." class="avatar-img rounded-circle">
+                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
                                         </div>
                                         <div class="info-user ml-3">
                                             <div class="username">Jimmy Denis</div>
@@ -901,7 +844,8 @@
                                     </div>
                                     <div class="item-list">
                                         <div class="avatar">
-                                            <img th:src="@{/assets/img/chadengle.jpg}" alt="..." class="avatar-img rounded-circle">
+                                            <img th:src="@{/assets/img/chadengle.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
                                         </div>
                                         <div class="info-user ml-3">
                                             <div class="username">Chad</div>
@@ -913,7 +857,8 @@
                                     </div>
                                     <div class="item-list">
                                         <div class="avatar">
-                                            <img th:src="@{/assets/img/talha.jpg}" alt="..." class="avatar-img rounded-circle">
+                                            <img th:src="@{/assets/img/talha.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
                                         </div>
                                         <div class="info-user ml-3">
                                             <div class="username">Talha</div>
@@ -925,7 +870,8 @@
                                     </div>
                                     <div class="item-list">
                                         <div class="avatar">
-                                            <img th:src="@{/assets/img/mlane.jpg}" alt="..." class="avatar-img rounded-circle">
+                                            <img th:src="@{/assets/img/mlane.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
                                         </div>
                                         <div class="info-user ml-3">
                                             <div class="username">John Doe</div>
@@ -937,7 +883,8 @@
                                     </div>
                                     <div class="item-list">
                                         <div class="avatar">
-                                            <img th:src="@{/assets/img/talha.jpg}" alt="..." class="avatar-img rounded-circle">
+                                            <img th:src="@{/assets/img/talha.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
                                         </div>
                                         <div class="info-user ml-3">
                                             <div class="username">Talha</div>
@@ -949,7 +896,8 @@
                                     </div>
                                     <div class="item-list">
                                         <div class="avatar">
-                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..." class="avatar-img rounded-circle">
+                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..."
+                                                 class="avatar-img rounded-circle">
                                         </div>
                                         <div class="info-user ml-3">
                                             <div class="username">Jimmy Denis</div>
@@ -972,8 +920,12 @@
                                 <div id="activeUsersChart"></div>
                                 <h4 class="mt-5 pb-3 mb-0 fw-bold">Top active pages</h4>
                                 <ul class="list-unstyled">
-                                    <li class="d-flex justify-content-between pb-1 pt-1"><small>/product/readypro/index.html</small> <span>7</span></li>
-                                    <li class="d-flex justify-content-between pb-1 pt-1"><small>/product/azzara/demo.html</small> <span>10</span></li>
+                                    <li class="d-flex justify-content-between pb-1 pt-1">
+                                        <small>/product/readypro/index.html</small>
+                                        <span>7</span></li>
+                                    <li class="d-flex justify-content-between pb-1 pt-1">
+                                        <small>/product/azzara/demo.html</small>
+                                        <span>10</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -989,11 +941,13 @@
                                 <ol class="activity-feed">
                                     <li class="feed-item feed-item-secondary">
                                         <time class="date" datetime="9-25">Sep 25</time>
-                                        <span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
+                                        <span class="text">Responded to need <a
+                                                href="#">"Volunteer opportunity"</a></span>
                                     </li>
                                     <li class="feed-item feed-item-success">
                                         <time class="date" datetime="9-24">Sep 24</time>
-                                        <span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
+                                        <span class="text">Added an interest <a
+                                                href="#">"Volunteer Activities"</a></span>
                                     </li>
                                     <li class="feed-item feed-item-info">
                                         <time class="date" datetime="9-23">Sep 23</time>
@@ -1001,7 +955,8 @@
                                     </li>
                                     <li class="feed-item feed-item-warning">
                                         <time class="date" datetime="9-21">Sep 21</time>
-                                        <span class="text">Responded to need <a href="#">"In-Kind Opportunity"</a></span>
+                                        <span class="text">Responded to need <a
+                                                href="#">"In-Kind Opportunity"</a></span>
                                     </li>
                                     <li class="feed-item feed-item-danger">
                                         <time class="date" datetime="9-18">Sep 18</time>
@@ -1021,15 +976,19 @@
                                 <div class="card-head-row">
                                     <div class="card-title">Support Tickets</div>
                                     <div class="card-tools">
-                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
+                                            role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link" id="pills-today" data-toggle="pill" href="#pills-today" role="tab" aria-selected="true">Today</a>
+                                                <a class="nav-link" id="pills-today" data-toggle="pill"
+                                                   href="#pills-today" role="tab" aria-selected="true">Today</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link active" id="pills-week" data-toggle="pill" href="#pills-week" role="tab" aria-selected="false">Week</a>
+                                                <a class="nav-link active" id="pills-week" data-toggle="pill"
+                                                   href="#pills-week" role="tab" aria-selected="false">Week</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" id="pills-month" data-toggle="pill" href="#pills-month" role="tab" aria-selected="false">Month</a>
+                                                <a class="nav-link" id="pills-month" data-toggle="pill"
+                                                   href="#pills-month" role="tab" aria-selected="false">Month</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -1041,7 +1000,8 @@
                                         <span class="avatar-title rounded-circle border border-white bg-info">J</span>
                                     </div>
                                     <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Joko Subianto <span class="text-warning pl-3">pending</span></h5>
+                                        <h5 class="text-uppercase fw-bold mb-1">Joko Subianto <span
+                                                class="text-warning pl-3">pending</span></h5>
                                         <span class="text-muted">I am facing some trouble with my viewport. When i start my</span>
                                     </div>
                                     <div class="float-right pt-1">
@@ -1054,7 +1014,8 @@
                                         <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
                                     </div>
                                     <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Prabowo Widodo <span class="text-success pl-3">open</span></h5>
+                                        <h5 class="text-uppercase fw-bold mb-1">Prabowo Widodo <span
+                                                class="text-success pl-3">open</span></h5>
                                         <span class="text-muted">I have some query regarding the license issue.</span>
                                     </div>
                                     <div class="float-right pt-1">
@@ -1067,7 +1028,8 @@
                                         <span class="avatar-title rounded-circle border border-white bg-danger">L</span>
                                     </div>
                                     <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Lee Chong Wei <span class="text-muted pl-3">closed</span></h5>
+                                        <h5 class="text-uppercase fw-bold mb-1">Lee Chong Wei <span
+                                                class="text-muted pl-3">closed</span></h5>
                                         <span class="text-muted">Is there any update plan for RTL version near future?</span>
                                     </div>
                                     <div class="float-right pt-1">
@@ -1080,7 +1042,8 @@
                                         <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
                                     </div>
                                     <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Peter Parker <span class="text-success pl-3">open</span></h5>
+                                        <h5 class="text-uppercase fw-bold mb-1">Peter Parker <span
+                                                class="text-success pl-3">open</span></h5>
                                         <span class="text-muted">I have some query regarding the license issue.</span>
                                     </div>
                                     <div class="float-right pt-1">
@@ -1093,7 +1056,8 @@
                                         <span class="avatar-title rounded-circle border border-white bg-danger">L</span>
                                     </div>
                                     <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Logan Paul <span class="text-muted pl-3">closed</span></h5>
+                                        <h5 class="text-uppercase fw-bold mb-1">Logan Paul <span
+                                                class="text-muted pl-3">closed</span></h5>
                                         <span class="text-muted">Is there any update plan for RTL version near future?</span>
                                     </div>
                                     <div class="float-right pt-1">
@@ -1143,7 +1107,8 @@
 </div>
 </div>
 <!--上传文件model-->
-<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:fragment="uploadfilemodel">
+<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" th:fragment="uploadfilemodel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -1162,12 +1127,15 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input id='location' class="form-control" onclick="$('#i-file').click();">
-                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();">
+                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary"
+                                   onclick="$('#i-file').click();">
                         </div>
-                        <input type="file" name="files" id='i-file' onchange="$('#location').val($('#i-file').val());" style="display: none">
+                        <input type="file" name="files" id='i-file' onchange="$('#location').val($('#i-file').val());"
+                               style="display: none">
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage" name="versionMessage" autocomplete="off"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage"
+                                  name="versionMessage" autocomplete="off"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
@@ -1179,7 +1147,8 @@
     </div>
 </div>
 <!--新建包-->
-<div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  th:fragment="newprojectpackage">
+<div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true" th:fragment="newprojectpackage">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form th:action="@{/projectsPackage}" method="post" onSubmit="return submitPackageCheck();">

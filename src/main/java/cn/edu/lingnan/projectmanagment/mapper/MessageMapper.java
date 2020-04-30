@@ -17,9 +17,10 @@ public interface MessageMapper {
     /**
      * 通过userId查询所有消息
      * @param userId
+     * @param needToDo
      * @return
      */
-    List<Message> getByUserId(Integer userId);
+    List<Message> getByUserId(Integer userId, Integer needToDo);
 
     /**
      * 插入一条消息
@@ -27,4 +28,12 @@ public interface MessageMapper {
      * @return
      */
     boolean insert(Message message);
+
+    /**
+     * 标记所有消息为已读
+     * @param userId
+     * @param isRead
+     * @return
+     */
+    boolean updateAllMessageIsReadByUserId(Integer userId, Integer isRead);
 }

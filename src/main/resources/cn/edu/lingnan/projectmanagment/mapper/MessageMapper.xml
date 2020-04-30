@@ -10,14 +10,15 @@
         <result column="time" property="time"></result>
         <result column="is_read" property="isRead"></result>
         <result column="delete_flag" property="deleteFlag"></result>
-        <collection property="messageType" column="{id=type_id}" select="cn.edu.lingnan.projectmanagment.mapper.MessageTypeMapper.getById">
+        <collection property="messageType" column="{id=type_id}"
+                    select="cn.edu.lingnan.projectmanagment.mapper.MessageTypeMapper.getById">
         </collection>
     </resultMap>
-   <select id="getByUserId" resultMap="MessageList">
-       select * from message where is_read = 1 and delete_flag = 1 and to_user_id = #{userId}
+    <select id="getByUserId" resultMap="MessageList">
+       select * from message where is_read = 1 and delete_flag = 1 and to_user_id = #{userId} and need_to_do = #{needToDo}
    </select>
 
-    <!--插入一条记录-->
+    <!--插入一条消息-->
     <insert id="insert">
         insert into message
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -29,6 +30,7 @@
             <if test="time != null">time,</if>
             <if test="isRead != null">is_read,</if>
             <if test="deleteFlag != null">delete_flag,</if>
+            <if test="needToDo !=null">need_to_do,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -40,6 +42,18 @@
             <if test="time != null">#{time},</if>
             <if test="isRead != null">#{isRead},</if>
             <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="needToDo !=null">#{needToDo}</if>
         </trim>
     </insert>
+
+
+    <update id="updateAllMessageIsReadByUserId">
+        update message set
+        <trim suffixOverrides=",">
+            <if test="isRead != null">
+                is_read = #{isRead},
+            </if>
+        </trim>
+        where delete_flag = 1 and to_user_id = #{userId} and need_to_do = 0
+    </update>
 </mapper>

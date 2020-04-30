@@ -2,11 +2,9 @@ package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
-import cn.edu.lingnan.projectmanagment.service.impl.MessageServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
+import cn.edu.lingnan.projectmanagment.utils.MessageTypeContants;
 import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,9 @@ public class ProjectsUserController {
 
     @Autowired
     private MessageServiceImpl messageService;
+
+    @Autowired
+    private ProjectsUserCooperationServiceImpl projectsUserCooperationService;
 
     @GetMapping("user_prjects")
     @ResponseBody
@@ -276,12 +277,27 @@ public class ProjectsUserController {
     @PostMapping("/inviteUser")
     @ResponseBody
     public AJaxResponse inviteUser(Integer projectId, Integer fromUserId, Integer toUserId) {
+        //为了在前端同意或拒绝按钮能够关联上
+        //先判断有没有邀请过
+        ProjectsUserCooperation projectsUserCooperation = projectsUserCooperationService.getByProjectIdAndNotInProjectUserId(projectId, toUserId);
+        if(projectsUserCooperation == null){
+            //没有邀请过，新加一条邀请记录
+            projectsUserCooperation.setProjectsId(projectId);
+            projectsUserCooperation.setInProjectUserId(fromUserId);
+            projectsUserCooperation.setNotInProjectUserId(toUserId);
+            projectsUserCooperation.setTime(new Date());
+            projectsUserCooperationService.insert(projectsUserCooperation);
+        }else {
+            //有邀请过，更新邀请时间
+            projectsUserCooperation.setTime(new Date());
+            projectsUserCooperationService.update(projectsUserCooperation);
+        }
         //封装信息
         Message message = new Message();
         //查找项目
         message.setFromUserId(fromUserId);
         message.setToUserId(toUserId);
-        message.setTypeId(6);
+        message.setTypeId(MessageTypeContants.PROJECT_COOPERATION);
         Projects projects = projectService.getById(projectId);
         ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(fromUserId, projectId);
         String msg = projects.getName() + "的" + projectsUser.getProjectsUserDuty().getDutyName() + projectsUser.getMyUserDetails().getUsername() + "邀请你一起开发";

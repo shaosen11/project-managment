@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Home</title>
-    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
 
     <!-- Fonts and icons -->
@@ -29,7 +29,8 @@
             <a th:href="index.html" class="logo">
                 <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
             </a>
-            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="fa fa-bars"></i>
 					</span>
@@ -54,7 +55,8 @@
             <div class="sidebar-content">
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
-                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..." class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..."
+                             class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -162,14 +164,14 @@
             <div class="page-inner">
                 <div class="row">
                     <div class="col-md-2 card" style="height: 630px;">
-                            <h2 style="margin-top: 10px">功能
+                        <h2 style="margin-top: 10px">功能
                             <button class="btn-xs btn-warning">
                                 <span class="btn-label">
                                     <i class="fas fa-plus"></i>
                                 </span>
                                 新建功能
                             </button>
-                            </h2>
+                        </h2>
                         <!--进度条-->
                         <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
                         <a href="#" style="margin-top: 20px;color: #1b1e21">
@@ -190,7 +192,9 @@
                         <div class="col-md-3">
                             <div class="card" style="height: 630px;">
                                 <div class="card-header row" style="background-color: rgba(245,232,200,0.5)">
-                                    <div class="card-title col-md-6" style="color: black"><i class="far fa-surprise" style="color: #FF9933"></i>&nbsp;待办的</div>
+                                    <div class="card-title col-md-6" style="color: black"><i class="far fa-surprise"
+                                                                                             style="color: #FF9933"></i>&nbsp;待办的
+                                    </div>
                                 </div>
                                 <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
                                     <div style="margin-top: -15px">
@@ -216,10 +220,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3" >
+                        <div class="col-md-3">
                             <div class="card" style="height: 630px;">
                                 <div class="card-header" style="background-color: rgba(157,211,250,0.5)">
-                                    <div class="card-title" style="color: black"><i class="far fa-tired" style="color: #1F6FB5"></i>&nbsp;进行中</div>
+                                    <div class="card-title" style="color: black"><i class="far fa-tired"
+                                                                                    style="color: #1F6FB5"></i>&nbsp;进行中
+                                    </div>
                                 </div>
                                 <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
                                     <div style="margin-top: -15px">
@@ -245,10 +251,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3" >
+                        <div class="col-md-3">
                             <div class="card" style="height: 630px;">
                                 <div class="card-header" style="background-color: rgba(118,126,199,0.5)">
-                                    <div class="card-title" style="color: black"><i class="far fa-laugh-squint" style="color: #795DDE"></i>&nbsp;已完成</div>
+                                    <div class="card-title" style="color: black"><i class="far fa-laugh-squint"
+                                                                                    style="color: #795DDE"></i>&nbsp;已完成
+                                    </div>
                                 </div>
                                 <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
                                     <div style="margin-top: -15px">
@@ -274,10 +282,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3" >
+                        <div class="col-md-3">
                             <div class="card" style="height: 630px;">
                                 <div class="card-header" style="background-color: rgba(25,148,117,0.5)">
-                                    <div class="card-title" style="color: black"><i class="far fa-kiss-wink-heart" style="color: #007850"></i>&nbsp;已验收</div>
+                                    <div class="card-title" style="color: black"><i class="far fa-kiss-wink-heart"
+                                                                                    style="color: #007850"></i>&nbsp;已验收
+                                    </div>
                                 </div>
                                 <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
                                     <div style="margin-top: -15px">
@@ -310,7 +320,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -329,12 +340,15 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input id='location' class="form-control" onclick="$('#i-file').click();">
-                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="$('#i-file').click();">
+                            <input type="button" id="i-check" value="浏览文件" class="btn btn-primary"
+                                   onclick="$('#i-file').click();">
                         </div>
-                        <input type="file" name="files" id='i-file' onchange="$('#location').val($('#i-file').val());" style="display: none">
+                        <input type="file" name="files" id='i-file' onchange="$('#location').val($('#i-file').val());"
+                               style="display: none">
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage" name="versionMessage" autocomplete="off"></textarea>
+                        <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage"
+                                  name="versionMessage" autocomplete="off"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
@@ -346,7 +360,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form th:action="@{/projectsPackage}" method="post" onSubmit="return submitPackageCheck();">
@@ -558,6 +573,7 @@
     })
     //检查包名是否存在
     var packageFlag = false;
+
     function checkPackage() {
         var projectId = $("#newPackageProjectId").val();
         var packageName = $("#packageName").val();
@@ -568,23 +584,24 @@
             type: "get",
             url: "projectsPackage",
             data: {
-                "projectId" : projectId,
-                "packageName" : packageName
+                "projectId": projectId,
+                "packageName": packageName
             },
-            success:function (json) {
-                if (!json){
-                    packageNamecss.css('borderColor','red');
+            success: function (json) {
+                if (!json) {
+                    packageNamecss.css('borderColor', 'red');
                     packageFlag = false;
-                }else {
-                    packageNamecss.css('borderColor','');
+                } else {
+                    packageNamecss.css('borderColor', '');
                     packageFlag = true;
                 }
             }
         })
     }
+
     //检查注册页面是否填写完成
     function submitPackageCheck() {
-        if(!packageFlag){
+        if (!packageFlag) {
             alert("包名已存在");
             return false;
         }
@@ -592,19 +609,63 @@
 
     // Cicle Chart
     Circles.create({
-        id:           'function-complete',
-        radius:       50,
-        value:        80,
-        maxValue:     100,
-        width:        10,
-        text:         function(value){return value + '%';},
-        colors:       ['#EACF02', '#2E68AA'],
-        duration:     400,
-        wrpClass:     'circles-wrp',
-        textClass:    'circles-text',
+        id: 'function-complete',
+        radius: 50,
+        value: 80,
+        maxValue: 100,
+        width: 10,
+        text: function (value) {
+            return value + '%';
+        },
+        colors: ['#EACF02', '#2E68AA'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
         styleWrapper: true,
-        styleText:    true
+        styleText: true
     })
+</script>
+<!--加载消息-->
+<script th:inline="javascript">
+    $(function () {
+        var userId = [[${#authentication.principal.id}]];
+        my_message();
+        my_message_need_to_do();
+    })
+
+    function my_message_need_to_do() {
+        var divNumber = $('#myMessageNeedToDoNumber');
+        var divTitleName = $('#myMessageNeedToDoTitle');
+        var divName = $('#myMessageNeedToDo');
+        nav_message(userId, 1, divNumber, divTitleName, divName);
+    }
+
+    function my_message() {
+        var divName = $('#myMessage');
+        var divNumber = $('#myMessageNumber');
+        var divTitleName = $('');
+        nav_message(userId, 0, divNumber, divTitleName, divName);
+    }
+
+</script>
+<!--标记消息已读-->
+<script type="text/javascript">
+    function updateAllMessageIsRead() {
+        $.ajax({
+            type: "get",
+            url: "/updateAllMessageIsReadByUserId",
+            dataType: "json",
+            data: {
+                userId: userId,
+            },
+            success: function (result) {
+                console.log(result);
+                if(result){
+                    my_message();
+                }
+            }
+        })
+    }
 </script>
 </body>
 </html>

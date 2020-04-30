@@ -4,10 +4,12 @@ import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.controller.ProjectsUserController;
 import cn.edu.lingnan.projectmanagment.service.ProjectsPackageService;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
+import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -54,9 +56,10 @@ class ProjectManagmentApplicationTests {
 
     @Autowired
     ProjectsMessageServiceImpl projectsMessageService;
+
+    @Autowired
+    ProjectsUserCooperationServiceImpl projectsUserCooperationService;
     @Test
     void t1(){
-//        List<ProjectsMessage> byProjectIdAndUserId = projectsMessageService.getByProjectIdAndUserId(1, 1, 0 ,5);
-//        System.out.println(byProjectIdAndUserId);
     }
 }

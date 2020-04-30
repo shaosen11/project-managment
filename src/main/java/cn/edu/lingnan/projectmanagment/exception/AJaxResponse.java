@@ -31,6 +31,13 @@ public class AJaxResponse {
         resultBean.setData(data);
         return resultBean;
     }
+    public static AJaxResponse success(String msg){
+        AJaxResponse resultBean = new AJaxResponse();
+        resultBean.setOk(true);
+        resultBean.setCode(200);
+        resultBean.setMessage(msg);
+        return resultBean;
+    }
     public static AJaxResponse success(Object data, String msg){
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(true);

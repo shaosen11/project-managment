@@ -34,7 +34,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
     UserRecordService userRecordService;
 
     @Autowired
-    cn.edu.lingnan.projectmanagment.utils.afterLoginOrLoginOutHandler afterLoginOrLoginOutHandler;
+    cn.edu.lingnan.projectmanagment.utils.AfterLoginOrLoginOutHandler afterLoginOrLoginOutHandler;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,

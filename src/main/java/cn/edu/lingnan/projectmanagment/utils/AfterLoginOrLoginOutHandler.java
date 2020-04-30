@@ -17,7 +17,7 @@ import java.util.Date;
  * @Date 18:55 2020/3/26
  */
 @Component
-public class afterLoginOrLoginOutHandler {
+public class AfterLoginOrLoginOutHandler {
     @Autowired
     UserService userService;
 

@@ -195,7 +195,9 @@
                                         <div class="card-title">项目代码行变化</div>
                                     </div>
                                     <div class="card-body">
-                                        <div id="lindChart" style="width: 100%;height: 350px;"></div>
+                                        <div class="pull-in" style="width: 100%;height: 350px;">
+                                            <canvas id="lindChart"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -210,8 +212,8 @@
                                             <div class="row">
                                                 <div class="card-body col-md-6">
                                                     <div class="chart-container">
-                                                        <div id="devoteChart"
-                                                             style="height: 300px; margin: auto;"></div>
+                                                        <div id="devoteChart" style="height: 300px; margin: auto;">
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="card-body col-md-6">
@@ -844,7 +846,7 @@
     package_list(projectId);
 </script>
 <!--饼图-->
-<script type="text/javascript" th:inline="javascript">
+<script th:inline="javascript">
     $(function () {
         var projectId = [[${param.projectId}]];
         var pieCharts2 = echarts.init(document.getElementById("reduceChart"));
@@ -881,11 +883,9 @@
                                     }
                                 }
                             },
-                            restore: {show: true},
                             saveAsImage: {show: true}
                         }
                     },
-                    calculable: true,
                     series: [
                         {
                             name: '数量',
@@ -901,6 +901,8 @@
     $(function () {
         var projectId = [[${param.projectId}]];
         var pieCharts1 = echarts.init(document.getElementById("devoteChart"));
+        var xdata = [];
+        var ydata = [];
         $.ajax({
             type: "get",
             async: true,
@@ -908,6 +910,11 @@
             data: [],
             dataType: "json",
             success: function (result) {
+                console.log(result);
+                $(result).each(function (index, item) {
+                    xdata.push(echarts.format.formatTime('yyyy-MM-dd', item.uploadTime));
+                    ydata.push(item.codeLineNumber);
+                })
                 pieCharts1.setOption({
                     title: {
                         text: '代码行',
@@ -934,10 +941,11 @@
                                     }
                                 }
                             },
-                            restore: {show: true},
                             saveAsImage: {show: true}
                         }
                     },
+                    responsive: true,
+                    maintainAspectRatio: false,
                     calculable: true,
                     series: [
                         {
@@ -948,6 +956,7 @@
                         }
                     ]
                 });
+
             }
         })
     })
@@ -956,7 +965,7 @@
 <script th:inline="javascript">
     $(function () {
         var projectId = [[${param.projectId}]];
-        var lindCharts = echarts.init(document.getElementById("lindChart"));
+        var ctx = document.getElementById('lindChart').getContext('2d');
         var xdata = [];
         var ydata = [];
         $.ajax({
@@ -970,64 +979,64 @@
                     xdata.push(echarts.format.formatTime('yyyy-MM-dd', item.uploadTime));
                     ydata.push(item.codeLineNumber);
                 })
-                lindCharts.setOption({
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'cross'
-                        }
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            saveAsImage: {}
-                        }
-                    },
-                    xAxis: {
-                        type: 'category',
-                        boundaryGap: false,
-                        data: xdata
-                    },
-                    yAxis: {
-                        type: 'value',
-                        axisLabel: {
-                            formatter: '{value}'
-                        },
-                        axisPointer: {
-                            snap: true
-                        }
-                    },
-                    visualMap: {
-                        show: false,
-                        dimension: 0,
-                        pieces: [{
-                            lte: 6,
-                            color: "#6f42c1"
-                        }, {
-                            gt: 6,
-                            lte: 8,
-                            color: "#6f42c1"
-                        }, {
-                            gt: 8,
-                            lte: 14,
-                            color: "#6f42c1"
-                        }, {
-                            gt: 14,
-                            lte: 17,
-                            color: "#6f42c1"
-                        }, {
-                            gt: 17,
-                            color: "#6f42c1"
+                var statisticsChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: xdata,
+                        datasets: [{
+                            label: "代码行",
+                            borderColor: '#177dff',
+                            pointBackgroundColor: 'rgba(23, 125, 255, 0.2)',
+                            pointRadius: 0,
+                            backgroundColor: 'rgba(23, 125, 255, 0.1)',
+                            legendColor: '#177dff',
+                            fill: true,
+                            borderWidth: 2,
+                            data: ydata
                         }]
                     },
-                    series: [
-                        {
-                            name: '代码行',
-                            type: 'line',
-                            smooth: true,
-                            data: ydata
-                        }
-                    ]
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            bodySpacing: 4,
+                            mode: "nearest",
+                            intersect: 0,
+                            position: "nearest",
+                            xPadding: 10,
+                            yPadding: 10,
+                            caretPadding: 10
+                        },
+                        layout: {
+                            padding: {left: 15, right: 15, top: 15, bottom: 15}
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                    beginAtZero: false,
+                                    maxTicksLimit: 5,
+                                    padding: 20
+                                },
+                                gridLines: {
+                                    drawTicks: false,
+                                    display: false
+                                }
+                            }],
+                            xAxes: [{
+                                gridLines: {
+                                    zeroLineColor: "transparent"
+                                },
+                                ticks: {
+                                    padding: 20,
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                }
+                            }]
+                        },
+                    }
                 });
             }
         })
@@ -1146,7 +1155,6 @@
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
-                console.log(list[i]);
                 tableShow += '<div class="d-flex">\n' +
                     '                <div class="avatar avatar-online">\n';
                 if (list[i].projectsUser.dutyCode == 1) {
@@ -1376,8 +1384,24 @@
 <script th:inline="javascript">
     $(function () {
         var userId = [[${#authentication.principal.id}]];
-        nav_message(userId);
+        my_message();
+        my_message_need_to_do();
     })
+
+    function my_message_need_to_do() {
+        var divNumber = $('#myMessageNeedToDoNumber');
+        var divTitleName = $('#myMessageNeedToDoTitle');
+        var divName = $('#myMessageNeedToDo');
+        nav_message(userId, 1, divNumber, divTitleName, divName);
+    }
+
+    function my_message() {
+        var divName = $('#myMessage');
+        var divNumber = $('#myMessageNumber');
+        var divTitleName = $('');
+        nav_message(userId, 0, divNumber, divTitleName, divName);
+    }
+
 </script>
 <!--加载人才市场-->
 <script type="text/javascript">
@@ -1592,6 +1616,25 @@
                 ' </button>'
         }
         $(developingFunction).html(button)
+    }
+</script>
+<!--标记消息已读-->
+<script type="text/javascript">
+    function updateAllMessageIsRead() {
+        $.ajax({
+            type: "get",
+            url: "/updateAllMessageIsReadByUserId",
+            dataType: "json",
+            data: {
+                userId: userId,
+            },
+            success: function (result) {
+                console.log(result);
+                if(result){
+                    my_message();
+                }
+            }
+        })
     }
 </script>
 </body>
