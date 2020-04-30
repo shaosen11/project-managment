@@ -20,3 +20,4 @@ public class Myprojects {
     private Integer storeFlag;
     private Integer likeFlag;
 }
+

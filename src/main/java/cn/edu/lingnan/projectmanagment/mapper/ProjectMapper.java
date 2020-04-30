@@ -132,3 +132,4 @@ public interface ProjectMapper {
      */
     Integer countProjectsNumberByType(String type);
 }
+

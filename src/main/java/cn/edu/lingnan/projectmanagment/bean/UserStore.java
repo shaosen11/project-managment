@@ -12,3 +12,4 @@ public class UserStore {
     private Integer deleteFlag;
     private Date storeTime;
 }
+

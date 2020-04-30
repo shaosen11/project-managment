@@ -28,3 +28,4 @@ public interface MessageMapper {
      */
     boolean insert(Message message);
 }
+

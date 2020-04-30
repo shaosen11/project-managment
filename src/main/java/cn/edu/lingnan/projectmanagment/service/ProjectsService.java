@@ -129,3 +129,4 @@ public interface ProjectsService {
      */
     Integer countProjectsNumberByType(String type);
 }
+

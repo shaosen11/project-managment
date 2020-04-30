@@ -24,3 +24,4 @@ public interface MessageService {
      */
     boolean insert(Message message);
 }
+

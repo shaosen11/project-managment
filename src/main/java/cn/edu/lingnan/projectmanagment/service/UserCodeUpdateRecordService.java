@@ -17,3 +17,4 @@ public interface UserCodeUpdateRecordService {
      */
     List<UserCodeUpdateRecord> getAllByUserId(Integer userId);
 }
+

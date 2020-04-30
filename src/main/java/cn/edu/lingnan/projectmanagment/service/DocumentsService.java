@@ -30,3 +30,4 @@ public interface DocumentsService {
 
     boolean undo(Integer id);
 }
+

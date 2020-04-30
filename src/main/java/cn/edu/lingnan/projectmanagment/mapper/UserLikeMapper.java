@@ -39,3 +39,4 @@ public interface UserLikeMapper {
      */
     Integer countProjectBeLiked(Integer id);
 }
+

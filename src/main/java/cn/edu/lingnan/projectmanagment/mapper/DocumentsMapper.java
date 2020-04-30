@@ -35,3 +35,4 @@ public interface DocumentsMapper {
 
     boolean undo(Integer id);
 }
+

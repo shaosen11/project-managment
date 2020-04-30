@@ -19,3 +19,4 @@ public interface ProjectsMessageTypeMapper {
      */
     ProjectsMessageType getById(Integer id);
 }
+

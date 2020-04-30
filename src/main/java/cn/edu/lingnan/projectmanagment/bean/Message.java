@@ -21,3 +21,4 @@ public class Message {
     private Integer isRead;
     private Integer deleteFlag;
 }
+

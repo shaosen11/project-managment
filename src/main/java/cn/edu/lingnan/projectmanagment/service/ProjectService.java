@@ -69,3 +69,4 @@ public interface ProjectService {
      */
     Projects getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
 }
+

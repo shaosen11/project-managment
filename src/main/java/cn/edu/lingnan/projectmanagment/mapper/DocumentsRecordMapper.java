@@ -31,3 +31,4 @@ public interface DocumentsRecordMapper {
 
     List<DocumentsRecord> getDocumentsRecordPageByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize);
 }
+

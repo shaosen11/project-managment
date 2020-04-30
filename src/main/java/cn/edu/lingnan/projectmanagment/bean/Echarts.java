@@ -14,3 +14,4 @@ public class Echarts {
         this.value = num;
     }
 }
+

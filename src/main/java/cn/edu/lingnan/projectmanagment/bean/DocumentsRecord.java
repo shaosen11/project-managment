@@ -20,3 +20,4 @@ public class DocumentsRecord {
     private MyUserDetails myUserDetails;
     private ProjectsUser projectsUser;
 }
+

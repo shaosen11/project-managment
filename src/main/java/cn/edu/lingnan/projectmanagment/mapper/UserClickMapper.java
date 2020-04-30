@@ -39,3 +39,4 @@ public interface UserClickMapper {
      */
     Integer countProjectByClick(Integer id);
 }
+

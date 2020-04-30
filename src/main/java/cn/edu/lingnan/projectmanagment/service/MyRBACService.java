@@ -15,3 +15,4 @@ public interface MyRBACService {
      */
     boolean hasPermission(HttpServletRequest request, Authentication authentication);
 }
+

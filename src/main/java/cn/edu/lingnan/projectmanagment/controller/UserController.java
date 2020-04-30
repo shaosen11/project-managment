@@ -337,3 +337,4 @@ public class UserController {
         return userService.getMyUserDetailsByUserId(userId);
     }
 }
+

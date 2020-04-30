@@ -126,3 +126,4 @@ public interface UserService {
      */
     MyUserDetails getMyUserDetailsByUserId(Integer userId);
 }
+

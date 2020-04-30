@@ -12,3 +12,4 @@ public class ProjectsUserDuty {
     private Integer id;
     private String dutyName;
 }
+

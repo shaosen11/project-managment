@@ -15,3 +15,4 @@ public interface ProjectsMessageTypeService {
      */
     ProjectsMessageType getById(Integer id);
 }
+

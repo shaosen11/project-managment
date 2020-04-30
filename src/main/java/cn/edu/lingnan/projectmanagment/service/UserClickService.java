@@ -35,3 +35,4 @@ public interface UserClickService {
      */
     Integer countProjectByClick(Integer id);
 }
+

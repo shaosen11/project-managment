@@ -12,3 +12,4 @@ public class UserLike {
     private Integer deleteFlag;
     private Date clickTime;
 }
+

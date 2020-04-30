@@ -123,3 +123,4 @@ public interface ProjectUserMapper {
      */
     List<ProjectsUser> getByUserId(Integer userId);
 }
+

@@ -31,3 +31,4 @@ public class CaptchaCode {
         return LocalDateTime.now().isAfter(expireTime);
     }
 }
+

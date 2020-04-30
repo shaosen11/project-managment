@@ -14,3 +14,4 @@ public class MessageType {
     private String type;
     private String background;
 }
+

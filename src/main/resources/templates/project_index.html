@@ -92,7 +92,7 @@
                                         <li class="nav-item" style="float: left">
                                             <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true" onclick="showTable('theSecondTodayAndWeekShow','theFirsTodayAndWeekShow','allProjectsType','projectsRecommendation')">推荐项目</a>
                                         </li>
-                                        <li class="nav-item" style="float: right">
+                                        <li class="nav-item" style="float: right;margin-left: 65%">
                                             <a class="nav-link" id="pills-four-tab-nobd" data-toggle="pill" href="#pills-four-nobd" role="tab" aria-controls="pills-four-nobd" aria-selected="false" onclick="showTable('theFirsTodayAndWeekShow','theSecondTodayAndWeekShow','allProjectsType1','projectsRecommendation1')">更多</a>
                                         </li>
                                     </ul>
@@ -494,6 +494,14 @@
         document.execCommand("Copy"); // 执行浏览器复制命令
         alert("已复制好，可贴粘。");
     }
+
+    function copyUrl4()
+    {
+        var Url2=document.getElementById("copyContent3");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("已复制好，可贴粘。");
+    }
 </script>
 
 <script th:inline="javascript" type="text/javascript">
@@ -727,14 +735,14 @@
                     '    <div class="row">\n' +
                     '    <div class="col-sm-12">\n' +
                     '    <div class="form-group form-group-default">\n' +
-                    '    <input id="copyContent2" type="text" class="form-control" placeholder="fill name" value="'+copyLink+'">\n' +
+                    '    <input id="copyContent3" type="text" class="form-control" placeholder="fill name" value="'+copyLink+'">\n' +
                     '    </div>\n' +
                     '    </div>\n' +
                     '    </div>\n' +
                     '    </form>\n' +
                     '    </div>\n' +
                     '    <div style="text-align:center; vertical-align:middle;">\n' +
-                    '    <button type="button" id="addRowButton" class="btn btn-primary" onClick="copyUrl3()">复制链接</button>\n' +
+                    '    <button type="button" id="addRowButton" class="btn btn-primary" onClick="copyUrl4()">复制链接</button>\n' +
                     '    </div>\n' +
                     '    <div class="modal-footer no-bd"></div>\n' +
                     '    </div>\n' +
@@ -760,10 +768,10 @@
        // alert(111);
         var functionPage = $('#allDiv');
         var divName = $('#allPage');
-        addDocumentRecordPage(functionPage, divName);
+        addProjectsRecordPage(functionPage, divName);
     })
 
-    function addDocumentRecordPage(div, ul) {
+    function addProjectsRecordPage(div, ul) {
         pageStart();//开始分页
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
@@ -774,7 +782,7 @@
                     page: '1',
                 }, //参数：当前页为1
                 success: function (data) {
-                    appendDocumentRecordHtml(data.list)//处理第一页的数据
+                    appendProjectsRecordHtml(data.list)//处理第一页的数据
                     var options = {//根据后台返回的分页相关信息，设置插件参数
                         bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
                         currentPage: data.page, //当前页数
@@ -803,7 +811,7 @@
                                     "page": page,
                                 },
                                 success: function (data) {
-                                    appendDocumentRecordHtml(data.list);//处理数据
+                                    appendProjectsRecordHtml(data.list);//处理数据
                                 }
                             });
                         }
@@ -813,7 +821,7 @@
             });
         }
 
-        function appendDocumentRecordHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        function appendProjectsRecordHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
