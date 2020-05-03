@@ -51,5 +51,13 @@ public interface MessageMapper {
      * @return
      */
     boolean update(Message message);
+
+    /**
+     * 标记消息为已读
+     *
+     * @param messageId
+     * @return
+     */
+    boolean updateMessageIsReadByMessageId(Integer messageId, Integer isRead);
 }
 

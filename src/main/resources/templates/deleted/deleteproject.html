@@ -190,156 +190,18 @@
 <script th:src="@{/assets/js/formcheck.js}"></script>
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
-<script >
-    $(document).ready(function() {
-        $('#basic-datatables').DataTable({
-        });
 
-        $('#multi-filter-select').DataTable( {
-            "pageLength": 5,
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        } );
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }
-        });
-        // Add Row
-        $('#add-row').DataTable({
-            "pageLength": 5,
-        });
-
-        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $('#addRowButton').click(function() {
-            $('#add-row').dataTable().fnAddData([
-                $("#addName").val(),
-                $("#addPosition").val(),
-                $("#addOffice").val(),
-                action
-            ]);
-            $('#addRowModal').modal('hide');
-
-        });
-    });
-
-    //还原项目
-    function reductionProject(projectId){
-        swal({
-            icon : "warning",
-            title: "您确定要还原该项目吗?",
-            text: "请谨慎操作！",
-            type: "warning",
-            buttons:{
-                cancel: {
-                    visible: true,
-                    text : '取消',
-                    className: 'btn btn-danger'
-                },
-                confirm: {
-                    text : '确定还原',
-                    className : 'btn btn-success'
-                }
-            },
-            closeOnConfirm: false,
-        }).then(
-            function (isConfirm) {
-                if (!isConfirm) return;
-                $.ajax(
-                    {
-                        type: "POST",
-                        url: "/reduction_project",
-                        data: {"id": projectId},
-                        dataType: "json",
-                        success: function (data) {
-                            if (data) {
-                                swal("还原成功！", {
-                                    icon : "success",
-                                    buttons: false,
-                                    timer: 1500,
-                                });
-                                setTimeout(function(){
-                                    location.href = "/del_project_list";
-                                },1500);
-                            }
-                            else {
-                                swal("还原失败！",{
-                                    icon: "error",
-                                    buttons: {
-                                        confirm: {
-                                            className: 'btn btn-danger'
-                                        }
-                                    }
-                                })
-                            }
-                        }
-                    }
-                );
-            }
-        );
-    }
-</script>
-<script type="text/javascript" th:inline="javascript">
-    //加载用户所有项目
-    var userId = [[${#authentication.principal.id}]];
-    user_prjects(userId);
-</script>
-<!--加载消息-->
-<script th:inline="javascript">
-    $(function () {
-        var userId = [[${#authentication.principal.id}]];
-        my_message();
-        my_message_need_to_do();
-    })
-
-    function my_message_need_to_do() {
-        var divNumber = $('#myMessageNeedToDoNumber');
-        var divTitleName = $('#myMessageNeedToDoTitle');
-        var divName = $('#myMessageNeedToDo');
-        nav_message(userId, 1, divNumber, divTitleName, divName);
-    }
-
-    function my_message() {
-        var divName = $('#myMessage');
-        var divNumber = $('#myMessageNumber');
-        var divTitleName = $('');
-        nav_message(userId, 0, divNumber, divTitleName, divName);
-    }
-
-</script>
-<!--标记消息已读-->
+<!--加载退出登录公共js-->
+<script th:src="@{/assets/js/nav-loginOut.js}"></script>
+<!--加载导航栏消息公共js-->
+<script th:src="@{/assets/js/nav-message.js}"></script>
+<!--加载侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider.js}"></script>
+<!--初始化公共js的userId-->
 <script type="text/javascript">
-    function updateAllMessageIsRead() {
-        $.ajax({
-            type: "get",
-            url: "/updateAllMessageIsReadByUserId",
-            dataType: "json",
-            data: {
-                userId: userId,
-            },
-            success: function (result) {
-                console.log(result);
-                if(result){
-                    my_message();
-                }
-            }
-        })
-    }
+    var userId = [[${#authentication.principal.id}]];
+    initJsUserId(userId);
 </script>
+
 </body>
 </html>

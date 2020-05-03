@@ -9,24 +9,28 @@ import java.util.List;
 public interface ProjectUserService {
     /**
      * 查询所有项目用户信息
+     *
      * @return
      */
     List<ProjectsUser> getProjectUserList();
 
     /**
      * 通过Id查询
+     *
      * @return
      */
     ProjectsUser getById(Integer id);
 
     /**
      * 通过Id查询已注销的记录
+     *
      * @return
      */
     ProjectsUser getDelById(Integer id);
 
     /**
      * 添加项目用户信息
+     *
      * @param projectsUser
      * @return
      */
@@ -34,36 +38,42 @@ public interface ProjectUserService {
 
     /**
      * 删除项目用户信息
+     *
      * @return
      */
     boolean deleteProjectUser(Integer id);
 
     /**
      * 删除项目用户信息通过项目id
+     *
      * @return
      */
     boolean deleteProjectUserByProjectsId(Integer id);
 
     /**
      * 修改项目用户信息
+     *
      * @return
      */
     boolean editProjectUser(ProjectsUser projectsUser);
 
     /**
      * 还原项目用户信息
+     *
      * @return
      */
     boolean reductionProjectUser(Integer id);
 
     /**
      * 查询所有已注销项目用户信息
+     *
      * @return
      */
     List<ProjectsUser> getDelProjectUserList();
 
     /**
      * 通过用户Id和项目Id查询用户
+     *
      * @param userId
      * @param projectId
      * @return
@@ -72,6 +82,7 @@ public interface ProjectUserService {
 
     /**
      * 获取代码贡献量
+     *
      * @param projectId
      * @return
      */
@@ -79,6 +90,7 @@ public interface ProjectUserService {
 
     /**
      * 获取代码上传次数
+     *
      * @param projectId
      * @return
      */
@@ -86,6 +98,7 @@ public interface ProjectUserService {
 
     /**
      * 查询项目总共人数
+     *
      * @param projectId
      * @return
      */
@@ -93,6 +106,7 @@ public interface ProjectUserService {
 
     /**
      * 通过项目id查找所有项目成员
+     *
      * @param projectId
      * @return
      */
@@ -100,6 +114,7 @@ public interface ProjectUserService {
 
     /**
      * 查询项目总共人数
+     *
      * @param projectId
      * @return
      */
@@ -107,6 +122,7 @@ public interface ProjectUserService {
 
     /**
      * 通过项目id查找不在项目的成员
+     *
      * @param projectId
      * @return
      */
@@ -114,9 +130,10 @@ public interface ProjectUserService {
 
     /**
      * 通过userId查询
+     *
      * @return
      */
-    List<ProjectsUser> getByUserId(Integer userId);
+    List<ProjectsUser> getAllProjectByUserId(Integer userId);
 
 }
 

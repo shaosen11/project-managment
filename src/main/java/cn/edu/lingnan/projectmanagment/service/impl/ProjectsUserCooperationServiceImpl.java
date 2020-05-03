@@ -6,6 +6,8 @@ import cn.edu.lingnan.projectmanagment.service.ProjectsUserCooperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author shaosen
  * @Description //TODO
@@ -17,8 +19,8 @@ public class ProjectsUserCooperationServiceImpl implements ProjectsUserCooperati
     ProjectsUserCooperationMapper projectsUserCooperationMapper;
 
     @Override
-    public ProjectsUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInvite(Integer projectId, Integer inProjectUserId, Integer notInProjectUserId, Integer invite) {
-        return projectsUserCooperationMapper.getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInvite(projectId, inProjectUserId, notInProjectUserId, invite);
+    public ProjectsUserCooperation getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer inProjectUserId, Integer notInProjectUserId, Integer inviteFlag, Integer finishFlag) {
+        return projectsUserCooperationMapper.getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish(projectId, inProjectUserId, notInProjectUserId, inviteFlag, finishFlag);
     }
 
     @Override
@@ -29,5 +31,15 @@ public class ProjectsUserCooperationServiceImpl implements ProjectsUserCooperati
     @Override
     public boolean update(ProjectsUserCooperation projectsUserCooperation) {
         return projectsUserCooperationMapper.update(projectsUserCooperation);
+    }
+
+    @Override
+    public ProjectsUserCooperation getById(Integer id) {
+        return projectsUserCooperationMapper.getById(id);
+    }
+
+    @Override
+    public List<ProjectsUserCooperation> getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(Integer projectId, Integer notInProjectUserId, Integer invite, Integer finish) {
+        return projectsUserCooperationMapper.getByProjectIdAndNotInProjectUserIdAndInviteAndFinish(projectId, notInProjectUserId, invite, finish);
     }
 }

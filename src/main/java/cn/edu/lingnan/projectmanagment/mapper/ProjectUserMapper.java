@@ -121,6 +121,6 @@ public interface ProjectUserMapper {
      * 通过userId查询
      * @return
      */
-    List<ProjectsUser> getByUserId(Integer userId);
+    List<ProjectsUser> getAllProjectByUserId(Integer userId);
 }
 

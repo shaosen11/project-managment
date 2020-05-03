@@ -2,6 +2,8 @@ package cn.edu.lingnan.projectmanagment.bean;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class ProjectsUser {
     private Integer id;
@@ -16,5 +18,6 @@ public class ProjectsUser {
     private MyUserDetails myUserDetails;
     private ProjectsUserDuty projectsUserDuty;
     private Projects projects;
+    private Date joinTime;
 }
 

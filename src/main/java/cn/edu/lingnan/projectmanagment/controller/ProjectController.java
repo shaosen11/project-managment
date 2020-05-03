@@ -38,6 +38,9 @@ public class ProjectController {
     @Autowired
     DocumentsRecordServiceImpl documentsRecordService;
 
+    @Autowired
+    ProjectsCodeLineServiceImpl projectsCodeLineService;
+
     //查询一条项目信息
     @GetMapping("/get_by_id")
     public String getById(Integer id,Model model){
@@ -181,14 +184,10 @@ public class ProjectController {
 
     @PostMapping("/projects")
     public String newprojects(Projects projects){
-        System.out.println("新建项目:::" + projects);
         //设置项目初始状态
         projects.setSchedule("未开始");
         //插入数据库
         projectService.addProject(projects);
-        //查找项目ID
-        projects = projectService.getNewProjectByProject(projects.getName(), projects.getChargeUserId(), projects.getCharacterization());
-        System.out.println(projects);
         //插入projectuser表
         ProjectsUser projectsUser = new ProjectsUser();
         projectsUser.setProjectsId(projects.getId());
@@ -197,7 +196,7 @@ public class ProjectController {
         //插入project_code_line表
         ProjectsCodeLine projectsCodeLine = new ProjectsCodeLine();
         projectsCodeLine.setProjectsId(projects.getId());
-        projectsCodeLine.setUploadTime(new Date());
+        projectsCodeLineService.insert(projectsCodeLine);
         Map<String,Object> pathMap = new HashMap<>();
         pathMap.put("projectId", projects.getId());
         pathMap.put("userId", projects.getChargeUserId());

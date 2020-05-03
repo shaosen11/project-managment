@@ -58,12 +58,14 @@
             <if test="characterization != null">characterization = #{characterization},</if>
             <if test="storeCount != null">store_count = #{storeCount},</if>
             <if test="likeCount != null">like_count = #{likeCount},</if>
+            <if test="clickCount != null">click_count = #{clickCount},</if>
+            <if test="userCount != null">user_count = #{userCount},</if>
         </trim>
         where id = #{id}
     </update>
 
-    <!--插入一条记录-->
-    <insert id="addProject">
+    <!--插入一个项目-->
+    <insert id="addProject" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         insert into projects
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">name,</if>
@@ -73,9 +75,12 @@
             <if test="schedule != null">schedule,</if>
             <if test="functionPoints != null">function_points,</if>
             <if test="completedFunctionPoints != null">completed_function_points,</if>
-            <if test="updateCount != null">update_count,</if>
             <if test="type != null">type,</if>
             <if test="characterization != null">characterization,</if>
+            <if test="storeCount != null">store_count,</if>
+            <if test="likeCount != null">like_count,</if>
+            <if test="clickCount != null">click_count,</if>
+            <if test="userCount != null">user_count,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -86,9 +91,12 @@
             <if test="schedule != null">#{schedule},</if>
             <if test="functionPoints != null">#{functionPoints},</if>
             <if test="completedFunctionPoints != null">#{completedFunctionPoints},</if>
-            <if test="updateCount != null">#{updateCount},</if>
             <if test="type != null">#{type},</if>
             <if test="characterization != null">#{characterization},</if>
+            <if test="storeCount != null">#{storeCount},</if>
+            <if test="likeCount != null">#{likeCount},</if>
+            <if test="clickCount != null">#{clickCount},</if>
+            <if test="userCount != null">#{userCount},</if>
         </trim>
     </insert>
 
@@ -102,10 +110,6 @@
         END
         where enabled = 1 and id = #{id}
     </update>
-
-    <select id="getNewProjectByProject" resultType="Projects">
-       select * from projects where name = #{projectName} and charge_user_id = #{chargeUserId} and characterization = #{projectCharacterization}
-    </select>
 
     <!--查找所有项目-->
     <select id="getProject" resultType="ProjectsRecommendation">

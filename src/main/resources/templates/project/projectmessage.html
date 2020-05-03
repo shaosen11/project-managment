@@ -47,134 +47,85 @@
         <!-- End Navbar -->
     </div>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-wrapper scrollbar-inner">
-            <div class="sidebar-background"></div>
-            <div class="sidebar-content">
-                <div class="user">
-                    <div class="avatar-sm float-left mr-2">
-                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..."
-                             class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
-                    </div>
-                    <div class="info">
-                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                                    <span th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">
-									用户名
-									<span class="user-level">Administrator</span>
-									<span class="caret"></span>
-								</span>
-                        </a>
-                        <div class="clearfix"></div>
-
-                        <div class="collapse in" id="collapseExample">
-                            <ul class="nav">
-                                <li>
-                                    <a th:href="@{/userprofile}">
-                                        <span class="link-collapse">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#edit">
-                                        <span class="link-collapse">Edit Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#settings">
-                                        <span class="link-collapse">Settings</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a th:href="index.html">
-                            <i class="fas fa-home"></i>
-                            <p>主页</p>
-                        </a>
-                    </li>
-                    <li class="nav-section">
-							<span class="sidebar-mini-icon">
-								<i class="fa fa-ellipsis-h"></i>
-							</span>
-                        <h4 class="text-section">infromation</h4>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/projectmessage(projectId=${param.projectId},userId=${#authentication.principal.id})}">
-                            <i class="far fa-comment-dots"></i>
-                            <p>项目消息</p>
-                            <span class="badge badge-count">5</span>
-                        </a>
-                    </li>
-                    <li class="nav-section">
-							<span class="sidebar-mini-icon">
-								<i class="fa fa-ellipsis-h"></i>
-							</span>
-                        <h4 class="text-section">content</h4>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="collapse" href="#base1">
-                            <i class="fas fa-box"></i>
-                            <p>项目</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="base1">
-                            <ul class="nav nav-collapse" id="projectsul"></ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/project_user_view(projectId=${param.projectId})}">
-                            <i class="fas fa-users"></i>
-                            <p>合作伙伴</p>
-                        </a>
-                    </li>
-                    <li class="nav-section">
-							<span class="sidebar-mini-icon">
-								<i class="fa fa-ellipsis-h"></i>
-							</span>
-                        <h4 class="text-section">package</h4>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="modal" data-target="#addpackage">
-                            <i class="fas fa-plus-square"></i>
-                            <p>new package</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="modal" data-target="#uploadfile">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>upload file</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="collapse" href="#base2">
-                            <i class="fas fa-folder"></i>
-                            <p>All Package</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="base2">
-                            <ul class="nav nav-collapse" id="packageul">
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <div th:replace="commom/bar :: projectsidebar"></div>
+    <!-- End Sidebar -->
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">项目消息</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a href="#">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Base</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Panels</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd" id="pills-tab-without-border"
+                            role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-person-tab-nobd" data-toggle="pill"
+                                   href="#pills-person-nobd" role="tab" aria-controls="pills-person-nobd"
+                                   aria-selected="true">Person</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-project-tab-nobd" data-toggle="pill"
+                                   href="#pills-project-nobd" role="tab" aria-controls="pills-project-nobd"
+                                   aria-selected="false">Project</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-todo-tab-nobd" data-toggle="pill"
+                                   href="#pills-todo-nobd" role="tab" aria-controls="pills-todo-nobd"
+                                   aria-selected="false">Todo</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
                 <!-- TimeLine -->
-                <h4 class="page-title">项目消息</h4>
                 <div class="row">
                     <div class="col-md-12">
 
-                        <ul class="timeline" id="messageUL">
-                        </ul>
-                        <div class="text-right mt-3 mb-3">
-                            <button class="btn btn-secondary" onclick="appendMoreMessageHtml()">加载更多</button>
+                        <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                            <div class="tab-pane fade show active" id="pills-person-nobd" role="tabpanel"
+                                 aria-labelledby="pills-person-tab-nobd">
+                                <ul class="timeline" id="personMessageUl">
+                                </ul>
+                                <div class="text-right mt-3 mb-3">
+                                    <button class="btn btn-secondary" onclick="appendMorePersonMessageHtml()">加载更多
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-project-nobd" role="tabpanel"
+                                 aria-labelledby="pills-project-tab-nobd">
+                                <ul class="timeline" id="projectMessageUl">
+                                </ul>
+                                <div class="text-right mt-3 mb-3">
+                                    <button class="btn btn-secondary" onclick="appendMoreProjectMessageHtml()">加载更多
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-todo-nobd" role="tabpanel"
+                                 aria-labelledby="pills-todo-tab-nobd">
+                                <p>这里放着待办事务</p>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -182,9 +133,10 @@
     </div>
 </div>
 
+<!--model框-->
 <div th:replace="commom/bar :: uploadfilemodel"></div>
-
 <div th:replace="commom/bar :: newprojectpackage"></div>
+
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
 <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
@@ -207,105 +159,36 @@
 <script th:src="@{/assets/js/myjs.js}"></script>
 <script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
 
-<!--加载用户所有项目-->
-<script type="text/javascript" th:inline="javascript">
-    var userId = [[${#authentication.principal.id}]];
-    user_prjects(userId);
-</script>
-<!--加载包结构-->
-<script type="text/javascript" th:inline="javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
-    projects_package(projectId, userId);
-</script>
-<!--包列表-->
-<script type="text/javascript" th:inline="javascript">
-    var projectId = [[${param.projectId}]];
-    package_list(projectId);
-</script>
-<!--检查包名-->
-<script type="text/javascript">
-    $(function () {
-            $("#packageName").keyup(function () {
-                setTimeout('checkPackage()', 1000);
-            })
-        }
-    )
-    //检查包名是否存在
-    var packageFlag = false;
-
-    function checkPackage() {
-        var projectId = $("#newPackageProjectId").val();
-        var packageName = $("#packageName").val();
-        var packageNamecss = $("#packageName");
-        $.ajax({
-            type: "get",
-            url: "projectsPackage",
-            data: {
-                "projectId": projectId,
-                "packageName": packageName
-            },
-            success: function (json) {
-                if (!json) {
-                    packageNamecss.css('borderColor', 'red');
-                    packageFlag = false;
-                } else {
-                    packageNamecss.css('borderColor', '');
-                    packageFlag = true;
-                }
-            }
-        })
-    }
-
-    //检查注册页面是否填写完成
-    function submitPackageCheck() {
-        if (!packageFlag) {
-            swal("包名已存在，换个名字试试", {
-                buttons: false,
-                timer: 1500,
-            });
-            return false;
-        }
-    }
-</script>
-<!--加载消息-->
-<script th:inline="javascript">
-    $(function () {
-        var userId = [[${#authentication.principal.id}]];
-        my_message();
-        my_message_need_to_do();
-    })
-
-    function my_message_need_to_do() {
-        var divNumber = $('#myMessageNeedToDoNumber');
-        var divTitleName = $('#myMessageNeedToDoTitle');
-        var divName = $('#myMessageNeedToDo');
-        nav_message(userId, 1, divNumber, divTitleName, divName);
-    }
-
-    function my_message() {
-        var divName = $('#myMessage');
-        var divNumber = $('#myMessageNumber');
-        var divTitleName = $('');
-        nav_message(userId, 0, divNumber, divTitleName, divName);
-    }
-
-</script>
-<!--加载项目消息-->
+<!--在家导航栏退出公共js-->
+<script th:src="@{/assets/js/nav-loginOut.js}"></script>
+<!--加载导航栏消息公共js-->
+<script th:src="@{/assets/js/nav-message.js}"></script>
+<!--加载侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider.js}"></script>
+<!--加载项目包侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider-project.js}"></script>
+<!--初始化公共js的userId和projectId-->
 <script type="text/javascript">
     var projectId = [[${param.projectId}]];
     var userId = [[${#authentication.principal.id}]];
-    var offset = 0;
-    var pageSize = 5;
-    var messageIndex = 0;
+    initJsUserIdAndProjectId(userId, projectId);
+</script>
+
+<!--加载项目个人消息-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    var personOffset = 0;
+    var personPageSize = 5;
+    var personMessageIndex = 0;
     $(function () {
-        ajaxAppendMessage(projectId, userId, offset, pageSize);
+        ajaxAppendPersonMessage(projectId, userId, personOffset, personPageSize);
     })
 
-    function ajaxAppendMessage(projectId, userId, offset, pageSize) {
+    function ajaxAppendPersonMessage(projectId, userId, offset, pageSize) {
         $.ajax({
             type: "get",
-            url: "/project_user_message",
+            url: "/project_user_message_person",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -314,15 +197,85 @@
                 pageSize: pageSize
             },
             success: function (json) {
-                appendMessageHtml(json);
+                appendPersonMessageHtml(json);
             }
         })
     }
 
-    function appendMessageHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    //此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    function appendPersonMessageHtml(list) {
         var messageLi = '';
-        for (var i = 0; i < list.length; i++, messageIndex++) {
-            if (messageIndex % 2 == 0) {
+        for (var i = 0; i < list.length; i++, personMessageIndex++) {
+            if (personMessageIndex % 2 == 0) {
+                messageLi += ' <li>'
+            } else {
+                messageLi += ' <li class="timeline-inverted">'
+            }
+            messageLi += '                       <div class="timeline-badge ' + list[i].projectsMessageType.background + '">' +
+                '                                    <i class="fas ' + list[i].projectsMessageType.icon + '"></i>' +
+                '                                </div>\n' +
+                '                                <div class="timeline-panel" onclick="updatePersonMessageIsRead(' + list[i].id + ')">\n' +
+                '                                    <div class="timeline-heading">\n' +
+                '                                        <h4 class="timeline-title">'
+            if (list[i].isRead == 1) {
+                messageLi += '<span style="color: red" id="PersonMessageIsReadSpan' + list[i].id + '">*</span>\n'
+            }
+            messageLi += '                                  ' + list[i].projectsMessageType.type + ' </h4>\n' +
+                '                                        <p>\n' +
+                '                                            <small class="text-muted"> ' + list[i].time + '\n' +
+                '                                            </small>\n' +
+                '                                        </p>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="timeline-body">\n' +
+                '                                        <p>' + list[i].message + '</p>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </li>'
+        }
+        $("#personMessageUl").append(messageLi);
+    }
+</script>
+<!--加载更多个人消息-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+
+    function appendMorePersonMessageHtml() {
+        personOffset = personOffset + personPageSize;
+        personPageSize = personPageSize + 10;
+        ajaxAppendPersonMessage(projectId, userId, personOffset, personPageSize);
+    }
+</script>
+<!--加载项目消息-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var offset = 0;
+    var pageSize = 5;
+    var projectMessageIndex = 0;
+    $(function () {
+        ajaxAppendProjectMessage(projectId, offset, pageSize);
+    })
+
+    function ajaxAppendProjectMessage(projectId, offset, pageSize) {
+        $.ajax({
+            type: "get",
+            url: "/project_user_message_project",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                offset: offset,
+                pageSize: pageSize
+            },
+            success: function (json) {
+                appendProjectMessageHtml(json);
+            }
+        })
+    }
+
+    function appendProjectMessageHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var messageLi = '';
+        for (var i = 0; i < list.length; i++, projectMessageIndex++) {
+            if (projectMessageIndex % 2 == 0) {
                 messageLi += ' <li>'
             } else {
                 messageLi += ' <li class="timeline-inverted">'
@@ -342,33 +295,42 @@
                 '                                </div>\n' +
                 '                            </li>'
         }
-        $("#messageUL").append(messageLi);
+        $("#projectMessageUl").append(messageLi);
     }
 </script>
-<!--加载更多消息-->
+<!--加载更多项目消息-->
 <script type="text/javascript">
     var projectId = [[${param.projectId}]];
     var userId = [[${#authentication.principal.id}]];
-    function appendMoreMessageHtml() {
-        offset = offset + pageSize;
-        pageSize = pageSize + 10;
-        ajaxAppendMessage(projectId, userId, offset, pageSize);
+
+    function appendMoreProjectMessageHtml() {
+        personOffset = personOffset + personPageSize;
+        personPageSize = personPageSize + 10;
+        ajaxAppendProjectMessage(projectId, personOffset, personPageSize);
     }
 </script>
-<!--标记消息已读-->
+<!--标志项目个人消息已读-->
 <script type="text/javascript">
-    function updateAllMessageIsRead() {
+    function updatePersonMessageIsRead(projectMessageId) {
         $.ajax({
             type: "get",
-            url: "/updateAllMessageIsReadByUserId",
+            url: "/updateProjectMessageIsReadByProjectMessageId",
             dataType: "json",
             data: {
-                userId: userId,
+                projectMessageId: projectMessageId,
             },
             success: function (result) {
-                console.log(result);
-                if(result){
-                    my_message();
+                if (result.ok) {
+                    $("#PersonMessageIsReadSpan"+projectMessageId).html("")
+                } else {
+                    swal("系统出现错误！", result.message, {
+                        icon : "error",
+                        buttons: {
+                            confirm: {
+                                className : 'btn btn-danger'
+                            }
+                        },
+                    });
                 }
             }
         })

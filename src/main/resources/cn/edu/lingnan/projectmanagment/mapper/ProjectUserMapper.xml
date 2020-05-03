@@ -55,6 +55,7 @@
         <trim suffixOverrides=",">
             <if test="projectsId != null">projects_id = #{projectsId},</if>
             <if test="userId != null">user_id = #{userId},</if>
+            <if test="dutyCode != null">duty_code = #{dutyCode},</if>
             <if test="codeDevoteLine != null">code_devote_line = #{codeDevoteLine},</if>
             <if test="codeUpdate != null">code_update = #{codeUpdate},</if>
         </trim>
@@ -67,15 +68,19 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectsId != null">projects_id,</if>
             <if test="userId != null">user_id,</if>
+            <if test="dutyCode != null">duty_code,</if>
             <if test="codeDevoteLine != null">code_devote_line,</if>
             <if test="codeUpdate != null">code_update,</if>
+            <if test="joinTime != null">join_time,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="projectsId != null">#{projectsId},</if>
             <if test="userId != null">#{userId},</if>
+            <if test="dutyCode != null">#{dutyCode},</if>
             <if test="codeDevoteLine != null">#{codeDevoteLine}</if>
             <if test="codeUpdate != null">#{codeUpdate},</if>
+            <if test="joinTime != null">#{joinTime},</if>
         </trim>
     </insert>
 
@@ -161,7 +166,7 @@
              limit #{offset},#{pageSize}
     </select>
 
-    <select id="getByUserId" resultMap="ProjectsUserList">
+    <select id="getAllProjectByUserId" resultMap="ProjectsUserList">
         select * from projects_user where delete_flag = 1 and user_id = #{userId}
     </select>
 </mapper>

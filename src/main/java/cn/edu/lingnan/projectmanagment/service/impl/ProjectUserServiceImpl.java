@@ -96,8 +96,8 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     }
 
     @Override
-    public List<ProjectsUser> getByUserId(Integer userId) {
-        return projectUserMapper.getByUserId(userId);
+    public List<ProjectsUser> getAllProjectByUserId(Integer userId) {
+        return projectUserMapper.getAllProjectByUserId(userId);
     }
 
 

@@ -713,71 +713,40 @@
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <script th:src="@{/assets/js/demo.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
-<!--加载用户所有项目-->
-<script type="text/javascript" th:inline="javascript">
-    var userId = [[${#authentication.principal.id}]];
-    user_prjects(userId);
-</script>
-<script>
-    $(document).ready(function () {
-        var content = {};
-        content.message = '你有xxx条消息待处理';
-        content.title = '提醒';
-        content.icon = 'flaticon-alarm-1';
-        content.url = 'index.html';
-        content.target = '_blank';
 
-        $.notify(content, {
-            type: 'info',
-            placement: {
-                from: 'bottom',
-                align: 'right'
-            },
-            time: 1000,
-        });
-    })
-</script>
-<!--加载消息-->
-<script th:inline="javascript">
-    $(function () {
-        my_message();
-        my_message_need_to_do();
-    })
-
-    function my_message_need_to_do() {
-        var divNumber = $('#myMessageNeedToDoNumber');
-        var divTitleName = $('#myMessageNeedToDoTitle');
-        var divName = $('#myMessageNeedToDo');
-        nav_message(userId, 1, divNumber, divTitleName, divName);
-    }
-
-    function my_message() {
-        var divName = $('#myMessage');
-        var divNumber = $('#myMessageNumber');
-        var divTitleName = $('');
-        nav_message(userId, 0, divNumber, divTitleName, divName);
-    }
-
-</script>
-<!--标记消息已读-->
+<!--在家导航栏退出公共js-->
+<script th:src="@{/assets/js/nav-loginOut.js}"></script>
+<!--加载导航栏消息公共js-->
+<script th:src="@{/assets/js/nav-message.js}"></script>
+<!--加载侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider.js}"></script>
+<!--初始化公共js的userId-->
 <script type="text/javascript">
-    function updateAllMessageIsRead() {
-        $.ajax({
-            type: "get",
-            url: "/updateAllMessageIsReadByUserId",
-            dataType: "json",
-            data: {
-                userId: userId,
-            },
-            success: function (result) {
-                console.log(result);
-               if(result){
-                   my_message();
-               }
-            }
-        })
-    }
+    var userId = [[${#authentication.principal.id}]];
+    initJsUserId(userId);
 </script>
+
+<!--待完成-->
+<script>
+    // $(document).ready(function () {
+    //     var content = {};
+    //     content.message = '你有xxx条消息待处理';
+    //     content.title = '提醒';
+    //     content.icon = 'flaticon-alarm-1';
+    //     content.url = 'index.html';
+    //     content.target = '_blank';
+    //
+    //     $.notify(content, {
+    //         type: 'info',
+    //         placement: {
+    //             from: 'bottom',
+    //             align: 'right'
+    //         },
+    //         time: 1000,
+    //     });
+    // })
+</script>
+
+
 </body>
 </html>

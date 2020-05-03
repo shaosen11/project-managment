@@ -2,13 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.lingnan.projectmanagment.mapper.ProjectsUserCooperationMapper">
 
-    <select id="getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInvite" resultType="ProjectsUserCooperation">
+    <select id="getByProjectIdAndInProjectUserIdAndNotInProjectUserIdAndInviteAndFinish" resultType="ProjectsUserCooperation">
         select *
         from projects_user_cooperation
         where delete_flag = 1
         and projects_id = #{projectId}
         and in_project_user_id = #{inProjectUserId}
-        and not_in_project_user_id = #{notInProjectUserId};
+        and not_in_project_user_id = #{notInProjectUserId}
+        and invite_flag = #{inviteFlag}
+        and finish_flag = #{finishFlag}
     </select>
 
     <!--插入一条记录-->
@@ -20,8 +22,9 @@
             <if test="notInProjectUserId != null">not_in_project_user_id,</if>
             <if test="dutyCode != null">duty_code,</if>
             <if test="time != null">time,</if>
-            <if test="invite != null">invite,</if>
-            <if test="join != null">join,</if>
+            <if test="inviteFlag != null">invite_flag,</if>
+            <if test="joinFlag != null">join_flag,</if>
+            <if test="finishFlag != null">finish_flag,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -30,8 +33,9 @@
             <if test="notInProjectUserId != null">#{notInProjectUserId},</if>
             <if test="dutyCode != null">#{dutyCode},</if>
             <if test="time != null">#{time},</if>
-            <if test="invite != null">#{invite},</if>
-            <if test="join != null">#{join},</if>
+            <if test="inviteFlag != null">#{inviteFlag},</if>
+            <if test="joinFlag != null">#{joinFlag},</if>
+            <if test="finishFlag != null">#{finishFlag},</if>
         </trim>
     </insert>
 
@@ -57,9 +61,30 @@
             <if test="deleteFlag != null">
                 delete_flag = #{deleteFlag},
             </if>
+            <if test="inviteFlag != null">
+                invite_flag = #{inviteFlag},
+            </if>
+            <if test="joinFlag != null">
+                join_flag = #{joinFlag},
+            </if>
+            <if test="finishFlag != null">
+                finish_flag = #{finishFlag},
+            </if>
         </trim>
         where id = #{id}
     </update>
 
+    <select id="getById" resultType="ProjectsUserCooperation">
+        select * from projects_user_cooperation where delete_flag = 1 and id = #{id}
+    </select>
 
+    <select id="getByProjectIdAndNotInProjectUserIdAndInviteAndFinish" resultType="ProjectsUserCooperation">
+        select *
+        from projects_user_cooperation
+        where delete_flag = 1
+        and projects_id = #{projectId}
+        and not_in_project_user_id = #{notInProjectUserId}
+        and invite_flag = #{inviteFlag}
+        and finish_flag = #{finishFlag}
+    </select>
 </mapper>

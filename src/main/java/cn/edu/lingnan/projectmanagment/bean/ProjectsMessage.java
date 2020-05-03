@@ -19,5 +19,8 @@ public class ProjectsMessage {
     private String time;
     private Integer isRead;
     private Integer deleteFlag;
+    private Integer allFlag;
+    private Integer adminFlag;
+    private Integer needToDo;
 }
 

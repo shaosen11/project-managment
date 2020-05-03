@@ -18,9 +18,10 @@ public class Projects {
     private String type;
     private Integer storeCount;
     private Integer likeCount;
+    private Integer clickCount;
     private String characterization;
     private Date createTime;
     private Integer enabled;
-
+    private Integer userCount;
 }
 

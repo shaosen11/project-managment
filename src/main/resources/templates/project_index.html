@@ -466,9 +466,20 @@
 <!-- Chart Circle -->
 <script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
 <script th:src="@{/assets/js/formcheck.js}"></script>
+
 <!-- 功能点分页 -->
 <script th:src="@{/assets/js/functionpage.js}"></script>
-
+<!--在家导航栏退出公共js-->
+<script th:src="@{/assets/js/nav-loginOut.js}"></script>
+<!--加载导航栏消息公共js-->
+<script th:src="@{/assets/js/nav-message.js}"></script>
+<!--加载侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider.js}"></script>
+<!--初始化公共js的userId-->
+<script type="text/javascript">
+    var userId = [[${#authentication.principal.id}]];
+    initJsUserId(userId);
+</script>
 
 <script>
     $(document).ready(function () {
@@ -1011,48 +1022,6 @@
     }
 
 
-</script>
-<!--加载消息-->
-<script th:inline="javascript">
-    $(function () {
-        var userId = [[${#authentication.principal.id}]];
-        my_message();
-        my_message_need_to_do();
-    })
-
-    function my_message_need_to_do() {
-        var divNumber = $('#myMessageNeedToDoNumber');
-        var divTitleName = $('#myMessageNeedToDoTitle');
-        var divName = $('#myMessageNeedToDo');
-        nav_message(userId, 1, divNumber, divTitleName, divName);
-    }
-
-    function my_message() {
-        var divName = $('#myMessage');
-        var divNumber = $('#myMessageNumber');
-        var divTitleName = $('');
-        nav_message(userId, 0, divNumber, divTitleName, divName);
-    }
-
-</script>
-<!--标记消息已读-->
-<script type="text/javascript">
-    function updateAllMessageIsRead() {
-        $.ajax({
-            type: "get",
-            url: "/updateAllMessageIsReadByUserId",
-            dataType: "json",
-            data: {
-                userId: userId,
-            },
-            success: function (result) {
-                console.log(result);
-                if (result) {
-                    my_message();
-                }
-            }
-        })
-    }
 </script>
 <!--加载用户所有项目-->
 <script type="text/javascript" th:inline="javascript">

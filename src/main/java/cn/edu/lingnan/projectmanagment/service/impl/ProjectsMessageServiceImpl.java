@@ -21,4 +21,24 @@ public class ProjectsMessageServiceImpl implements ProjectsMessageService {
     public List<ProjectsMessage> getByProjectIdAndUserId(Integer projectId, Integer userId, Integer offset, Integer pageSize) {
         return projectsMessageMapper.getByProjectIdAndUserId(projectId, userId, offset, pageSize);
     }
+
+    @Override
+    public void insert(ProjectsMessage projectsMessage) {
+        projectsMessageMapper.insert(projectsMessage);
+    }
+
+    @Override
+    public List<ProjectsMessage> getByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectsMessageMapper.getByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public boolean update(ProjectsMessage projectsMessage) {
+        return projectsMessageMapper.update(projectsMessage);
+    }
+
+    @Override
+    public boolean updateProjectMessageIsReadByProjectMessageId(Integer projectMessageId) {
+        return projectsMessageMapper.updateProjectMessageIsReadByProjectMessageId(projectMessageId);
+    }
 }

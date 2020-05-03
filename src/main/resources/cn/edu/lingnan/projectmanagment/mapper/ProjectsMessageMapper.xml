@@ -11,11 +11,105 @@
         <result column="time" property="time"></result>
         <result column="is_read" property="isRead"></result>
         <result column="delete_flag" property="deleteFlag"></result>
-        <collection property="projectsMessageType" column="{id=type_id}" select="cn.edu.lingnan.projectmanagment.mapper.ProjectsMessageTypeMapper.getById">
+        <result column="all_flag" property="allFlag"></result>
+        <result column="admin_flag" property="allFlag"></result>
+        <result column="need_to_do" property="needToDo"></result>
+        <collection property="projectsMessageType" column="{id=type_id}"
+                    select="cn.edu.lingnan.projectmanagment.mapper.ProjectsMessageTypeMapper.getById">
         </collection>
     </resultMap>
-   <select id="getByProjectIdAndUserId" resultMap="ProjectsMessageList">
-       select * from projects_message where is_read = 1 and delete_flag = 1 and project_id = #{projectId} and to_user_id = #{userId} order by time desc limit #{offset},#{pageSize}
+    <select id="getByProjectIdAndUserId" resultMap="ProjectsMessageList">
+       select * from projects_message where delete_flag = 1 and project_id = #{projectId} and to_user_id = #{userId} order by time desc limit #{offset},#{pageSize}
    </select>
 
+    <!--插入一条消息-->
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into projects_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">project_id,</if>
+            <if test="fromUserId != null">from_user_id,</if>
+            <if test="toUserId != null">to_user_id,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="message != null">message,</if>
+            <if test="time != null">time,</if>
+            <if test="isRead != null">is_read,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="allFlag != null">all_flag,</if>
+            <if test="adminFlag != null">admin_flag,</if>
+            <if test="needToDo !=null">need_to_do,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectId != null">#{projectId},</if>
+            <if test="fromUserId != null">#{fromUserId},</if>
+            <if test="toUserId != null">#{toUserId},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="message != null">#{message},</if>
+            <if test="time != null">#{time},</if>
+            <if test="isRead != null">#{isRead},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="allFlag != null">#{allFlag},</if>
+            <if test="adminFlag != null">#{adminFlag},</if>
+            <if test="needToDo !=null">#{needToDo},</if>
+        </trim>
+    </insert>
+
+    <select id="getByProjectId" resultMap="ProjectsMessageList">
+       select *
+       from projects_message
+       where delete_flag = 1
+       and all_flag = 1
+       and project_id = #{projectId}
+       order by time desc limit #{offset},#{pageSize}
+   </select>
+
+    <update id="update">
+        update projects_message set
+        <trim suffixOverrides=",">
+            <if test="projectId != null">
+                project_id =#{projectId},
+            </if>
+            <if test="fromUserId != null">
+                from_user_id= #{fromUserId},
+            </if>
+            <if test="toUserId != null">
+                to_user_id=#{toUserId},
+            </if>
+            <if test="typeId != null">
+                type_id=#{typeId},
+            </if>
+            <if test="message != null">
+                message=#{message},
+            </if>
+            <if test="time != null">
+                time=#{time},
+            </if>
+            <if test="isRead != null">
+                is_read =#{isRead},
+            </if>
+            <if test="deleteFlag != null">
+                delete_flag = #{deleteFlag},
+            </if>
+            <if test="allFlag != null">
+                all_flag = #{allFlag},
+            </if>
+            <if test="adminFlag != null">
+                admin_flag = #{adminFlag},
+            </if>
+            <if test="needToDo !=null">
+                need_to_do = #{needToDo},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateProjectMessageIsReadByProjectMessageId">
+        update projects_message set
+        <trim suffixOverrides=",">
+            <if test="isRead != null">
+                is_read = 0,
+            </if>
+        </trim>
+        where id = #{projectMessageId}
+    </update>
 </mapper>

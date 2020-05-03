@@ -79,14 +79,7 @@ public interface ProjectMapper {
      */
     Projects getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
 
-    /**
-     * 查找创建的项目
-     * @param projectName
-     * @param chargeUserId
-     * @param projectCharacterization
-     * @return
-     */
-    Projects getNewProjectByProject(String projectName, Integer chargeUserId, String projectCharacterization);
+
 
     /**
      * 查询所有项目主页信息

@@ -18,6 +18,7 @@ public class ProjectsUserCooperation {
     private Integer dutyCode;
     private Date time;
     private Integer deleteFlag;
-    private Integer invite;
-    private Integer join;
+    private Integer inviteFlag;
+    private Integer joinFlag;
+    private Integer finishFlag;
 }

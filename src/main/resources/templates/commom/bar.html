@@ -80,7 +80,7 @@
                     <li class="nav-item dropdown hidden-caret">
                         <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-edit"></i>
+                            <i class="fa fa-clock"></i>
                             <div id="myMessageNeedToDoNumber"></div>
                         </a>
                         <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
@@ -486,6 +486,122 @@
                                         <span class="sub-item">Level 1</span>
                                     </a>
                                 </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar" th:fragment="projectsidebar">
+        <div class="sidebar-wrapper scrollbar-inner">
+            <div class="sidebar-background"></div>
+            <div class="sidebar-content">
+                <div class="user">
+                    <div class="avatar-sm float-left mr-2">
+                        <img th:src="@{/files/photo/{filename}(filename=${#authentication.principal.photo})}" alt="..."
+                             class="avatar-img rounded-circle" th:if="${#authentication.principal.photo}!=null">
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                                    <span th:text="${#authentication.principal.username!=null}?${#authentication.principal.username}">
+									用户名
+									<span class="user-level">Administrator</span>
+									<span class="caret"></span>
+								</span>
+                        </a>
+                        <div class="clearfix"></div>
+
+                        <div class="collapse in" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a th:href="@{/userprofile}">
+                                        <span class="link-collapse">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#edit">
+                                        <span class="link-collapse">Edit Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#settings">
+                                        <span class="link-collapse">Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a th:href="index.html">
+                            <i class="fas fa-home"></i>
+                            <p>主页</p>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">message</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/projectmessage(projectId=${param.projectId},userId=${#authentication.principal.id})}">
+                            <i class="fas fa-comment-dots"></i>
+                            <p>项目消息</p>
+                            <span class="badge badge-count">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">content</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#base1">
+                            <i class="fas fa-box"></i>
+                            <p>项目</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="base1">
+                            <ul class="nav nav-collapse" id="projectsul"></ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/project_user_view(projectId=${param.projectId})}">
+                            <i class="fas fa-users"></i>
+                            <p>合作伙伴</p>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">package</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="modal" data-target="#addpackage">
+                            <i class="fas fa-plus-square"></i>
+                            <p>new package</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="modal" data-target="#uploadfile">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>upload file</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#base2">
+                            <i class="fas fa-folder"></i>
+                            <p>All Package</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="base2">
+                            <ul class="nav nav-collapse" id="packageul">
                             </ul>
                         </div>
                     </li>
@@ -1104,7 +1220,6 @@
         </div>
     </div>
     <!-- End Custom template -->
-</div>
 </div>
 <!--上传文件model-->
 <div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

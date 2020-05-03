@@ -349,10 +349,22 @@
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
+
 <!-- fileinput -->
 <script th:src="@{/assets/js/plugin/fileinput/fileinput.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/plugin/fileinput/fileinput_locale_zh.js}" type="text/javascript"></script>
+
+<!--在家导航栏退出公共js-->
+<script th:src="@{/assets/js/nav-loginOut.js}"></script>
+<!--加载导航栏消息公共js-->
+<script th:src="@{/assets/js/nav-message.js}"></script>
+<!--加载侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider.js}"></script>
+<!--初始化公共js的userId-->
+<script type="text/javascript">
+    var userId = [[${#authentication.principal.id}]];
+    initJsUserId(userId);
+</script>
 <script>
     $('#datepicker').datetimepicker({
         format: 'MM/DD/YYYY',
@@ -405,11 +417,7 @@
         }
     }
 </script>
-<script type="text/javascript" th:inline="javascript">
-    //加载用户所有项目
-    var userId = [[${#authentication.principal.id}]];
-    user_prjects(userId);
-</script>
+<!--上传头像js-->
 <script>
     var userId = [[${#authentication.principal.id}]];
     var file = $()
@@ -455,48 +463,6 @@
             }, 1500);
         }
     });
-</script>
-<!--加载消息-->
-<script th:inline="javascript">
-    $(function () {
-        var userId = [[${#authentication.principal.id}]];
-        my_message();
-        my_message_need_to_do();
-    })
-
-    function my_message_need_to_do() {
-        var divNumber = $('#myMessageNeedToDoNumber');
-        var divTitleName = $('#myMessageNeedToDoTitle');
-        var divName = $('#myMessageNeedToDo');
-        nav_message(userId, 1, divNumber, divTitleName, divName);
-    }
-
-    function my_message() {
-        var divName = $('#myMessage');
-        var divNumber = $('#myMessageNumber');
-        var divTitleName = $('');
-        nav_message(userId, 0, divNumber, divTitleName, divName);
-    }
-
-</script>
-<!--标记消息已读-->
-<script type="text/javascript">
-    function updateAllMessageIsRead() {
-        $.ajax({
-            type: "get",
-            url: "/updateAllMessageIsReadByUserId",
-            dataType: "json",
-            data: {
-                userId: userId,
-            },
-            success: function (result) {
-                console.log(result);
-                if(result){
-                    my_message();
-                }
-            }
-        })
-    }
 </script>
 </body>
 </html>

@@ -70,11 +70,6 @@ public class ProjectServiceImpl implements ProjectsService {
     }
 
     @Override
-    public Projects getNewProjectByProject(String projectName, Integer chargeUserId, String projectCharacterization) {
-        return projectMapper.getNewProjectByProject(projectName, chargeUserId, projectCharacterization);
-    }
-
-    @Override
     public List<ProjectsRecommendation> getProject(Integer pageNum, Integer pageSize) {
         return projectMapper.getProject(pageNum,pageSize);
     }

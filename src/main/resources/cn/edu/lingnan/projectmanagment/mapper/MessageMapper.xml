@@ -92,4 +92,15 @@
         </trim>
         where delete_flag = 1 and id = #{id}
     </update>
+
+
+    <update id="updateMessageIsReadByMessageId">
+        update message set
+        <trim suffixOverrides=",">
+            <if test="isRead != null">
+                is_read = #{isRead},
+            </if>
+        </trim>
+        where delete_flag = 1 and id = #{messageId}
+    </update>
 </mapper>
