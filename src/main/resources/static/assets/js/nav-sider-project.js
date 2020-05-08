@@ -126,7 +126,25 @@ $(function () {
     $("#packageName").keyup(function () {
         setTimeout('checkPackage()', 1000);
     })
+    projectMessageCount();
 })
+
+//加载项目个人消息和待办数量
+function projectMessageCount() {
+    $.ajax({
+        url: "/projectMessageCount",
+        type: "get",
+        datatype: "json",
+        data: {
+            projectId: projectId,
+            userId: userId
+        },
+        success: function (data) {
+            console.log(data);
+            $("#projectMessageCount").text(data)
+        }
+    })
+}
 
 
 

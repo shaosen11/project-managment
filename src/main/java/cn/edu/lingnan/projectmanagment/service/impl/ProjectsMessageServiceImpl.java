@@ -41,4 +41,24 @@ public class ProjectsMessageServiceImpl implements ProjectsMessageService {
     public boolean updateProjectMessageIsReadByProjectMessageId(Integer projectMessageId) {
         return projectsMessageMapper.updateProjectMessageIsReadByProjectMessageId(projectMessageId);
     }
+
+    @Override
+    public List<ProjectsMessage> getAllNeedToByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectsMessageMapper.getAllNeedToByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public ProjectsMessage getById(Integer id) {
+        return projectsMessageMapper.getById(id);
+    }
+
+    @Override
+    public Integer projectMessageCount(Integer projectId, Integer userId) {
+        return projectsMessageMapper.projectMessageCount(projectId, userId);
+    }
+
+    @Override
+    public Integer projectMessageNeedToDoCount(Integer projectId) {
+        return projectsMessageMapper.projectMessageNeedToDoCount(projectId);
+    }
 }

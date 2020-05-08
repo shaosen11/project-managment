@@ -23,5 +23,6 @@ public class Projects {
     private Date createTime;
     private Integer enabled;
     private Integer userCount;
+    private Integer documentCount;
 }
 

@@ -52,7 +52,7 @@
         where id = #{id}
     </update>
 
-    <insert id="insert">
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         insert into documents
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">

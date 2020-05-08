@@ -138,7 +138,7 @@
         <result column="duty_code" property="dutyCode"></result>
         <result column="code_devote_line" property="codeDevoteLine"></result>
         <result column="code_update" property="codeUpdate"></result>
-        <collection property="myUserDetails" column="{id=user_id}" select="cn.edu.lingnan.projectmanagment.mapper.MyUserDetailsMapper.findById">
+        <collection property="myUserDetails" column="{id=user_id}" select="cn.edu.lingnan.projectmanagment.mapper.UserMapper.getSimpleMyUserDetailsByUserId">
         </collection>
         <collection property="projectsUserDuty" column="{id=duty_code}" select="cn.edu.lingnan.projectmanagment.mapper.ProjectsUserDutyMapper.getById">
         </collection>

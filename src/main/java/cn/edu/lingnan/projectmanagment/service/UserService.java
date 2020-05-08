@@ -125,5 +125,12 @@ public interface UserService {
      * @return
      */
     MyUserDetails getMyUserDetailsByUserId(Integer userId);
+
+    /**
+     * 查询简要的用户信息
+     * @param userId
+     * @return
+     */
+    MyUserDetails getSimpleMyUserDetailsByUserId(Integer userId);
 }
 

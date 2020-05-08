@@ -122,7 +122,13 @@
                             </div>
                             <div class="tab-pane fade" id="pills-todo-nobd" role="tabpanel"
                                  aria-labelledby="pills-todo-tab-nobd">
-                                <p>这里放着待办事务</p>
+                                <ul class="timeline" id="projectMessageNeedToDoUl">
+                                </ul>
+                                <div class="text-right mt-3 mb-3">
+                                    <button class="btn btn-secondary" onclick="appendMoreProjectMessageNeedToDoHtml()">
+                                        加载更多
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -139,8 +145,8 @@
 
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
 <script th:src="@{/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
 <!-- jQuery UI -->
 <script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
 <script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
@@ -176,8 +182,6 @@
 
 <!--加载项目个人消息-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     var personOffset = 0;
     var personPageSize = 5;
     var personMessageIndex = 0;
@@ -188,7 +192,7 @@
     function ajaxAppendPersonMessage(projectId, userId, offset, pageSize) {
         $.ajax({
             type: "get",
-            url: "/project_user_message_person",
+            url: "/project_message_person",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -237,8 +241,6 @@
 </script>
 <!--加载更多个人消息-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
 
     function appendMorePersonMessageHtml() {
         personOffset = personOffset + personPageSize;
@@ -246,9 +248,9 @@
         ajaxAppendPersonMessage(projectId, userId, personOffset, personPageSize);
     }
 </script>
+
 <!--加载项目消息-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
     var offset = 0;
     var pageSize = 5;
     var projectMessageIndex = 0;
@@ -259,12 +261,13 @@
     function ajaxAppendProjectMessage(projectId, offset, pageSize) {
         $.ajax({
             type: "get",
-            url: "/project_user_message_project",
+            url: "/project_message_project",
             dataType: "json",
             data: {
                 projectId: projectId,
                 offset: offset,
-                pageSize: pageSize
+                pageSize: pageSize,
+                needToDo: 0
             },
             success: function (json) {
                 appendProjectMessageHtml(json);
@@ -285,7 +288,7 @@
                 '                                    <div class="timeline-heading">\n' +
                 '                                        <h4 class="timeline-title">' + list[i].projectsMessageType.type + '</h4>\n' +
                 '                                        <p>\n' +
-                '                                            <small class="text-muted"><i class="flaticon-message"></i> ' + list[i].time + '\n' +
+                '                                            <small class="text-muted"> ' + list[i].time + '\n' +
                 '                                            </small>\n' +
                 '                                        </p>\n' +
                 '                                    </div>\n' +
@@ -300,15 +303,14 @@
 </script>
 <!--加载更多项目消息-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
 
     function appendMoreProjectMessageHtml() {
-        personOffset = personOffset + personPageSize;
-        personPageSize = personPageSize + 10;
-        ajaxAppendProjectMessage(projectId, personOffset, personPageSize);
+        offset = offset + pageSize;
+        pageSize = pageSize + 10;
+        ajaxAppendProjectMessage(projectId, offset, pageSize);
     }
 </script>
+
 <!--标志项目个人消息已读-->
 <script type="text/javascript">
     function updatePersonMessageIsRead(projectMessageId) {
@@ -321,16 +323,130 @@
             },
             success: function (result) {
                 if (result.ok) {
-                    $("#PersonMessageIsReadSpan"+projectMessageId).html("")
+                    $("#PersonMessageIsReadSpan" + projectMessageId).html("");
+                    projectMessageCount();
                 } else {
                     swal("系统出现错误！", result.message, {
-                        icon : "error",
+                        icon: "error",
                         buttons: {
                             confirm: {
-                                className : 'btn btn-danger'
+                                className: 'btn btn-danger'
                             }
                         },
                     });
+                }
+            }
+        })
+    }
+</script>
+
+<!--加载待办消息-->
+<script type="text/javascript">
+    var needToDoOffset = 0;
+    var needToDoPageSize = 5;
+    var projectMessageNeedToDoIndex = 0;
+    $(function () {
+        ajaxAppendProjectMessageNeedToDo(projectId, needToDoOffset, needToDoPageSize);
+    })
+
+    function ajaxAppendProjectMessageNeedToDo(projectId, offset, pageSize) {
+        $.ajax({
+            type: "get",
+            url: "/project_message_need_to_do",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                offset: offset,
+                pageSize: pageSize,
+            },
+            success: function (json) {
+                appendProjectMessageNeedToDoHtml(json);
+            }
+        })
+    }
+
+    function appendProjectMessageNeedToDoHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var messageLi = '';
+        for (var i = 0; i < list.length; i++, projectMessageNeedToDoIndex++) {
+            if (projectMessageNeedToDoIndex % 2 == 0) {
+                messageLi += ' <li id="PersonMessageNeedToDo' + list[i].id + '">'
+            } else {
+                messageLi += ' <li class="timeline-inverted" id="PersonMessageNeedToDo' + list[i].id + '">'
+            }
+            messageLi += '<div class="timeline-badge ' + list[i].projectsMessageType.background + '"><i class="fas ' + list[i].projectsMessageType.icon + '"></i></div>\n' +
+                '                                <div class="timeline-panel">\n' +
+                '                                    <div class="timeline-heading">\n' +
+                '                                        <h4 class="timeline-title">' + list[i].projectsMessageType.type + '</h4>\n' +
+                '                                        <p>\n' +
+                '                                            <small class="text-muted"> ' + list[i].time + '\n' +
+                '                                            </small>\n' +
+                '                                        </p>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="timeline-body">\n' +
+                '                                        <p>' + list[i].message + '</p>\n' +
+                '                                        <hr>' +
+                '                                        <div class="btn-group dropdown">\n' +
+                '                                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">\n' +
+                '                                                 <span class="btn-label">\n' +
+                '                                                      <i class="fa fa-cog"></i>\n' +
+                '                                                 </span>\n' +
+                '                                             </button>\n' +
+                '                                             <ul class="dropdown-menu" role="menu">\n' +
+                '                                                 <li>\n' +
+                '                                                 <a class="dropdown-item" onclick="agreeProjectMessageToDo(' + list[i].id + ',' + userId + ')">同意</a>\n' +
+                '                                                 <a class="dropdown-item" onclick="doNotAgreeProjectMessageToDo(' + list[i].id + ',' + userId + ')">拒绝</a>\n' +
+                '                                                 </li>\n' +
+                '                                             </ul>\n' +
+                '                                          </div>' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </li>'
+        }
+        $("#projectMessageNeedToDoUl").append(messageLi);
+    }
+</script>
+<!--加载更多待办消息-->
+<script type="text/javascript">
+    function appendMoreProjectMessageNeedToDoHtml() {
+        needToDoOffset = needToDoOffset + needToDoPageSize;
+        needToDoPageSize = needToDoPageSize + 10;
+        ajaxAppendProjectMessageNeedToDo(projectId, needToDoOffset, needToDoPageSize);
+    }
+</script>
+<!--同意待办消息-->
+<script type="text/javascript">
+    function agreeProjectMessageToDo(projectMessageId, userId) {
+        $.ajax({
+            type: "put",
+            url: "/agreeProjectMessageNeedToDo",
+            dataType: "json",
+            data: {
+                projectMessageId: projectMessageId,
+                userId: userId
+            },
+            success: function (result) {
+                console.log(result);
+                if (result) {
+                    $("#PersonMessageNeedToDo" + projectMessageId).html("")
+                }
+            }
+        })
+    }
+</script>
+<!--不同意待办消息-->
+<script type="text/javascript">
+    function doNotAgreeProjectMessageToDo(projectMessageId, userId) {
+        $.ajax({
+            type: "put",
+            url: "/doNotAgreeProjectMessageToDo",
+            dataType: "json",
+            data: {
+                projectMessageId: projectMessageId,
+                userId: userId
+            },
+            success: function (result) {
+                if (result) {
+                    $("#PersonMessageNeedToDo" + projectMessageId).html("")
                 }
             }
         })

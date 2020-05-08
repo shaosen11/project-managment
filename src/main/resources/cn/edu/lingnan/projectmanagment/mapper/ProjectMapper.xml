@@ -60,6 +60,7 @@
             <if test="likeCount != null">like_count = #{likeCount},</if>
             <if test="clickCount != null">click_count = #{clickCount},</if>
             <if test="userCount != null">user_count = #{userCount},</if>
+            <if test="documentCount != null">document_count = #{documentCount},</if>
         </trim>
         where id = #{id}
     </update>
@@ -81,6 +82,7 @@
             <if test="likeCount != null">like_count,</if>
             <if test="clickCount != null">click_count,</if>
             <if test="userCount != null">user_count,</if>
+            <if test="documentCount != null">document_count,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -97,6 +99,7 @@
             <if test="likeCount != null">#{likeCount},</if>
             <if test="clickCount != null">#{clickCount},</if>
             <if test="userCount != null">#{userCount},</if>
+            <if test="documentCount != null">#{documentCount},</if>
         </trim>
     </insert>
 

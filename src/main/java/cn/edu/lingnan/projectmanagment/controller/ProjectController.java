@@ -203,5 +203,11 @@ public class ProjectController {
         String pathString = PathUtil.pathUtil(pathMap);
         return "redirect:projects_view" + pathString;
     }
+
+    @GetMapping("/project")
+    @ResponseBody
+    public  Projects getProjectByProjectId(Integer projectId){
+        return projectService.getById(projectId);
+    }
 }
 

@@ -1,14 +1,12 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
-import cn.edu.lingnan.projectmanagment.bean.Documents;
-import cn.edu.lingnan.projectmanagment.bean.Projects;
+import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectsMessageNeedToDoRelationshipServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectsMessageServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
-import cn.edu.lingnan.projectmanagment.utils.FileUtil;
-import cn.edu.lingnan.projectmanagment.utils.FtpUtil;
-import cn.edu.lingnan.projectmanagment.utils.IPUtil;
-import cn.edu.lingnan.projectmanagment.utils.PathUtil;
+import cn.edu.lingnan.projectmanagment.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,16 +42,23 @@ public class DocumentsController {
     ProjectsUserController projectsUserController;
     @Autowired
     ProjectsCodeLineController projectsCodeLineController;
+    @Autowired
+    ProjectsMessageServiceImpl projectsMessageService;
+    @Autowired
+    PorojectsMessageController porojectsMessageController;
+    @Autowired
+    ProjectsMessageNeedToDoRelationshipServiceImpl projectsMessageNeedToDoRelationshipService;
+
 
     @GetMapping("/document")
-    public String text(String documentName,Integer projectId,Integer userId, Model model) {
+    public String text(String documentName, Integer projectId, Integer userId, Model model, HttpServletRequest request) {
         System.out.println("文件名：" + documentName);
         System.out.println("项目id：" + projectId);
         //获取文件名为filename和版本标识符为1的
-        Documents documents1 = documentsService.getByProjectsIdAndVersionFlagAndName(projectId,1, documentName);
+        Documents documents1 = documentsService.getByProjectsIdAndVersionFlagAndName(projectId, 1, documentName);
         System.out.println(documents1);
         //获取文件名为filename和版本标识符为2的
-        Documents documents2 = documentsService.getByProjectsIdAndVersionFlagAndName(projectId,2, documentName);
+        Documents documents2 = documentsService.getByProjectsIdAndVersionFlagAndName(projectId, 2, documentName);
         System.out.println(documents2);
         //判断有无VersionFlag为2的
         if (documents2 == null) {
@@ -131,7 +136,7 @@ public class DocumentsController {
             //装换文件类型，且读取代码行数
             System.out.println("开始转换文件");
             Integer codeline = FileUtil.codeLine(FileUtil.multipartFileToFile(file));
-            if ( codeline != 0) {
+            if (codeline != 0) {
                 documents.setCodeLineNumber(codeline);
             } else {
                 documents.setCodeLineNumber(0);
@@ -145,10 +150,13 @@ public class DocumentsController {
             }
             //查询版本号
             Integer version = documentsService.getVersionByProjectsIdAndName(documents.getProjectId(), oldFileName);
-            if ( version != null) {
+            //新文件标志
+            Integer newDocumentFlag = 0;
+            if (version != null) {
                 documents.setVersion(version + 1);
                 documents.setVersionFlag(2);
             } else {
+                newDocumentFlag = 1;
                 documents.setVersion(1);
                 documents.setVersionFlag(1);
                 //第一次插入统计代码行
@@ -172,18 +180,24 @@ public class DocumentsController {
             Projects projects = projectService.getById(projectId);
             System.out.println(projects);
             Integer projectsCodeUpdateCount = projects.getCodeUpdateCount();
-            if(projectsCodeUpdateCount == null){
+            if (projectsCodeUpdateCount == null) {
                 projects.setCodeUpdateCount(1);
             } else {
                 projects.setCodeUpdateCount(projectsCodeUpdateCount + 1);
             }
+            //修改文件数量
+            if (newDocumentFlag == 1) {
+                projects.setDocumentCount(projects.getDocumentCount() + 1);
+            }
             projects.setLastUpdateTime(new Date());
             projectService.editProject(projects);
+            //插入项目消息
+            porojectsMessageController.insertDocumentUpdateProjectMessage(documents);
             //写入服务器
             System.out.println("上传文件");
             //调用自定义的FTP工具类上传文件
             String fileName = FtpUtil.uploadFile(file, newFileName, documents.getProjectId());
-            if (!StringUtils.isEmpty(fileName)){
+            if (!StringUtils.isEmpty(fileName)) {
                 System.out.println("上传文件" + fileName);
             }
         }
@@ -195,7 +209,7 @@ public class DocumentsController {
             Documents d2 = documentsService.getByProjectsIdAndVersionFlagAndName(documents.getProjectId(), 2, documents.getName());
             System.out.println(d2);
         }
-        Map<String,Object> pathMap = new HashMap<>();
+        Map<String, Object> pathMap = new HashMap<>();
         pathMap.put("projectId", projectId);
         pathMap.put("documentName", documents.getName());
         pathMap.put("userId", documents.getUserId());
@@ -210,43 +224,20 @@ public class DocumentsController {
     //2表示要审核版本
     @PutMapping("/document")
     public String updateFileState(Integer projectsId, String documentName, Integer userId, Integer operate, HttpServletRequest request) {
-        //Integer operate表示操作的类型，1表示同意，把d1的versionFing改为0，d2的改为1
+        //Integer operate表示操作的类型，
+        // 1表示同意，把d1的versionFing改为0，d2的改为1
         // 2表示不同意，把d2的改为0
-        System.out.println(documentName);
         //获取文件名为filename和版本标识符为1的
         Documents d1 = documentsService.getByProjectsIdAndVersionFlagAndName(projectsId, 1, documentName);
-        System.out.println(d1);
         //获取文件名为filename和版本标识符为2的
         Documents d2 = documentsService.getByProjectsIdAndVersionFlagAndName(projectsId, 2, documentName);
-        System.out.println(d2);
-        //获取ip
-        String ip = IPUtil.getIP(request);
-        System.out.println("获取的ip:::" + ip);
-        if (operate == 1) {
-            //同意修改文件，修改文件versionFlag值为1的变为0，值为2的变为1
-            d1.setVersionFlag(0);
-            System.out.println(d1);
-            System.out.println("修改d1文件确定号：" + documentsService.update(d1));
-            d2.setVersionFlag(1);
-            System.out.println(d2);
-            System.out.println("修改d2文件确定号：" + documentsService.update(d2));
-            //修改代码贡献量
-            Integer codeLine = d2.getCodeLineNumber() - d1.getCodeLineNumber();
-            System.out.println("代码行修改：" + projectsUserController.update(codeLine, d2.getUserId(), d2.getProjectId()));
-            //插入projectcodeline表
-            projectsCodeLineController.insert(d1.getProjectId());
-            //插入日志表
-            documentsRecordController.insert(d2, ip, 2);
-        } else {
-            //不同意修改文件，只修改文件versionFlag值2的变为-1
-            d2.setVersionFlag(-1);
-            System.out.println("修改d2文件确定号：" + documentsService.update(d2));
-            documentsRecordController.insert(d2, ip, 2);
+        ProjectsMessageNeedToDoRelationship relationship = projectsMessageNeedToDoRelationshipService.getByDocumentId(d2.getId());
+        if (operate == 1){
+            porojectsMessageController.agreeNeedToDo(relationship.getProjectMessageId(), userId, request);
+        }else {
+            porojectsMessageController.doNotagreeProjectMessageToDo(relationship.getProjectMessageId(), userId, request);
         }
-        Projects projects = projectService.getById(projectsId);
-        projects.setLastUpdateTime(new Date());
-        projectService.editProject(projects);
-        Map<String,Object> pathMap = new HashMap<>();
+        Map<String, Object> pathMap = new HashMap<>();
         pathMap.put("projectId", d2.getProjectId());
         pathMap.put("documentName", d2.getName());
         pathMap.put("userId", userId);
@@ -280,7 +271,7 @@ public class DocumentsController {
     }
 
     @GetMapping("/download")
-    public String download(Documents documents){
+    public String download(Documents documents) {
         System.out.println(documents);
         documents = documentsService.getById(documents.getId());
         String downloadPath = "/files/projects/" + documents.getProjectId() + "/" + documents.getSerialNumber() + "-" + documents.getName();

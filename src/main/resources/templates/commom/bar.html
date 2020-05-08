@@ -551,7 +551,7 @@
                         <a th:href="@{/projectmessage(projectId=${param.projectId},userId=${#authentication.principal.id})}">
                             <i class="fas fa-comment-dots"></i>
                             <p>项目消息</p>
-                            <span class="badge badge-count">5</span>
+                            <span class="badge badge-count" id="projectMessageCount"></span>
                         </a>
                     </li>
                     <li class="nav-section">

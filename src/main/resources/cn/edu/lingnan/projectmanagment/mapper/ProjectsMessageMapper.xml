@@ -112,4 +112,41 @@
         </trim>
         where id = #{projectMessageId}
     </update>
+
+    <select id="getAllNeedToByProjectId" resultMap="ProjectsMessageList">
+       select *
+       from projects_message
+       where delete_flag = 1
+       and is_read = 1
+       and admin_flag = 1
+       and need_to_do = 1
+       and project_id = #{projectId}
+       order by time desc limit #{offset},#{pageSize}
+   </select>
+
+    <select id="getById" resultType="ProjectsMessage">
+       select *
+       from projects_message
+       where delete_flag = 1
+       and id = #{id};
+   </select>
+
+    <select id="projectMessageCount" resultType="int">
+        select count(*)
+        from projects_message
+        where delete_flag = 1
+        and is_read = 1
+        and project_id = #{projectId}
+        and to_user_id = #{userId}
+   </select>
+
+    <select id="projectMessageNeedToDoCount" resultType="int">
+        select count(*)
+        from projects_message
+        where delete_flag = 1
+        and is_read = 1
+        and admin_flag = 1
+        and need_to_do = 1
+        and project_id = #{projectId}
+   </select>
 </mapper>

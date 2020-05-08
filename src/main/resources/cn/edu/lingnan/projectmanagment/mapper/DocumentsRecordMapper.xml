@@ -93,11 +93,10 @@
     </select>
 
 
-
-<!--    &lt;!&ndash; 查询分页数据 &ndash;&gt;-->
-<!--    <select id="getPage" resultType="DocumentsRecord">-->
-<!--	    SELECT * FROM documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}-->
-<!--    </select>-->
+    <!--    &lt;!&ndash; 查询分页数据 &ndash;&gt;-->
+    <!--    <select id="getPage" resultType="DocumentsRecord">-->
+    <!--	    SELECT * FROM documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}-->
+    <!--    </select>-->
 
     <!--查找所有项目功能点信息-->
     <resultMap id="documentRecordList" type="DocumentsRecord">
@@ -107,8 +106,11 @@
         <result column="operate_time" property="operateTime"></result>
         <result column="ip" property="ip"></result>
         <result column="operate_message" property="operateMessage"></result>
-        <collection property="myUserDetails" column="{id=user_id}" select="cn.edu.lingnan.projectmanagment.mapper.MyUserDetailsMapper.findById"></collection>
-        <collection property="projectsUser" column="{userId=user_id,projectId=project_id}" select="cn.edu.lingnan.projectmanagment.mapper.ProjectUserMapper.getByUserIdAndProjectId"></collection>
+        <collection property="myUserDetails" column="{id=user_id}"
+                    select="cn.edu.lingnan.projectmanagment.mapper.UserMapper.getSimpleMyUserDetailsByUserId">
+        </collection>
+        <collection property="projectsUser" column="{userId=user_id,projectId=project_id}"
+                    select="cn.edu.lingnan.projectmanagment.mapper.ProjectUserMapper.getByUserIdAndProjectId"></collection>
     </resultMap>
     <select id="getDocumentsRecordPageByProjectId" resultMap="documentRecordList">
         select * from documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}

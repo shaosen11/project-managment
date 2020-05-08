@@ -56,7 +56,7 @@
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
+                <div class="page-header col-md-6">
                     <h4 class="page-title">项目主页面</h4>
                     <ul class="breadcrumbs">
                         <li class="nav-home">
@@ -104,6 +104,85 @@
                     <!--项目详情-->
                     <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel"
                          aria-labelledby="pills-one-tab-nobd">
+                        <!--项目项目上传代码行，上传次数，文件数量，项目人员-->
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                                <div class="card card-stats card-round">
+                                    <div class="card-body ">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="icon-big text-center">
+                                                    <i class="flaticon-graph text-primary"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col col-stats">
+                                                <div class="numbers">
+                                                    <p class="card-category">代码行</p>
+                                                    <h4 class="card-title" id="projectCodeLineNumber"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="card card-stats card-round">
+                                    <div class="card-body ">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="icon-big text-center">
+                                                    <i class="flaticon-up-arrow-2 text-success"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col col-stats">
+                                                <div class="numbers">
+                                                    <p class="card-category">上传次数</p>
+                                                    <h4 class="card-title" id="projectCodeUpdateCount"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="card card-stats card-round">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="icon-big text-center">
+                                                    <i class="flaticon-folder text-warning"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col col-stats">
+                                                <div class="numbers">
+                                                    <p class="card-category">文件数量</p>
+                                                    <h4 class="card-title" id="projectDocumentCount"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="card card-stats card-round">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="icon-big text-center">
+                                                    <i class="flaticon-users text-secondary"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col col-stats">
+                                                <div class="numbers">
+                                                    <p class="card-category">贡献者</p>
+                                                    <h4 class="card-title" id="projectUserCount"></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <!-- 折线图-->
                             <div class="col-md-8">
@@ -406,7 +485,9 @@
                                             <ul id="projectUserPage" class="pagination"></ul>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
                                         <div class="form-group col-md-12">
                                             <div class="card-header">
                                                 <span class="text-center text-dark mb-1 fw-bold">
@@ -440,81 +521,59 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="card-title"><h3>概览</h3></div>
+                                        <span class="mb-1 fw-bold"><h2>完成功能点</h2></span>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <h3>名称：</h3>
-                                                <div class="form-group form-group-default">
-                                                    <span class="mb-1 fw-bold" id="personInformationName"></span>
-                                                </div>
-                                                <h3>邮箱：</h3>
-                                                <div class="form-group form-group-default">
-                                                    <span class="mb-1 fw-bold" id="personInformationEmail"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="avatar avatar-xxl" style="margin: auto">
-                                                    <img id="personInformationPhoto" alt="..."
-                                                         class="avatar-img rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="separator-dashed col-md-12"></div>
-                                            <div class="form-group col-md-12">
-                                                <div class="card-header">
-                                                    <span class="mb-1 fw-bold"><h2>完成功能点</h2></span>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p class="demo" id="finishFunction">
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-12">
-                                                <div class="card-header">
-                                                    <span class="mb-1 fw-bold"><h2>正在开发功能点</h2></span>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p class="demo" id="developingFunction">
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-12">
-                                                <div class="card-header">
-                                                    <span class="mb-1 fw-bold"><h2>最近活动</h2></span>
-                                                </div>
-                                                <div class="card-body">
-                                                    <ol class="activity-feed">
-                                                        <li class="feed-item feed-item-secondary">
-                                                            <time class="date" datetime="9-25">Sep 25</time>
-                                                            <span class="text">Responded to need <a href="#">"Volunteer opportunity"</a></span>
-                                                        </li>
-                                                        <li class="feed-item feed-item-success">
-                                                            <time class="date" datetime="9-24">Sep 24</time>
-                                                            <span class="text">Added an interest <a href="#">"Volunteer Activities"</a></span>
-                                                        </li>
-                                                        <li class="feed-item feed-item-info">
-                                                            <time class="date" datetime="9-23">Sep 23</time>
-                                                            <span class="text">Joined the group <a
-                                                                    href="single-group.php">"Boardsmanship Forum"</a></span>
-                                                        </li>
-                                                        <li class="feed-item feed-item-warning">
-                                                            <time class="date" datetime="9-21">Sep 21</time>
-                                                            <span class="text">Responded to need <a href="#">"In-Kind Opportunity"</a></span>
-                                                        </li>
-                                                        <li class="feed-item feed-item-danger">
-                                                            <time class="date" datetime="9-18">Sep 18</time>
-                                                            <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
-                                                        </li>
-                                                        <li class="feed-item">
-                                                            <time class="date" datetime="9-17">Sep 17</time>
-                                                            <span class="text">Attending the event <a
-                                                                    href="single-event.php">"Some New Event"</a></span>
-                                                        </li>
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <p class="demo" id="finishFunction">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span class="mb-1 fw-bold"><h2>正在开发功能点</h2></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="demo" id="developingFunction">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span class="mb-1 fw-bold"><h2>最近活动</h2></span>
+                                    </div>
+                                    <div class="card-body">
+                                        <ol class="activity-feed">
+                                            <li class="feed-item feed-item-secondary">
+                                                <time class="date" datetime="9-25">Sep 25</time>
+                                                <span class="text">Responded to need <a
+                                                        href="#">"Volunteer opportunity"</a></span>
+                                            </li>
+                                            <li class="feed-item feed-item-success">
+                                                <time class="date" datetime="9-24">Sep 24</time>
+                                                <span class="text">Added an interest <a
+                                                        href="#">"Volunteer Activities"</a></span>
+                                            </li>
+                                            <li class="feed-item feed-item-info">
+                                                <time class="date" datetime="9-23">Sep 23</time>
+                                                <span class="text">Joined the group <a
+                                                        href="single-group.php">"Boardsmanship Forum"</a></span>
+                                            </li>
+                                            <li class="feed-item feed-item-warning">
+                                                <time class="date" datetime="9-21">Sep 21</time>
+                                                <span class="text">Responded to need <a
+                                                        href="#">"In-Kind Opportunity"</a></span>
+                                            </li>
+                                            <li class="feed-item feed-item-danger">
+                                                <time class="date" datetime="9-18">Sep 18</time>
+                                                <span class="text">Created need <a
+                                                        href="#">"Volunteer Opportunity"</a></span>
+                                            </li>
+                                            <li class="feed-item">
+                                                <time class="date" datetime="9-17">Sep 17</time>
+                                                <span class="text">Attending the event <a
+                                                        href="single-event.php">"Some New Event"</a></span>
+                                            </li>
+                                        </ol>
                                     </div>
                                 </div>
                             </div>
@@ -616,39 +675,10 @@
     initJsUserIdAndProjectId(userId, projectId);
 </script>
 
-<script type="text/javascript">
-    /*var showSignIn = true,
-        showSignUp = false;*/
-    function changeContainer(id1, id2) {
-        if (showSignIn == true) {
-            document.getElementById(id1).style.display = "block";
-        } else {
-            document.getElementById(id1).style.display = "none";
-        }
-        if (showSignUp == true) {
-            document.getElementById(id2).style.display = "block";
-        } else {
-            document.getElementById(id2).style.display = "none";
-        }
-    }
-
-    function hide(id1, id2) {
-        showSignUp = false;
-        showSignIn = true;
-        changeContainer(id1, id2);
-    }
-
-    function show(id1, id2) {
-        showSignUp = true;
-        showSignIn = false;
-        changeContainer(id1, id2);
-    }
-</script>
 
 <!--饼图-->
-<script th:inline="javascript">
+<script type="text/javascript">
     $(function () {
-        var projectId = [[${param.projectId}]];
         var pieCharts2 = echarts.init(document.getElementById("reduceChart"));
         $.ajax({
             type: "get",
@@ -699,7 +729,6 @@
         })
     })
     $(function () {
-        var projectId = [[${param.projectId}]];
         var pieCharts1 = echarts.init(document.getElementById("devoteChart"));
         var xdata = [];
         var ydata = [];
@@ -761,9 +790,8 @@
     })
 </script>
 <!--折线图-->
-<script th:inline="javascript">
+<script type="text/javascript">
     $(function () {
-        var projectId = [[${param.projectId}]];
         var ctx = document.getElementById('lindChart').getContext('2d');
         var xdata = [];
         var ydata = [];
@@ -841,7 +869,6 @@
         })
     })
 </script>
-
 <!--项目日志分页-->
 <script type="text/javascript">
     var userIdFlag = [[${#authentication.principal.id}]];
@@ -1036,7 +1063,7 @@
 
 </script>
 <!--功能点进度条-->
-<script th:inline="javascript">
+<script type="text/javascript">
     // Cicle Chart
     var data = [[${projectFunctionData}]];
     Circles.create({
@@ -1135,10 +1162,8 @@
     }
 
 </script>
-<!--加载人才市场-->
+<!--加载人员信息-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     $(function () {
         addPersonManagerPage(projectId, null, projectUserDiv, projectUserPage);
     })
@@ -1198,7 +1223,8 @@
             });
         }
 
-        function appendPersonManagerHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        //此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        function appendPersonManagerHtml(list) {
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
@@ -1222,7 +1248,7 @@
 
     }
 </script>
-<!--比例图-->
+<!--人员信息贡献比例图-->
 <script type="text/javascript">
     function codeLineCicle(radius) {
         // Cicle Chart
@@ -1281,7 +1307,6 @@
                 codeUpdateCile(json.codeUpdateRatio);
                 $("#personInformationName").text(json.myUserDetails.username);
                 $("#personInformationEmail").text(json.myUserDetails.email);
-                $("#personInformationPhoto").attr("src", "/files/photo/" + json.myUserDetails.photo);
                 appendFinishFunction(projectId, userId);
                 appendDevelopIngFunction(projectId, userId);
             }
@@ -1349,6 +1374,26 @@
         }
         $(developingFunction).html(button)
     }
+</script>
+<!--加载项目上传代码行，上传次数，文件数量，项目人员-->
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "get",
+            url: "/project",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+            },
+            success: function (json) {
+                console.log(json)
+                $("#projectCodeLineNumber").text(json.codeLineNumber);
+                $("#projectCodeUpdateCount").text(json.codeUpdateCount);
+                $("#projectDocumentCount").text(json.documentCount);
+                $("#projectUserCount").text(json.userCount);
+            }
+        })
+    })
 </script>
 </body>
 </html>

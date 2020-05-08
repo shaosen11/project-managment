@@ -53,5 +53,39 @@ public interface ProjectsMessageMapper {
      * @return
      */
     boolean updateProjectMessageIsReadByProjectMessageId(Integer projectMessageId);
+
+    /**
+     * 通过projectId查询所有待办消息
+     *
+     * @param projectId
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<ProjectsMessage> getAllNeedToByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过id查找项目消息
+     * @param id
+     * @return
+     */
+    ProjectsMessage getById(Integer id);
+
+    /**
+     * 获取项目消息数量
+     *
+     * @param projectId
+     * @param userId
+     * @return
+     */
+    Integer projectMessageCount(Integer projectId, Integer userId);
+
+    /**
+     * 获取项目消息数量
+     *
+     * @param projectId
+     * @return
+     */
+    Integer projectMessageNeedToDoCount(Integer projectId);
 }
 

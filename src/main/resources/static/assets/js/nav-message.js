@@ -55,7 +55,7 @@ function addMessageToDo(list, divNumber, divTitle, div) {
             '                       </div>\n' +
             '                   </div>\n' +
             '                   <button class="btn btn-secondary col-md-4 ml-auto mr-auto" onclick="agreeNeedToDo(' + list[i].id + ')">同意</button>' +
-            '                   <button class="btn btn-primary col-md-4 ml-auto mr-auto">拒绝</button>' +
+            '                   <button class="btn btn-primary col-md-4 ml-auto mr-auto" onclick="doNotAgreeNeedToDo(' + list[i].id + ')">拒绝</button>' +
             '               </div>' +
             '           </a>'
     }
@@ -93,7 +93,7 @@ function addMessage(list, divNumber, div) {
 //同意待办
 function agreeNeedToDo(messageId) {
     $.ajax({
-        type: "post",
+        type: "put",
         url: "/agreeNeedToDo",
         dataType: "json",
         data: {
@@ -106,6 +106,26 @@ function agreeNeedToDo(messageId) {
                 setTimeout(function () {
                     location.href = result.data;
                 }, 1500);
+            }
+        }
+    })
+}
+
+//拒绝待办
+function doNotAgreeNeedToDo(messageId){
+    console.log(messageId);
+    $.ajax({
+        type: "put",
+        url: "/doNotAgreeNeedToDo",
+        dataType: "json",
+        data: {
+            messageId: messageId,
+        },
+        success: function (result) {
+            console.log(result);
+            if (result) {
+                console.log(result);
+                my_message_need_to_do();
             }
         }
     })

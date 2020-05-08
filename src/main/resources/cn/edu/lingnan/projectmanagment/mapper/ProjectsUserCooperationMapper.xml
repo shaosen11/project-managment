@@ -70,6 +70,9 @@
             <if test="finishFlag != null">
                 finish_flag = #{finishFlag},
             </if>
+            <if test="successFlag !=null">
+                success_flag = #{successFlag},
+            </if>
         </trim>
         where id = #{id}
     </update>

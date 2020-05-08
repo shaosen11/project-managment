@@ -117,5 +117,10 @@ public class UserServiceImpl implements UserService {
     public MyUserDetails getMyUserDetailsByUserId(Integer userId) {
         return userMapper.getMyUserDetailsByUserId(userId);
     }
+
+    @Override
+    public MyUserDetails getSimpleMyUserDetailsByUserId(Integer userId) {
+        return userMapper.getSimpleMyUserDetailsByUserId(userId);
+    }
 }
 

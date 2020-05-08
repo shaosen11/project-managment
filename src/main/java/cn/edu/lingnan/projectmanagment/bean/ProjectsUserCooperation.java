@@ -21,4 +21,5 @@ public class ProjectsUserCooperation {
     private Integer inviteFlag;
     private Integer joinFlag;
     private Integer finishFlag;
+    private Integer successFlag;
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -57,9 +58,9 @@ public class MessageController {
     @ResponseBody
     public AJaxResponse updateAllMessageIsReadByUserId(Integer userId) {
         boolean result = messageService.updateAllMessageIsReadByUserId(userId, 0);
-        if (result){
+        if (result) {
             return AJaxResponse.success("标志所有消息已读");
-        }else {
+        } else {
             return AJaxResponse.error(new CustomException(CustomExceptionType.SYSTEM_ERROR, "标志所有消息已读操作失败"));
         }
     }
@@ -71,7 +72,7 @@ public class MessageController {
         return AJaxResponse.success("标志消息已读");
     }
 
-    @PostMapping("/agreeNeedToDo")
+    @PutMapping("/agreeNeedToDo")
     @ResponseBody
     public AJaxResponse agreeNeedToDo(Integer messageId) {
         //通过messageId查找待办的事件
@@ -139,6 +140,40 @@ public class MessageController {
             pathMap.put("userId", notInProjectUserId);
             String pathString = "/projects_view" + PathUtil.pathUtil(pathMap);
             return AJaxResponse.success(pathString, "处理完成");
+        }
+        return null;
+    }
+
+    @PutMapping("/doNotAgreeNeedToDo")
+    @ResponseBody
+    public AJaxResponse doNotAgreeNeedToDo(Integer messageId) {
+        //通过messageId查找待办的事件
+        MessageNeedToDoRelationship messageNeedToDoRelationship = messageNeedToDoRelationshipService.getByMessageId(messageId);
+        //如果是项目邀请
+        if (messageNeedToDoRelationship.getProjectsUserCooperrationId() != 0) {
+            ProjectsUserCooperation userCooperation = projectsUserCooperationService.getById(messageNeedToDoRelationship.getProjectsUserCooperrationId());
+            //标志邀请已完成
+            userCooperation.setSuccessFlag(-1);
+            //标志邀请已结束
+            userCooperation.setFinishFlag(1);
+            projectsUserCooperationService.update(userCooperation);
+            //标志消息已处理
+            Message message = messageService.getById(messageNeedToDoRelationship.getMessageId());
+            message.setIsRead(0);
+            messageService.update(message);
+            //发送消息给邀请人，邀请失败
+            //封装项目消息
+            ProjectsMessage projectsMessage = new ProjectsMessage();
+            projectsMessage.setProjectId(userCooperation.getProjectsId());
+            projectsMessage.setTypeId(10);
+            projectsMessage.setToUserId(userCooperation.getInProjectUserId());
+            projectsMessage.setTime(DateFromatUtil.getNowDate(new Date()));
+            //获取邀请人
+            MyUserDetails inviteUser = userService.getSimpleMyUserDetailsByUserId(userCooperation.getNotInProjectUserId());
+            String msg = inviteUser.getUsername() + "拒绝了你的邀请邀请";
+            projectsMessage.setMessage(msg);
+            projectsMessageService.insert(projectsMessage);
+            return AJaxResponse.success("处理完成");
         }
         return null;
     }

@@ -5,6 +5,7 @@ import cn.edu.lingnan.projectmanagment.service.DocumentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 
@@ -69,7 +70,7 @@ public class FileUtil {
     //获取文件路径
     public static String DocumentsGetAddrress(Documents documents) {
         System.out.println("文件" + documents);
-        String address = "http://47.98.240.31/files/projects/" + documents.getProjectId() + "/"+ documents.getSerialNumber() + "-" + documents.getName();
+        String address = "/files/projects/" + documents.getProjectId() + "/"+ documents.getSerialNumber() + "-" + documents.getName();
         System.out.println("文件路径：：" + address);
         return address;
     }
