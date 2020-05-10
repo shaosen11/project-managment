@@ -14,6 +14,8 @@
     <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
     <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
 
+    <link rel="stylesheet" th:href="@{/assets/js/highlight/styles/vs2015.css}">
+
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
 </head>
@@ -92,7 +94,12 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <textarea id="addressd1" class="card-group col-md-12" rows="25"></textarea>
+                                        <!--                                        <textarea id="addressd1" class="card-group col-md-12" rows="25"></textarea>-->
+                                        <pre>
+                                    <code id="addressd1">
+
+                                    </code>
+                                </pre>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -102,7 +109,12 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <textarea id="addressd2" class="card-group col-md-12" rows="25"></textarea>
+                                        <!--                                        <textarea id="addressd2" class="card-group col-md-12" rows="25"></textarea>-->
+                                        <pre>
+                                    <code id="addressd2">
+
+                                    </code>
+                                </pre>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +169,14 @@
                                 <h4 class="card-title" th:text="${documents1.name}"></h4>
                             </div>
                             <div class="card-body">
-                                <textarea id="addressdocument" class="col-md-12" rows="25"></textarea>
+                                <!--                                <textarea id="addressdocument" class="col-md-12" rows="25">-->
+
+                                <!--                                </textarea>-->
+                                <pre>
+                                    <code id="addressdocument">
+
+                                    </code>
+                                </pre>
                             </div>
                         </div>
                     </div>
@@ -165,26 +184,26 @@
                         <div class="card">
                             <div class="card-body row">
                                 <div class="col-md-4">
-                                    <button class="btn btn-secondary btn-round col-md-12">
-                                                <span class="btn-label">
-                                                    <i class="fas fa-cloud-download-alt"></i>
-                                                </span>
+                                    <button class="btn btn-secondary btn-round col-md-12" onclick="downloadFile()">
+                                            <span class="btn-label">
+                                                <i class="fas fa-cloud-download-alt"></i>
+                                            </span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button class="btn btn-secondary btn-round col-md-12" data-toggle="modal"
                                             data-target="#uploadfile" data-id="edit">
-                                                <span class="btn-label">
-                                                   <i class="fas fa-cloud-upload-alt"></i>
-                                                </span>
+                                            <span class="btn-label">
+                                               <i class="fas fa-cloud-upload-alt"></i>
+                                            </span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
                                     <button class="btn btn-secondary btn-round col-md-12" data-toggle="modal"
                                             data-target="#updateDocument" data-id="edit">
-                                                <span class="btn-label">
-                                                   <i class="fas fa-cog"></i>
-                                                </span>
+                                            <span class="btn-label">
+                                               <i class="fas fa-cog"></i>
+                                            </span>
                                     </button>
                                 </div>
                             </div>
@@ -208,36 +227,7 @@
 
 </div>
 
-<!-- Custom template | don't include it in your project! -->
-<div class="custom-template">
-    <div class="title">Settings</div>
-    <div class="custom-content">
-        <div class="switcher">
-            <div class="switch-block">
-                <h4>Topbar</h4>
-                <div class="btnSwitch">
-                    <button type="button" class="changeMainHeaderColor" data-color="blue"></button>
-                    <button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
-                    <button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
-                    <button type="button" class="changeMainHeaderColor" data-color="green"></button>
-                    <button type="button" class="changeMainHeaderColor" data-color="orange"></button>
-                    <button type="button" class="changeMainHeaderColor" data-color="red"></button>
-                </div>
-            </div>
-            <div class="switch-block">
-                <h4>Background</h4>
-                <div class="btnSwitch">
-                    <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-                    <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-                    <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="custom-toggle">
-        <i class="flaticon-settings"></i>
-    </div>
-</div>
+
 <!-- End Custom template -->
 </div>
 
@@ -301,6 +291,8 @@
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
 
+<!--代码高亮-->
+<script th:src="@{/assets/js/highlight/highlight.js}"></script>
 <!--加载退出登录公共js-->
 <script th:src="@{/assets/js/nav-loginOut.js}"></script>
 <!--加载导航栏消息公共js-->
@@ -317,20 +309,65 @@
 </script>
 
 <!--加载文件-->
-<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript">
     $(function () {
-        var addressdocument = [[${addressdocument}]];
-        var addressd1 = [[${addressd1}]];
-        var addressd2 = [[${addressd2}]];
-        if (addressd1 != null && addressd2 != null) {
-            $('#addressd1').load(addressd1);
-            $('#addressd2').load(addressd2);
-        } else {
-            $('#addressdocument').load(addressdocument);
+        var addressdocument = "[[${addressdocument}]]";
+        var addressd1 = "[[${addressd1}]]";
+        var addressd2 = "[[${addressd2}]]";
+        if (addressd1 != "" && addressd2 != "") {
+            $.ajax({
+                url: addressd1,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    var code = data;
+                    var highCode = hljs.highlightAuto(code).value;
+                    $("#addressd1").html(highCode);
+                },
+                error: function () {
+                    console.log("没有请求成功！");
+                }
+            })
+            $.ajax({
+                url: addressd2,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    var code = data;
+                    var highCode = hljs.highlightAuto(code).value;
+                    $("#addressd2").html(highCode);
+                },
+                error: function () {
+                    console.log("没有请求成功！");
+                }
+            })
+        } else if (addressdocument != ""){
+            $.ajax({
+                url: addressdocument,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    var code = data;
+                    var highCode = hljs.highlightAuto(code).value;
+                    $("#addressdocument").html(highCode);
+                },
+                error: function () {
+                    console.log("没有请求成功！");
+                }
+            })
         }
+
     })
 </script>
 
+<!--下载文件-->
+<script type="text/javascript">
+    // function downloadFile() {
+    //     var addressdocument = [[${addressdocument}]]
+    //     console.log([[${addressdocument}]])
+    //     location.href = [[${addressdocument}]]
+    // }
+</script>
 
 </body>
 </html>
