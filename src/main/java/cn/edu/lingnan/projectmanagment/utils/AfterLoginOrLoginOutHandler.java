@@ -35,7 +35,7 @@ public class AfterLoginOrLoginOutHandler {
         //存储登录日志
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(myUserDetails.getId());
-        userRecord.setIp(IPUtil.getIP(request));
+        userRecord.setIp(IPUtil.getIpAddress(request));
         userRecord.setOperateTime(new Date());
         userRecord.setOperateMassage(msg);
         userRecordService.insert(userRecord);

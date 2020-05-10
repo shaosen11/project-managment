@@ -171,7 +171,7 @@ public class DocumentsController {
             documentsService.insert(documents);
             //插入日志文件
             //获取ip
-            String ip = IPUtil.getIP(request);
+            String ip = IPUtil.getIpAddress(request);
             System.out.println("获取的ip:::" + ip);
             System.out.println("插入日志数据库:::" + documentsRecordController.insert(documents, ip, 1));
             //插入文件包表数据库

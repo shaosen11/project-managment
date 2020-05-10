@@ -14,7 +14,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
     <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
 
-    <link rel="stylesheet" th:href="@{/assets/js/highlight/styles/vs2015.css}">
+    <link rel="stylesheet" th:href="@{/assets/js/highlight/styles/atelier-cave-dark.css}">
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
@@ -169,9 +169,6 @@
                                 <h4 class="card-title" th:text="${documents1.name}"></h4>
                             </div>
                             <div class="card-body">
-                                <!--                                <textarea id="addressdocument" class="col-md-12" rows="25">-->
-
-                                <!--                                </textarea>-->
                                 <pre>
                                     <code id="addressdocument">
 
@@ -341,20 +338,510 @@
                     console.log("没有请求成功！");
                 }
             })
-        } else if (addressdocument != ""){
-            $.ajax({
-                url: addressdocument,
-                type: "get",
-                datatype: "json",
-                success: function (data) {
-                    var code = data;
-                    var highCode = hljs.highlightAuto(code).value;
-                    $("#addressdocument").html(highCode);
-                },
-                error: function () {
-                    console.log("没有请求成功！");
-                }
-            })
+        } else{
+            // $.ajax({
+            //     url: addressdocument,
+            //     type: "get",
+            //     datatype: "json",
+            //     success: function (data) {
+            //         // var code = data;
+            //         var code = "  package neusoft.controller;\n" +
+            //             "\n" +
+            //             "import neusoft.pojo.Documents;\n" +
+            //             "import neusoft.service.DocumentsRecordService;\n" +
+            //             "import neusoft.service.DocumentsService;\n" +
+            //             "import neusoft.service.ProjectsService;\n" +
+            //             "import neusoft.util.FileUtil;\n" +
+            //             "import neusoft.util.IPUtil;\n" +
+            //             "import org.junit.Test;\n" +
+            //             "import org.springframework.beans.factory.annotation.Autowired;\n" +
+            //             "import org.springframework.context.ApplicationContext;\n" +
+            //             "import org.springframework.context.annotation.Bean;\n" +
+            //             "import org.springframework.context.support.ClassPathXmlApplicationContext;\n" +
+            //             "import org.springframework.stereotype.Controller;\n" +
+            //             "import org.springframework.ui.Model;\n" +
+            //             "import org.springframework.web.bind.annotation.RequestMapping;\n" +
+            //             "import org.springframework.web.bind.annotation.RequestParam;\n" +
+            //             "import org.springframework.web.multipart.MultipartFile;\n" +
+            //             "import org.springframework.web.servlet.ModelAndView;\n" +
+            //             "\n" +
+            //             "import javax.servlet.http.HttpServletRequest;\n" +
+            //             "import java.io.*;\n" +
+            //             "import java.util.List;\n" +
+            //             "import java.util.UUID;\n" +
+            //             "\n" +
+            //             "@Controller\n" +
+            //             "@RequestMapping(\"/documents\")\n" +
+            //             "public class DocumentsController {\n" +
+            //             "    @Autowired\n" +
+            //             "    private DocumentsService documentsService;\n" +
+            //             "    @Autowired\n" +
+            //             "    private ProjectsService projectsService;\n" +
+            //             "\n" +
+            //             "    @RequestMapping(\"/text\")\n" +
+            //             "    public String text(@RequestParam(\"filename\") String filename, @RequestParam(\"projectId\") Integer projectId, @RequestParam(\"userId\") Integer userid, Model model){\n" +
+            //             "        System.out.println(\"文件名：\" + filename);\n" +
+            //             "        System.out.println(\"项目id：\" + projectId);\n" +
+            //             "        ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+            //             "        System.out.println(\"加载application成功\");\n" +
+            //             "        Documents d1 = ctx.getBean(Documents.class);\n" +
+            //             "        Documents d2 = ctx.getBean(Documents.class);\n" +
+            //             "//        Documents d1 = new Documents();\n" +
+            //             "//        Documents d2 = new Documents();\n" +
+            //             "        System.out.println(\"Sptring获取对象成功\");\n" +
+            //             "        //获取文件名为filename和版本标识符为1的\n" +
+            //             "        d1 = documentsService.getByVersionFlagAndName(1,filename);\n" +
+            //             "        System.out.println(d1);\n" +
+            //             "        //获取文件名为filename和版本标识符为2的\n" +
+            //             "        d2 = documentsService.getByVersionFlagAndName(2,filename);\n" +
+            //             "        System.out.println(d2);\n" +
+            //             "        //判断有无VersionFlag为2的\n" +
+            //             "        if(d2 == null){\n" +
+            //             "            //只有版本号为1的，把d1赋值给d1\n" +
+            //             "            Documents documents = d1;\n" +
+            //             "            System.out.println(documents);\n" +
+            //             "            //返回前端documents对象\n" +
+            //             "            model.addAttribute(\"documents1\", documents);\n" +
+            //             "            //处理文件，返回前端地址\n" +
+            //             "            String addressDocument = FileUtil.DocumentsGetAddrress(documents);\n" +
+            //             "            //返回前端地址\n" +
+            //             "            model.addAttribute(\"addressdocument\", addressDocument);\n" +
+            //             "        }else{\n" +
+            //             "            //返回前端documents对象\n" +
+            //             "            model.addAttribute(\"documents1\", d1);\n" +
+            //             "            model.addAttribute(\"documents2\", d2);\n" +
+            //             "            //处理文件，返回前端地址\n" +
+            //             "            String addressd1 = FileUtil.DocumentsGetAddrress(d1);\n" +
+            //             "            System.out.println(addressd1);\n" +
+            //             "            String addressd2 = FileUtil.DocumentsGetAddrress(d2);\n" +
+            //             "            System.out.println(addressd2);\n" +
+            //             "            //返回前端地址\n" +
+            //             "            model.addAttribute(\"addressd1\", addressd1);\n" +
+            //             "            model.addAttribute(\"addressd2\", addressd2);\n" +
+            //             "        }\n" +
+            //             "\n" +
+            //             "        //设置项目id\n" +
+            //             "        model.addAttribute(\"projectId\", projectId);\n" +
+            //             "        //判断是否为项目组长\n" +
+            //             "        Integer power = 0;\n" +
+            //             "        if(projectsService.getAdminByUserIdAndProjectId(userid, 1) != null){\n" +
+            //             "            power = 1;\n" +
+            //             "        }\n" +
+            //             "        model.addAttribute(\"power\", power);\n" +
+            //             "        return \"text\";\n" +
+            //             "    }\n" +
+            //             "\n" +
+            //             "    @RequestMapping(\"/getall\")\n" +
+            //             "    public String getAll(@RequestParam(\"projectId\") Integer projectId, Model model){\n" +
+            //             "        List<Documents> List = documentsService.getAllByProjectId(projectId);\n" +
+            //             "        System.out.println(List);\n" +
+            //             "        model.addAttribute(\"allDocuments\",List);\n" +
+            //             "        //设置项目id\n" +
+            //             "        model.addAttribute(\"projectId\", projectId);\n" +
+            //             "        return \"datatables\";\n" +
+            //             "    }\n" +
+            //             "\n" +
+            //             "    @RequestMapping(\"/upload\")\n" +
+            //             "    public String uploadFile(@RequestParam(\"file\")MultipartFile[] files, @RequestParam(\"projectId\") Integer projectId, Documents documents,\n" +
+            //             "                             @RequestParam(\"packageName1\") String packageName, HttpServletRequest request, Model model) throws Exception{\n" +
+            //             "        System.out.println(\"项目id：\" + projectId);\n" +
+            //             "        System.out.println(\"packageName:::\" + packageName);\n" +
+            //             "        if(files.length == 0){\n" +
+            //             "            return \"failure\";\n" +
+            //             "        }\n" +
+            //             "        String filePath = request.getServletContext().getRealPath(\"/\");\n" +
+            //             "        for(MultipartFile file:files){\n" +
+            //             "            //生成随机号\n" +
+            //             "            String uuid= UUID.randomUUID().toString();\n" +
+            //             "            uuid=uuid.replace(\"-\", \"\");\n" +
+            //             "            //获取文件名\n" +
+            //             "            String oldFileName=file.getOriginalFilename();\n" +
+            //             "            int  index=  oldFileName.lastIndexOf(\"\\\\\");\n" +
+            //             "            if(index!=-1){\n" +
+            //             "                oldFileName.substring(index+1);\n" +
+            //             "            }\n" +
+            //             "            //拼接文件名，防止冲突\n" +
+            //             "            String newFileName=uuid+\"-\"+oldFileName;\n" +
+            //             "            System.out.println(\"D:/upload/\"+newFileName);\n" +
+            //             "            //设置Documents的属性\n" +
+            //             "            documents.setName(oldFileName);\n" +
+            //             "            documents.setSerialNumber(uuid);\n" +
+            //             "            //以后需要修改projiectId\n" +
+            //             "            documents.setProjectId(projectId);\n" +
+            //             "            //装换文件类型，且读取代码行数\n" +
+            //             "            System.out.println(\"开始转换文件\");\n" +
+            //             "            if(FileUtil.codeLine(FileUtil.multipartFileToFile(file)) != 0){\n" +
+            //             "                documents.setCodeLineNumber(FileUtil.codeLine(FileUtil.multipartFileToFile(file)));\n" +
+            //             "            }else{\n" +
+            //             "                documents.setCodeLineNumber(0);\n" +
+            //             "            }\n" +
+            //             "            System.out.println(\"转换结束\");\n" +
+            //             "            //控制上传确定版本号为2的\n" +
+            //             "            if(documentsService.getByVersionFlagAndName(2, oldFileName)!=null){\n" +
+            //             "                String msg = \"存在未审核版本，不能上传，请通知项目组长审核\";\n" +
+            //             "                System.out.println(msg);\n" +
+            //             "                model.addAttribute(\"msg\",msg);\n" +
+            //             "                return \"false\";\n" +
+            //             "            }\n" +
+            //             "            //查询版本号\n" +
+            //             "            if(documentsService.getVersionByName(oldFileName) != null){\n" +
+            //             "                documents.setVersion(documentsService.getVersionByName(oldFileName)+1);\n" +
+            //             "                documents.setVersionFlag(2);\n" +
+            //             "            }else{\n" +
+            //             "                documents.setVersion(1);\n" +
+            //             "                documents.setVersionFlag(1);\n" +
+            //             "                //第一次插入统计代码行\n" +
+            //             "                //修改代码贡献量\n" +
+            //             "                Integer codeLine = documents.getCodeLineNumber();\n" +
+            //             "                ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+            //             "                UserProjectsController userProjectsController = ctx.getBean(UserProjectsController.class);\n" +
+            //             "                System.out.println(\"代码行修改：\" + userProjectsController.update(codeLine, documents.getWriter(), documents.getProjectId()));\n" +
+            //             "                //插入record表\n" +
+            //             "                ReocrdController reocrdController = ctx.getBean(ReocrdController.class);\n" +
+            //             "                System.out.println(\"插入reocrd:::\" + reocrdController.insert(documents, codeLine));\n" +
+            //             "            }\n" +
+            //             "            System.out.println(documents);\n" +
+            //             "            //插入数据库\n" +
+            //             "            documentsService.insert(documents);\n" +
+            //             "            //插入日志文件\n" +
+            //             "            ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+            //             "            DocumentsRecordController documentsRecordController = ctx.getBean(DocumentsRecordController.class);\n" +
+            //             "            //获取ip\n" +
+            //             "            String ip = IPUtil.getIP(request);\n" +
+            //             "            System.out.println(\"获取的ip:::\" + ip);\n" +
+            //             "            System.out.println(\"插入日志数据库:::\" + documentsRecordController.insert(documents, ip, 1));\n" +
+            //             "            //插入文件包表数据库\n" +
+            //             "            DocumentsPackageController documentsPackageController = ctx.getBean(DocumentsPackageController.class);\n" +
+            //             "            System.out.println(\"插入文件包表数据库：：：\" + documentsPackageController.insertpackage(documents, packageName));\n" +
+            //             "\n" +
+            //             "            //写入磁盘\n" +
+            //             "            System.out.println(\"D:/upload/\" + newFileName);\n" +
+            //             "            file.transferTo(new File(\"D:/upload/\"+newFileName));\n" +
+            //             "        }\n" +
+            //             "        if(documents.getVersionFlag() == 2){\n" +
+            //             "            ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+            //             "            Documents d1 = ctx.getBean(Documents.class);\n" +
+            //             "            Documents d2 = ctx.getBean(Documents.class);\n" +
+            //             "            //获取文件名为filename和版本标识符为1的\n" +
+            //             "            d1 = documentsService.getByVersionFlagAndName(1,documents.getName());\n" +
+            //             "            System.out.println(d1);\n" +
+            //             "            //获取文件名为filename和版本标识符为2的\n" +
+            //             "            d2 = documentsService.getByVersionFlagAndName(2,documents.getName());\n" +
+            //             "            System.out.println(d2);\n" +
+            //             "        }\n" +
+            //             "        //设置项目id\n" +
+            //             "        model.addAttribute(\"projectId\", projectId);\n" +
+            //             "        model.addAttribute(\"filename\",documents.getName());\n" +
+            //             "        model.addAttribute(\"userId\", documents.getWriter());\n" +
+            //             "        return \"redirect:text\";\n" +
+            //             "    }\n" +
+            //             "\n" +
+            //             "    //修改文件状态\n" +
+            //             "    //-1表示以前没有用过的版本\n" +
+            //             "    //0表示以前通过版本\n" +
+            //             "    //1表示当前版本\n" +
+            //             "    //2表示要审核版本\n" +
+            //             "    @RequestMapping(\"/update\")\n" +
+            //             "    public String updateFileState(@RequestParam(\"documentsName\") String documentsName, Integer operate, HttpServletRequest request, Model model){\n" +
+            //             "        //Integer operate表示操作的类型，1表示同意，把d1的versionFing改为0，d2的改为1\n" +
+            //             "        // 2表示不同意，把d2的改为0\n" +
+            //             "        System.out.println(documentsName);\n" +
+            //             "        ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+            //             "        Documents d1 = ctx.getBean(Documents.class);\n" +
+            //             "        Documents d2 = ctx.getBean(Documents.class);\n" +
+            //             "        //获取文件名为filename和版本标识符为1的\n" +
+            //             "        d1 = documentsService.getByVersionFlagAndName(1,documentsName);\n" +
+            //             "        System.out.println(d1);\n" +
+            //             "        //获取文件名为filename和版本标识符为2的\n" +
+            //             "        d2 = documentsService.getByVersionFlagAndName(2,documentsName);\n" +
+            //             "        System.out.println(d2);\n" +
+            //             "        DocumentsRecordController documentsRecordController = ctx.getBean(DocumentsRecordController.class);\n" +
+            //             "        //获取ip\n" +
+            //             "        String ip = IPUtil.getIP(request);\n" +
+            //             "        System.out.println(\"获取的ip:::\" + ip);\n" +
+            //             "        if(operate == 1){\n" +
+            //             "            //同意修改文件，修改文件versionFlag值为1的变为0，值为2的变为1\n" +
+            //             "            d1.setVersionFlag(0);\n" +
+            //             "            System.out.println(d1);\n" +
+            //             "            System.out.println(\"修改d1文件确定号：\" + documentsService.update(d1));\n" +
+            //             "            d2.setVersionFlag(1);\n" +
+            //             "            System.out.println(d2);\n" +
+            //             "            System.out.println(\"修改d2文件确定号：\" + documentsService.update(d2));\n" +
+            //             "            //修改代码贡献量\n" +
+            //             "            Integer codeLine = d2.getCodeLineNumber() - d1.getCodeLineNumber();\n" +
+            //             "            UserProjectsController userProjectsController = ctx.getBean(UserProjectsController.class);\n" +
+            //             "            System.out.println(\"代码行修改：\" + userProjectsController.update(codeLine, d2.getWriter(), d2.getProjectId()));\n" +
+            //             "            //插入record表\n" +
+            //             "            ReocrdController reocrdController = ctx.getBean(ReocrdController.class);\n" +
+            //             "            reocrdController.insert(d1, codeLine);\n" +
+            //             "            //插入日志表\n" +
+            //             "            documentsRecordController.insert(d2, ip, 2);\n" +
+            //             "        }else{\n" +
+            //             "            //不同意修改文件，只修改文件versionFlag值2的变为-1\n" +
+            //             "            d2.setVersionFlag(-1);\n" +
+            //             "            System.out.println(\"修改d2文件确定号：\" + documentsService.update(d2));\n" +
+            //             "            documentsRecordController.insert(d2, ip, 2);\n" +
+            //             "        }\n" +
+            //             "        model.addAttribute(\"projectId\", d2.getProjectId());\n" +
+            //             "        model.addAttribute(\"filename\",d2.getName());\n" +
+            //             "        model.addAttribute(\"userId\", operate);\n" +
+            //             "        return \"redirect:text\";\n" +
+            //             "    }\n" +
+            //             "\n" +
+            //             "}\n"
+            //         var highCode = hljs.highlightAuto(code).value;
+            //         $("#addressdocument").html(highCode);
+            //     },
+            //     error: function () {
+            //         console.log("没有请求成功！");
+            //     }
+            // })
+            var code = "  package neusoft.controller;\n" +
+                "\n" +
+                "import neusoft.pojo.Documents;\n" +
+                "import neusoft.service.DocumentsRecordService;\n" +
+                "import neusoft.service.DocumentsService;\n" +
+                "import neusoft.service.ProjectsService;\n" +
+                "import neusoft.util.FileUtil;\n" +
+                "import neusoft.util.IPUtil;\n" +
+                "import org.junit.Test;\n" +
+                "import org.springframework.beans.factory.annotation.Autowired;\n" +
+                "import org.springframework.context.ApplicationContext;\n" +
+                "import org.springframework.context.annotation.Bean;\n" +
+                "import org.springframework.context.support.ClassPathXmlApplicationContext;\n" +
+                "import org.springframework.stereotype.Controller;\n" +
+                "import org.springframework.ui.Model;\n" +
+                "import org.springframework.web.bind.annotation.RequestMapping;\n" +
+                "import org.springframework.web.bind.annotation.RequestParam;\n" +
+                "import org.springframework.web.multipart.MultipartFile;\n" +
+                "import org.springframework.web.servlet.ModelAndView;\n" +
+                "\n" +
+                "import javax.servlet.http.HttpServletRequest;\n" +
+                "import java.io.*;\n" +
+                "import java.util.List;\n" +
+                "import java.util.UUID;\n" +
+                "\n" +
+                "@Controller\n" +
+                "@RequestMapping(\"/documents\")\n" +
+                "public class DocumentsController {\n" +
+                "    @Autowired\n" +
+                "    private DocumentsService documentsService;\n" +
+                "    @Autowired\n" +
+                "    private ProjectsService projectsService;\n" +
+                "\n" +
+                "    @RequestMapping(\"/text\")\n" +
+                "    public String text(@RequestParam(\"filename\") String filename, @RequestParam(\"projectId\") Integer projectId, @RequestParam(\"userId\") Integer userid, Model model){\n" +
+                "        System.out.println(\"文件名：\" + filename);\n" +
+                "        System.out.println(\"项目id：\" + projectId);\n" +
+                "        ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+                "        System.out.println(\"加载application成功\");\n" +
+                "        Documents d1 = ctx.getBean(Documents.class);\n" +
+                "        Documents d2 = ctx.getBean(Documents.class);\n" +
+                "//        Documents d1 = new Documents();\n" +
+                "//        Documents d2 = new Documents();\n" +
+                "        System.out.println(\"Sptring获取对象成功\");\n" +
+                "        //获取文件名为filename和版本标识符为1的\n" +
+                "        d1 = documentsService.getByVersionFlagAndName(1,filename);\n" +
+                "        System.out.println(d1);\n" +
+                "        //获取文件名为filename和版本标识符为2的\n" +
+                "        d2 = documentsService.getByVersionFlagAndName(2,filename);\n" +
+                "        System.out.println(d2);\n" +
+                "        //判断有无VersionFlag为2的\n" +
+                "        if(d2 == null){\n" +
+                "            //只有版本号为1的，把d1赋值给d1\n" +
+                "            Documents documents = d1;\n" +
+                "            System.out.println(documents);\n" +
+                "            //返回前端documents对象\n" +
+                "            model.addAttribute(\"documents1\", documents);\n" +
+                "            //处理文件，返回前端地址\n" +
+                "            String addressDocument = FileUtil.DocumentsGetAddrress(documents);\n" +
+                "            //返回前端地址\n" +
+                "            model.addAttribute(\"addressdocument\", addressDocument);\n" +
+                "        }else{\n" +
+                "            //返回前端documents对象\n" +
+                "            model.addAttribute(\"documents1\", d1);\n" +
+                "            model.addAttribute(\"documents2\", d2);\n" +
+                "            //处理文件，返回前端地址\n" +
+                "            String addressd1 = FileUtil.DocumentsGetAddrress(d1);\n" +
+                "            System.out.println(addressd1);\n" +
+                "            String addressd2 = FileUtil.DocumentsGetAddrress(d2);\n" +
+                "            System.out.println(addressd2);\n" +
+                "            //返回前端地址\n" +
+                "            model.addAttribute(\"addressd1\", addressd1);\n" +
+                "            model.addAttribute(\"addressd2\", addressd2);\n" +
+                "        }\n" +
+                "\n" +
+                "        //设置项目id\n" +
+                "        model.addAttribute(\"projectId\", projectId);\n" +
+                "        //判断是否为项目组长\n" +
+                "        Integer power = 0;\n" +
+                "        if(projectsService.getAdminByUserIdAndProjectId(userid, 1) != null){\n" +
+                "            power = 1;\n" +
+                "        }\n" +
+                "        model.addAttribute(\"power\", power);\n" +
+                "        return \"text\";\n" +
+                "    }\n" +
+                "\n" +
+                "    @RequestMapping(\"/getall\")\n" +
+                "    public String getAll(@RequestParam(\"projectId\") Integer projectId, Model model){\n" +
+                "        List<Documents> List = documentsService.getAllByProjectId(projectId);\n" +
+                "        System.out.println(List);\n" +
+                "        model.addAttribute(\"allDocuments\",List);\n" +
+                "        //设置项目id\n" +
+                "        model.addAttribute(\"projectId\", projectId);\n" +
+                "        return \"datatables\";\n" +
+                "    }\n" +
+                "\n" +
+                "    @RequestMapping(\"/upload\")\n" +
+                "    public String uploadFile(@RequestParam(\"file\")MultipartFile[] files, @RequestParam(\"projectId\") Integer projectId, Documents documents,\n" +
+                "                             @RequestParam(\"packageName1\") String packageName, HttpServletRequest request, Model model) throws Exception{\n" +
+                "        System.out.println(\"项目id：\" + projectId);\n" +
+                "        System.out.println(\"packageName:::\" + packageName);\n" +
+                "        if(files.length == 0){\n" +
+                "            return \"failure\";\n" +
+                "        }\n" +
+                "        String filePath = request.getServletContext().getRealPath(\"/\");\n" +
+                "        for(MultipartFile file:files){\n" +
+                "            //生成随机号\n" +
+                "            String uuid= UUID.randomUUID().toString();\n" +
+                "            uuid=uuid.replace(\"-\", \"\");\n" +
+                "            //获取文件名\n" +
+                "            String oldFileName=file.getOriginalFilename();\n" +
+                "            int  index=  oldFileName.lastIndexOf(\"\\\\\");\n" +
+                "            if(index!=-1){\n" +
+                "                oldFileName.substring(index+1);\n" +
+                "            }\n" +
+                "            //拼接文件名，防止冲突\n" +
+                "            String newFileName=uuid+\"-\"+oldFileName;\n" +
+                "            System.out.println(\"D:/upload/\"+newFileName);\n" +
+                "            //设置Documents的属性\n" +
+                "            documents.setName(oldFileName);\n" +
+                "            documents.setSerialNumber(uuid);\n" +
+                "            //以后需要修改projiectId\n" +
+                "            documents.setProjectId(projectId);\n" +
+                "            //装换文件类型，且读取代码行数\n" +
+                "            System.out.println(\"开始转换文件\");\n" +
+                "            if(FileUtil.codeLine(FileUtil.multipartFileToFile(file)) != 0){\n" +
+                "                documents.setCodeLineNumber(FileUtil.codeLine(FileUtil.multipartFileToFile(file)));\n" +
+                "            }else{\n" +
+                "                documents.setCodeLineNumber(0);\n" +
+                "            }\n" +
+                "            System.out.println(\"转换结束\");\n" +
+                "            //控制上传确定版本号为2的\n" +
+                "            if(documentsService.getByVersionFlagAndName(2, oldFileName)!=null){\n" +
+                "                String msg = \"存在未审核版本，不能上传，请通知项目组长审核\";\n" +
+                "                System.out.println(msg);\n" +
+                "                model.addAttribute(\"msg\",msg);\n" +
+                "                return \"false\";\n" +
+                "            }\n" +
+                "            //查询版本号\n" +
+                "            if(documentsService.getVersionByName(oldFileName) != null){\n" +
+                "                documents.setVersion(documentsService.getVersionByName(oldFileName)+1);\n" +
+                "                documents.setVersionFlag(2);\n" +
+                "            }else{\n" +
+                "                documents.setVersion(1);\n" +
+                "                documents.setVersionFlag(1);\n" +
+                "                //第一次插入统计代码行\n" +
+                "                //修改代码贡献量\n" +
+                "                Integer codeLine = documents.getCodeLineNumber();\n" +
+                "                ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+                "                UserProjectsController userProjectsController = ctx.getBean(UserProjectsController.class);\n" +
+                "                System.out.println(\"代码行修改：\" + userProjectsController.update(codeLine, documents.getWriter(), documents.getProjectId()));\n" +
+                "                //插入record表\n" +
+                "                ReocrdController reocrdController = ctx.getBean(ReocrdController.class);\n" +
+                "                System.out.println(\"插入reocrd:::\" + reocrdController.insert(documents, codeLine));\n" +
+                "            }\n" +
+                "            System.out.println(documents);\n" +
+                "            //插入数据库\n" +
+                "            documentsService.insert(documents);\n" +
+                "            //插入日志文件\n" +
+                "            ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+                "            DocumentsRecordController documentsRecordController = ctx.getBean(DocumentsRecordController.class);\n" +
+                "            //获取ip\n" +
+                "            String ip = IPUtil.getIP(request);\n" +
+                "            System.out.println(\"获取的ip:::\" + ip);\n" +
+                "            System.out.println(\"插入日志数据库:::\" + documentsRecordController.insert(documents, ip, 1));\n" +
+                "            //插入文件包表数据库\n" +
+                "            DocumentsPackageController documentsPackageController = ctx.getBean(DocumentsPackageController.class);\n" +
+                "            System.out.println(\"插入文件包表数据库：：：\" + documentsPackageController.insertpackage(documents, packageName));\n" +
+                "\n" +
+                "            //写入磁盘\n" +
+                "            System.out.println(\"D:/upload/\" + newFileName);\n" +
+                "            file.transferTo(new File(\"D:/upload/\"+newFileName));\n" +
+                "        }\n" +
+                "        if(documents.getVersionFlag() == 2){\n" +
+                "            ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+                "            Documents d1 = ctx.getBean(Documents.class);\n" +
+                "            Documents d2 = ctx.getBean(Documents.class);\n" +
+                "            //获取文件名为filename和版本标识符为1的\n" +
+                "            d1 = documentsService.getByVersionFlagAndName(1,documents.getName());\n" +
+                "            System.out.println(d1);\n" +
+                "            //获取文件名为filename和版本标识符为2的\n" +
+                "            d2 = documentsService.getByVersionFlagAndName(2,documents.getName());\n" +
+                "            System.out.println(d2);\n" +
+                "        }\n" +
+                "        //设置项目id\n" +
+                "        model.addAttribute(\"projectId\", projectId);\n" +
+                "        model.addAttribute(\"filename\",documents.getName());\n" +
+                "        model.addAttribute(\"userId\", documents.getWriter());\n" +
+                "        return \"redirect:text\";\n" +
+                "    }\n" +
+                "\n" +
+                "    //修改文件状态\n" +
+                "    //-1表示以前没有用过的版本\n" +
+                "    //0表示以前通过版本\n" +
+                "    //1表示当前版本\n" +
+                "    //2表示要审核版本\n" +
+                "    @RequestMapping(\"/update\")\n" +
+                "    public String updateFileState(@RequestParam(\"documentsName\") String documentsName, Integer operate, HttpServletRequest request, Model model){\n" +
+                "        //Integer operate表示操作的类型，1表示同意，把d1的versionFing改为0，d2的改为1\n" +
+                "        // 2表示不同意，把d2的改为0\n" +
+                "        System.out.println(documentsName);\n" +
+                "        ApplicationContext ctx = new ClassPathXmlApplicationContext(\"application-context.xml\");\n" +
+                "        Documents d1 = ctx.getBean(Documents.class);\n" +
+                "        Documents d2 = ctx.getBean(Documents.class);\n" +
+                "        //获取文件名为filename和版本标识符为1的\n" +
+                "        d1 = documentsService.getByVersionFlagAndName(1,documentsName);\n" +
+                "        System.out.println(d1);\n" +
+                "        //获取文件名为filename和版本标识符为2的\n" +
+                "        d2 = documentsService.getByVersionFlagAndName(2,documentsName);\n" +
+                "        System.out.println(d2);\n" +
+                "        DocumentsRecordController documentsRecordController = ctx.getBean(DocumentsRecordController.class);\n" +
+                "        //获取ip\n" +
+                "        String ip = IPUtil.getIP(request);\n" +
+                "        System.out.println(\"获取的ip:::\" + ip);\n" +
+                "        if(operate == 1){\n" +
+                "            //同意修改文件，修改文件versionFlag值为1的变为0，值为2的变为1\n" +
+                "            d1.setVersionFlag(0);\n" +
+                "            System.out.println(d1);\n" +
+                "            System.out.println(\"修改d1文件确定号：\" + documentsService.update(d1));\n" +
+                "            d2.setVersionFlag(1);\n" +
+                "            System.out.println(d2);\n" +
+                "            System.out.println(\"修改d2文件确定号：\" + documentsService.update(d2));\n" +
+                "            //修改代码贡献量\n" +
+                "            Integer codeLine = d2.getCodeLineNumber() - d1.getCodeLineNumber();\n" +
+                "            UserProjectsController userProjectsController = ctx.getBean(UserProjectsController.class);\n" +
+                "            System.out.println(\"代码行修改：\" + userProjectsController.update(codeLine, d2.getWriter(), d2.getProjectId()));\n" +
+                "            //插入record表\n" +
+                "            ReocrdController reocrdController = ctx.getBean(ReocrdController.class);\n" +
+                "            reocrdController.insert(d1, codeLine);\n" +
+                "            //插入日志表\n" +
+                "            documentsRecordController.insert(d2, ip, 2);\n" +
+                "        }else{\n" +
+                "            //不同意修改文件，只修改文件versionFlag值2的变为-1\n" +
+                "            d2.setVersionFlag(-1);\n" +
+                "            System.out.println(\"修改d2文件确定号：\" + documentsService.update(d2));\n" +
+                "            documentsRecordController.insert(d2, ip, 2);\n" +
+                "        }\n" +
+                "        model.addAttribute(\"projectId\", d2.getProjectId());\n" +
+                "        model.addAttribute(\"filename\",d2.getName());\n" +
+                "        model.addAttribute(\"userId\", operate);\n" +
+                "        return \"redirect:text\";\n" +
+                "    }\n" +
+                "\n" +
+                "}\n"
+            var highCode = hljs.highlightAuto(code).value;
+            $("#addressdocument").html(highCode);
         }
 
     })

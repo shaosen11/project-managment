@@ -133,7 +133,7 @@ public class PorojectsMessageController {
             documents2.setVersionFlag(1);
             documentsService.update(documents2);
             //获取ip
-            String ip = IPUtil.getIP(request);
+            String ip = IPUtil.getIpAddress(request);
             //修改代码贡献量
             Integer codeLine = documents2.getCodeLineNumber() - documents1.getCodeLineNumber();
             projectsUserController.update(codeLine, documents2.getUserId(), documents2.getProjectId());
@@ -193,7 +193,7 @@ public class PorojectsMessageController {
             documents2.setVersionFlag(-1);
             documentsService.update(documents2);
             //获取ip
-            String ip = IPUtil.getIP(request);
+            String ip = IPUtil.getIpAddress(request);
             documentsRecordController.insert(documents2, ip, 2);
             //项目消息处理
             ProjectsMessage projectsMessage = new ProjectsMessage();
