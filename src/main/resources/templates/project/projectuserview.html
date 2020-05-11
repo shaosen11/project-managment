@@ -19,6 +19,7 @@
 </head>
 
 <body>
+
 <div class="wrapper">
     <div class="main-header" data-background-color="purple">
         <!-- Logo Header -->
@@ -49,11 +50,12 @@
     <!-- Sidebar -->
     <div th:replace="commom/bar :: projectsidebar"></div>
     <!-- End Sidebar -->
+
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
-                <div class="page-header">
-                    <h4 class="page-title">项目合作</h4>
+                <div class="page-header col-md-6">
+                    <h4 class="page-title">项目主页面</h4>
                     <ul class="breadcrumbs">
                         <li class="nav-home">
                             <a href="#">
@@ -74,74 +76,229 @@
                         </li>
                     </ul>
                 </div>
+                <!--功能点概览-->
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title"><h3>人才市场</h3></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-list">
-                                    <div class="card-body pb-0">
-                                        <!-- 分页容器：显示数据 -->
-                                        <div id="UserDiv"></div>
+                    <div class="col-md-4">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-users text-primary"></i>
+                                        </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <!-- 分页容器： 显示分页按钮-->
-                                        <div class="text-right mt-3 mb-3">
-                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                            <ul id="UserPage" class="pagination"></ul>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">项目人数</p>
+                                            <h4 class="card-title" id="projectUserCount"></h4>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header"><h3>概览</h3></div>
-                            <div class="card-body">
-                                <div class="card-body row">
-                                    <div class="col-md-6">
-                                        <h3>名称：</h3>
-                                        <div class="form-group form-group-default">
-                                            <span class="mb-1 fw-bold" id="personInformationName"></span>
+                    <div class="col-md-4">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-user-tie text-secondary"></i>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h3>邮箱：</h3>
-                                        <div class="form-group form-group-default">
-                                            <span class="mb-1 fw-bold" id="personInformationEmail"></span>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">管理员</p>
+                                            <h4 class="card-title" id="projectUserAdmin"></h4>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-title"><h3>参与项目</h3></span>
-                            </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-stats card-round">
                             <div class="card-body">
-                                <div class="row" id="userProjects">
-                                    <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-user-astronaut text-info"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">开发者</p>
+                                            <h4 class="card-title" id="projectUserCodeDevelop"></h4>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="col-md-12" id="calendarDevote" style="height:200px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--人员信息-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title"><h3>项目人员</h3></div>
+                            </div>
+                            <div class="card-body pb-0">
+                                <!-- 分页容器：显示数据 -->
+                                <div id="projectUserDiv"></div>
+                                <!-- 分页容器： 显示分页按钮-->
+                                <div class="text-right mt-3 mb-3">
+                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                    <ul id="projectUserPage" class="pagination"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group col-md-12">
+                                    <div class="card-header">
+                                                <span class="text-center text-dark mb-1 fw-bold">
+                                                    <h2 id="personInformationDevelopment"></h2>
+                                                    <h2>贡献量</h2>
+                                                </span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card card-info bg-secondary-gradient ">
+                                                <div class="card-body">
+                                                    <h4 class="mb-1 fw-bold">代码贡献量</h4>
+                                                    <div id="codeDevoteLine"
+                                                         class="chart-circle mt-4 mb-3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card card-info bg-info-gradient">
+                                                <div class="card-body">
+                                                    <h4 class="mb-1 fw-bold">上传次数</h4>
+                                                    <div id="codeUpdate" class="chart-circle mt-4 mb-3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="mb-1 fw-bold"><h2>完成功能点</h2></span>
+                            </div>
+                            <div class="card-body">
+                                <p class="demo" id="finishFunction">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="mb-1 fw-bold"><h2>正在开发功能点</h2></span>
+                            </div>
+                            <div class="card-body">
+                                <p class="demo" id="developingFunction">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="mb-1 fw-bold"><h2>最近活动</h2></span>
+                            </div>
+                            <div class="card-body">
+                                <ol class="activity-feed">
+                                    <li class="feed-item feed-item-secondary">
+                                        <time class="date" datetime="9-25">Sep 25</time>
+                                        <span class="text">Responded to need <a
+                                                href="#">"Volunteer opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-success">
+                                        <time class="date" datetime="9-24">Sep 24</time>
+                                        <span class="text">Added an interest <a
+                                                href="#">"Volunteer Activities"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-info">
+                                        <time class="date" datetime="9-23">Sep 23</time>
+                                        <span class="text">Joined the group <a
+                                                href="single-group.php">"Boardsmanship Forum"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-warning">
+                                        <time class="date" datetime="9-21">Sep 21</time>
+                                        <span class="text">Responded to need <a
+                                                href="#">"In-Kind Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item feed-item-danger">
+                                        <time class="date" datetime="9-18">Sep 18</time>
+                                        <span class="text">Created need <a
+                                                href="#">"Volunteer Opportunity"</a></span>
+                                    </li>
+                                    <li class="feed-item">
+                                        <time class="date" datetime="9-17">Sep 17</time>
+                                        <span class="text">Attending the event <a
+                                                href="single-event.php">"Some New Event"</a></span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
+
 <!--model框-->
 <div th:replace="commom/bar :: uploadfilemodel"></div>
 <div th:replace="commom/bar :: newprojectpackage"></div>
+<div class="modal fade" id="addFunction" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            New</span>
+                    <span class="fw-light">
+                            Function
+                        </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="small">Create a new Function using this form, make sure you fill them all</p>
+                <div class="row">
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>功能名</label>
+                            <input id="addName" name="functionName" type="text" class="form-control"
+                                   placeholder="fill functionName" onBlur="checkFunctionName()">
+                            <span class="default" style="color: #3c763d" id="nameErr">请输入功能名称</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>实现用户</label>
+                            <input id="addRealizeUserId" name="realizeUserId" type="text" class="form-control"
+                                   placeholder="fill realizeUserId">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-primary" onclick="addFunction()">Add</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
@@ -159,11 +316,18 @@
 <!-- Azzara JS -->
 <script th:src="@{/assets/js/ready.min.js}"></script>
 <!-- Azzara DEMO methods, don't include it in your project! -->
-<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+<script th:src="@{/assets/js/setting-demo.js}"></script>
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/assets/js/myjs.js}"></script>
 <script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+<!-- Chart JS -->
+<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+<!-- Chart Circle -->
+<script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<!-- 功能点分页 -->
+<script th:src="@{/assets/js/functionpage.js}"></script>
 
 <!--在家导航栏退出公共js-->
 <script th:src="@{/assets/js/nav-loginOut.js}"></script>
@@ -180,15 +344,14 @@
     initJsUserIdAndProjectId(userId, projectId);
 </script>
 
-<!--加载人才市场-->
+
+<!--加载人员信息-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     $(function () {
-        addpage(projectId, 1, UserDiv, UserPage);
+        addPersonManagerPage(projectId, null, projectUserDiv, projectUserPage);
     })
 
-    function addpage(projectId, market, div, ul) {
+    function addPersonManagerPage(projectId, market, div, ul) {
         pageStart();//开始分页
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
@@ -201,8 +364,8 @@
                     market: market
                 }, //参数：当前页为1
                 success: function (data) {
-                    appendHtml(data.list)//处理第一页的数据
-                    appendPersonInformationHtml(data.list[0].id)
+                    appendPersonManagerHtml(data.list)//处理第一页的数据
+                    appendPersonInformationHtml(data.list[0].userId)
                     var options = {//根据后台返回的分页相关信息，设置插件参数
                         bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
                         currentPage: data.page, //当前页数
@@ -233,7 +396,7 @@
                                     market: market
                                 },
                                 success: function (data) {
-                                    appendHtml(data.list);//处理数据
+                                    appendPersonManagerHtml(data.list);//处理数据
                                 }
                             });
                         }
@@ -243,46 +406,70 @@
             });
         }
 
-        function appendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        //此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        function appendPersonManagerHtml(list) {
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
-                tableShow += '<div class="item-list" onclick="javascript:appendPersonInformationHtml(' + list[i].id + ')">\n' +
-                    '               <div class="avatar">\n' +
-                    '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
-                    '               </div>\n' +
-                    '               <div class="info-user ml-3">\n' +
-                    '               <div class="username"> ' + list[i].username + '</div>\n' +
-                    '                   <div class="status">' + list[i].tag + '</div>\n' +
-                    '               </div>\n' +
-                    '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="invite(' + projectId + ',' + userId + ',' + list[i].id + ')">\n' +
-                    '                       <i class="fa fa-plus"></i>\n' +
-                    '               </button>\n' +
-                    '             </div>'
+                tableShow += '                         <div class="d-flex" onclick="javascript:appendPersonInformationHtml(' + list[i].userId + ')">\n' +
+                    '                                    <div class="avatar">\n' +
+                    '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="flex-1 pt-1 ml-2">\n' +
+                    '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
+                    '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="d-flex ml-auto align-items-center">\n' +
+                    '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
+                    '                                    </div>\n' +
+                    '                                </div>\n' +
+                    '                                <div class="separator-dashed"></div>'
             }
             $(div).html(tableShow)
         }
+
+
+    }
+</script>
+<!--人员信息贡献比例图-->
+<script type="text/javascript">
+    function codeLineCicle(radius) {
+        // Cicle Chart
+        Circles.create({
+            id: 'codeDevoteLine',
+            radius: 50,
+            value: radius,
+            maxValue: 100,
+            width: 5,
+            text: function (value) {
+                return value + '%';
+            },
+            colors: ['#6677ee', '#fff'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
+        })
     }
 
-    function invite(projectId, fromUserId, toUserId) {
-        $.ajax({
-            type: "post",
-            url: "/inviteUser",
-            dataType: "json",
-            data: {
-                projectId: projectId,
-                fromUserId: fromUserId,
-                toUserId: toUserId
+    function codeUpdateCile(radius) {
+        // Cicle Chart
+        Circles.create({
+            id: 'codeUpdate',
+            radius: 50,
+            value: radius,
+            maxValue: 100,
+            width: 5,
+            text: function (value) {
+                return value + '%';
             },
-            success: function (json) {
-                if (json.ok) {
-                    swal(json.message, {
-                        icon: "success",
-                        buttons: false,
-                        timer: 1500,
-                    });
-                }
-            }
+            colors: ['#36a3f7', '#fff'],
+            duration: 400,
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text',
+            styleWrapper: true,
+            styleText: true
         })
     }
 </script>
@@ -291,145 +478,104 @@
     function appendPersonInformationHtml(userId) {
         $.ajax({
             type: "get",
-            url: "/user_informetion",
+            url: "/projectsUser",
             dataType: "json",
             data: {
                 projectId: projectId,
                 userId: userId
             },
             success: function (json) {
-                $("#personInformationName").text(json.username);
-                $("#personInformationEmail").text(json.email);
-                userProject(json.myprojectsList);
-                //获取当前年份
-                var myDate = new Date();
-                var tYear = myDate.getFullYear();
-                calendarDevote(tYear, json.userCodeUpdateRecordList);
+                $("#personInformationDevelopment").text(json.myUserDetails.username);
+                codeLineCicle(json.codeDevoteLineRatio);
+                codeUpdateCile(json.codeUpdateRatio);
+                $("#personInformationName").text(json.myUserDetails.username);
+                $("#personInformationEmail").text(json.myUserDetails.email);
+                appendFinishFunction(projectId, userId);
+                appendDevelopIngFunction(projectId, userId);
             }
         })
     }
 </script>
-<!--加载用户项目-->
+<!--加载开发功能点-->
 <script type="text/javascript">
-    function userProject(myprojectsList) {
-        $(userProjects).html("");
-        var userProjectDiv = '';
-        if (myprojectsList.length = 0) {
-            for (var i = 0; i < myprojectsList.length && i < 2; i++) {
-                userProjectDiv += '<div class="col-md-6">\n' +
-                    '                                            <div class="form-group form-group-default">\n' +
-                    '                                                <div class="col-md-12 row">\n' +
-                    '                                                    <div class="col-md-8">\n' +
-                    '                                                        <a href="#">\n' +
-                    '                                                            <h2 style="color: #145180">\n' +
-                    '                                                                <i class="fas fa-file-alt"></i>' + myprojectsList[i].projectName + '\n' +
-                    '                                                            </h2>\n' +
-                    '                                                        </a>\n' +
-                    '                                                    </div>\n' +
-                    '                                                    <div class="col-md-4 text-right">\n' +
-                    '                                                        <i class="fas fa-star"></i><span>1</span>\n' +
-                    '                                                        <i class="fas fa-heart"></i><span>2</span>\n' +
-                    '                                                    </div>\n' +
-                    '                                                    <div class="col-md-6">\n' +
-                    '                                                    <span style="color: #4e555b">\n' +
-                    '                                                        <i class="fas fa-user-tie"></i>项目管理员：' + myprojectsList[i].chargeUser + '\n' +
-                    '                                                    </span>\n' +
-                    '                                                    </div>\n' +
-                    '                                                    <div class="col-md-6">\n' +
-                    '                                                    <span style="color: #4e555b">\n' +
-                    '                                                            <i class="fab fa-codiepie"></i>项目进度：' + myprojectsList[i].schedule + '\n' +
-                    '                                                    </span>\n' +
-                    '                                                    </div>\n' +
-                    '                                                    <div class="col-md-6">\n' +
-                    '                                                    <span style="color: #4e555b">\n' +
-                    '                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：' + myprojectsList[i].codeUpdateCount + '\n' +
-                    '                                                    </span>\n' +
-                    '                                                    </div>\n' +
-                    '                                                    <div class="col-md-6">\n' +
-                    '                                                    <span style="color: #4e555b">\n' +
-                    '                                                            <i class="far fa-arrow-alt-circle-up"></i>他的上传次数：' + myprojectsList[i].myUpdateCount + '\n' +
-                    '                                                    </span>\n' +
-                    '                                                    </div>\n' +
-                    '                                                </div>\n' +
-                    '                                            </div>\n' +
-                    '                                        </div>'
+    function appendFinishFunction(projectId, userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_finish_function",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                appendFinishFunctionHtml(json);
             }
-        } else {
-            userProjectDiv += '<div class="form-group form-group-default">\n' +
-                '                                                <span class="text-center">\n' +
-                '                                                    <h1>暂无参与项目</h1>\n' +
-                '                                                </span>\n' +
-                '                                            </div>'
+        })
+    }
+
+    function appendFinishFunctionHtml(list) {
+        $(finishFunction).html("");
+        var button = '';
+        for (var i = 0; i < list.length; i++) {
+            button += '<button class="btn btn-secondary">\n' +
+                '   <span class="btn-label">\n' +
+                '     <i class="fa fa-check"></i>\n' +
+                '   </span>\n' +
+                '   ' + list[i].functionName + '\n' +
+                ' </button>'
         }
-        $(userProjects).html(userProjectDiv)
+        $(finishFunction).html(button)
     }
 </script>
-<!--日历图-->
+<!--加载完成功能点-->
 <script type="text/javascript">
-    function calendarDevote(year, json) {
-        var myChart = echarts.init(document.getElementById('calendarDevote'));
-
-        function getVirtulData(year) {
-            year = year;
-            var date = +echarts.number.parseDate(year + '-01-01');
-            var end = +echarts.number.parseDate(year + '-12-31');
-            var dayTime = 3600 * 24 * 1000;
-            var data = [];
-            for (var time = date, i = 0; time <= end; time += dayTime) {
-                var timeString = echarts.format.formatTime('yyyy-MM-dd', time);
-                if ((i < json.length) && (timeString == echarts.format.formatTime('yyyy-MM-dd', json[i].time))) {
-                    data.push([
-                        timeString,
-                        json[i].codeUpdateCount
-                    ]);
-                    i++;
-                } else {
-                    data.push([
-                        timeString,
-                        0
-                    ]);
-                }
+    function appendDevelopIngFunction(projectId, userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_developing_function",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                appendDevelopingFunctionHtml(json);
             }
-            return data;
-        }
-
-        var option = {
-            title: {
-                top: 0,
-                left: 'center',
-                text: year + '每天提交代码次数'
-            },
-            tooltip: {},
-            visualMap: {
-                min: 0,
-                max: 10,
-                type: 'piecewise',
-                orient: 'horizontal',
-                left: 'center',
-                top: 30,
-                textStyle: {
-                    color: '#000'
-                },
-                inRange: {
-                    color: ['#eeeeee', '#177dff']
-                }
-            },
-            calendar: {
-                top: 80,
-                left: 30,
-                right: 30,
-                cellSize: ['auto', 12],
-                range: year,
-                yearLabel: {show: false}
-            },
-            series: {
-                type: 'heatmap',
-                coordinateSystem: 'calendar',
-                data: getVirtulData(year)
-            }
-        };
-        myChart.setOption(option);
+        })
     }
+
+    function appendDevelopingFunctionHtml(list) {
+        $(developingFunction).html("");
+        var button = '';
+        for (var i = 0; i < list.length; i++) {
+            button += '<button class="btn btn-info">\n' +
+                '   <span class="btn-label">\n' +
+                '     <i class="fa fa-sync-alt"></i>\n' +
+                '   </span>\n' +
+                '   ' + list[i].functionName + '\n' +
+                ' </button>'
+        }
+        $(developingFunction).html(button)
+    }
+</script>
+<!--加载项目功能点数量-->
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "get",
+            url: "/projectUserTotal",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+            },
+            success: function (data) {
+                //项目人员数量
+                $("#projectUserCount").text(data.countByProjectId);
+                $("#projectUserAdmin").text(data.admin);
+                $("#projectUserCodeDevelop").text(data.codeDevelop);
+            }
+        })
+    })
 </script>
 </body>
 </html>

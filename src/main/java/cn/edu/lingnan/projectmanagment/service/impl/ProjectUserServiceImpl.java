@@ -101,4 +101,10 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     }
 
 
+    @Override
+    public Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode) {
+        return projectUserMapper.getCountByProjectIdAndDuty(projectId, dutyCode);
+    }
+
+
 }

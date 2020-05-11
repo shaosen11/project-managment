@@ -221,8 +221,13 @@ public class ProjectsUserController {
         return codeInsertList;
     }
 
+    @GetMapping("/project_user_cooperation_view")
+    public String projectUserCooperationView() {
+        return "project/projectusercooperationview";
+    }
+
     @GetMapping("/project_user_view")
-    public String projectUserView(Integer projectId) {
+    public String projectUserView() {
         return "project/projectuserview";
     }
 
@@ -288,6 +293,18 @@ public class ProjectsUserController {
         return projectsUser;
     }
 
-
+    @GetMapping("/projectUserTotal")
+    @ResponseBody
+    public Object projectUserTotal(Integer projectId) {
+        Integer countByProjectId = projectUserService.getCountByProjectId(projectId);
+        Integer managment = projectUserService.getCountByProjectIdAndDuty(projectId, 1);
+        Integer admin = projectUserService.getCountByProjectIdAndDuty(projectId, 2);
+        Integer codeDevelop = projectUserService.getCountByProjectIdAndDuty(projectId, 4);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("countByProjectId", countByProjectId);
+        map.put("admin", managment+admin);
+        map.put("codeDevelop", codeDevelop);
+        return map;
+    }
 }
 

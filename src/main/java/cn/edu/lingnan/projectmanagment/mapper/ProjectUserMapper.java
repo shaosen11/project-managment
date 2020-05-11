@@ -122,5 +122,15 @@ public interface ProjectUserMapper {
      * @return
      */
     List<ProjectsUser> getAllProjectByUserId(Integer userId);
+
+
+
+    /**
+     * 获取项目各类人数
+     * @param projectId
+     * @param dutyCode
+     * @return
+     */
+    Integer getCountByProjectIdAndDuty(Integer projectId, Integer dutyCode);
 }
 

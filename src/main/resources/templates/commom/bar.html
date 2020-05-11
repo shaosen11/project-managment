@@ -571,6 +571,12 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <a th:href="@{/projects_view(projectId=${param.projectId})}">
+                            <i class="fas fa-chart-area"></i>
+                            <p>项目详情</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a th:href="@{/project_function_view(projectId=${param.projectId})}">
                             <i class="fas fa-align-left"></i>
                             <p>项目功能点</p>
@@ -579,6 +585,12 @@
                     <li class="nav-item">
                         <a th:href="@{/project_user_view(projectId=${param.projectId})}">
                             <i class="fas fa-users"></i>
+                            <p>项目人员</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/project_user_cooperation_view(projectId=${param.projectId})}">
+                            <i class="fas fa-user-plus"></i>
                             <p>合作伙伴</p>
                         </a>
                     </li>

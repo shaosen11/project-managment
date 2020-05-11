@@ -169,4 +169,8 @@
     <select id="getAllProjectByUserId" resultMap="ProjectsUserList">
         select * from projects_user where delete_flag = 1 and user_id = #{userId}
     </select>
+
+    <select id="getCountByProjectIdAndDuty" resultType="int">
+        select count(*) from projects_user where delete_flag = 1 and projects_id = #{projectId} and duty_code = #{dutyCode}
+    </select>
 </mapper>

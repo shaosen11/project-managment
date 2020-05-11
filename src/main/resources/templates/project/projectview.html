@@ -76,507 +76,222 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd" id="pills-tab-without-border"
-                            role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill"
-                                   href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd"
-                                   aria-selected="true">
-                                    项目详情</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-two-tab-nobd" data-toggle="pill" href="#pills-two-nobd"
-                                   role="tab" aria-controls="pills-two-nobd" aria-selected="false">功能点</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-three-tab-nobd" data-toggle="pill"
-                                   href="#pills-three-nobd"
-                                   role="tab" aria-controls="pills-three-nobd" aria-selected="false">人员管理</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="tab-content mt-2 mb-3">
-                    <!--项目详情-->
-                    <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel"
-                         aria-labelledby="pills-one-tab-nobd">
-                        <!--项目项目上传代码行，上传次数，文件数量，项目人员-->
-                        <div class="row">
-                            <div class="col-sm-6 col-md-3">
-                                <div class="card card-stats card-round">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="flaticon-graph text-primary"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">代码行</p>
-                                                    <h4 class="card-title" id="projectCodeLineNumber"></h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <div class="card card-stats card-round">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="flaticon-up-arrow-2 text-success"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">上传次数</p>
-                                                    <h4 class="card-title" id="projectCodeUpdateCount"></h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <div class="card card-stats card-round">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="flaticon-folder text-warning"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">文件数量</p>
-                                                    <h4 class="card-title" id="projectDocumentCount"></h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <div class="card card-stats card-round">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="flaticon-users text-secondary"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">贡献者</p>
-                                                    <h4 class="card-title" id="projectUserCount"></h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- 折线图-->
-                            <div class="col-md-8">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-title">项目代码行变化</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="pull-in" style="width: 100%;height: 350px;">
-                                            <canvas id="lindChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 饼图-->
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-title">代码贡献量及上传次数</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="tab-content col-md-12" id="pills-without-border-tabContent">
-                                            <div class="row">
-                                                <div class="card-body col-md-6">
-                                                    <div class="chart-container">
-                                                        <div id="devoteChart" style="height: 300px; margin: auto;">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body col-md-6">
-                                                    <div class="chart-container">
-                                                        <div id="reduceChart"
-                                                             style="height: 300px; margin: auto;"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <!--待完成-->
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-title">Feed Activity</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <ol class="activity-feed">
-                                            <li class="feed-item feed-item-secondary">
-                                                <time class="date" datetime="9-25">Sep 25</time>
-                                                <span class="text">Responded to need <a
-                                                        href="#">"Volunteer opportunity"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-success">
-                                                <time class="date" datetime="9-24">Sep 24</time>
-                                                <span class="text">Added an interest <a
-                                                        href="#">"Volunteer Activities"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-info">
-                                                <time class="date" datetime="9-23">Sep 23</time>
-                                                <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-warning">
-                                                <time class="date" datetime="9-21">Sep 21</time>
-                                                <span class="text">Responded to need <a
-                                                        href="#">"In-Kind Opportunity"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-danger">
-                                                <time class="date" datetime="9-18">Sep 18</time>
-                                                <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
-                                            </li>
-                                            <li class="feed-item">
-                                                <time class="date" datetime="9-17">Sep 17</time>
-                                                <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
-                                            </li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--项目日志-->
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-head-row">
-                                            <div class="card-title">项目日志</div>
-                                            <div class="card-tools">
-                                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
-                                                    role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" id="pills-tab-today"
-                                                           data-toggle="pill" href="#pills-today" role="tab"
-                                                           aria-selected="true">全部</a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" id="pills-tab-week" data-toggle="pill"
-                                                           href="#pills-week" role="tab" aria-selected="false">我的</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="tab-content mt-2 mb-3">
-                                            <div class="tab-pane fade show active" id="pills-today" role="tabpanel"
-                                                 aria-labelledby="pills-tab-today">
-                                                <!-- 分页容器：显示数据 -->
-                                                <div id="allDiv"></div>
-                                                <!-- 分页容器： 显示分页按钮-->
-                                                <div class="text-right mt-3 mb-3">
-                                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                    <ul id="allPage" class="pagination"></ul>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="pills-week" role="tabpanel"
-                                                 aria-labelledby="pills-tab-week">
-                                                <!-- 分页容器：显示数据 -->
-                                                <div id="myDiv"></div>
-                                                <!-- 分页容器： 显示分页按钮-->
-                                                <div class="text-right mt-3 mb-3">
-                                                    <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                    <ul id="myPage" class="pagination"></ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!--功能点详情-->
-                    <div class="tab-pane fade" id="pills-two-nobd" role="tabpanel"
-                         aria-labelledby="pills-two-tab-nobd">
-                        <div class="row">
-                            <div class="col-md-2 card" style="height: 700px;">
-                                <div class="card-header">
+                <!--项目详情-->
+                <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel"
+                     aria-labelledby="pills-one-tab-nobd">
+                    <!--项目项目上传代码行，上传次数，文件数量，项目人员-->
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body ">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <h2 style="margin-top: 10px">功能</h2>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="text-right">
-                                                <button class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#addFunction">
-                                                <span class="btn-label">
-                                                    <i class="fas fa-plus"></i>
-                                                </span>
-                                                    新建功能
-                                                </button>
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="flaticon-graph text-primary"></i>
                                             </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">代码行</p>
+                                                <h4 class="card-title" id="projectCodeLineNumber"></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="flaticon-up-arrow-2 text-success"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">上传次数</p>
+                                                <h4 class="card-title" id="projectCodeUpdateCount"></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="flaticon-folder text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">文件数量</p>
+                                                <h4 class="card-title" id="projectDocumentCount"></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="card card-stats card-round">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="flaticon-users text-secondary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">贡献者</p>
+                                                <h4 class="card-title" id="projectUserCount"></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- 折线图-->
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">项目代码行变化</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="pull-in" style="width: 100%;height: 350px;">
+                                        <canvas id="lindChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 饼图-->
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">代码贡献量及上传次数</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content col-md-12" id="pills-without-border-tabContent">
+                                        <div class="row">
+                                            <div class="card-body col-md-6">
+                                                <div class="chart-container">
+                                                    <div id="devoteChart" style="height: 300px; margin: auto;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body col-md-6">
+                                                <div class="chart-container">
+                                                    <div id="reduceChart"
+                                                         style="height: 300px; margin: auto;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <!--待完成-->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Feed Activity</div>
+                                </div>
+                                <div class="card-body">
+                                    <ol class="activity-feed">
+                                        <li class="feed-item feed-item-secondary">
+                                            <time class="date" datetime="9-25">Sep 25</time>
+                                            <span class="text">Responded to need <a
+                                                    href="#">"Volunteer opportunity"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-success">
+                                            <time class="date" datetime="9-24">Sep 24</time>
+                                            <span class="text">Added an interest <a
+                                                    href="#">"Volunteer Activities"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-info">
+                                            <time class="date" datetime="9-23">Sep 23</time>
+                                            <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-warning">
+                                            <time class="date" datetime="9-21">Sep 21</time>
+                                            <span class="text">Responded to need <a
+                                                    href="#">"In-Kind Opportunity"</a></span>
+                                        </li>
+                                        <li class="feed-item feed-item-danger">
+                                            <time class="date" datetime="9-18">Sep 18</time>
+                                            <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
+                                        </li>
+                                        <li class="feed-item">
+                                            <time class="date" datetime="9-17">Sep 17</time>
+                                            <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <!--项目日志-->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-head-row">
+                                        <div class="card-title">项目日志</div>
+                                        <div class="card-tools">
+                                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
+                                                role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="pills-tab-today"
+                                                       data-toggle="pill" href="#pills-today" role="tab"
+                                                       aria-selected="true">全部</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="pills-tab-week" data-toggle="pill"
+                                                       href="#pills-week" role="tab" aria-selected="false">我的</a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <!--进度条-->
-                                    <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
-                                    <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist"
-                                         aria-orientation="vertical" style="margin-top: 20px">
-                                        <a class="nav-link active" data-toggle="pill" href="#"
-                                           onclick="allFunctionPage()"><i class="fas fa-layer-group"></i>全部功能</a>
-                                        <a class="nav-link" data-toggle="pill" href="#" onclick="assignFunctionPage()">指派给我的</a>
-                                        <a class="nav-link" data-toggle="pill" href="#" onclick="publishFunctionPage()">我发布的</a>
-                                        <a class="nav-link" data-toggle="pill" href="#" onclick="joinFunctionPage()">我参与的</a>
+                                    <div class="tab-content mt-2 mb-3">
+                                        <div class="tab-pane fade show active" id="pills-today" role="tabpanel"
+                                             aria-labelledby="pills-tab-today">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="allDiv"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-right mt-3 mb-3">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="allPage" class="pagination"></ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-week" role="tabpanel"
+                                             aria-labelledby="pills-tab-week">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="myDiv"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-right mt-3 mb-3">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="myPage" class="pagination"></ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
-                            <!--功能-->
-                            <div class="col-md-10 tab-content" style="height: 630px;" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active row" id="v-pills-four" role="tabpanel"
-                                     aria-labelledby="v-pills-four-tab">
-                                    <div class="col-md-12 row">
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(245,232,200,0.5)">
-                                                    <div class="card-title" style="color: black">
-                                                        <i class="fas fa-battery-empty" style="color: #FF9933"></i>&nbsp;待办的
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据--参与 -->
-                                                        <div id="TodoDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="TodoFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(157,211,250,0.5)">
-                                                    <div class="card-title" style="color: black">
-                                                        <i class="fas fa-battery-half" style="color: #1F6FB5"></i>&nbsp;进行中
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="ProcesingDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="ProcesingFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(118,126,199,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="fas fa-battery-three-quarters"
-                                                            style="color: #795DDE"></i>&nbsp;已完成
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="CompletedDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="CompletedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="card" style="height: 700px;">
-                                                <div class="card-header"
-                                                     style="background-color: rgba(25,148,117,0.5)">
-                                                    <div class="card-title" style="color: black"><i
-                                                            class="fas fa-battery-full"
-                                                            style="color: #007850"></i>&nbsp;已验收
-                                                    </div>
-                                                </div>
-                                                <div class="card-body"
-                                                     style="background-color: rgba(220,220,220,0.3)">
-                                                    <div style="margin-top: -15px">
-                                                        <!-- 分页容器：显示数据 -->
-                                                        <div id="AcceptedDiv"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <!-- 分页容器： 显示分页按钮-->
-                                                    <div class="text-center">
-                                                        <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                        <ul id="AcceptedFunctionPage"
-                                                            class="pagination pagination-sm"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--人员管理页面-->
-                    <div class="tab-pane fade" id="pills-three-nobd" role="tabpanel"
-                         aria-labelledby="pills-two-three-nobd">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="card-title"><h3>项目人员</h3></div>
-                                    </div>
-                                    <div class="card-body pb-0">
-                                        <!-- 分页容器：显示数据 -->
-                                        <div id="projectUserDiv"></div>
-                                        <!-- 分页容器： 显示分页按钮-->
-                                        <div class="text-right mt-3 mb-3">
-                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                            <ul id="projectUserPage" class="pagination"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="form-group col-md-12">
-                                            <div class="card-header">
-                                                <span class="text-center text-dark mb-1 fw-bold">
-                                                    <h2 id="personInformationDevelopment"></h2>
-                                                    <h2>贡献量</h2>
-                                                </span>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="card card-info bg-secondary-gradient ">
-                                                        <div class="card-body">
-                                                            <h4 class="mb-1 fw-bold">代码贡献量</h4>
-                                                            <div id="codeDevoteLine"
-                                                                 class="chart-circle mt-4 mb-3"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="card card-info bg-info-gradient">
-                                                        <div class="card-body">
-                                                            <h4 class="mb-1 fw-bold">上传次数</h4>
-                                                            <div id="codeUpdate" class="chart-circle mt-4 mb-3"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="mb-1 fw-bold"><h2>完成功能点</h2></span>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="demo" id="finishFunction">
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="mb-1 fw-bold"><h2>正在开发功能点</h2></span>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="demo" id="developingFunction">
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <span class="mb-1 fw-bold"><h2>最近活动</h2></span>
-                                    </div>
-                                    <div class="card-body">
-                                        <ol class="activity-feed">
-                                            <li class="feed-item feed-item-secondary">
-                                                <time class="date" datetime="9-25">Sep 25</time>
-                                                <span class="text">Responded to need <a
-                                                        href="#">"Volunteer opportunity"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-success">
-                                                <time class="date" datetime="9-24">Sep 24</time>
-                                                <span class="text">Added an interest <a
-                                                        href="#">"Volunteer Activities"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-info">
-                                                <time class="date" datetime="9-23">Sep 23</time>
-                                                <span class="text">Joined the group <a
-                                                        href="single-group.php">"Boardsmanship Forum"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-warning">
-                                                <time class="date" datetime="9-21">Sep 21</time>
-                                                <span class="text">Responded to need <a
-                                                        href="#">"In-Kind Opportunity"</a></span>
-                                            </li>
-                                            <li class="feed-item feed-item-danger">
-                                                <time class="date" datetime="9-18">Sep 18</time>
-                                                <span class="text">Created need <a
-                                                        href="#">"Volunteer Opportunity"</a></span>
-                                            </li>
-                                            <li class="feed-item">
-                                                <time class="date" datetime="9-17">Sep 17</time>
-                                                <span class="text">Attending the event <a
-                                                        href="single-event.php">"Some New Event"</a></span>
-                                            </li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -959,419 +674,6 @@
             }
             $(div).html(tableShow)
         }
-    }
-</script>
-<!--功能点分页-->
-<script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
-    var functionStatusFlag = 0;
-    $(function () {
-        allFunctionPage();
-    })
-
-    //全部功能点
-    function allFunctionPage() {
-        functionStatusFlag = 0;
-        var allFunctionUrl = "/allFunctionPage";
-        appendFuntion1(projectId, allFunctionUrl);
-    }
-
-    //分配给我的功能点
-    function assignFunctionPage() {
-        functionStatusFlag = 1;
-        var assignFunctionUrl = "/assignFunctionPage";
-        appendFuntion2(projectId, userId, assignFunctionUrl);
-    }
-
-    //我发布的功能点
-    function publishFunctionPage() {
-        functionStatusFlag = 2;
-        var publishFunctionUrl = "/publishFunctionPage";
-        appendFuntion2(projectId, userId, publishFunctionUrl);
-    }
-
-    //正在进行的功能点
-    function joinFunctionPage() {
-        functionStatusFlag = 3;
-        var joinFunctionUrl = "/joinFunctionPage";
-        appendFuntion2(projectId, userId, joinFunctionUrl);
-    }
-
-    //提取
-    function appendFuntion1(projectId, url) {
-        var functionPage = $('#TodoFunctionPage');
-        var divName = $('#TodoDiv');
-        $(divName).html("");
-        var pagecolor = "#FF9933";
-        var functionStatus = 0;
-        functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
-
-        var functionPage2 = $('#ProcesingFunctionPage');
-        var divName2 = $('#ProcesingDiv');
-        $(divName2).html("");
-        var pagecolor2 = "#1F6FB5";
-        var functionStatus2 = 1;
-        functionPageStart(url, projectId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
-
-        var functionPage3 = $('#CompletedFunctionPage');
-        var divName3 = $('#CompletedDiv');
-        $(divName3).html("");
-        var pagecolor3 = "#795DDE";
-        var functionStatus3 = 2;
-        functionPageStart(url, projectId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
-
-        var functionPage4 = $('#AcceptedFunctionPage');
-        var divName4 = $('#AcceptedDiv');
-        $(divName2).html("");
-        var pagecolor4 = "#007850";
-        var functionStatus4 = 3;
-        functionPageStart(url, projectId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
-    }
-
-    function appendFuntion2(projectId, userId, url) {
-        var functionPage = $('#TodoFunctionPage');
-        var divName = $('#TodoDiv');
-        $(divName).html("");
-        var pagecolor = "#FF9933";
-        var functionStatus = 0;
-        functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
-
-        var functionPage2 = $('#ProcesingFunctionPage');
-        var divName2 = $('#ProcesingDiv');
-        $(divName2).html("");
-        var pagecolor2 = "#1F6FB5";
-        var functionStatus2 = 1;
-        functionPageStart2(url, projectId, userId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
-
-        var functionPage3 = $('#CompletedFunctionPage');
-        var divName3 = $('#CompletedDiv');
-        $(divName3).html("");
-        var pagecolor3 = "#795DDE";
-        var functionStatus3 = 2;
-        functionPageStart2(url, projectId, userId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
-
-        var functionPage4 = $('#AcceptedFunctionPage');
-        var divName4 = $('#AcceptedDiv');
-        $(divName2).html("");
-        var pagecolor4 = "#007850";
-        var functionStatus4 = 3;
-        functionPageStart2(url, projectId, userId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
-    }
-
-
-</script>
-<!--功能点进度条-->
-<script type="text/javascript">
-    // Cicle Chart
-    var data = [[${projectFunctionData}]];
-    Circles.create({
-        id: 'function-complete',
-        radius: 50,
-        value: data,
-        maxValue: 100,
-        width: 10,
-        text: function (value) {
-            return value + '%';
-        },
-        colors: ['#EACF02', '#2E68AA'],
-        duration: 400,
-        wrpClass: 'circles-wrp',
-        textClass: 'circles-text',
-        styleWrapper: true,
-        styleText: true
-    })
-
-    function refreshTodoFunction(projectsId) {
-        var functionPage = $('#TodoFunctionPage');
-        var divName = $('#TodoDiv');
-        $(divName).html("");
-        var pagecolor = "#FF9933";
-        var functionStatus = 0;
-        $(divName).html("");
-        if (functionStatusFlag == 0) {
-            var url = "/allFunctionPage";
-            functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
-        } else {
-            if (functionStatusFlag == 1) {
-                var url = "/assignFunctionPage";
-            } else if (functionStatusFlag == 2) {
-                var url = "/publishFunctionPage";
-            } else if (functionStatusFlag == 3) {
-                var url = "/joinFunctionPage";
-            }
-            functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
-        }
-
-    }
-
-    //添加项目功能
-    function addFunction() {
-        var functionName = $("#addName").val();
-        var realizeUserId = $("#addRealizeUserId").val();
-        var projectsId = [[${projectId}]];
-        var publishUserId = [[${#authentication.principal.id}]];
-        if (!checkAddFunction()) {
-            return;
-        } else {
-            $.ajax(
-                {
-                    type: "POST",
-                    url: "/add_project_function",
-                    data: {
-                        "projectsId": projectsId,
-                        "functionName": functionName,
-                        "realizeUserId": realizeUserId,
-                        "publishUserId": publishUserId
-                    },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data == 1) {
-                            swal("添加成功！", {
-                                icon: "success",
-                                buttons: false,
-                                timer: 1500,
-                            });
-                            setTimeout(function () {
-                                refreshTodoFunction(projectsId);
-                            }, 1500);
-                        } else if (data == 6) {
-                            swal("添加失败！", "功能点名称不能为空!", {
-                                icon: "error",
-                                buttons: {
-                                    confirm: {
-                                        className: 'btn btn-danger'
-                                    }
-                                }
-                            })
-                        } else {
-                            swal("添加失败！", {
-                                icon: "error",
-                                buttons: {
-                                    confirm: {
-                                        className: 'btn btn-danger'
-                                    }
-                                }
-                            })
-                        }
-                    }
-                }
-            );
-        }
-    }
-
-</script>
-<!--加载人员信息-->
-<script type="text/javascript">
-    $(function () {
-        addPersonManagerPage(projectId, null, projectUserDiv, projectUserPage);
-    })
-
-    function addPersonManagerPage(projectId, market, div, ul) {
-        pageStart();//开始分页
-        function pageStart() {//分页函数
-            $.ajax({ //去后台查询第一页数据
-                type: "get",
-                url: "/projectUserPage",
-                dataType: "json",
-                data: {
-                    page: '1',
-                    projectId: projectId,
-                    market: market
-                }, //参数：当前页为1
-                success: function (data) {
-                    appendPersonManagerHtml(data.list)//处理第一页的数据
-                    appendPersonInformationHtml(data.list[0].userId)
-                    var options = {//根据后台返回的分页相关信息，设置插件参数
-                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
-                        currentPage: data.page, //当前页数
-                        totalPages: data.totalPage, //总页数
-                        numberOfPages: data.pageSize,//每页记录数
-                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
-                            switch (type) {
-                                case "first":
-                                    return "首页";
-                                case "prev":
-                                    return "上一页";
-                                case "next":
-                                    return "下一页";
-                                case "last":
-                                    return "末页";
-                                case "page":
-                                    return page;
-                            }
-                        },
-                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
-                            $.ajax({//根据page去后台加载数据
-                                url: "/projectUserPage",
-                                type: "get",
-                                dataType: "json",
-                                data: {
-                                    "page": page,
-                                    projectId: projectId,
-                                    market: market
-                                },
-                                success: function (data) {
-                                    appendPersonManagerHtml(data.list);//处理数据
-                                }
-                            });
-                        }
-                    };
-                    $(ul).bootstrapPaginator(options);//设置分页
-                }
-            });
-        }
-
-        //此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
-        function appendPersonManagerHtml(list) {
-            $(div).html("");
-            var tableShow = '';
-            for (var i = 0; i < list.length; i++) {
-                tableShow += '                         <div class="d-flex" onclick="javascript:appendPersonInformationHtml(' + list[i].userId + ')">\n' +
-                    '                                    <div class="avatar">\n' +
-                    '                                        <img src="/files/photo/' + list[i].myUserDetails.photo + '" alt="..." class="avatar-img rounded-circle">\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="flex-1 pt-1 ml-2">\n' +
-                    '                                        <h5 class="fw-bold mb-1">' + list[i].projectsUserDuty.dutyName + '</h5>\n' +
-                    '                                        <small class="text-muted">' + list[i].myUserDetails.username + '</small>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="d-flex ml-auto align-items-center">\n' +
-                    '                                        <h3 class="text-info fw-bold">+' + list[i].codeDevoteLine + '</h3>\n' +
-                    '                                    </div>\n' +
-                    '                                </div>\n' +
-                    '                                <div class="separator-dashed"></div>'
-            }
-            $(div).html(tableShow)
-        }
-
-
-    }
-</script>
-<!--人员信息贡献比例图-->
-<script type="text/javascript">
-    function codeLineCicle(radius) {
-        // Cicle Chart
-        Circles.create({
-            id: 'codeDevoteLine',
-            radius: 50,
-            value: radius,
-            maxValue: 100,
-            width: 5,
-            text: function (value) {
-                return value + '%';
-            },
-            colors: ['#6677ee', '#fff'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
-        })
-    }
-
-    function codeUpdateCile(radius) {
-        // Cicle Chart
-        Circles.create({
-            id: 'codeUpdate',
-            radius: 50,
-            value: radius,
-            maxValue: 100,
-            width: 5,
-            text: function (value) {
-                return value + '%';
-            },
-            colors: ['#36a3f7', '#fff'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
-        })
-    }
-</script>
-<!--人员信息-->
-<script type="text/javascript">
-    function appendPersonInformationHtml(userId) {
-        $.ajax({
-            type: "get",
-            url: "/projectsUser",
-            dataType: "json",
-            data: {
-                projectId: projectId,
-                userId: userId
-            },
-            success: function (json) {
-                $("#personInformationDevelopment").text(json.myUserDetails.username);
-                codeLineCicle(json.codeDevoteLineRatio);
-                codeUpdateCile(json.codeUpdateRatio);
-                $("#personInformationName").text(json.myUserDetails.username);
-                $("#personInformationEmail").text(json.myUserDetails.email);
-                appendFinishFunction(projectId, userId);
-                appendDevelopIngFunction(projectId, userId);
-            }
-        })
-    }
-</script>
-<!--加载开发功能点-->
-<script type="text/javascript">
-    function appendFinishFunction(projectId, userId) {
-        $.ajax({
-            type: "get",
-            url: "/user_finish_function",
-            dataType: "json",
-            data: {
-                projectId: projectId,
-                userId: userId
-            },
-            success: function (json) {
-                appendFinishFunctionHtml(json);
-            }
-        })
-    }
-
-    function appendFinishFunctionHtml(list) {
-        $(finishFunction).html("");
-        var button = '';
-        for (var i = 0; i < list.length; i++) {
-            button += '<button class="btn btn-secondary">\n' +
-                '   <span class="btn-label">\n' +
-                '     <i class="fa fa-check"></i>\n' +
-                '   </span>\n' +
-                '   ' + list[i].functionName + '\n' +
-                ' </button>'
-        }
-        $(finishFunction).html(button)
-    }
-</script>
-<!--加载完成功能点-->
-<script type="text/javascript">
-    function appendDevelopIngFunction(projectId, userId) {
-        $.ajax({
-            type: "get",
-            url: "/user_developing_function",
-            dataType: "json",
-            data: {
-                projectId: projectId,
-                userId: userId
-            },
-            success: function (json) {
-                appendDevelopingFunctionHtml(json);
-            }
-        })
-    }
-
-    function appendDevelopingFunctionHtml(list) {
-        $(developingFunction).html("");
-        var button = '';
-        for (var i = 0; i < list.length; i++) {
-            button += '<button class="btn btn-info">\n' +
-                '   <span class="btn-label">\n' +
-                '     <i class="fa fa-sync-alt"></i>\n' +
-                '   </span>\n' +
-                '   ' + list[i].functionName + '\n' +
-                ' </button>'
-        }
-        $(developingFunction).html(button)
     }
 </script>
 <!--加载项目上传代码行，上传次数，文件数量，项目人员-->

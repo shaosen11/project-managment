@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <!-- echarts -->
+    <script type="text/javascript" th:src="@{/assets/js/echarts.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a th:href="index.html" class="logo">
+                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: projectsidebar"></div>
+    <!-- End Sidebar -->
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">项目合作</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a href="#">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Base</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Panels</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title"><h3>人才市场</h3></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-list">
+                                    <div class="card-body pb-0">
+                                        <!-- 分页容器：显示数据 -->
+                                        <div id="UserDiv"></div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-right mt-3 mb-3">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="UserPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header"><h3>概览</h3></div>
+                            <div class="card-body">
+                                <div class="card-body row">
+                                    <div class="col-md-6">
+                                        <h3>名称：</h3>
+                                        <div class="form-group form-group-default">
+                                            <span class="mb-1 fw-bold" id="personInformationName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3>邮箱：</h3>
+                                        <div class="form-group form-group-default">
+                                            <span class="mb-1 fw-bold" id="personInformationEmail"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-title"><h3>参与项目</h3></span>
+                            </div>
+                            <div class="card-body">
+                                <div class="row" id="userProjects">
+                                    <div class="col-md-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12" id="calendarDevote" style="height:200px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--model框-->
+<div th:replace="commom/bar :: uploadfilemodel"></div>
+<div th:replace="commom/bar :: newprojectpackage"></div>
+
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+
+<!--在家导航栏退出公共js-->
+<script th:src="@{/assets/js/nav-loginOut.js}"></script>
+<!--加载导航栏消息公共js-->
+<script th:src="@{/assets/js/nav-message.js}"></script>
+<!--加载侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider.js}"></script>
+<!--加载项目包侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider-project.js}"></script>
+<!--初始化公共js的userId和projectId-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    initJsUserIdAndProjectId(userId, projectId);
+</script>
+
+<!--加载人才市场-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    $(function () {
+        addpage(projectId, 1, UserDiv, UserPage);
+    })
+
+    function addpage(projectId, market, div, ul) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "get",
+                url: "/projectUserPage",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    projectId: projectId,
+                    market: market
+                }, //参数：当前页为1
+                success: function (data) {
+                    appendHtml(data.list)//处理第一页的数据
+                    appendPersonInformationHtml(data.list[0].id)
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/projectUserPage",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    "page": page,
+                                    projectId: projectId,
+                                    market: market
+                                },
+                                success: function (data) {
+                                    appendHtml(data.list);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+
+        function appendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+            $(div).html("");
+            var tableShow = '';
+            for (var i = 0; i < list.length; i++) {
+                tableShow += '<div class="item-list" onclick="javascript:appendPersonInformationHtml(' + list[i].id + ')">\n' +
+                    '               <div class="avatar">\n' +
+                    '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
+                    '               </div>\n' +
+                    '               <div class="info-user ml-3">\n' +
+                    '               <div class="username"> ' + list[i].username + '</div>\n' +
+                    '                   <div class="status">' + list[i].tag + '</div>\n' +
+                    '               </div>\n' +
+                    '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="invite(' + projectId + ',' + userId + ',' + list[i].id + ')">\n' +
+                    '                       <i class="fa fa-plus"></i>\n' +
+                    '               </button>\n' +
+                    '             </div>'
+            }
+            $(div).html(tableShow)
+        }
+    }
+
+    function invite(projectId, fromUserId, toUserId) {
+        $.ajax({
+            type: "post",
+            url: "/inviteUser",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                fromUserId: fromUserId,
+                toUserId: toUserId
+            },
+            success: function (json) {
+                if (json.ok) {
+                    swal(json.message, {
+                        icon: "success",
+                        buttons: false,
+                        timer: 1500,
+                    });
+                }
+            }
+        })
+    }
+</script>
+<!--人员信息-->
+<script type="text/javascript">
+    function appendPersonInformationHtml(userId) {
+        $.ajax({
+            type: "get",
+            url: "/user_informetion",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+                userId: userId
+            },
+            success: function (json) {
+                $("#personInformationName").text(json.username);
+                $("#personInformationEmail").text(json.email);
+                userProject(json.myprojectsList);
+                //获取当前年份
+                var myDate = new Date();
+                var tYear = myDate.getFullYear();
+                calendarDevote(tYear, json.userCodeUpdateRecordList);
+            }
+        })
+    }
+</script>
+<!--加载用户项目-->
+<script type="text/javascript">
+    function userProject(myprojectsList) {
+        $(userProjects).html("");
+        var userProjectDiv = '';
+        if (myprojectsList.length = 0) {
+            for (var i = 0; i < myprojectsList.length && i < 2; i++) {
+                userProjectDiv += '<div class="col-md-6">\n' +
+                    '                                            <div class="form-group form-group-default">\n' +
+                    '                                                <div class="col-md-12 row">\n' +
+                    '                                                    <div class="col-md-8">\n' +
+                    '                                                        <a href="#">\n' +
+                    '                                                            <h2 style="color: #145180">\n' +
+                    '                                                                <i class="fas fa-file-alt"></i>' + myprojectsList[i].projectName + '\n' +
+                    '                                                            </h2>\n' +
+                    '                                                        </a>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-4 text-right">\n' +
+                    '                                                        <i class="fas fa-star"></i><span>1</span>\n' +
+                    '                                                        <i class="fas fa-heart"></i><span>2</span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                        <i class="fas fa-user-tie"></i>项目管理员：' + myprojectsList[i].chargeUser + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                            <i class="fab fa-codiepie"></i>项目进度：' + myprojectsList[i].schedule + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：' + myprojectsList[i].codeUpdateCount + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                    <div class="col-md-6">\n' +
+                    '                                                    <span style="color: #4e555b">\n' +
+                    '                                                            <i class="far fa-arrow-alt-circle-up"></i>他的上传次数：' + myprojectsList[i].myUpdateCount + '\n' +
+                    '                                                    </span>\n' +
+                    '                                                    </div>\n' +
+                    '                                                </div>\n' +
+                    '                                            </div>\n' +
+                    '                                        </div>'
+            }
+        } else {
+            userProjectDiv += '<div class="form-group form-group-default">\n' +
+                '                                                <span class="text-center">\n' +
+                '                                                    <h1>暂无参与项目</h1>\n' +
+                '                                                </span>\n' +
+                '                                            </div>'
+        }
+        $(userProjects).html(userProjectDiv)
+    }
+</script>
+<!--日历图-->
+<script type="text/javascript">
+    function calendarDevote(year, json) {
+        var myChart = echarts.init(document.getElementById('calendarDevote'));
+
+        function getVirtulData(year) {
+            year = year;
+            var date = +echarts.number.parseDate(year + '-01-01');
+            var end = +echarts.number.parseDate(year + '-12-31');
+            var dayTime = 3600 * 24 * 1000;
+            var data = [];
+            for (var time = date, i = 0; time <= end; time += dayTime) {
+                var timeString = echarts.format.formatTime('yyyy-MM-dd', time);
+                if ((i < json.length) && (timeString == echarts.format.formatTime('yyyy-MM-dd', json[i].time))) {
+                    data.push([
+                        timeString,
+                        json[i].codeUpdateCount
+                    ]);
+                    i++;
+                } else {
+                    data.push([
+                        timeString,
+                        0
+                    ]);
+                }
+            }
+            return data;
+        }
+
+        var option = {
+            title: {
+                top: 0,
+                left: 'center',
+                text: year + '每天提交代码次数'
+            },
+            tooltip: {},
+            visualMap: {
+                min: 0,
+                max: 10,
+                type: 'piecewise',
+                orient: 'horizontal',
+                left: 'center',
+                top: 30,
+                textStyle: {
+                    color: '#000'
+                },
+                inRange: {
+                    color: ['#eeeeee', '#177dff']
+                }
+            },
+            calendar: {
+                top: 80,
+                left: 30,
+                right: 30,
+                cellSize: ['auto', 12],
+                range: year,
+                yearLabel: {show: false}
+            },
+            series: {
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                data: getVirtulData(year)
+            }
+        };
+        myChart.setOption(option);
+    }
+</script>
+</body>
+</html>
