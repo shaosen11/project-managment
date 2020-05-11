@@ -84,16 +84,36 @@ public interface UserService {
     List<Myprojects> getMyProjects(Integer id);
 
     /**
+     * 分页--查询我的所有项目(user)
+     * @return
+     */
+    List<Myprojects> getMyProjectsPage(Integer userId,Integer offset,Integer pageSize);
+
+
+    /**
      * 查询我负责的项目(user)
      * @return
      */
     List<Myprojects> getMyChargeProjects(Integer id);
 
     /**
+     * 分页--查询我负责的项目
+     * @return
+     */
+    List<Myprojects> getMyChargeProjectsPage(Integer userId,Integer offset,Integer pageSize);
+
+
+    /**
      * 查询我参与的项目(user)
      * @return
      */
     List<Myprojects> getMyJoinProjects(Integer id);
+
+    /**
+     * 分页--查询我参与的项目
+     * @return
+     */
+    List<Myprojects> getMyJoinProjectsPage(Integer userId,Integer offset,Integer pageSize);
 
     /**
      * 查询我所有的项目进度数量(饼图)
@@ -118,6 +138,13 @@ public interface UserService {
      * @return
      */
     List<Myprojects> getMyProjectsStore(Integer id);
+
+    /**
+     * 分页--查询我的项目收藏(
+     * @return
+     */
+    List<Myprojects> getMyProjectsStorePage(Integer userId, Integer offset, Integer pageSize);
+
 
     /**
      * 查询user的信息和项目

@@ -74,10 +74,10 @@
                                             <a class="nav-link active show" id="pills-one-tab-nobd" data-toggle="pill" href="#pills-one-nobd" role="tab" aria-controls="pills-one-nobd" aria-selected="true">所有项目</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="pills-two-tab-nobd" data-toggle="pill" href="#pills-two-nobd" role="tab" aria-controls="pills-two-nobd" aria-selected="false">负责项目</a>
+                                            <a class="nav-link" id="pills-two-tab-nobd" data-toggle="pill" href="#pills-two-nobd" role="tab" aria-controls="pills-two-nobd" aria-selected="false" onclick="myProjectPage()">负责项目</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="pills-three-tab-nobd" data-toggle="pill" href="#pills-three-nobd" role="tab" aria-controls="pills-three-nobd" aria-selected="false">参与项目</a>
+                                            <a class="nav-link" id="pills-three-tab-nobd" data-toggle="pill" href="#pills-three-nobd" role="tab" aria-controls="pills-three-nobd" aria-selected="false" onclick="myJoinProjectPage()">参与项目</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -85,10 +85,16 @@
                             <div class="card-body tab-pane fade show active" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
                                 <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
                                     <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
-                                            <!-- 项目列表1 -->
-                                            <div class="col-md-8 row" style="float: left" id="myProjectAll">
-
+                                        <!-- 项目列表1 -->
+                                        <div class="col-md-8" style="float: left">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="myProjectAll" class="row"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="myProjectAllPage" class="pagination"></ul>
                                             </div>
+                                        </div>
 
                                             <!-- 饼图1 -->
                                             <div class="col-md-4" style="float: left">
@@ -98,29 +104,13 @@
                                     </div>
                                     <div class="tab-pane fade" id="pills-two-nobd" role="tabpanel" aria-labelledby="pills-two-tab-nobd">
                                         <!-- 项目列表2 -->
-                                        <div class="col-md-8 row" style="float: left">
-                                            <div class="col-md-12 row" th:each="myproject:${mychargeprojects}">
-                                                <div class="col-lg-10">
-                                                    <a th:href="@{/projects_view(projectId=${myproject.projectId},userId=${#authentication.principal.id})}">
-                                                        <h2 style="color: #145180">
-                                                            <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
-                                                        </h2>
-                                                    </a>
-                                                </a>
-                                                    <span style="color: #4e555b">
-                                                        <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
-                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">
-                                                            <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
-                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">
-                                                            <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.codeUpdateCount}]]
-                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">
-                                                            <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
-                                                    </span>
-                                                </div>
-                                                <hr style="color: #4C5B5C" size="3" width="96%">
+                                        <div class="col-md-8" style="float: left">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="myProjectCharge" class="row"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="myProjectChargePage" class="pagination"></ul>
                                             </div>
                                         </div>
 
@@ -131,28 +121,13 @@
                                     </div>
                                     <div class="tab-pane fade" id="pills-three-nobd" role="tabpanel" aria-labelledby="pills-three-tab-nobd">
                                         <!-- 项目列表3 -->
-                                        <div class="col-md-8 row" style="float: left">
-                                            <div class="col-md-12 row" th:each="myproject:${myjoinprojects}">
-                                                <div class="col-lg-10">
-                                                    <a th:href="@{/projects_view(projectId=${myproject.projectId},userId=${#authentication.principal.id})}">
-                                                        <h2 style="color: #145180">
-                                                            <i class="fas fa-file-alt"></i>&nbsp;[[${myproject.projectName}]]
-                                                        </h2>
-                                                    </a>
-                                                    <span style="color: #4e555b">
-                                                        <i class="fas fa-user-tie"></i>项目管理员：[[${myproject.chargeUser}]]
-                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">
-                                                        <i class="fab fa-codiepie"></i>&nbsp;项目进度：[[${myproject.schedule}]]
-                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">
-                                                        <i class="far fa-arrow-alt-circle-up"></i>上传次数：[[${myproject.codeUpdateCount}]]
-                                                    </span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span style="color: #4e555b">
-                                                        <i class="far fa-arrow-alt-circle-up"></i>我的上传次数：[[${myproject.myUpdateCount}]]
-                                                    </span>
-                                                </div>
-                                                <hr style="color: #4C5B5C" size="3" width="96%">
+                                        <div class="col-md-8" style="float: left">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="myProjectJoin" class="row"></div>
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="myProjectJoinPage" class="pagination"></ul>
                                             </div>
                                         </div>
 
@@ -196,7 +171,7 @@
 <script th:src="@{/assets/js/setting-demo.js}"></script>
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
 <!--在家导航栏退出公共js-->
 <script th:src="@{/assets/js/nav-loginOut.js}"></script>
 <!--加载导航栏消息公共js-->
@@ -446,23 +421,195 @@
 
 </script>
 <script type="text/javascript">
-    //加载我的项目
-    var userId = [[${#authentication.principal.id}]];
-    $.ajax(
-        {
-            type: "Get",
-            url: "/my_project_all",
-            data: {
-                userId: userId,
-            },
-            dataType: "json",
-            success: function (data) {
-                myprojectAppendHtml(data);
-            }
-        }
-    );
 
-    function myprojectAppendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    var userId = [[${#authentication.principal.id}]];
+
+    //加载我的项目
+    $(function () {
+        var divName = $('#myProjectAll');
+        $(divName).html("");
+        addMyProjectPage(userId, divName, myProjectAllPage,1);
+    })
+
+    //加载我负责的项目
+    function myProjectPage(){
+        var divName = $('#myProjectCharge');
+        $(divName).html("");
+        addMyProjectChargePage(userId, divName, myProjectChargePage,2);
+    }
+
+    //加载我参加的项目
+    function myJoinProjectPage(){
+        var divName = $('#myProjectJoin');
+        $(divName).html("");
+        addMyProjectJoinPage(userId, divName, myProjectJoinPage,3);
+    }
+
+
+    //我的所有项目
+    function addMyProjectPage(userId,div,ul,status) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "Get",
+                url: "/my_project_all",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    userId: userId
+                }, //参数：当前页为1
+                success: function (data) {
+                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首";
+                                case "prev":
+                                    return "<";
+                                case "next":
+                                    return ">";
+                                case "last":
+                                    return "末";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/my_project_all",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    page: page,
+                                    userId: userId
+                                },
+                                success: function (data) {
+                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+    }
+
+    //我负责的项目
+    function addMyProjectChargePage(userId,div,ul,status) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "Get",
+                url: "/my_project_charge",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    userId: userId
+                }, //参数：当前页为1
+                success: function (data) {
+                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首";
+                                case "prev":
+                                    return "<";
+                                case "next":
+                                    return ">";
+                                case "last":
+                                    return "末";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/my_project_charge",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    page: page,
+                                    userId: userId
+                                },
+                                success: function (data) {
+                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+    }
+
+    //我参加的项目
+    function addMyProjectJoinPage(userId,div,ul,status) {
+        pageStart();//开始分页
+        function pageStart() {//分页函数
+            $.ajax({ //去后台查询第一页数据
+                type: "Get",
+                url: "/my_project_join",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    userId: userId
+                }, //参数：当前页为1
+                success: function (data) {
+                    myprojectAppendHtml(data.list,div,status,1);//处理第一页的数据
+                    var options = {//根据后台返回的分页相关信息，设置插件参数
+                        bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                        currentPage: data.page, //当前页数
+                        totalPages: data.totalPage, //总页数
+                        numberOfPages: data.pageSize,//每页记录数
+                        itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                            switch (type) {
+                                case "first":
+                                    return "首";
+                                case "prev":
+                                    return "<";
+                                case "next":
+                                    return ">";
+                                case "last":
+                                    return "末";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                            $.ajax({//根据page去后台加载数据
+                                url: "/my_project_join",
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    page: page,
+                                    userId: userId
+                                },
+                                success: function (data) {
+                                    myprojectAppendHtml(data.list,div,status,page);//处理数据
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);//设置分页
+                }
+            });
+        }
+    }
+
+    //页面渲染
+    function myprojectAppendHtml(list,div,status,page) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
         var userId = [[${#authentication.principal.id}]];
         var tableShow = '';
         for (var i = 0; i < list.length; i++) {
@@ -496,89 +643,133 @@
                 '<i class="fab fa-codiepie"></i>&nbsp;项目进度：' + list[i].schedule +
                 '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
                 '<span style="color: #4e555b">\n' +
-                '<i class="far fa-arrow-alt-circle-up"></i>上传次数：' + list[i].updateCount +
+                '<i class="far fa-arrow-alt-circle-up"></i>上传次数：' + list[i].codeUpdateCount +
                 '</span>&nbsp;&nbsp;&nbsp;&nbsp;\n' +
                 '<span style="color: #4e555b">\n' +
                 '<i class="far fa-arrow-alt-circle-up"></i>我的上传次数：' + list[i].myUpdateCount +
                 '</span>\n' +
                 '</div>\n' +
                 '<div class="col-lg-2">\n' +
-                '<a onclick="' + storefunction + '(' + userId + ',' + list[i].projectId + ')" style="color: ' + storecolor + '">\n'+
+                '<a onclick="' + storefunction + '(' + userId + ',' + list[i].projectId + ',' + status + ',' + page + ')" style="color: ' + storecolor + '">\n'+
                 '<i class="fas fa-star"></i><span>' + list[i].storeCount + '</span>\n' +
                 '</a>\n' +
-                '<a onclick="' + likefunction + '(' + userId + ',' + list[i].projectId + ')" style="color:' + likecolor + '">\n' +
+                '<a onclick="' + likefunction + '(' + userId + ',' + list[i].projectId + ',' + status + ',' + page + ')" style="color:' + likecolor + '">\n' +
                  '<i class="fas fa-heart"></i><span>' + list[i].likeCount + '</span>\n' +
                 '</a>\n' +
                 '</div>\n' +
                 '<hr style="color: #4C5B5C" size="3" width="96%">\n' +
                 '</div>\n'
         }
-        $('#myProjectAll').html(tableShow)
+        div.html(tableShow)
     }
 
-    function cancelstore(userId,projectId) {
+    function cancelstore(userId,projectId,status,page) {
+        if(status == 1){
+            var divName = $('#myProjectAll');
+        }
+        else if(status == 2){
+            var divName = $('#myProjectCharge');
+        }
+        else if(status == 3){
+            var divName = $('#myProjectJoin');
+        }
         $.ajax(
             {
                 type: "Get",
                 url: "/my_project_del_refrech",
                 data: {
                     userId: userId,
-                    projectId: projectId
+                    projectId: projectId,
+                    page: page,
+                    status: status
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data);
+                    myprojectAppendHtml(data.list,divName,status,data.page);
                 }
             }
         );
     }
 
-    function addstore(userId,projectId) {
+    function addstore(userId,projectId,status,page) {
+        if(status == 1){
+            var divName = $('#myProjectAll');
+        }
+        else if(status == 2){
+            var divName = $('#myProjectCharge');
+        }
+        else if(status == 3){
+            var divName = $('#myProjectJoin');
+        }
         $.ajax(
             {
                 type: "Get",
                 url: "/my_project_refrech",
                 data: {
                     userId: userId,
-                    projectId: projectId
+                    projectId: projectId,
+                    page: page,
+                    status: status
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data);
+                    myprojectAppendHtml(data.list,divName,status,data.page);
                 }
             }
         );
     }
 
-    function cancellike(userId,projectId) {
+    function cancellike(userId,projectId,status,page) {
+        if(status == 1){
+            var divName = $('#myProjectAll');
+        }
+        else if(status == 2){
+            var divName = $('#myProjectCharge');
+        }
+        else if(status == 3){
+            var divName = $('#myProjectJoin');
+        }
         $.ajax(
             {
                 type: "Get",
                 url: "/my_project_del_refrech_like",
                 data: {
                     userId: userId,
-                    projectId: projectId
+                    projectId: projectId,
+                    page: page,
+                    status: status
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data);
+                    myprojectAppendHtml(data.list,divName,status,data.page);
                 }
             }
         );
     }
 
-    function addlike(userId,projectId) {
+    function addlike(userId,projectId,status,page) {
+        if(status == 1){
+            var divName = $('#myProjectAll');
+        }
+        else if(status == 2){
+            var divName = $('#myProjectCharge');
+        }
+        else if(status == 3){
+            var divName = $('#myProjectJoin');
+        }
         $.ajax(
             {
                 type: "Get",
                 url: "/my_project_refrech_like",
                 data: {
                     userId: userId,
-                    projectId: projectId
+                    projectId: projectId,
+                    page: page,
+                    status: status
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data);
+                    myprojectAppendHtml(data.list,divName,status,data.page);
                 }
             }
         );

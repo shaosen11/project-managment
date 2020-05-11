@@ -124,61 +124,77 @@
         select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
                p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
                p.store_count as storeCount, p.like_count as likeCount,
-               (select count(*) from user_store us where us.user_id = su.id and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
-               (select count(*) from user_like ul where ul.user_id = su.id and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_like ul where ul.user_id = #{userId} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
         from projects_user pu right join projects p on pu.projects_id = p.id
-                              right join sys_user su on pu.user_id = su.id
+                              right join sys_user su on p.charge_user_id = su.id
         where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1 and pu.user_id = #{id}
     </select>
 
+    <!-- 查询分页数据之我的所有项目 -->
+    <select id="getMyProjectsPage" resultMap="myprojects">
+	    select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
+               p.store_count as storeCount, p.like_count as likeCount,
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_like ul where ul.user_id = #{userId} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
+        from projects_user pu right join projects p on pu.projects_id = p.id
+                              right join sys_user su on p.charge_user_id = su.id
+        where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1 and pu.user_id = #{userId}
+	    order by projectId
+	    desc limit #{offset},#{pageSize}
+    </select>
+
     <!--查找我负责的项目-->
-    <resultMap id="mychargeprojects" type="Myprojects">
-        <result column="projectId" property="projectId"></result>
-        <result column="projectName" property="projectName"></result>
-        <result column="chargeUserId" property="chargeUserId"></result>
-        <result column="chargeUser" property="chargeUser"></result>
-        <result column="schedule" property="schedule"></result>
-        <result column="codeUpdateCount" property="codeUpdateCount"></result>
-        <result column="myUpdateCount" property="myUpdateCount"></result>
-        <result column="storeCount" property="storeCount"></result>
-        <result column="likeCount" property="likeCount"></result>
-        <result column="storeFlag" property="storeFlag"></result>
-        <result column="likeFlag" property="likeFlag"></result>
-    </resultMap>
-    <select id="getMyChargeProjects" resultMap="mychargeprojects">
+    <select id="getMyChargeProjects" resultMap="myprojects">
         select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
                p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
                p.store_count as storeCount, p.like_count as likeCount,
-               (select count(*) from user_store us where us.user_id = su.id and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
-               (select count(*) from user_like ul where ul.user_id = su.id and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_like ul where ul.user_id = #{userId} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
         from projects_user pu right join projects p on pu.projects_id = p.id
-                              right join sys_user su on pu.user_id = su.id
+                              right join sys_user su on p.charge_user_id = su.id
         where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1 and pu.user_id = #{id} and p.charge_user_id = #{id}
     </select>
 
+    <!-- 查询分页数据之我负责的项目 -->
+    <select id="getMyChargeProjectsPage" resultMap="myprojects">
+	    select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
+               p.store_count as storeCount, p.like_count as likeCount,
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_like ul where ul.user_id = #{userId} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
+        from projects_user pu right join projects p on pu.projects_id = p.id
+                              right join sys_user su on p.charge_user_id = su.id
+        where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1 and pu.user_id = #{userId} and p.charge_user_id = #{userId}
+	    order by projectId
+	    desc limit #{offset},#{pageSize}
+    </select>
+
     <!--查找我参与的项目-->
-    <resultMap id="myjoinprojects" type="Myprojects">
-        <result column="projectId" property="projectId"></result>
-        <result column="projectName" property="projectName"></result>
-        <result column="chargeUserId" property="chargeUserId"></result>
-        <result column="chargeUser" property="chargeUser"></result>
-        <result column="schedule" property="schedule"></result>
-        <result column="codeUpdateCount" property="codeUpdateCount"></result>
-        <result column="myUpdateCount" property="myUpdateCount"></result>
-        <result column="storeCount" property="storeCount"></result>
-        <result column="likeCount" property="likeCount"></result>
-        <result column="storeFlag" property="storeFlag"></result>
-        <result column="likeFlag" property="likeFlag"></result>
-    </resultMap>
-    <select id="getMyJoinProjects" resultMap="myjoinprojects">
+    <select id="getMyJoinProjects" resultMap="myprojects">
         select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
                p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
                p.store_count as storeCount, p.like_count as likeCount,
-               (select count(*) from user_store us where us.user_id = su.id and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
-               (select count(*) from user_like ul where ul.user_id = su.id and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_like ul where ul.user_id = #{userId} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
         from projects_user pu right join projects p on pu.projects_id = p.id
-                              right join sys_user su on pu.user_id = su.id
+                              right join sys_user su on p.charge_user_id = su.id
         where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1 and pu.user_id = #{id} and p.charge_user_id != #{id}
+    </select>
+
+    <!-- 查询分页数据之我参与的项目 -->
+    <select id="getMyJoinProjectsPage" resultMap="myprojects">
+	    select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, pu.code_update as myUpdateCount,
+               p.store_count as storeCount, p.like_count as likeCount,
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_like ul where ul.user_id = #{userId} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag
+        from projects_user pu right join projects p on pu.projects_id = p.id
+                              right join sys_user su on p.charge_user_id = su.id
+        where pu.delete_flag = 1 and su.enabled = 1 and p.enabled = 1 and pu.user_id = #{userId} and p.charge_user_id !=  #{userId}
+	    order by projectId
+	    desc limit #{offset},#{pageSize}
     </select>
 
     <!--查找我所有的项目进度数据，饼图-->
@@ -226,6 +242,19 @@
         where p.enabled = 1 and us.user_id = #{id} and us.delete_flag = 1
     </select>
 
+    <!--分页- -查找我的项目收藏-->
+    <select id="getMyProjectsStorePage" resultMap="myprojectsstore">
+        select p.id as projectId, p.name as projectName, su.id as chargeUserId, su.username as chargeUser,
+               p.schedule as schedule, p.code_update_count as codeUpdateCount, p.store_count as storeCount, p.like_count as likeCount,
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = p.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_like ul where ul.user_id = #{userId} and ul.projects_id = p.id and ul.delete_flag = 1) as likeFlag,
+               p.type as type, p.function_points as functionPoints, p.completed_function_points as completedFunctionPoints
+        from  projects p right join user_store us on p.id = us.projects_id
+                         left join sys_user su on p.charge_user_id = su.id
+        where p.enabled = 1 and us.user_id = #{userId} and us.delete_flag = 1
+        order by projectId
+	    desc limit #{offset},#{pageSize}
+    </select>
 
     <resultMap id="MyUserDetailsAndProjectList" type="MyUserDetails">
         <collection property="myprojectsList" column="{id=id}"
