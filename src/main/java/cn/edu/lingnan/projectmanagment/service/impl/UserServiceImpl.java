@@ -84,13 +84,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Myprojects> getMyProjectsPage(Integer userId, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsPage(userId,offset,pageSize);
+    }
+
+    @Override
     public List<Myprojects> getMyChargeProjects(Integer id) {
         return userMapper.getMyChargeProjects(id);
     }
 
     @Override
+    public List<Myprojects> getMyChargeProjectsPage(Integer userId, Integer offset, Integer pageSize) {
+        return userMapper.getMyChargeProjectsPage(userId,offset,pageSize);
+    }
+
+    @Override
     public List<Myprojects> getMyJoinProjects(Integer id) {
         return userMapper.getMyJoinProjects(id);
+    }
+
+    @Override
+    public List<Myprojects> getMyJoinProjectsPage(Integer userId, Integer offset, Integer pageSize) {
+        return userMapper.getMyJoinProjectsPage(userId,offset,pageSize);
     }
 
     @Override
@@ -111,6 +126,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Myprojects> getMyProjectsStore(Integer id) {
         return userMapper.getMyProjectsStore(id);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsStorePage(Integer userId, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsStorePage(userId,offset,pageSize);
     }
 
     @Override

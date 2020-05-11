@@ -93,6 +93,12 @@ public interface UserMapper {
     List<Myprojects> getMyProjects(Integer id);
 
     /**
+     * 分页--查询我的所有项目(user)
+     * @return
+     */
+    List<Myprojects> getMyProjectsPage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
+    /**
      * 查询我负责的项目(user)
      *
      * @return
@@ -100,11 +106,25 @@ public interface UserMapper {
     List<Myprojects> getMyChargeProjects(Integer id);
 
     /**
+     * 分页--查询我负责的项目
+     * @return
+     */
+    List<Myprojects> getMyChargeProjectsPage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
+
+    /**
      * 查询我参与的项目(user)
      *
      * @return
      */
     List<Myprojects> getMyJoinProjects(Integer id);
+
+    /**
+     * 分页--查询我参加的项目
+     * @return
+     */
+    List<Myprojects> getMyJoinProjectsPage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
 
     /**
      * 查询我所有的项目进度数量(饼图1)
@@ -133,6 +153,13 @@ public interface UserMapper {
      * @return
      */
     List<Myprojects> getMyProjectsStore(Integer id);
+
+    /**
+     * 分页--查询我的项目收藏(
+     * @return
+     */
+    List<Myprojects> getMyProjectsStorePage(@Param("userId")Integer userId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
 
     /**
      * 查询user的信息和项目

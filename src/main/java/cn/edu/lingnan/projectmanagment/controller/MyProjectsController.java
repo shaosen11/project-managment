@@ -6,6 +6,7 @@ import cn.edu.lingnan.projectmanagment.service.impl.UserLikeServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserStoreServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,20 +36,164 @@ public class MyProjectsController {
 
     //查看我的项目
     @GetMapping("/my_projects/{id}")
-    public String myProjects(@PathVariable("id")Integer id, Model model){
-        //我所有项目
-//        List<Myprojects> myprojectsList = userService.getMyProjects(id);
-//        System.out.println("userid:"+id+" 我的项目："+myprojectsList);
-//        model.addAttribute("myprojects",myprojectsList);
-        //我负责的项目
-        List<Myprojects> mychargeprojectsList = userService.getMyChargeProjects(id);
-        System.out.println("userid:"+id+" 我负责的项目："+mychargeprojectsList);
-        model.addAttribute("mychargeprojects",mychargeprojectsList);
-        //我参加的项目
-        List<Myprojects> myjoinprojectsList = userService.getMyJoinProjects(id);
-        System.out.println("userid:"+id+" 我参与的项目："+myjoinprojectsList);
-        model.addAttribute("myjoinprojects",myjoinprojectsList);
+    public String myProjects(@PathVariable("id")Integer id){
         return "myprojects";
+    }
+
+    public Map<String, Object> functionPageCom(Integer page,Integer count){
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 计算总页数
+            int totalPage = count / pageSize;
+            // 不满一页的数据按一页计算
+            if (count % pageSize != 0) {
+                totalPage++;
+            }
+            // 当页数大于总页数，直接返回
+            if (page > totalPage){
+                return null;
+            }
+            // 计算sql需要的起始索引
+            int offset = (page - 1) * pageSize;
+            // 封装数据，并返回
+            map.put("page", page);
+            map.put("pageSize", pageSize);
+            map.put("totalPage", totalPage);
+            map.put("offset",offset);
+            return map;
+        } catch (Exception e) {
+            System.out.println("获取函数数据失败" + e);
+            return map;
+        }
+    }
+
+    public ResponseEntity<Map<String, Object>> myProjects(Integer page, Integer userId,Integer status){
+        System.out.println("当前页：" + page+"  当前用户：" + userId + " status" +status);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            List<Myprojects> myprojectsList = null;
+            if(status == 1){//我的项目
+                myprojectsList = userService.getMyProjects(userId);
+            }else if(status == 2){//我负责的项目
+                myprojectsList = userService.getMyChargeProjects(userId);
+            }else if(status == 3){//我参加的项目
+                myprojectsList = userService.getMyJoinProjects(userId);
+            }
+            System.out.println("userid:"+userId+" 项目："+myprojectsList);
+            int count = myprojectsList.size();
+            map = functionPageCom(page,count);
+            int offset = (int) map.get("offset");
+            // 根据起始索引和页面大小去查询数据
+            List<Myprojects> list = null;
+            if(status == 1){//我的项目
+                list = userService.getMyProjectsPage(userId,offset,pageSize);
+            }else if(status == 2){//我负责的项目
+                list = userService.getMyChargeProjectsPage(userId,offset,pageSize);
+            }else if(status == 3){//我参加的项目
+                list = userService.getMyJoinProjectsPage(userId,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我的全部项目
+    @GetMapping("/my_project_all")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsAll(Integer page, Integer userId){
+        System.out.println("当前页：" + page+"  当前用户：" + userId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            List<Myprojects> myprojectsList = userService.getMyProjects(userId);
+            System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
+            int count = myprojectsList.size();
+            map = functionPageCom(page,count);
+            int offset = (int) map.get("offset");
+            // 根据起始索引和页面大小去查询数据
+            List<Myprojects> list = userService.getMyProjectsPage(userId,offset,pageSize);
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我负责的项目
+    @GetMapping("/my_project_charge")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsCharge(Integer page, Integer userId){
+        System.out.println("charge当前页：" + page+"  当前用户：" + userId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            List<Myprojects> myprojectsList = userService.getMyChargeProjects(userId);
+            System.out.println("userid:"+userId+" 我负责的项目："+myprojectsList);
+            int count = myprojectsList.size();
+            map = functionPageCom(page,count);
+            int offset = (int) map.get("offset");
+            // 根据起始索引和页面大小去查询数据
+            List<Myprojects> list = userService.getMyChargeProjectsPage(userId,offset,pageSize);
+            System.out.println("我负责的项目分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("我负责的项目分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我参加的项目
+    @GetMapping("/my_project_join")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsJoin(Integer page, Integer userId){
+        System.out.println("join当前页：" + page+"  当前用户：" + userId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            List<Myprojects> myprojectsList = userService.getMyJoinProjects(userId);
+            System.out.println("userid:"+userId+" 我负责的项目："+myprojectsList);
+            int count = myprojectsList.size();
+            map = functionPageCom(page,count);
+            int offset = (int) map.get("offset");
+            // 根据起始索引和页面大小去查询数据
+            List<Myprojects> list = userService.getMyJoinProjectsPage(userId,offset,pageSize);
+            System.out.println("我负责的项目分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("我负责的项目分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //我的项目--饼图1
@@ -98,145 +244,200 @@ public class MyProjectsController {
         return list3;
     }
 
-    //我的全部项目
-    @GetMapping("/my_project_all")
-    @ResponseBody
-    public List myProjectsAll(Integer userId){
-        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
-        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
-        return myprojectsList;
-    }
-
     //我的项目--收藏
     @ResponseBody
     @GetMapping("/my_project_refrech")
-    public List myProjectsRefrech(Integer userId, Integer projectId){
-        UserStore userStore = userStoreService.getOneUserStore(userId,projectId);
-        if(userStore == null){
-            UserStore userStore1 = new UserStore();
-            userStore1.setUserId(userId);
-            userStore1.setProjectsId(projectId);
-            System.out.println("添加UserStore"+userStore1);
-            userStoreService.addUserStore(userStore1);
-        }else{
-            userStoreService.reductionUserStore(userId,projectId);
-        }
+    public ResponseEntity<Map<String, Object>> myProjectsRefrech(Integer userId, Integer projectId,Integer page,Integer status){
+        System.out.println("收藏项目:"+userId+" "+projectId+" "+page);
+        UserStore userStore1 = new UserStore();
+        userStore1.setUserId(userId);
+        userStore1.setProjectsId(projectId);
+        System.out.println("添加UserStore"+userStore1);
+        userStoreService.addUserStore(userStore1);
         Integer storenum = userStoreService.countProjectBeStored(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setStoreCount(storenum);
         System.out.println("收藏项目"+projects);
         projectService.editProject(projects);
-        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
-        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
-        return myprojectsList;
+
+        ResponseEntity<Map<String, Object>> m ;
+        m = myProjects(page,userId,status);
+        System.out.println("收藏项目,返回："+m);
+        return m;
     }
 
     //我的项目--取消收藏
     @ResponseBody
     @GetMapping("/my_project_del_refrech")
-    public List myProjectsDelRefrech(Integer userId,Integer projectId){
+    public ResponseEntity<Map<String, Object>> myProjectsDelRefrech(Integer userId,Integer projectId,Integer page,Integer status){
+        System.out.println("取消收藏项目:"+userId+" "+projectId+" "+page);
         userStoreService.deleteUserStore(userId,projectId);
         Integer storenum = userStoreService.countProjectBeStored(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setStoreCount(storenum);
         System.out.println("取消收藏项目"+projects);
         projectService.editProject(projects);
-        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
-        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
-        return myprojectsList;
+        ResponseEntity<Map<String, Object>> m ;
+        m = myProjects(page,userId,status);
+        System.out.println("取消收藏项目,返回："+m);
+        return m;
     }
 
     //我的项目--点赞
     @ResponseBody
     @GetMapping("/my_project_refrech_like")
-    public List myProjectsRefrechLike(Integer userId,Integer projectId){
-        UserLike userLike = userLikeService.getOneUserLike(userId,projectId);
-        if(userLike == null){
-            UserLike userLike1 = new UserLike();
-            userLike1.setUserId(userId);
-            userLike1.setProjectsId(projectId);
-            System.out.println("添加UserStore"+userLike1);
-            userLikeService.addUserLike(userLike1);
-        }else{
-            userLikeService.reductionUserLike(userId,projectId);
-        }
+    public ResponseEntity<Map<String, Object>>  myProjectsRefrechLike(Integer userId,Integer projectId,Integer page,Integer status){
+        System.out.println("点赞项目:"+userId+" "+projectId+" "+page);
+        UserLike userLike1 = new UserLike();
+        userLike1.setUserId(userId);
+        userLike1.setProjectsId(projectId);
+        System.out.println("添加userLike"+userLike1);
+        userLikeService.addUserLike(userLike1);
         Integer storenum = userLikeService.countProjectBeLiked(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setLikeCount(storenum);
         System.out.println("点赞项目"+projects);
         projectService.editProject(projects);
-        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
-        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
-        return myprojectsList;
+        ResponseEntity<Map<String, Object>> m ;
+        m = myProjects(page,userId,status);
+        System.out.println("点赞项目,返回："+m);
+        return m;
     }
 
     //我的项目--取消点赞
     @ResponseBody
     @GetMapping("/my_project_del_refrech_like")
-    public List myProjectsDelRefrechLike(Integer userId,Integer projectId){
+    public ResponseEntity<Map<String, Object>> myProjectsDelRefrechLike(Integer userId,Integer projectId,Integer page,Integer status){
         userLikeService.deleteUserLike(userId,projectId);
         Integer likenum = userLikeService.countProjectBeLiked(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setLikeCount(likenum);
         System.out.println("取消点赞项目"+projects);
         projectService.editProject(projects);
-        List<Myprojects> myprojectsList = userService.getMyProjects(userId);
-        System.out.println("userid:"+userId+" 我的项目："+myprojectsList);
-        return myprojectsList;
+        ResponseEntity<Map<String, Object>> m ;
+        m = myProjects(page,userId,status);
+        System.out.println("取消点赞项目,返回："+m);
+        return m;
     }
 
     //查看我的项目收藏
     @GetMapping("/my_projects_store/{id}")
-    public String myProjectsStore(@PathVariable("id")Integer id, Model model){
-        List<Myprojects> myprojectstores = userService.getMyProjectsStore(id);
-        System.out.println("userid:"+id+" 我的项目收藏："+myprojectstores);
-        model.addAttribute("myprojectstores",myprojectstores);
+    public String myProjectsStore(@PathVariable("id")Integer id){
         return "mystore";
     }
 
+    //查看我的项目收藏
+    @GetMapping("/my_projects_store")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsStore(Integer page, Integer userId){
+        System.out.println("我的项目收藏当前页：" + page+"  当前用户：" + userId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            List<Myprojects> myprojectsList = userService.getMyProjectsStore(userId);
+            System.out.println("userid:"+userId+" 我的项目收藏："+myprojectsList);
+            int count = myprojectsList.size();
+            map = functionPageCom(page,count);
+            int offset = (int) map.get("offset");
+            // 根据起始索引和页面大小去查询数据
+            List<Myprojects> list = userService.getMyProjectsStorePage(userId,offset,pageSize);
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Map<String, Object>> myStoreProjectsCom(Integer page, Integer userId){
+        System.out.println("我的收藏--当前页：" + page+"  当前用户：" + userId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 获取总条目数
+            List<Myprojects> myprojectsList = userService.getMyProjectsStore(userId);
+            System.out.println("userid:"+userId+" 我的项目收藏："+myprojectsList);
+            int count = myprojectsList.size();
+            if(count <= (pageSize*(page-1))){
+                page = page-1;
+            }
+            System.out.println("数量="+count);
+            map = functionPageCom(page,count);
+            int offset = (int) map.get("offset");
+            // 根据起始索引和页面大小去查询数据
+            List<Myprojects> list = userService.getMyProjectsStorePage(userId,offset,pageSize);
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //我的收藏--取消收藏
-    @GetMapping("/my_project_store_del/{userId}/{projectId}")
-    public String myProjectsStoreDel(@PathVariable("userId")Integer id,@PathVariable("projectId")Integer projectId,Model model){
-        userStoreService.deleteUserStore(id,projectId);
+    @GetMapping("/my_project_store_del")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsStoreDel(Integer userId,Integer projectId,Integer page){
+        System.out.println("取消收藏--我的收藏:"+userId+" "+projectId+" "+page);
+        userStoreService.deleteUserStore(userId,projectId);
         Integer storenum = userStoreService.countProjectBeStored(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setStoreCount(storenum);
         System.out.println("取消收藏项目"+projects);
         projectService.editProject(projects);
-        return "redirect:/my_projects_store/"+id;
+        ResponseEntity<Map<String, Object>> m ;
+        m = myStoreProjectsCom(page,userId);
+        System.out.println("取消收藏项目,返回："+m);
+        return m;
     }
 
     //我的收藏--点赞
-    @GetMapping("/my_project_store_like/{userId}/{projectId}")
-    public String myProjectsStoreLike(@PathVariable("userId")Integer id,@PathVariable("projectId")Integer projectId,Model model){
-        UserLike userLike = userLikeService.getOneUserLike(id,projectId);
-        if(userLike == null){
-            UserLike userLike1 = new UserLike();
-            userLike1.setUserId(id);
-            userLike1.setProjectsId(projectId);
-            System.out.println("添加UserStore"+userLike1);
-            userLikeService.addUserLike(userLike1);
-        }else{
-            userLikeService.reductionUserLike(id,projectId);
-        }
+    @GetMapping("/my_project_store_like")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsStoreLike(Integer userId,Integer projectId,Integer page){
+        System.out.println("点赞--我的收藏:"+userId+" "+projectId+" "+page);
+        UserLike userLike1 = new UserLike();
+        userLike1.setUserId(userId);
+        userLike1.setProjectsId(projectId);
+        System.out.println("添加userLike1"+userLike1);
+        userLikeService.addUserLike(userLike1);
         Integer storenum = userLikeService.countProjectBeLiked(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setLikeCount(storenum);
         System.out.println("点赞项目"+projects);
         projectService.editProject(projects);
-        return "redirect:/my_projects_store/"+id;
+        ResponseEntity<Map<String, Object>> m ;
+        m = myStoreProjectsCom(page,userId);
+        System.out.println("点赞收藏项目,返回："+m);
+        return m;
     }
 
     //我的收藏--取消点赞
-    @GetMapping("/my_project_store_del_like/{userId}/{projectId}")
-    public String myProjectsStoreDelLike(@PathVariable("userId")Integer id,@PathVariable("projectId")Integer projectId,Model model){
-        userLikeService.deleteUserLike(id,projectId);
+    @GetMapping("/my_project_store_del_like")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsStoreDelLike(Integer userId,Integer projectId,Integer page){
+        System.out.println("取消点赞--我的收藏:"+userId+" "+projectId+" "+page);
+        userLikeService.deleteUserLike(userId,projectId);
         Integer likenum = userLikeService.countProjectBeLiked(projectId);
         Projects projects = projectService.getById(projectId);
         projects.setLikeCount(likenum);
         System.out.println("取消点赞项目"+projects);
         projectService.editProject(projects);
-        return "redirect:/my_projects_store/"+id;
+        ResponseEntity<Map<String, Object>> m ;
+        m = myStoreProjectsCom(page,userId);
+        System.out.println("取消点赞收藏项目,返回："+m);
+        return m;
     }
 }
 
