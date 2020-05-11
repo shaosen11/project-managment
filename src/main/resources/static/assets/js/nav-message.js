@@ -122,7 +122,6 @@ function doNotAgreeNeedToDo(messageId){
             messageId: messageId,
         },
         success: function (result) {
-            console.log(result);
             if (result) {
                 console.log(result);
                 my_message_need_to_do();

@@ -9,6 +9,7 @@ import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,11 @@ public class DocumentsController {
 
     @GetMapping("/document")
     public String text(String documentName, Integer projectId, Integer userId, Model model, HttpServletRequest request) {
+        //获取myUserDetails对象
+        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        System.out.println("myUserDetails:" + myUserDetails);
         System.out.println("文件名：" + documentName);
         System.out.println("项目id：" + projectId);
         //获取文件名为filename和版本标识符为1的

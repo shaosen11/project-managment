@@ -17,7 +17,7 @@ function user_prjects(userId) {
                 var li = document.createElement("li");
                 parentUL.appendChild(li);
                 var a = document.createElement("a");
-                a.href = '/projects_view?projectId=' + data[i].id + '&userId=' + userId;
+                a.href = '/projects_view?projectId=' + data[i].id;
                 a.innerHTML = data[i].name;
                 li.appendChild(a);
             }

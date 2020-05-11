@@ -21,6 +21,7 @@
 </head>
 
 <body>
+
 <div class="wrapper">
     <div class="main-header" data-background-color="purple">
         <!-- Logo Header -->
@@ -51,154 +52,251 @@
     <!-- Sidebar -->
     <div th:replace="commom/bar :: projectsidebar"></div>
     <!-- End Sidebar -->
+
     <div class="main-panel">
         <div class="content">
             <div class="page-inner">
+                <div class="page-header col-md-6">
+                    <h4 class="page-title">项目功能点</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a href="#">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Base</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Panels</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--功能点概览-->
                 <div class="row">
-                    <div class="col-md-2 card" style="height: 630px;">
-                        <h2 style="margin-top: 10px">功能
-                            <button class="btn-xs btn-warning">
-                                <span class="btn-label">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                                新建功能
-                            </button>
-                        </h2>
-                        <!--进度条-->
-                        <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
-                        <a href="#" style="margin-top: 20px;color: #1b1e21">
-                            <h3><i class="fas fa-layer-group"></i>&nbsp;全部功能</h3>
-                        </a>
-                        <h3 style="margin-top: 10px;color: #1b1e21"><i class="fas fa-bookmark"></i>&nbsp;我的任务</h3>
-                        <h4 style="margin-top: 10px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#">指派给我的</a>
-                        </h4>
-                        <h4 style="margin-top: 10px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#">我发布的</a>
-                        </h4>
-                        <h4 style="margin-top: 10px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#">我参与的</a>
-                        </h4>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-battery-empty text-warning"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">待办功能点</p>
+                                            <h4 class="card-title" id="projectFunctionTodo"></h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-10 row">
-                        <div class="col-md-3">
-                            <div class="card" style="height: 630px;">
-                                <div class="card-header row" style="background-color: rgba(245,232,200,0.5)">
-                                    <div class="card-title col-md-6" style="color: black"><i class="far fa-surprise"
-                                                                                             style="color: #FF9933"></i>&nbsp;待办的
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body ">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-battery-half text-primary"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
-                                    <div style="margin-top: -15px">
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #FF9933;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #FF9933;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>学生管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #FF9933;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>课室管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">进行中功能点</p>
+                                            <h4 class="card-title" id="projectFunctionProcesing"></h4>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card" style="height: 630px;">
-                                <div class="card-header" style="background-color: rgba(157,211,250,0.5)">
-                                    <div class="card-title" style="color: black"><i class="far fa-tired"
-                                                                                    style="color: #1F6FB5"></i>&nbsp;进行中
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-battery-three-quarters text-secondary"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
-                                    <div style="margin-top: -15px">
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #1F6FB5;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #1F6FB5;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #1F6FB5;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">已完成功能点</p>
+                                            <h4 class="card-title" id="projectFunctionCompleted"></h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card" style="height: 630px;">
-                                <div class="card-header" style="background-color: rgba(118,126,199,0.5)">
-                                    <div class="card-title" style="color: black"><i class="far fa-laugh-squint"
-                                                                                    style="color: #795DDE"></i>&nbsp;已完成
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-battery-full text-success"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
-                                    <div style="margin-top: -15px">
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #795DDE;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #795DDE;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
-                                        </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #795DDE;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
-                                            </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">已验收功能点</p>
+                                            <h4 class="card-title" id="projectFunctionAccepted"></h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card" style="height: 630px;">
-                                <div class="card-header" style="background-color: rgba(25,148,117,0.5)">
-                                    <div class="card-title" style="color: black"><i class="far fa-kiss-wink-heart"
-                                                                                    style="color: #007850"></i>&nbsp;已验收
+                    </div>
+                </div>
+                <!--功能点详情-->
+                <div class="row">
+                    <div class="col-md-2 card" style="height: 700px;">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 style="margin-top: 10px">功能</h2>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-right">
+                                        <button class="btn btn-primary" data-toggle="modal"
+                                                data-target="#addFunction">
+                                                <span class="btn-label">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                            新建功能
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="card-body" style="background-color: rgba(220,220,220,0.3)">
-                                    <div style="margin-top: -15px">
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #007850;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!--进度条-->
+                            <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
+                            <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist"
+                                 aria-orientation="vertical" style="margin-top: 20px">
+                                <a class="nav-link active" data-toggle="pill" href="#"
+                                   onclick="allFunctionPage()"><i class="fas fa-layer-group"></i>全部功能</a>
+                                <a class="nav-link" data-toggle="pill" href="#" onclick="assignFunctionPage()">指派给我的</a>
+                                <a class="nav-link" data-toggle="pill" href="#" onclick="publishFunctionPage()">我发布的</a>
+                                <a class="nav-link" data-toggle="pill" href="#" onclick="joinFunctionPage()">我参与的</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--功能-->
+                    <div class="col-md-10 tab-content" style="height: 630px;" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active row" id="v-pills-four" role="tabpanel"
+                             aria-labelledby="v-pills-four-tab">
+                            <div class="col-md-12 row">
+                                <div class="col-md-3">
+                                    <div class="card" style="height: 700px;">
+                                        <div class="card-header"
+                                             style="background-color: rgba(245,232,200,0.5)">
+                                            <div class="card-title" style="color: black">
+                                                <i class="fas fa-battery-empty" style="color: #FF9933"></i>&nbsp;待办的
                                             </div>
                                         </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #007850;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
+                                        <div class="card-body"
+                                             style="background-color: rgba(220,220,220,0.3)">
+                                            <div style="margin-top: -15px">
+                                                <!-- 分页容器：显示数据--参与 -->
+                                                <div id="TodoDiv"></div>
                                             </div>
                                         </div>
-                                        <div class="row" style="background-color: white;margin-top: 10px">
-                                            <div style="background-color: #007850;width: 5px;"></div>
-                                            <div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">
-                                                <h3>宿舍管理</h3><span style="color: darkgray">by jennie</span>
+                                        <div class="card-footer">
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="TodoFunctionPage"
+                                                    class="pagination pagination-sm"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card" style="height: 700px;">
+                                        <div class="card-header"
+                                             style="background-color: rgba(157,211,250,0.5)">
+                                            <div class="card-title" style="color: black">
+                                                <i class="fas fa-battery-half" style="color: #1F6FB5"></i>&nbsp;进行中
+                                            </div>
+                                        </div>
+                                        <div class="card-body"
+                                             style="background-color: rgba(220,220,220,0.3)">
+                                            <div style="margin-top: -15px">
+                                                <!-- 分页容器：显示数据 -->
+                                                <div id="ProcesingDiv"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="ProcesingFunctionPage"
+                                                    class="pagination pagination-sm"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card" style="height: 700px;">
+                                        <div class="card-header"
+                                             style="background-color: rgba(118,126,199,0.5)">
+                                            <div class="card-title" style="color: black"><i
+                                                    class="fas fa-battery-three-quarters"
+                                                    style="color: #795DDE"></i>&nbsp;已完成
+                                            </div>
+                                        </div>
+                                        <div class="card-body"
+                                             style="background-color: rgba(220,220,220,0.3)">
+                                            <div style="margin-top: -15px">
+                                                <!-- 分页容器：显示数据 -->
+                                                <div id="CompletedDiv"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="CompletedFunctionPage"
+                                                    class="pagination pagination-sm"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card" style="height: 700px;">
+                                        <div class="card-header"
+                                             style="background-color: rgba(25,148,117,0.5)">
+                                            <div class="card-title" style="color: black"><i
+                                                    class="fas fa-battery-full"
+                                                    style="color: #007850"></i>&nbsp;已验收
+                                            </div>
+                                        </div>
+                                        <div class="card-body"
+                                             style="background-color: rgba(220,220,220,0.3)">
+                                            <div style="margin-top: -15px">
+                                                <!-- 分页容器：显示数据 -->
+                                                <div id="AcceptedDiv"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="AcceptedFunctionPage"
+                                                    class="pagination pagination-sm"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -215,11 +313,53 @@
 <!--model框-->
 <div th:replace="commom/bar :: uploadfilemodel"></div>
 <div th:replace="commom/bar :: newprojectpackage"></div>
+<div class="modal fade" id="addFunction" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            New</span>
+                    <span class="fw-light">
+                            Function
+                        </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="small">Create a new Function using this form, make sure you fill them all</p>
+                <div class="row">
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>功能名</label>
+                            <input id="addName" name="functionName" type="text" class="form-control"
+                                   placeholder="fill functionName" onBlur="checkFunctionName()">
+                            <span class="default" style="color: #3c763d" id="nameErr">请输入功能名称</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>实现用户</label>
+                            <input id="addRealizeUserId" name="realizeUserId" type="text" class="form-control"
+                                   placeholder="fill realizeUserId">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-primary" onclick="addFunction()">Add</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-<script th:src="@{/assets/js/core/popper.min.js}"></script>
 <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
 <!-- jQuery UI -->
 <script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
 <script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
@@ -233,16 +373,19 @@
 <script th:src="@{/assets/js/ready.min.js}"></script>
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap-select.min.js}"></script>
 <!-- Sweet Alert -->
 <script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/assets/js/myjs.js}"></script>
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
 <!-- Chart JS -->
 <script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
 <!-- Chart Circle -->
 <script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<!-- 功能点分页 -->
+<script th:src="@{/assets/js/functionpage.js}"></script>
 
-<!--加载退出登录公共js-->
+<!--在家导航栏退出公共js-->
 <script th:src="@{/assets/js/nav-loginOut.js}"></script>
 <!--加载导航栏消息公共js-->
 <script th:src="@{/assets/js/nav-message.js}"></script>
@@ -258,23 +401,235 @@
 </script>
 
 
-<script th:inline="javascript">
-    // Cicle Chart
-    Circles.create({
-        id: 'function-complete',
-        radius: 50,
-        value: 80,
-        maxValue: 100,
-        width: 10,
-        text: function (value) {
-            return value + '%';
-        },
-        colors: ['#EACF02', '#2E68AA'],
-        duration: 400,
-        wrpClass: 'circles-wrp',
-        textClass: 'circles-text',
-        styleWrapper: true,
-        styleText: true
+<!--功能点分页-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    var functionStatusFlag = 0;
+    $(function () {
+        allFunctionPage();
+    })
+
+    //全部功能点
+    function allFunctionPage() {
+        functionStatusFlag = 0;
+        var allFunctionUrl = "/allFunctionPage";
+        appendFuntion1(projectId, allFunctionUrl);
+    }
+
+    //分配给我的功能点
+    function assignFunctionPage() {
+        functionStatusFlag = 1;
+        var assignFunctionUrl = "/assignFunctionPage";
+        appendFuntion2(projectId, userId, assignFunctionUrl);
+    }
+
+    //我发布的功能点
+    function publishFunctionPage() {
+        functionStatusFlag = 2;
+        var publishFunctionUrl = "/publishFunctionPage";
+        appendFuntion2(projectId, userId, publishFunctionUrl);
+    }
+
+    //正在进行的功能点
+    function joinFunctionPage() {
+        functionStatusFlag = 3;
+        var joinFunctionUrl = "/joinFunctionPage";
+        appendFuntion2(projectId, userId, joinFunctionUrl);
+    }
+
+    //提取
+    function appendFuntion1(projectId, url) {
+        var functionPage = $('#TodoFunctionPage');
+        var divName = $('#TodoDiv');
+        $(divName).html("");
+        var pagecolor = "#FF9933";
+        var functionStatus = 0;
+        functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+
+        var functionPage2 = $('#ProcesingFunctionPage');
+        var divName2 = $('#ProcesingDiv');
+        $(divName2).html("");
+        var pagecolor2 = "#1F6FB5";
+        var functionStatus2 = 1;
+        functionPageStart(url, projectId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
+
+        var functionPage3 = $('#CompletedFunctionPage');
+        var divName3 = $('#CompletedDiv');
+        $(divName3).html("");
+        var pagecolor3 = "#795DDE";
+        var functionStatus3 = 2;
+        functionPageStart(url, projectId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
+
+        var functionPage4 = $('#AcceptedFunctionPage');
+        var divName4 = $('#AcceptedDiv');
+        $(divName2).html("");
+        var pagecolor4 = "#007850";
+        var functionStatus4 = 3;
+        functionPageStart(url, projectId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
+    }
+
+    function appendFuntion2(projectId, userId, url) {
+        var functionPage = $('#TodoFunctionPage');
+        var divName = $('#TodoDiv');
+        $(divName).html("");
+        var pagecolor = "#FF9933";
+        var functionStatus = 0;
+        functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+
+        var functionPage2 = $('#ProcesingFunctionPage');
+        var divName2 = $('#ProcesingDiv');
+        $(divName2).html("");
+        var pagecolor2 = "#1F6FB5";
+        var functionStatus2 = 1;
+        functionPageStart2(url, projectId, userId, functionStatus2, functionPage2, divName2, pagecolor2);//全部功能-进行
+
+        var functionPage3 = $('#CompletedFunctionPage');
+        var divName3 = $('#CompletedDiv');
+        $(divName3).html("");
+        var pagecolor3 = "#795DDE";
+        var functionStatus3 = 2;
+        functionPageStart2(url, projectId, userId, functionStatus3, functionPage3, divName3, pagecolor3);//全部功能-完成
+
+        var functionPage4 = $('#AcceptedFunctionPage');
+        var divName4 = $('#AcceptedDiv');
+        $(divName2).html("");
+        var pagecolor4 = "#007850";
+        var functionStatus4 = 3;
+        functionPageStart2(url, projectId, userId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
+    }
+
+
+</script>
+<!--功能点进度条-->
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "get",
+            url: "/projectFunctionDataCicleChart",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+            },
+            success: function (data) {
+                Circles.create({
+                    id: 'function-complete',
+                    radius: 50,
+                    value: data,
+                    maxValue: 100,
+                    width: 10,
+                    text: function (value) {
+                        return value + '%';
+                    },
+                    colors: ['#EACF02', '#2E68AA'],
+                    duration: 400,
+                    wrpClass: 'circles-wrp',
+                    textClass: 'circles-text',
+                    styleWrapper: true,
+                    styleText: true
+                })
+            }
+        })
+    })
+
+
+    function refreshTodoFunction(projectId) {
+        var functionPage = $('#TodoFunctionPage');
+        var divName = $('#TodoDiv');
+        $(divName).html("");
+        var pagecolor = "#FF9933";
+        var functionStatus = 0;
+        $(divName).html("");
+        if (functionStatusFlag == 0) {
+            var url = "/allFunctionPage";
+            functionPageStart(url, projectId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+        } else {
+            if (functionStatusFlag == 1) {
+                var url = "/assignFunctionPage";
+            } else if (functionStatusFlag == 2) {
+                var url = "/publishFunctionPage";
+            } else if (functionStatusFlag == 3) {
+                var url = "/joinFunctionPage";
+            }
+            functionPageStart2(url, projectId, userId, functionStatus, functionPage, divName, pagecolor);//全部功能-待办
+        }
+
+    }
+
+    //添加项目功能
+    function addFunction() {
+        var functionName = $("#addName").val();
+        var realizeUserId = $("#addRealizeUserId").val();
+        var projectsId = projectId;
+        var publishUserId = [[${#authentication.principal.id}]];
+        if (!checkAddFunction()) {
+            return;
+        } else {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/add_project_function",
+                    data: {
+                        "projectsId": projectsId,
+                        "functionName": functionName,
+                        "realizeUserId": realizeUserId,
+                        "publishUserId": publishUserId
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == 1) {
+                            swal("添加成功！", {
+                                icon: "success",
+                                buttons: false,
+                                timer: 1500,
+                            });
+                            setTimeout(function () {
+                                refreshTodoFunction(projectsId);
+                            }, 1500);
+                        } else if (data == 6) {
+                            swal("添加失败！", "功能点名称不能为空!", {
+                                icon: "error",
+                                buttons: {
+                                    confirm: {
+                                        className: 'btn btn-danger'
+                                    }
+                                }
+                            })
+                        } else {
+                            swal("添加失败！", {
+                                icon: "error",
+                                buttons: {
+                                    confirm: {
+                                        className: 'btn btn-danger'
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+            );
+        }
+    }
+
+</script>
+<!--加载项目上传代码行，上传次数，文件数量，项目人员-->
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "get",
+            url: "/projectFunctionTotal",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+            },
+            success: function (json) {
+                console.log(json)
+                $("#projectFunctionTodo").text(json.data0);
+                $("#projectFunctionProcesing").text(json.data1);
+                $("#projectFunctionCompleted").text(json.data2);
+                $("#projectFunctionAccepted").text(json.data3);
+            }
+        })
     })
 </script>
 </body>

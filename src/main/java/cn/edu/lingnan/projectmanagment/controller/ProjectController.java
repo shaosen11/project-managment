@@ -66,7 +66,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_view")
-    public String projectView(@Param("projectId")Integer projectId, Model model){
+    public String projectView(Integer projectId, Model model){
         System.out.println("项目id " + projectId);
         model.addAttribute("projectId",projectId);
         //获取进度条

@@ -4,6 +4,7 @@ import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.PathUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProjectsFunctionController {
@@ -260,6 +263,40 @@ public class ProjectsFunctionController {
     @ResponseBody
     public List userDevelopingFunction(Integer projectId, Integer userId) {
         return projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, userId, 1);
+    }
+
+    @GetMapping("/project_function_view")
+    public String projectView() {
+        return "project/projectfunctionview";
+    }
+
+    @GetMapping("/projectFunctionDataCicleChart")
+    @ResponseBody
+    public Integer projectFunctionData(Integer projectId) {
+        Integer data1 = projectsFunctionService.countProjectFunctionByProjectId(projectId);
+        if (data1 == 0) {
+            return 0;
+        } else {
+            Integer data2 = projectsFunctionService.countByProjectIdAndStatus(projectId, 2);
+            Integer data3 = projectsFunctionService.countByProjectIdAndStatus(projectId, 3);
+            Integer projectFunctionData = ((data2 + data3) * 100) / data1;
+            return projectFunctionData;
+        }
+    }
+
+    @GetMapping("/projectFunctionTotal")
+    @ResponseBody
+    public Object projectFunctionTotal(Integer projectId) {
+        Integer data0 = projectsFunctionService.countByProjectIdAndStatus(projectId, 0);
+        Integer data1 = projectsFunctionService.countByProjectIdAndStatus(projectId, 1);
+        Integer data2 = projectsFunctionService.countByProjectIdAndStatus(projectId, 2);
+        Integer data3 = projectsFunctionService.countByProjectIdAndStatus(projectId, 3);
+        Map<String,Integer> map = new HashMap<>();
+        map.put("data0", data0);
+        map.put("data1", data1);
+        map.put("data2", data2);
+        map.put("data3", data3);
+        return map;
     }
 }
 

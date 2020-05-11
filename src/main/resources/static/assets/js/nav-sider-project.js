@@ -140,7 +140,6 @@ function projectMessageCount() {
             userId: userId
         },
         success: function (data) {
-            console.log(data);
             $("#projectMessageCount").text(data)
         }
     })
