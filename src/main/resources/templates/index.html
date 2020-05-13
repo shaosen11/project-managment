@@ -73,6 +73,7 @@
                         </div>
                     </div>
                 </div>
+                <!--数据统计-->
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
                         <div class="card card-stats card-round">
@@ -151,569 +152,165 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
+                    <!--左边大框-->
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="card-head-row">
-                                    <div class="card-title">User Statistics</div>
-                                    <div class="card-tools">
-                                        <a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
-												<span class="btn-label">
-													<i class="fa fa-pencil"></i>
-												</span>
-                                            Export
-                                        </a>
-                                        <a href="#" class="btn btn-info btn-border btn-round btn-sm">
-												<span class="btn-label">
-													<i class="fa fa-print"></i>
-												</span>
-                                            Print
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="card-body">
-                                <div class="chart-container" style="min-height: 375px">
-                                    <canvas id="statisticsChart"></canvas>
+                                <!--导航栏-->
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-recommend-tab-nobd"
+                                               data-toggle="pill"
+                                               href="#pills-recommend-tab" role="tab"
+                                               aria-controls="pills-recommend-nobd"
+                                               aria-selected="true">推荐项目</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-more-tab-nobd" data-toggle="pill"
+                                               href="#pills-more-tab" role="tab" aria-controls="pills-more-nobd"
+                                               aria-selected="false">更多</a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div id="myChartLegend"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-secondary">
-                            <div class="card-header">
-                                <div class="card-title">Daily Sales</div>
-                                <div class="card-category">March 25 - April 02</div>
-                            </div>
-                            <div class="card-body pb-0">
-                                <div class="mb-4 mt-2">
-                                    <h1>$4,578.58</h1>
-                                </div>
-                                <div class="pull-in">
-                                    <canvas id="dailySalesChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card-info bg-info-gradient">
-                            <div class="card-body">
-                                <h4 class="mb-1 fw-bold">Tasks Progress</h4>
-                                <div id="task-complete" class="chart-circle mt-4 mb-3"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row row-card-no-pd">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-head-row">
-                                    <h4 class="card-title">Users Geolocation</h4>
-                                    <div class="card-tools">
-                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span
-                                                class="fa fa-angle-down"></span></button>
-                                        <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span
-                                                class="fa fa-sync-alt"></span></button>
-                                        <button class="btn btn-icon btn-link btn-primary btn-xs"><span
-                                                class="fa fa-times"></span></button>
-                                    </div>
-                                </div>
-                                <p class="card-category">
-                                    Map of the distribution of users around the world</p>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="table-responsive table-hover table-sales">
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flag">
-                                                            <img th:src="@{/assets/img/flags/id.png}" alt="indonesia">
-                                                        </div>
-                                                    </td>
-                                                    <td>Indonesia</td>
-                                                    <td class="text-right">
-                                                        2.320
-                                                    </td>
-                                                    <td class="text-right">
-                                                        42.18%
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flag">
-                                                            <img th:src="@{/assets/img/flags/us.png}"
-                                                                 alt="united states">
-                                                        </div>
-                                                    </td>
-                                                    <td>USA</td>
-                                                    <td class="text-right">
-                                                        240
-                                                    </td>
-                                                    <td class="text-right">
-                                                        4.36%
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flag">
-                                                            <img th:src="@{/assets/img/flags/au.png}" alt="australia">
-                                                        </div>
-                                                    </td>
-                                                    <td>Australia</td>
-                                                    <td class="text-right">
-                                                        119
-                                                    </td>
-                                                    <td class="text-right">
-                                                        2.16%
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flag">
-                                                            <img th:src="@{/assets/img/flags/ru.png}" alt="russia">
-                                                        </div>
-                                                    </td>
-                                                    <td>Russia</td>
-                                                    <td class="text-right">
-                                                        1.081
-                                                    </td>
-                                                    <td class="text-right">
-                                                        19.65%
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flag">
-                                                            <img th:src="@{/assets/img/flags/cn.png}" alt="china">
-                                                        </div>
-                                                    </td>
-                                                    <td>China</td>
-                                                    <td class="text-right">
-                                                        1.100
-                                                    </td>
-                                                    <td class="text-right">
-                                                        20%
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="flag">
-                                                            <img th:src="@{/assets/img/flags/br.png}" alt="brazil">
-                                                        </div>
-                                                    </td>
-                                                    <td>Brasil</td>
-                                                    <td class="text-right">
-                                                        640
-                                                    </td>
-                                                    <td class="text-right">
-                                                        11.63%
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mapcontainer">
-                                            <div id="map-example" class="vmap"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Top Products</div>
-                            </div>
-                            <div class="card-body pb-0">
-                                <div class="d-flex">
-                                    <div class="avatar">
-                                        <img th:src="@{/assets/img/logoproduct.svg}" alt="..."
-                                             class="avatar-img rounded-circle">
-                                    </div>
-                                    <div class="flex-1 pt-1 ml-2">
-                                        <h5 class="fw-bold mb-1">CSS</h5>
-                                        <small class="text-muted">Cascading Style Sheets</small>
-                                    </div>
-                                    <div class="d-flex ml-auto align-items-center">
-                                        <h3 class="text-info fw-bold">+$17</h3>
-                                    </div>
-                                </div>
-                                <div class="separator-dashed"></div>
-                                <div class="d-flex">
-                                    <div class="avatar">
-                                        <img th:src="@{/assets/img/logoproduct2.svg}" alt="..."
-                                             class="avatar-img rounded-circle">
-                                    </div>
-                                    <div class="flex-1 pt-1 ml-2">
-                                        <h5 class="fw-bold mb-1">J.CO Donuts</h5>
-                                        <small class="text-muted">The Best Donuts</small>
-                                    </div>
-                                    <div class="d-flex ml-auto align-items-center">
-                                        <h3 class="text-info fw-bold">+$300</h3>
-                                    </div>
-                                </div>
-                                <div class="separator-dashed"></div>
-                                <div class="d-flex">
-                                    <div class="avatar">
-                                        <img th:src="@{/assets/img/logoproduct3.svg}" alt="..."
-                                             class="avatar-img rounded-circle">
-                                    </div>
-                                    <div class="flex-1 pt-1 ml-2">
-                                        <h5 class="fw-bold mb-1">Ready Pro</h5>
-                                        <small class="text-muted">Bootstrap 4 Admin Dashboard</small>
-                                    </div>
-                                    <div class="d-flex ml-auto align-items-center">
-                                        <h3 class="text-info fw-bold">+$350</h3>
-                                    </div>
-                                </div>
-                                <div class="separator-dashed"></div>
-                                <div class="pull-in">
-                                    <canvas id="topProductsChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title fw-mediumbold">Suggested People</div>
-                                <div class="card-list">
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..."
-                                                 class="avatar-img rounded-circle">
-                                        </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">Jimmy Denis</div>
-                                            <div class="status">Graphic Designer</div>
-                                        </div>
-                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img th:src="@{/assets/img/chadengle.jpg}" alt="..."
-                                                 class="avatar-img rounded-circle">
-                                        </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">Chad</div>
-                                            <div class="status">CEO Zeleaf</div>
-                                        </div>
-                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img th:src="@{/assets/img/talha.jpg}" alt="..."
-                                                 class="avatar-img rounded-circle">
-                                        </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">Talha</div>
-                                            <div class="status">Front End Designer</div>
-                                        </div>
-                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img th:src="@{/assets/img/mlane.jpg}" alt="..."
-                                                 class="avatar-img rounded-circle">
-                                        </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">John Doe</div>
-                                            <div class="status">Back End Developer</div>
-                                        </div>
-                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img th:src="@{/assets/img/talha.jpg}" alt="..."
-                                                 class="avatar-img rounded-circle">
-                                        </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">Talha</div>
-                                            <div class="status">Front End Designer</div>
-                                        </div>
-                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img th:src="@{/assets/img/jm_denis.jpg}" alt="..."
-                                                 class="avatar-img rounded-circle">
-                                        </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">Jimmy Denis</div>
-                                            <div class="status">Graphic Designer</div>
-                                        </div>
-                                        <button class="btn btn-icon btn-primary btn-round btn-sm">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-primary bg-primary-gradient bubble-shadow">
-                            <div class="card-body">
-                                <h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Active user right now</h4>
-                                <h1 class="mb-4 fw-bold">17</h1>
-                                <h4 class="mt-3 b-b1 pb-2 mb-5 fw-bold">Page view per minutes</h4>
-                                <div id="activeUsersChart"></div>
-                                <h4 class="mt-5 pb-3 mb-0 fw-bold">Top active pages</h4>
-                                <ul class="list-unstyled">
-                                    <li class="d-flex justify-content-between pb-1 pt-1">
-                                        <small>/product/readypro/index.html</small>
-                                        <span>7</span></li>
-                                    <li class="d-flex justify-content-between pb-1 pt-1">
-                                        <small>/product/azzara/demo.html</small>
-                                        <span>10</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Feed Activity</div>
-                            </div>
-                            <div class="card-body">
-                                <ol class="activity-feed">
-                                    <li class="feed-item feed-item-secondary">
-                                        <time class="date" datetime="9-25">Sep 25</time>
-                                        <span class="text">Responded to need <a
-                                                href="#">"Volunteer opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-success">
-                                        <time class="date" datetime="9-24">Sep 24</time>
-                                        <span class="text">Added an interest <a
-                                                href="#">"Volunteer Activities"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-info">
-                                        <time class="date" datetime="9-23">Sep 23</time>
-                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-warning">
-                                        <time class="date" datetime="9-21">Sep 21</time>
-                                        <span class="text">Responded to need <a
-                                                href="#">"In-Kind Opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-danger">
-                                        <time class="date" datetime="9-18">Sep 18</time>
-                                        <span class="text">Created need <a href="#">"Volunteer Opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item">
-                                        <time class="date" datetime="9-17">Sep 17</time>
-                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-head-row">
-                                    <div class="card-title">Support Tickets</div>
-                                    <div class="card-tools">
-                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
-                                            role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="pills-today" data-toggle="pill"
-                                                   href="#pills-today" role="tab" aria-selected="true">Today</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" id="pills-week" data-toggle="pill"
-                                                   href="#pills-week" role="tab" aria-selected="false">Week</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="pills-month" data-toggle="pill"
-                                                   href="#pills-month" role="tab" aria-selected="false">Month</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex">
-                                    <div class="avatar avatar-online">
-                                        <span class="avatar-title rounded-circle border border-white bg-info">J</span>
-                                    </div>
-                                    <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Joko Subianto <span
-                                                class="text-warning pl-3">pending</span></h5>
-                                        <span class="text-muted">I am facing some trouble with my viewport. When i start my</span>
-                                    </div>
-                                    <div class="float-right pt-1">
-                                        <small class="text-muted">8:40 PM</small>
-                                    </div>
-                                </div>
-                                <div class="separator-dashed"></div>
-                                <div class="d-flex">
-                                    <div class="avatar avatar-offline">
-                                        <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-                                    </div>
-                                    <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Prabowo Widodo <span
-                                                class="text-success pl-3">open</span></h5>
-                                        <span class="text-muted">I have some query regarding the license issue.</span>
-                                    </div>
-                                    <div class="float-right pt-1">
-                                        <small class="text-muted">1 Day Ago</small>
-                                    </div>
-                                </div>
-                                <div class="separator-dashed"></div>
-                                <div class="d-flex">
-                                    <div class="avatar avatar-away">
-                                        <span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-                                    </div>
-                                    <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Lee Chong Wei <span
-                                                class="text-muted pl-3">closed</span></h5>
-                                        <span class="text-muted">Is there any update plan for RTL version near future?</span>
-                                    </div>
-                                    <div class="float-right pt-1">
-                                        <small class="text-muted">2 Days Ago</small>
-                                    </div>
-                                </div>
-                                <div class="separator-dashed"></div>
-                                <div class="d-flex">
-                                    <div class="avatar avatar-offline">
-                                        <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-                                    </div>
-                                    <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Peter Parker <span
-                                                class="text-success pl-3">open</span></h5>
-                                        <span class="text-muted">I have some query regarding the license issue.</span>
-                                    </div>
-                                    <div class="float-right pt-1">
-                                        <small class="text-muted">2 Day Ago</small>
-                                    </div>
-                                </div>
-                                <div class="separator-dashed"></div>
-                                <div class="d-flex">
-                                    <div class="avatar avatar-away">
-                                        <span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-                                    </div>
-                                    <div class="flex-1 ml-3 pt-1">
-                                        <h5 class="text-uppercase fw-bold mb-1">Logan Paul <span
-                                                class="text-muted pl-3">closed</span></h5>
-                                        <span class="text-muted">Is there any update plan for RTL version near future?</span>
-                                    </div>
-                                    <div class="float-right pt-1">
-                                        <small class="text-muted">2 Days Ago</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        Copyright &copy; 2019.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
-    </div>
 
-    <!-- Custom template | don't include it in your project! -->
-    <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-            <div class="switcher">
-                <div class="switch-block">
-                    <h4>Topbar</h4>
-                    <div class="btnSwitch">
-                        <button type="button" class="changeMainHeaderColor" data-color="blue"></button>
-                        <button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="green"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="orange"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="red"></button>
+                                <!--主体-->
+                                <div class="tab-content mt-2 mb-3" id="pills-tabContent">
+                                    <!--推荐项目-->
+                                    <div class="tab-pane fade show active" id="pills-recommend-tab" role="tabpanel"
+                                         aria-labelledby="pills-recommend-tab-nobd">
+                                        <div id="recommendDiv"></div>
+                                        <div class="text-right mt-3 mb-3">
+                                            <ul id="recommendPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+
+                                    <!--更多项目-->
+                                    <div class="tab-pane fade" id="pills-more-tab" role="tabpanel"
+                                         aria-labelledby="pills-more-tab-nobd">
+                                        <div id="allDiv"></div>
+                                        <div class="text-right mt-3 mb-3">
+                                            <ul id="allPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="switch-block">
-                    <h4>Background</h4>
-                    <div class="btnSwitch">
-                        <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-                        <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-                        <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
+
+                    <!--右边小框-->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <!--导航栏-->
+                                <div class="row row-nav-line">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active show" id="pills-today-tab-nobd"
+                                               data-toggle="pill" href="#pills-today-tab" role="tab"
+                                               aria-controls="pills-today-nobd">今日热门</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-week-tab-nobd" data-toggle="pill"
+                                               href="#pills-week-tab" role="tab"
+                                               aria-controls="pills-week-nobd">本周热门</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--主体-->
+                                <div class="tab-content mt-2 mb-3">
+                                    <!--今日热门-->
+                                    <div class="tab-pane fade show active" id="pills-today-tab" role="tabpanel"
+                                         aria-labelledby="pills-today-tab-nobd">
+                                        <div id="todayDiv"></div>
+                                        <div class="text-right mt-3 mb-3">
+                                            <ul id="todayPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+
+                                    <!--本周热门-->
+                                    <div class="tab-pane fade" id="pills-week-tab" role="tabpanel"
+                                         aria-labelledby="pills-week-tab-nobd">
+                                        <div id="weekDiv"></div>
+                                        <div class="text-right mt-3 mb-3">
+                                            <ul id="weekPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="custom-toggle">
-            <i class="flaticon-settings"></i>
+    </div>
+</div>
+<!--分享链接modal-->
+<div class="modal fade" id="RowModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold">
+                         Project Share
+                    </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="small">You can copy the following links to share with friends</p>
+                <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-group-default">
+                                <input id="copyContent" type="text" class="form-control" placeholder="fill name"
+                                       value="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div style="text-align:center; vertical-align:middle;">
+                <button type="button" id="addRowButton" class="btn btn-primary">复制链接</button>
+            </div>
+            <div class="modal-footer no-bd"></div>
         </div>
     </div>
-    <!-- End Custom template -->
-</div>
 </div>
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
 <script th:src="@{/assets/js/core/popper.min.js}"></script>
 <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
-
 <!-- jQuery UI -->
 <script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
 <script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
-
-<!-- jQuery Scrollbar -->
-<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
-
-<!-- Moment JS -->
-<script th:src="@{/assets/js/plugin/moment/moment.min.js}"></script>
-
-<!-- Chart JS -->
-<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
-
-<!-- jQuery Sparkline -->
-<script th:src="@{/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js}"></script>
-
-<!-- Chart Circle -->
-<script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
-
-<!-- Datatables -->
-<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
-
-<!-- Bootstrap Notify -->
-<script th:src="@{/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js}"></script>
-
 <!-- Bootstrap Toggle -->
 <script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
-
-<!-- jQuery Vector Maps -->
-<script th:src="@{/assets/js/plugin/jqvmap/jquery.vmap.min.js}"></script>
-<script th:src="@{/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js}"></script>
-
-<!-- Google Maps Plugin -->
-<script th:src="@{/assets/js/plugin/gmaps/gmaps.js}"></script>
-
-<!-- Sweet Alert -->
-<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
 <!-- Azzara JS -->
 <script th:src="@{/assets/js/ready.min.js}"></script>
-
 <!-- Azzara DEMO methods, don't include it in your project! -->
 <script th:src="@{/assets/js/setting-demo.js}"></script>
-<script th:src="@{/assets/js/demo.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+<!-- Chart JS -->
+<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+<!-- Chart Circle -->
+<script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
 
+<!-- 功能点分页 -->
+<script th:src="@{/assets/js/functionpage.js}"></script>
 <!--在家导航栏退出公共js-->
 <script th:src="@{/assets/js/nav-loginOut.js}"></script>
 <!--加载导航栏消息公共js-->
@@ -726,27 +323,333 @@
     initJsUserId(userId);
 </script>
 
-<!--待完成-->
-<script>
-    // $(document).ready(function () {
-    //     var content = {};
-    //     content.message = '你有xxx条消息待处理';
-    //     content.title = '提醒';
-    //     content.icon = 'flaticon-alarm-1';
-    //     content.url = 'index.html';
-    //     content.target = '_blank';
-    //
-    //     $.notify(content, {
-    //         type: 'info',
-    //         placement: {
-    //             from: 'bottom',
-    //             align: 'right'
-    //         },
-    //         time: 1000,
-    //     });
-    // })
+
+<!--更新点击量-->
+<script type="text/javascript">
+    function UpdateTraffs(projectId) {
+        $.ajax({
+            type: "post",
+            url: "/projects_index_click",
+            data: {
+                userId: userId,
+                projectId: projectId
+            },
+            success: function (json) {
+                if (json.ok) {
+                    location.href = json.data;
+                }
+            }
+        })
+    }
 </script>
+<!--加载更多项目-->
+<script type="text/javascript">
+    $(function () {
+        var allDiv = $('#allDiv');
+        var allPage = $('#allPage');
+        addProjectsPage(allDiv, allPage, null);
+    })
+
+    /*根据类型获取项目*/
+    function getSpecifiedType(type) {
+        var allDiv = $('#allDiv');
+        var allPage = $('#allPage');
+        addProjectsPage(allDiv, allPage, type);
+    }
+
+    /*请求数据*/
+    function addProjectsPage(div, ul, projectsType) {
+        pageStart();
+        function pageStart() {
+            $.ajax({
+                type: "get",
+                url: "/getProjectsByTypePage",
+                dataType: "json",
+                data: {
+                    page: '1',
+                    projectsType: projectsType
+                },
+                success: function (data) {
+                    appendProjectsRecordHtml(data.list, div)
+                    var options = {
+                        bootstrapMajorVersion: 3,
+                        currentPage: data.page,
+                        totalPages: data.totalPage,
+                        numberOfPages: data.pageSize,
+                        itemTexts: function (type, page, current) {
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {
+                            $.ajax({
+                                type: "get",
+                                url: "/getProjectsByTypePage",
+                                dataType: "json",
+                                data: {
+                                    page: page,
+                                    projectsType: projectsType
+                                },
+                                success: function (data) {
+                                    appendProjectsRecordHtml(data.list, div);
+                                }
+                            });
+                        }
+                    };
+                    $(ul).bootstrapPaginator(options);
+                }
+            });
+        }
+    }
+
+    /*拼接分页页面*/
+    function appendProjectsRecordHtml(list, div) {
+        $(div).html("");
+        var tableShow = '';
+        for (var i = 0; i < list.length; i++) {
+            console.log(list[i]);
+            var type = "'" + list[i].type + "'";
+
+            /*如果最近更新小于24小时*/
+            if (list[i].updateTime <= 24 && list[i].updateTime != null) {
+                var updateTimeTextShow = list[i].updateTime + '小时前' + "&nbsp;&nbsp;<i class=far fa-paper-plane></i>&nbsp;&nbsp";
+            } else {
+                var updateTimeTextShow = "";
+            }
+
+            /*如果最近更新大于24小时*/
+            /*拼接更新时间，如何没有更新时间，获取创建时间*/
+            if (list[i].updateDate != null) {
+                var updateDate = list[i].updateDate;
+                var date = new Date(updateDate);
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;    //js从0开始取
+                var date1 = date.getDate();
+                var curTime = year + "年" + month + "月" + date1 + "日";
+                var updateDateTextShow = "更新于" + curTime;
+                var createDateTextShow = "";
+            } else {
+                var createDate = list[i].createDate;
+                var date = new Date(createDate);
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;    //js从0开始取
+                var date1 = date.getDate();
+                var curTime = year + "年" + month + "月" + date1 + "日";
+                var createDateTextShow = "更新于" + curTime;
+                var updateDateTextShow = "";
+            }
+            tableShow +=
+                /*项目详情左边*/
+                '    <div class="col-md-12 row">\n' +
+                '    <div class="col-lg-10">\n' +
+                '       <span class="avatar avatar-online" style="float: left;width: 30px;height: 30px">\n' +
+                '           <span class="avatar-title rounded-circle border border-white bg-info">' + list[i].firstname + '</span>\n' +
+                '       </span>\n' +
+                '       <div style="float: left">\n' +
+                '           <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')" href="javascript:void(0);">\n' +
+                '               <span style="color: #145180;font-size: 18px">\n' +
+                '                   ' + list[i].username + '/' + list[i].name + '\n' +
+                '               </span>\n' +
+                '           </a>\n' +
+                '           <span class="defineAStyle" style ="color:#fd7e14">\n' +
+                '               <i class="fas fa-medal"></i>\n' +
+                '                   <a onclick="getSpecifiedType(' + type + ')" >\n' +
+                '                       <span style ="color:#575962;background: #f1f1f1;font-size: 15px;border-radius :5px">\n' +
+                '                           ' + list[i].type + '\n' +
+                '                       </span>\n' +
+                '                   </a>\n' +
+                '           </span>\n' +
+                '           <div class ="glyphicon glyphicon-bookmark" style="color: #4e555b">\n' +
+                '               ' + list[i].characterization + '\n' +
+                '           </div>\n' +
+                '           <div>\n' +
+                '               <span id="showUpdateTime' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + updateTimeTextShow + '</span>\n' +
+                '               <span id="showUpdateDate' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + updateDateTextShow + '</span>\n' +
+                '               <span id="showCreateDate' + list[i].projectId + '" class ="glyphicon glyphicon-bookmark" style="color: darkgrey">' + createDateTextShow + '</span>\n' +
+                '           </div>\n' +
+                '       </div>\n' +
+                '    </div>\n' +
+
+                /*项目详情右边*/
+                '    <div class="col-lg-2" >\n' +
+                '       <i class="fas fa-eye" style="color: darkgrey"></i>\n' +
+                '       <span style="color: darkgrey">' + list[i].clickCount + '</span>\n'
+
+            /*判断是否收藏*/
+            if (list[i].storeFlag == 1) {
+                var storeColor = "#F29F3F";
+                tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_del_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+            } else if (list[i].storeFlag == 0) {
+                var storeColor = "darkgrey";
+                tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+            }
+            tableShow +=
+                '           <i class="fas fa-star"></i><span id="storeCount' + list[i].projectId + '">' + list[i].storeCount + '</span>\n' +
+                '       </a>\n' +
+                // '       <a data-toggle="modal" data-target="#RowModal2" style="color: darkgrey" >\n' +
+                // '           <i class="fas fa-share-alt"></i>\n' +
+                // '        </a>\n' +
+                '       <a onclick="showModel(' + list[i].projectId + ')" style="color: darkgrey" >\n' +
+                '           <i class="fas fa-share-alt"></i>\n' +
+                '        </a>\n' +
+                '    </div>\n' +
+                '</div>\n' +
+                '    <hr style="color: #4C5B5C" size="3" width="96%">'
 
 
+        }
+        $(div).html(tableShow)
+    }
+</script>
+<!--显示隐藏modal框，获取项目路径-->
+<script type="text/javascript" th:inline="javascript">
+    /*显示弹出框*/
+    function showModel(projectId) {
+        $("#copyContent").val(getRootPath() + "/projects_view?projectId=" + projectId);
+        $("#copyContent").html(getRootPath() + "/projects_view?projectId=" + projectId);
+        $("#RowModal").modal('show');
+    }
+
+    /*获取项目路径*/
+    function getRootPath() {
+        //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+        var curWwwPath = window.document.location.href;
+        //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+        var pathName = window.document.location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        //获取主机地址，如： http://localhost:8083
+        var localhostPaht = curWwwPath.substring(0, pos);
+        //获取带"/"的项目名，如：/uimcardprj
+        var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+        return (localhostPaht + projectName);
+    }
+</script>
+<!--复制分享链接-->
+<script type="text/javascript">
+    $('#addRowButton').click(function () {
+        var Url2 = document.getElementById("copyContent");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        swal("复制成功", {
+            buttons: false,
+            icon: "success",
+            timer: 1000,
+        });
+    });
+</script>
+<!--收藏与取消收藏状态切换-->
+<script type="text/javascript">
+    function projects_index_refrech(userId, projectId) {
+        $.ajax({
+            type: "post",
+            url: "/projects_index_refrech",
+            dataType: "json",
+            data: {
+                userId: userId,
+                projectId: projectId
+            },
+            success: function (json) {
+                if (json.ok) {
+                    $("#stored" + projectId).css("color", "#F29F3F");
+                    var tranfunction = "projects_index_del_refrech(" + userId + "," + projectId + ")"
+                    $("#stored" + projectId).attr("onclick", tranfunction);
+                    $("#storeCount" + projectId).html(json.data.storeCount)
+                }
+            }
+        })
+    }
+
+    function projects_index_del_refrech(userId, projectId) {
+        $.ajax({
+            type: "post",
+            url: "/projects_index_del_refrech",
+            dataType: "json",
+            data: {
+                userId: userId,
+                projectId: projectId
+            },
+            success: function (json) {
+                if (json.ok) {
+                    $("#stored" + projectId).css("color", "darkgrey");
+                    var tranfunction = "projects_index_refrech(" + userId + "," + projectId + ")"
+                    $("#stored" + projectId).attr("onclick", tranfunction);
+                    $("#storeCount" + projectId).html(json.data.storeCount)
+                }
+            }
+        })
+    }
+</script>
+<!--今日热门，本周热门-->
+<script type="text/javascript">
+    $(function () {
+        var todayDiv = $('#todayDiv');
+        var todayPage = $('#todayPage');
+        var weekDiv = $('#weekDiv');
+        var weekPage = $('#weekPage');
+        todayProjectsAndWeekProjects();
+
+        function todayProjectsAndWeekProjects() {
+            $.ajax({
+                type: "get",
+                url: "/todayProjectsAndWeekProjects",
+                success: function (json) {
+                    appendtodayProjectsAndWeekProjectsHtml(json.todayProjectsList, todayDiv)
+                    appendtodayProjectsAndWeekProjectsHtml(json.weekProjectsList, weekDiv)
+                }
+            })
+
+            /*拼接分页页面*/
+            function appendtodayProjectsAndWeekProjectsHtml(list, div) {
+                $(div).html("");
+                var tableShow = '';
+                for (var i = 0; i < list.length; i++) {
+                    tableShow += '<div>\n' +
+                        '              <div class="col-lg-10">\n' +
+                        '                   <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')"\n' +
+                        '                      style="color: #145180;font-size: 18px">\n' +
+                        '                      <span>' + list[i].username + '/' + list[i].name + '</span>\n' +
+                        '                   </a>\n' +
+                        '                   <div class="glyphicon glyphicon-bookmark"\n' +
+                        '                        style="color: #4e555b;margin-left: 2px;">\n' +
+                        '                        ' + list[i].characterization + '\n' +
+                        '                    </div>\n' +
+                        '                </div>\n' +
+                        '            <hr style="color: #4C5B5C" size="3" width="96%">\n' +
+                        '          </div>'
+                }
+                $(div).html(tableShow)
+            }
+        }
+
+
+    })
+
+
+</script>
+<!--推荐项目-->
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "get",
+            url: "/projectsRecommendationPage",
+            data: {
+                userId: userId
+            },
+            success: function (json) {
+                console.log(json)
+                appendProjectsRecordHtml(json, recommendDiv)
+            }
+        })
+    })
+</script>
 </body>
 </html>

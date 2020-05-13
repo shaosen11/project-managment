@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Tables - Azzara Bootstrap 4 Admin Dashboard</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
-    <link rel="icon" href="../../assets/img/icon.ico" type="image/x-icon"/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
 
     <!-- Fonts and icons -->
-    <script src="../../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
     <script>
         WebFont.load({
             google: {"families": ["Open+Sans:300,400,600,700"]},
@@ -55,10 +55,11 @@
     -->
     <div class="main-header" data-background-color="purple">
         <!-- Logo Header -->
+        <!-- Logo Header -->
         <div class="logo-header">
 
-            <a href="../index.html" class="logo">
-                <img src="../../assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+            <a th:href="index.html" class="logo">
+                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
             </a>
             <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
                     data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -481,53 +482,7 @@
     initJsUserId(userId);
 </script>
 
-<script>
-    $(document).ready(function () {
-        $('#basic-datatables').DataTable({});
-
-        $('#multi-filter-select').DataTable({
-            "pageLength": 5,
-            initComplete: function () {
-                this.api().columns().every(function () {
-                    var column = this;
-                    var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search(val ? '^' + val + '$' : '', true, false)
-                                .draw();
-                        });
-
-                    column.data().unique().sort().each(function (d, j) {
-                        select.append('<option value="' + d + '">' + d + '</option>')
-                    });
-                });
-            }
-        });
-        // Add Row
-        $('#add-row').DataTable({
-            "pageLength": 5,
-        });
-
-        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $('#addRowButton').click(function () {
-            $('#add-row').dataTable().fnAddData([
-                $("#addName").val(),
-                $("#addPosition").val(),
-                $("#addOffice").val(),
-                action
-            ]);
-            $('#addRowModal').modal('hide');
-
-        });
-    });
-</script>
-
+<!--更新点击量-->
 <script type="text/javascript">
     function UpdateTraffs(projectsId) {
         //alert(11);
@@ -575,10 +530,8 @@
     }
 </script>
 
-<script th:inline="javascript" type="text/javascript">
-
+<script type="text/javascript">
     function changeContainer(id1, id2) {
-        //alert(333);
         if (showSignIn == true) {
             document.getElementById(id1).style.display = "block";
         } else {
@@ -592,7 +545,6 @@
     }
 
     function changeContainer1(id1, id2, id3, id4) {
-        //alert(333);
         if (showSignIn == true) {
             document.getElementById(id1).style.display = "block";
             document.getElementById(id3).style.display = "block";
@@ -621,6 +573,7 @@
         changeContainer(id1, id2);
     }
 
+    //
     function showTable(id1, id2, id3, id4) {
         showSignUp = true;
         showSignIn = false;
@@ -697,7 +650,7 @@
             });
         }
 
-        function appendSpecifiedTypePageHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        function appendSpecifiedTypePageHtml(list) {
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
@@ -830,25 +783,24 @@
 
 </script>
 
-<script th:inline="javascript" type="text/javascript">
-
-
+<!--加载更多项目-->
+<script type="text/javascript">
     $(function () {
-        // alert(111);
         var functionPage = $('#allDiv');
         var divName = $('#allPage');
-        addProjectsRecordPage(functionPage, divName);
+        addProjectsPage(functionPage, divName, null);
     })
 
-    function addProjectsRecordPage(div, ul) {
+    function addProjectsPage(div, ul, projectsType) {
         pageStart();//开始分页
         function pageStart() {//分页函数
             $.ajax({ //去后台查询第一页数据
                 type: "get",
-                url: "/projectsRecommendationPage",
+                url: "/getProjectsByTypePage",
                 dataType: "json",
                 data: {
                     page: '1',
+                    projectsType: projectsType
                 }, //参数：当前页为1
                 success: function (data) {
                     appendProjectsRecordHtml(data.list)//处理第一页的数据
@@ -873,11 +825,12 @@
                         },
                         onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
                             $.ajax({//根据page去后台加载数据
-                                url: "/projectsRecommendationPage",
                                 type: "get",
+                                url: "/getProjectsByTypePage",
                                 dataType: "json",
                                 data: {
-                                    "page": page,
+                                    page: page,
+                                    projectsType: projectsType
                                 },
                                 success: function (data) {
                                     appendProjectsRecordHtml(data.list);//处理数据
@@ -890,7 +843,7 @@
             });
         }
 
-        function appendProjectsRecordHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        function appendProjectsRecordHtml(list) {
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
@@ -902,11 +855,15 @@
                 var type = "'" + list[i].type + "'";
                 var copyLink = "/projects_index/" + [[${#authentication.principal.id}]];
 
+                /*如果最近更新小于24小时*/
                 if (list[i].updateTime <= 24 && list[i].updateTime != null) {
                     var updateTimeTextShow = list[i].updateTime + '小时前' + "&nbsp;&nbsp;<i class=" + "far fa-paper-plane" + "></i>&nbsp;&nbsp";
                 } else {
                     var updateTimeTextShow = "";
                 }
+
+                /*如果最近更新大于24小时*/
+                /*拼接更新时间，如何没有更新时间，获取创建时间*/
                 if (list[i].updateDate != null) {
                     var updateDate = list[i].updateDate;
                     var date = new Date(updateDate);
@@ -935,6 +892,7 @@
                     var storeLink = "/projects_index_refrech/" + [[${#authentication.principal.id}]] + '/' + list[i].projectId;
                 }
                 tableShow +=
+                    /*项目详情左边*/
                     '    <div class="col-lg-10">\n' +
 
                     '    <span class="avatar avatar-online" style="float: left;width: 30px;height: 30px">\n' +
@@ -966,6 +924,7 @@
                     '    </div>\n' +
                     '    </div>\n' +
                     '    </div>\n' +
+                    /*项目详情右边*/
                     '    <div class="col-lg-2" >\n' +
                     '    <i class="fas fa-eye" style="color: darkgrey"></i><span style="color: darkgrey">' + list[i].clickCount + '</span>\n' +
 
@@ -976,7 +935,7 @@
                     '    <i class="fas fa-share-alt"></i>\n' +
                     '    </a>\n' +
                     '    </div>\n' +
-
+                    /*项目弹出框*/
                     '    <div class="modal fade" id="RowModal2" tabindex="-1" role="dialog" aria-hidden="true">\n' +
                     '    <div class="modal-dialog" role="document">\n' +
                     '    <div class="modal-content">\n' +
@@ -1020,8 +979,6 @@
             $(div).html(tableShow)
         }
     }
-
-
 </script>
 
 </body>
