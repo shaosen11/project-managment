@@ -57,7 +57,7 @@
         <div class="content">
             <div class="page-inner">
                 <div class="page-header col-md-6">
-                    <h4 class="page-title">项目功能点</h4>
+                    <h4 class="page-title">[[${project.name}]]功能点</h4>
                     <ul class="breadcrumbs">
                         <li class="nav-home">
                             <a href="#">
@@ -80,7 +80,7 @@
                 </div>
                 <!--功能点概览-->
                 <div class="row">
-                    <div class="col-sm-6 col-md-3">
+                    <div style="width: 19%;float: left">
                         <div class="card card-stats card-round">
                             <div class="card-body ">
                                 <div class="row">
@@ -100,7 +100,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
+                    <div style="width: 1%;float: left">&nbsp;</div>
+                    <div style="width: 19%;float: left">
                         <div class="card card-stats card-round">
                             <div class="card-body ">
                                 <div class="row">
@@ -120,7 +121,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
+                    <div style="width: 1%;float: left">&nbsp;</div>
+                    <div style="width: 19%;float: left">
                         <div class="card card-stats card-round">
                             <div class="card-body">
                                 <div class="row">
@@ -139,7 +141,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
+                    <div style="width: 1%;float: left">&nbsp;</div>
+                    <div style="width: 19%;float: left">
                         <div class="card card-stats card-round">
                             <div class="card-body">
                                 <div class="row">
@@ -158,27 +161,32 @@
                             </div>
                         </div>
                     </div>
+                    <div style="width: 1%;float: left">&nbsp;</div>
+                    <div style="width: 19%;float: left">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="icon-big text-center">
+                                            <i class="fas fa-broom" style="color: #7B7687"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats">
+                                        <div class="numbers">
+                                            <p class="card-category">已取消功能点</p>
+                                            <h4 class="card-title" id="projectFunctionCancel"></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--功能点详情-->
                 <div class="row">
                     <div class="col-md-2 card" style="height: 700px;">
                         <div class="card-header">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h2 style="margin-top: 10px">功能</h2>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-right">
-                                        <button class="btn btn-primary" data-toggle="modal"
-                                                data-target="#addFunction">
-                                                <span class="btn-label">
-                                                    <i class="fas fa-plus"></i>
-                                                </span>
-                                            新建功能
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <h2 style="margin-top: 10px" class="text-center">功能</h2>
                         </div>
                         <div class="card-body">
                             <!--进度条-->
@@ -191,15 +199,32 @@
                                 <a class="nav-link" data-toggle="pill" href="#" onclick="publishFunctionPage()">我发布的</a>
                                 <a class="nav-link" data-toggle="pill" href="#" onclick="joinFunctionPage()">我参与的</a>
                             </div>
+                            <br>
+                            <div class="text-center">
+                                    <button class="btn btn-primary" data-toggle="modal"
+                                            data-target="#addFunction">
+                                                <span class="btn-label">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                        新建功能
+                                    </button>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <button class="btn btn-danger" onclick="delFunction()">
+                                                <span class="btn-label">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                    删除功能
+                                </button>
+                            </div>
                         </div>
-
                     </div>
                     <!--功能-->
-                    <div class="col-md-10 tab-content" style="height: 630px;" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active row" id="v-pills-four" role="tabpanel"
+                    <div class="tab-content col-md-10" style="height: 630px;" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel"
                              aria-labelledby="v-pills-four-tab">
-                            <div class="col-md-12 row">
-                                <div class="col-md-3">
+                            <div style="width: 19%;float: left">
                                     <div class="card" style="height: 700px;">
                                         <div class="card-header"
                                              style="background-color: rgba(245,232,200,0.5)">
@@ -223,8 +248,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
+                            </div>
+                            <div style="width: 1%;float: left">&nbsp;</div>
+                            <div style="width: 19%;float: left">
                                     <div class="card" style="height: 700px;">
                                         <div class="card-header"
                                              style="background-color: rgba(157,211,250,0.5)">
@@ -248,8 +274,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
+                            </div>
+                            <div style="width: 1%;float: left">&nbsp;</div>
+                            <div style="width: 19%;float: left">
                                     <div class="card" style="height: 700px;">
                                         <div class="card-header"
                                              style="background-color: rgba(118,126,199,0.5)">
@@ -274,8 +301,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
+                            </div>
+                            <div style="width: 1%;float: left">&nbsp;</div>
+                            <div style="width: 19%;float: left">
                                     <div class="card" style="height: 700px;">
                                         <div class="card-header"
                                              style="background-color: rgba(25,148,117,0.5)">
@@ -300,7 +328,33 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                            </div>
+                            <div style="width: 1%;float: left">&nbsp;</div>
+                            <div style="width: 19%;float: left">
+                                    <div class="card" style="height: 700px;">
+                                        <div class="card-header"
+                                             style="background-color: rgba(172,173,172,0.5)">
+                                            <div class="card-title" style="color: black"><i
+                                                    class="fas fa-broom"
+                                                    style="color: #7B7687"></i>&nbsp;已取消
+                                            </div>
+                                        </div>
+                                        <div class="card-body"
+                                             style="background-color: rgba(220,220,220,0.3)">
+                                            <div style="margin-top: -15px">
+                                                <!-- 分页容器：显示数据 -->
+                                                <div id="CancelDiv"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <!-- 分页容器： 显示分页按钮-->
+                                            <div class="text-center">
+                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                                <ul id="CancelFunctionPage"
+                                                    class="pagination pagination-sm"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -355,6 +409,45 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="delFunction" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            Deltel</span>
+                    <span class="fw-light">
+                            Function
+                        </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>功能名</label>
+                            <select name="functionName" id="functionName">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>删除原因</label>
+                            <input id="delReason" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-primary" onclick="deleteProjectFunction()">确定</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--   Core JS Files   -->
 <script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
@@ -399,7 +492,6 @@
     var userId = [[${#authentication.principal.id}]];
     initJsUserIdAndProjectId(userId, projectId);
 </script>
-
 
 <!--功能点分页-->
 <script type="text/javascript">
@@ -463,10 +555,17 @@
 
         var functionPage4 = $('#AcceptedFunctionPage');
         var divName4 = $('#AcceptedDiv');
-        $(divName2).html("");
+        $(divName4).html("");
         var pagecolor4 = "#007850";
         var functionStatus4 = 3;
         functionPageStart(url, projectId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
+
+        var functionPage5 = $('#CancelFunctionPage');
+        var divName5 = $('#CancelDiv');
+        $(divName5).html("");
+        var pagecolor5 = "#7B7687";
+        var functionStatus5 = 4;
+        functionPageStart(url, projectId, functionStatus5, functionPage5, divName5, pagecolor5);//全部功能-已取消
     }
 
     function appendFuntion2(projectId, userId, url) {
@@ -497,6 +596,13 @@
         var pagecolor4 = "#007850";
         var functionStatus4 = 3;
         functionPageStart2(url, projectId, userId, functionStatus4, functionPage4, divName4, pagecolor4);//全部功能-已验收
+
+        var functionPage5 = $('#CancelFunctionPage');
+        var divName5 = $('#CancelDiv');
+        $(divName5).html("");
+        var pagecolor5 = "#7B7687";
+        var functionStatus5 = 4;
+        functionPageStart2(url, projectId,userId,functionStatus5, functionPage5, divName5, pagecolor5);//全部功能-已取消
     }
 
 
@@ -504,6 +610,10 @@
 <!--功能点进度条-->
 <script type="text/javascript">
     $(function () {
+        getChart();
+    })
+
+    function getChart() {
         $.ajax({
             type: "get",
             url: "/projectFunctionDataCicleChart",
@@ -530,8 +640,7 @@
                 })
             }
         })
-    })
-
+    }
 
     function refreshTodoFunction(projectId) {
         var functionPage = $('#TodoFunctionPage');
@@ -615,6 +724,10 @@
 <!--加载项目功能点数量-->
 <script type="text/javascript">
     $(function () {
+        functionNum();
+    })
+
+    function functionNum() {
         $.ajax({
             type: "get",
             url: "/projectFunctionTotal",
@@ -628,9 +741,132 @@
                 $("#projectFunctionProcesing").text(json.data1);
                 $("#projectFunctionCompleted").text(json.data2);
                 $("#projectFunctionAccepted").text(json.data3);
+                $("#projectFunctionCancel").text(json.data4);
             }
         })
-    })
+    }
+</script>
+<!--删除功能点-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    function delFunction() {
+        $.ajax(
+            {
+                type: "Get",
+                url: "/project_function",
+                data: {
+                    projectId: projectId,
+                    userId: userId
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.duty == "true"){
+                        $('#delFunction').modal('show');
+                        projectFunctionAppendHtml(data.list);
+                    }else{
+
+                        swal({
+                            icon : "warning",
+                            title: "权限不够！",
+                            text: "只有项目创建者和管理员才可以删除项目！",
+                            type: "warning",
+                            buttons: false,
+                            timer: 1500,
+                        })
+                    }
+                }
+            }
+        );
+    }
+
+    //页面渲染
+    function projectFunctionAppendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var tableShow = '';
+        for (var i = 0; i < list.length; i++) {
+            tableShow +=
+                '<option value=' + list[i].id + '>' + list[i].functionName + '</option>\n'
+        }
+        $('#functionName').html(tableShow)
+    }
+
+    //删除功能
+    function deleteProjectFunction(){
+        var id = $("#functionName").val();
+        var reason = $("#delReason").val();
+        if(reason.length == 0){
+            swal({
+                icon : "warning",
+                title: "删除原因不能为空！",
+                text: "请输入！",
+                type: "warning",
+                buttons: false,
+                timer: 1500,
+            })
+        } else{
+            swal({
+                icon : "warning",
+                title: "您确定要删除该功能吗?",
+                text: "请谨慎操作！",
+                type: "warning",
+                buttons:{
+                    cancel: {
+                        visible: true,
+                        text : '取消',
+                        className: 'btn btn-danger'
+                    },
+                    confirm: {
+                        text : '确定删除',
+                        className : 'btn btn-success'
+                    }
+                },
+                closeOnConfirm: false,
+            }).then(
+                function (isConfirm) {
+                    if (!isConfirm) return;
+                    $.ajax(
+                        {
+                            type: "POST",
+                            url: "/del_project_function",
+                            data: {
+                                id: id,
+                                reason: reason
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data) {
+                                    swal("删除成功！", {
+                                        icon : "success",
+                                        buttons: false,
+                                        timer: 1500,
+                                    });
+                                    setTimeout(function(){
+                                        allFunctionPage();
+                                        assignFunctionPage();
+                                        publishFunctionPage();
+                                        joinFunctionPage();
+                                        delFunction();
+                                        functionNum();
+                                        getChart();
+                                    },1500);
+                                }
+                                else {
+                                    swal("删除失败！",{
+                                        icon: "error",
+                                        buttons: {
+                                            confirm: {
+                                                className: 'btn btn-danger'
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    );
+                }
+            );
+        }
+    }
 </script>
 </body>
 </html>

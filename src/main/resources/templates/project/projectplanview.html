@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+
+    <!-- Fonts and icons -->
+    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
+    <!-- echarts -->
+    <script type="text/javascript" th:src="@{/assets/js/echarts.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="main-header" data-background-color="purple">
+        <!-- Logo Header -->
+        <div class="logo-header">
+
+            <a th:href="index.html" class="logo">
+                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="fa fa-bars"></i>
+					</span>
+            </button>
+            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
+            <div class="navbar-minimize">
+                <button class="btn btn-minimize btn-rounded">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- End Logo Header -->
+
+        <!-- Navbar Header -->
+        <div th:replace="commom/bar :: topbar"></div>
+        <!-- End Navbar -->
+    </div>
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: projectsidebar"></div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header col-md-6">
+                    <h4 class="page-title">[[${project.name}]]计划</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a href="#">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Base</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Panels</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Row Card No Padding -->
+                <div class="row row-card-no-pd" id="projectTime">
+
+                </div>
+
+                <!-- TimeLine -->
+                <div class="row" id="projectsPlan">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--model框-->
+<div th:replace="commom/bar :: uploadfilemodel"></div>
+<div th:replace="commom/bar :: newprojectpackage"></div>
+
+<!--   Core JS Files   -->
+<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
+<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/core/popper.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
+<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
+<!-- Bootstrap Toggle -->
+<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+<!-- jQuery Scrollbar -->
+<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
+<!-- Datatables -->
+<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+<!-- Azzara JS -->
+<script th:src="@{/assets/js/ready.min.js}"></script>
+<!-- Azzara DEMO methods, don't include it in your project! -->
+<script th:src="@{/assets/js/setting-demo.js}"></script>
+<!-- Sweet Alert -->
+<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/assets/js/myjs.js}"></script>
+<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+<!-- Chart JS -->
+<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
+<!-- Chart Circle -->
+<script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
+<script th:src="@{/assets/js/formcheck.js}"></script>
+<!-- 功能点分页 -->
+<script th:src="@{/assets/js/functionpage.js}"></script>
+
+<!--在家导航栏退出公共js-->
+<script th:src="@{/assets/js/nav-loginOut.js}"></script>
+<!--加载导航栏消息公共js-->
+<script th:src="@{/assets/js/nav-message.js}"></script>
+<!--加载侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider.js}"></script>
+<!--加载项目包侧边栏公共js-->
+<script th:src="@{/assets/js/nav-sider-project.js}"></script>
+<!--初始化公共js的userId和projectId-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    initJsUserIdAndProjectId(userId, projectId);
+</script>
+<!--获取功能点数据-->
+<script type="text/javascript">
+    var projectId = [[${param.projectId}]];
+    var userId = [[${#authentication.principal.id}]];
+    $(function () {
+        projectsPlan();
+    })
+
+    function projectsPlan() {
+        var divName = $('#projectsPlan');
+        $(divName).html("");
+        var divName2 = $('#projectTime');
+        $(divName2).html("");
+        $.ajax({
+            type: "get",
+            url: "/projects_plan",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+            },
+            success: function (data) {
+                projectTimeAppendHtml(data.project,divName2);
+                projectPlanAppendHtml(data.list,divName);
+            }
+        })
+    }
+
+    //页面渲染
+    function projectPlanAppendHtml(list,divName) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var tableShow = '';
+        tableShow += '<ul class="timeline col-md-12">\n'
+
+        for (var i = 0; i < list.length; i++) {
+            if(list[i].functionStatus==0){
+                var functionStatus = "待办的";
+                var icon = "fas fa-battery-empty";
+                var bgcolor = "warning";
+            }else if(list[i].functionStatus==1){
+                var functionStatus = "进行中";
+                var icon = "fas fa-battery-half";
+                var bgcolor = "primary";
+            }else if(list[i].functionStatus==2){
+                var functionStatus = "已完成";
+                var icon = "fas fa-battery-three-quarters";
+                var bgcolor = "secondary";
+            }else if(list[i].functionStatus==3){
+                var functionStatus = "已验收";
+                var icon = "fas fa-battery-full";
+                var bgcolor = "success";
+            }
+            if(list[i].plannedStartTime==null){
+                var plannedStartTime = "未确定";
+            }else{
+                var plannedStartTime = list[i].plannedStartTime;
+            }
+            if(list[i].plannedEndTime==null){
+                var plannedEndTime = "未确定";
+            }else{
+                var plannedEndTime = list[i].plannedEndTime;
+            }
+            if(list[i].actualStartTime==null){
+                var actualStartTime = "未开始";
+            }else{
+                var actualStartTime = list[i].actualStartTime;
+            }
+            if(list[i].actualEndTime==null){
+                var actualEndTime = "未结束";
+            }else{
+                var actualEndTime = list[i].actualEndTime;
+            }
+
+            if(i%2==0){
+                tableShow += '<li>\n'
+            }else{
+                tableShow += '<li class="timeline-inverted">\n'
+            }
+            tableShow +=
+                '<div class="timeline-badge ' + bgcolor + ' "><i class=" ' + icon + ' "></i></div>\n' +
+                '<div class="timeline-panel">\n' +
+                '<div class="timeline-heading">\n' +
+                '<h4 class="timeline-title">\n' +
+                '<b>' + list[i].functionName + '</b>&nbsp;&nbsp;\n' +
+                '<!-- 发送催促消息给被指派者 -->\n' +
+                '<i class="fas fas fa-comment-dots" style="color: #0099CC"></i>\n' +
+                '</h4>\n' +
+                '</div>\n' +
+                '<div class="timeline-body">\n' +
+                '<p><i class="fas fa-compact-disc"></i>&nbsp;状态：' + functionStatus + '&nbsp;&nbsp; &nbsp;&nbsp;\n' +
+                '<i class="fas fa-user-tie"></i>&nbsp;发布者：' + list[i].publishUserName + '&nbsp;&nbsp; &nbsp;&nbsp;\n' +
+                '<i class="fas fa-user-tag"></i>&nbsp;被指派者：' + list[i].realizeUserName + '</p><br>\n' +
+                '<p><i class="far fa-calendar"></i>&nbsp;计划开始时间：' + plannedStartTime + '&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<i class="far fa-calendar-alt"></i>&nbsp;计划结束时间：' +plannedEndTime + '</p><br>\n' +
+                '<p><i class="far fa-calendar"></i>&nbsp;实际开始时间：' + actualStartTime + '&nbsp;&nbsp;&nbsp;&nbsp;\n' +
+                '<i class="far fa-calendar-alt"></i>&nbsp;实际结束时间：' + actualEndTime + '</p>\n' +
+                '</div>\n' +
+                '</div>\n' +
+                '</li>\n'
+        }
+        tableShow += '</ul>\n'
+        divName.html(tableShow)
+    }
+
+    //页面渲染
+    function projectTimeAppendHtml(project,divName) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var tableShow = '';
+            if(project.plannedStartTime==null){
+                var plannedStartTime = "未确定";
+            }else{
+                var plannedStartTime = project.actualStartTime;
+            }
+            if(project.plannedEndTime==null){
+                var plannedEndTime = "未确定";
+            }else{
+                var plannedEndTime = project.actualEndTime;
+            }
+            if(project.actualStartTime==null){
+                var actualStartTime = "未开始";
+            }else{
+                var actualStartTime = project.actualStartTime;
+            }
+            if(project.actualEndTime==null){
+                var actualEndTime = "未结束";
+            }else{
+                var actualEndTime = project.actualEndTime;
+            }
+            tableShow +=
+                '<div class="col-sm-6 col-md-3">\n' +
+                '                        <div class="card card-stats card-round">\n' +
+                '                            <div class="card-body ">\n' +
+                '                                <div class="row">\n' +
+                '                                    <div class="col-5">\n' +
+                '                                        <div class="icon-big text-center">\n' +
+                '                                            <i class="far fa-calendar text-warning"></i>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col col-stats">\n' +
+                '                                        <div class="numbers">\n' +
+                '                                            <p class="card-category">项目计划开始时间</p>\n' +
+                '                                            <h4 class="card-title">' + plannedStartTime + '</h4>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="col-sm-6 col-md-3">\n' +
+                '                        <div class="card card-stats card-round">\n' +
+                '                            <div class="card-body ">\n' +
+                '                                <div class="row">\n' +
+                '                                    <div class="col-5">\n' +
+                '                                        <div class="icon-big text-center">\n' +
+                '                                            <i class="far fa-calendar-alt text-success"></i>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col col-stats">\n' +
+                '                                        <div class="numbers">\n' +
+                '                                            <p class="card-category">项目实际开始时间</p>\n' +
+                '                                            <h4 class="card-title">' + actualStartTime + '</h4>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="col-sm-6 col-md-3">\n' +
+                '                        <div class="card card-stats card-round">\n' +
+                '                            <div class="card-body">\n' +
+                '                                <div class="row">\n' +
+                '                                    <div class="col-5">\n' +
+                '                                        <div class="icon-big text-center">\n' +
+                '                                            <i class="far fa-calendar text-danger"></i>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col col-stats">\n' +
+                '                                        <div class="numbers">\n' +
+                '                                            <p class="card-category">项目计划结束时间</p>\n' +
+                '                                            <h4 class="card-title">' + plannedEndTime + '</h4>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                    <div class="col-sm-6 col-md-3">\n' +
+                '                        <div class="card card-stats card-round">\n' +
+                '                            <div class="card-body">\n' +
+                '                                <div class="row">\n' +
+                '                                    <div class="col-5">\n' +
+                '                                        <div class="icon-big text-center">\n' +
+                '                                            <i class="far fa-calendar-alt text-primary"></i>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="col col-stats">\n' +
+                '                                        <div class="numbers">\n' +
+                '                                            <p class="card-category">项目实际结束时间</p>\n' +
+                '                                            <h4 class="card-title">' + actualEndTime + '</h4>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </div>'
+
+        divName.html(tableShow)
+    }
+
+</script>
+</body>
+</html>

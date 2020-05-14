@@ -41,6 +41,10 @@
         select * from projects_function where id = #{id}
     </select>
 
+    <select id="getAllFunctionByProjectId" resultType="ProjectsFunction">
+        select * from projects_function where projects_id = #{id} and delete_flag = 1
+    </select>
+
     <!--查找所有被注销项目功能点信息-->
     <resultMap id="delpflist" type="ProjectsFunction">
         <result column="id" property="id"></result>
@@ -84,6 +88,7 @@
             <if test="functionStatus != null">function_status = #{functionStatus},</if>
             <if test="publishUserId != null">publish_user_id = #{publishUserId},</if>
             <if test="realizeUserId != null">realize_user_id = #{realizeUserId},</if>
+            <if test="delReason != null">del_reason = #{delReason},</if>
         </trim>
         where id = #{id}
     </update>
@@ -118,7 +123,7 @@
         where projects_id = #{id} and delete_flag = 1
     </select>
 
-    <!--通过项目id和status查询功能点数量-->
+    <!--通过项目id和status查询全部功能点数量-->
     <select id="countByProjectIdAndStatus" resultType="Integer">
         select count(*) from projects_function
         where projects_id = #{id} and delete_flag = 1 and function_status = #{functionStatus}
@@ -141,6 +146,31 @@
         select count(*) from projects_function
         where projects_id = #{projectId} and delete_flag = 1 and function_status = #{functionStatus} and (publish_user_id = #{userId} or realize_user_id = #{userId})
     </select>
+
+    <!--通过项目id查询全部已取消功能点数量-->
+    <select id="countDelByProjectId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{id} and delete_flag = 0
+    </select>
+
+    <!--通过项目id查询指派给我的且已取消功能点数量-->
+    <select id="countDelProjectFunctionByProjectIdAndRealizeUserId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{projectId} and delete_flag = 0 and realize_user_id = #{userId}
+    </select>
+
+    <!--通过项目id查询我发布的且已取消功能点数量-->
+    <select id="countDelProjectFunctionByProjectIdAndPublishUserId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{projectId} and delete_flag = 0 and publish_user_id = #{userId}
+    </select>
+
+    <!--通过项目id查询我参与的且已取消功能点数量-->
+    <select id="countDelProjectFunctionByProjectIdAndUserId" resultType="Integer">
+        select count(*) from projects_function
+        where projects_id = #{projectId} and delete_flag = 0 and (publish_user_id = #{userId} or realize_user_id = #{userId})
+    </select>
+
 
     <resultMap id="projectsFunction0" type="ProjectsFunction">
         <result column="id" property="id"></result>
@@ -199,6 +229,51 @@
 	    desc limit #{offset},#{pageSize}
     </select>
 
+    <!-- 查询分页数据之全部功能且已取消 -->
+    <select id="getDelAllFunctionPage" resultMap="projectsFunction0">
+	    SELECT pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+               pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+               pf.realize_user_id as ruid, su2.username as rusername
+	    FROM projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                  left join sys_user su2 on pf.realize_user_id = su2.id
+	    where pf.delete_flag = 0 and pf.projects_id = #{projectId}
+	    order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+    <!-- 查询分页数据之指派给我的且已取消 -->
+    <select id="getDelFunctionByProjectIdAndRealizeUserId" resultMap="projectsFunction0">
+        select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+                pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+                pf.realize_user_id as ruid, su2.username as rusername
+        from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                    left join sys_user su2 on pf.realize_user_id = su2.id
+        where projects_id = #{projectsId} and pf.delete_flag = 0 and realize_user_id = #{realizeUserId}
+        order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+    <!-- 查询分页数据之我发布的且已取消 -->
+    <select id="getDelFunctionByProjectIdAndPublishUserId" resultMap="projectsFunction0">
+        select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+                pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+                pf.realize_user_id as ruid, su2.username as rusername
+        from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                    left join sys_user su2 on pf.realize_user_id = su2.id
+        where projects_id = #{projectsId} and pf.delete_flag = 0 and publish_user_id = #{publishUserId}
+        order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+    <!-- 查询分页数据之我参与的且已取消 -->
+    <select id="getDelFunctionByProjectIdAndUserId" resultMap="projectsFunction0">
+        select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
+                pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+                pf.realize_user_id as ruid, su2.username as rusername
+        from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                  left join sys_user su2 on pf.realize_user_id = su2.id
+        where projects_id = #{projectsId} and pf.delete_flag = 0 and (publish_user_id = #{userId} or realize_user_id = #{userId})
+        order by id
+	    desc limit #{offset},#{pageSize}
+    </select>
+
     <!-- 查询所有指派给我的功能点 -->
     <select id="getAllFunctionByProjectIdAndRealizeUserId" resultMap="projectsFunction0">
         select pf.id as id, pf.projects_id as pid, pf.function_id as fid, pf.function_name as fname,
@@ -207,6 +282,35 @@
         from projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
                                     left join sys_user su2 on pf.realize_user_id = su2.id
         where projects_id = #{projectsId} and pf.delete_flag = 1 and realize_user_id = #{realizeUserId} and pf.function_status = #{functionStatus}
+    </select>
+
+    <!-- 通过项目id获得项目计划 -->
+    <resultMap id="projectsPlanFunction" type="ProjectsFunction">
+        <result column="id" property="id"></result>
+        <result column="pid" property="projectsId"></result>
+        <result column="pname" property="projectName"></result>
+        <result column="fid" property="functionId"></result>
+        <result column="fname" property="functionName"></result>
+        <result column="fstatus" property="functionStatus"></result>
+        <result column="puid" property="publishUserId"></result>
+        <result column="pusername" property="publishUserName"></result>
+        <result column="ruid" property="realizeUserId"></result>
+        <result column="rusername" property="realizeUserName"></result>
+        <result column="pstime" property="plannedStartTime"></result>
+        <result column="petime" property="plannedEndTime"></result>
+        <result column="astime" property="actualStartTime"></result>
+        <result column="aetime" property="actualEndTime"></result>
+    </resultMap>
+    <select id="getProjectPlanFunctions" resultMap="projectsPlanFunction">
+        select pf.id as id, pf.projects_id as pid, p.name as pname, pf.function_id as fid, pf.function_name as fname,
+               pf.function_status as fstatus, pf.publish_user_id as puid, su1.username as pusername,
+               pf.realize_user_id as ruid, su2.username as rusername, pf.planned_start_time as pstime,
+               pf.planned_end_time as petime, pf.actual_start_time as astime, pf.actual_end_time as aetime
+        FROM projects_function pf left join sys_user su1 on pf.publish_user_id = su1.id
+                                  left join sys_user su2 on pf.realize_user_id = su2.id
+                                  right join projects p on pf.projects_id = p.id
+        where pf.delete_flag = 1 and pf.projects_id = #{projectsId}
+        order by pf.planned_start_time,pf.planned_end_time,pf.actual_start_time,pf.actual_end_time
     </select>
 </mapper>
 

@@ -190,5 +190,40 @@
     var userId = [[${#authentication.principal.id}]];
     initJsUserId(userId);
 </script>
+<script type="text/javascript">
+    function reductionProjectFunction(id) {
+        $.ajax({
+            type: "post",
+            url: "/reduction_project_function",
+            dataType: "json",
+            data: {
+                id: id,
+            },
+            success: function (data) {
+                if (data==1) {
+                    swal("还原成功！", {
+                        icon : "success",
+                        buttons: false,
+                        timer: 1500,
+                    });
+                    setTimeout(function(){
+                        location.href = "/del_project_function_list";
+                    },1500);
+                }
+                else {
+                    swal("还原失败！",{
+                        icon: "error",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-danger'
+                            }
+                        }
+                    })
+                }
+            }
+        });
+    }
+
+</script>
 </body>
 </html>

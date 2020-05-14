@@ -2,19 +2,17 @@ package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
-import cn.edu.lingnan.projectmanagment.utils.PathUtil;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +28,9 @@ public class ProjectsFunctionController {
 
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private ProjectUserServiceImpl projectUserService;
 
     //查询所有项目功能点信息
     @GetMapping("/project_function_list")
@@ -101,9 +102,11 @@ public class ProjectsFunctionController {
     @Transactional
     @ResponseBody
     @PostMapping("/del_project_function")
-    public Boolean delProjectFunction(Integer id) {
+    public Boolean delProjectFunction(Integer id,String reason) {
         try {
             ProjectsFunction projectsFunction = projectsFunctionService.getOneProjectFunction(id);
+            projectsFunction.setDelReason(reason);
+            projectsFunctionService.editProjectFunction(projectsFunction);
             System.out.println("projectsFunction=" + projectsFunction);
             Boolean flag = projectsFunctionService.deleteProjectFunction(id);
             System.out.println("删除项目功能点信息:" + id + flag);
@@ -266,7 +269,9 @@ public class ProjectsFunctionController {
     }
 
     @GetMapping("/project_function_view")
-    public String projectView() {
+    public String projectView(@RequestParam Integer projectId,Model model) {
+        Projects projects = projectService.getById(projectId);
+        model.addAttribute("project",projects);
         return "project/projectfunctionview";
     }
 
@@ -291,12 +296,70 @@ public class ProjectsFunctionController {
         Integer data1 = projectsFunctionService.countByProjectIdAndStatus(projectId, 1);
         Integer data2 = projectsFunctionService.countByProjectIdAndStatus(projectId, 2);
         Integer data3 = projectsFunctionService.countByProjectIdAndStatus(projectId, 3);
+        Integer data4 = projectsFunctionService.countDelByProjectId(projectId);
         Map<String,Integer> map = new HashMap<>();
         map.put("data0", data0);
         map.put("data1", data1);
         map.put("data2", data2);
         map.put("data3", data3);
+        map.put("data4", data4);
         return map;
+    }
+
+    //获取项目的所有功能点
+    @GetMapping("/project_function")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> myProjectsJoin(Integer projectId,Integer userId){
+        System.out.println("项目id"+projectId+" "+userId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId,projectId);
+            if(projectsUser.getDutyCode()==3){
+                map.put("duty","false");
+            }else{
+                map.put("duty","true");
+                List<ProjectsFunction> list = projectsFunctionService.getAllFunctionByProjectId(projectId);
+                System.out.println("获得项目功能点信息:" + list);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("map"+map);
+            }
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/projects_plan_view")
+    public String projectPlanView(@RequestParam Integer projectId,Model model) {
+        Projects projects = projectService.getById(projectId);
+        model.addAttribute("project",projects);
+        return "project/projectplanview";
+    }
+
+    //获取项目的所有功能点计划
+    @GetMapping("/projects_plan")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> projectsPlan(Integer projectId){
+        System.out.println("项目id"+projectId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            Projects projects = projectService.getById(projectId);
+            System.out.println("获得项目信息:" + projects);
+            map.put("project", projects);
+            List<ProjectsFunction> list = projectsFunctionService.getProjectPlanFunctions(projectId);
+            System.out.println("获得项目计划信息:" + list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
 

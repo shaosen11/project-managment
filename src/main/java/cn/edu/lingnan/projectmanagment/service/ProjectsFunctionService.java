@@ -67,11 +67,13 @@ public interface ProjectsFunctionService {
      */
     Integer countProjectFunctionByProjectId(Integer id);
 
+
     /**
      * 通过项目id查询功能点数量
      * @return
      */
     Integer countByProjectIdAndStatus(Integer id,Integer functionStatus);
+
 
     /**
      * 通过项目id和status查询指派给我的功能点数量
@@ -92,6 +94,32 @@ public interface ProjectsFunctionService {
     Integer countProjectFunctionByProjectIdAndUserId(Integer projectId,Integer userId,Integer functionStatus);
 
     /**
+     * 通过项目id查询全部已取消功能点数量
+     * @return
+     */
+    Integer countDelByProjectId(Integer id);
+
+    /**
+     * 通过项目id查询指派给我的且已取消功能点数量
+     * @return
+     */
+    Integer countDelProjectFunctionByProjectIdAndRealizeUserId(Integer projectId,Integer userId);
+
+    /**
+     * 通过项目id查询我发布的且已取消功能点数量
+     * @return
+     */
+    Integer countDelProjectFunctionByProjectIdAndPublishUserId(Integer projectId,Integer userId);
+
+    /**
+     * 通过项目id查询我参与的且已取消功能点数量
+     * @return
+     */
+    Integer countDelProjectFunctionByProjectIdAndUserId(Integer projectId,Integer userId);
+
+
+
+    /**
      * 通过项目id查询全部的功能
      * @return
      */
@@ -110,22 +138,48 @@ public interface ProjectsFunctionService {
     List<ProjectsFunction> getAllFunctionPage(Integer projectId, Integer offset,Integer pageSize,Integer functionStatus);
 
     /**
-     * 通过项目id查询指派给我的的功能
+     * 分页--通过项目id查询指派给我的的功能
      * @return
      */
     List<ProjectsFunction> getFunctionByProjectIdAndRealizeUserId(Integer projectsId,Integer offset,Integer pageSize,Integer realizeUserId,Integer functionStatus);
 
     /**
-     * 通过项目id查找项目中我发布的的全部功能点
+     * 分页--通过项目id查找项目中我发布的的全部功能点
      * @return
      */
     List<ProjectsFunction> getFunctionByProjectIdAndPublishUserId(Integer projectsId,Integer offset,Integer pageSize,Integer publishUserId,Integer functionStatus);
 
     /**
-     * 通过项目id查找项目中我参与的的全部功能点
+     * 分页--通过项目id查找项目中我参与的的全部功能点
      * @return
      */
     List<ProjectsFunction> getFunctionByProjectIdAndUserId(Integer projectsId,Integer offset,Integer pageSize,Integer userId,Integer functionStatus);
+
+
+    /**
+     * 分页--全部功能且已取消
+     * @return
+     */
+    List<ProjectsFunction> getDelAllFunctionPage(Integer projectId,Integer offset,Integer pageSize);
+
+    /**
+     * 通过项目id查询指派给我的的功能且已取消
+     * @return
+     */
+    List<ProjectsFunction> getDelFunctionByProjectIdAndRealizeUserId(Integer projectsId,Integer offset,Integer pageSize,Integer realizeUserId);
+
+    /**
+     * 通过项目id查找项目中我发布的的全部功能点且已取消
+     * @return
+     */
+    List<ProjectsFunction> getDelFunctionByProjectIdAndPublishUserId(Integer projectsId,Integer offset,Integer pageSize,Integer publishUserId);
+
+    /**
+     * 通过项目id查找项目中我参与的的全部功能点且已取消
+     * @return
+     */
+    List<ProjectsFunction> getDelFunctionByProjectIdAndUserId(Integer projectsId,Integer offset,Integer pageSize,Integer userId);
+
 
     /**
      * 通过项目id查询指派给我的的功能（不分页）
@@ -135,5 +189,12 @@ public interface ProjectsFunctionService {
      * @return
      */
     List<ProjectsFunction> getFunctionByProjectIdAndRealizeUserId(Integer projectsId,Integer realizeUserId,Integer functionStatus);
+
+    /**
+     * 通过项目id获得项目计划
+     * @param projectsId
+     * @return
+     */
+    List<ProjectsFunction> getProjectPlanFunctions(Integer projectsId);
 }
 

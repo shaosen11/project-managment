@@ -20,9 +20,9 @@ function functionPageStart(url,projectId,functionStatus,functionPage,divName,pag
                         case "first":
                             return "首";
                         case "prev":
-                            return "<<";
+                            return "<";
                         case "next":
-                            return ">>";
+                            return ">";
                         case "last":
                             return "末";
                         case "page":
@@ -73,9 +73,9 @@ function functionPageStart2(url,projectId,userId,functionStatus,functionPage,div
                         case "first":
                             return "首";
                         case "prev":
-                            return "<<";
+                            return "<";
                         case "next":
-                            return ">>";
+                            return ">";
                         case "last":
                             return "末";
                         case "page":
