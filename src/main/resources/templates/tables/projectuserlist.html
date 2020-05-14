@@ -249,37 +249,10 @@
     </div>
 
 </div>
-<!--   Core JS Files   -->
-<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-<script th:src="@{/assets/js/core/popper.min.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
-<!-- jQuery UI -->
-<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
-<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
-<!-- Bootstrap Toggle -->
-<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
-<!-- jQuery Scrollbar -->
-<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
-<!-- Datatables -->
-<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
-<!-- Azzara JS -->
-<script th:src="@{/assets/js/ready.min.js}"></script>
-<!-- Azzara DEMO methods, don't include it in your project! -->
-<script th:src="@{/assets/js/setting-demo.js}"></script>
-<script th:src="@{/assets/js/formcheck.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
-<!-- Sweet Alert -->
-<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
-<!--加载导航栏消息公共js-->
-<script th:src="@{/assets/js/nav-message.js}"></script>
-<!--加载侧边栏公共js-->
-<script th:src="@{/assets/js/nav-sider.js}"></script>
-<!--初始化公共js的userId-->
-<script type="text/javascript">
-    var userId = [[${#authentication.principal.id}]];
-    initJsUserId(userId);
-</script>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js" />
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_js" />
 <script >
     $(document).ready(function() {
         $('#basic-datatables').DataTable({
@@ -538,10 +511,6 @@
         );
     }
 </script>
-<script type="text/javascript" th:inline="javascript">
-    //加载用户所有项目
-    var userId = [[${#authentication.principal.id}]];
-    user_prjects(userId);
-</script>
+
 </body>
 </html>

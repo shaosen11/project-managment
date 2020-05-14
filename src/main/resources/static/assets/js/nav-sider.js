@@ -1,14 +1,17 @@
-var userId;
-
-function initJsUserId(userId) {
-    this.userId = userId;
-}
+$(function () {
+    if (userId != "") {
+        user_prjects(userId);
+    }
+})
 
 //用户项目列表
 function user_prjects(userId) {
     $.ajax({
-        url: "/user_prjects?userId=" + userId,
+        url: "/user_prjects",
         type: "get",
+        data: {
+            userId: userId
+        },
         datatype: "json",
         success: function (data) {
             var parentUL = document.getElementById("projectsul");
@@ -25,7 +28,3 @@ function user_prjects(userId) {
     })
 }
 
-//加载项目列表
-$(function () {
-    user_prjects(userId);
-})

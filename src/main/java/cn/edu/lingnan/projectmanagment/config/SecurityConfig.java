@@ -95,7 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //允许所有访问
                 .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()
                 .antMatchers("/forgetpassword","/forget_password","/resetpassword","/reset_password").permitAll()
-                .antMatchers("/index.html").authenticated()
+                .antMatchers("/index.html","/index","/todayProjectsAndWeekProjects","/getProjectsByTypePage").permitAll()
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()
                 .sessionManagement()

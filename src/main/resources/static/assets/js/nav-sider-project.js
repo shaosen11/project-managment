@@ -1,13 +1,15 @@
-var userId;
-var projectId;
+$(function () {
+    projects_package(projectId);
+    package_list(projectId);
+    $("#packageName").keyup(function () {
+        setTimeout('checkPackage()', 1000);
+    })
+    projectMessageCount();
+})
 
-function initJsUserIdAndProjectId(userId, projectId) {
-    this.userId = userId;
-    this.projectId = projectId;
-}
 
 //项目包结构
-function projects_package(projectId, userId) {
+function projects_package(projectId) {
     $.ajax({
         url: "/projectsPackages?projectId=" + projectId,
         type: "get",
@@ -51,7 +53,7 @@ function projects_package(projectId, userId) {
                         var li1 = document.createElement("li");
                         ul.append(li1);
                         var a1 = document.createElement("a");
-                        a1.href = '/document?userId=' + userId + '&projectId=' + projectId + '&documentName=' + data[i].projectsPackageList[j].documentName;
+                        a1.href = '/document?projectId=' + projectId + '&documentName=' + data[i].projectsPackageList[j].documentName;
                         li1.appendChild(a1);
                         //创建span
                         var span1 = document.createElement("span");
@@ -82,7 +84,6 @@ function package_list(projectId) {
         }
     });
 }
-
 
 //检查包名是否存在
 var packageFlag = false;
@@ -120,15 +121,6 @@ function submitPackageCheck() {
     }
 }
 
-$(function () {
-    projects_package(projectId, userId);
-    package_list(projectId);
-    $("#packageName").keyup(function () {
-        setTimeout('checkPackage()', 1000);
-    })
-    projectMessageCount();
-})
-
 //加载项目个人消息和待办数量
 function projectMessageCount() {
     $.ajax({
@@ -144,6 +136,8 @@ function projectMessageCount() {
         }
     })
 }
+
+
 
 
 

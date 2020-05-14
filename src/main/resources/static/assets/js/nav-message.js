@@ -1,8 +1,13 @@
-var userId;
-
-function initJsUserId(userId) {
-    this.userId = userId;
-}
+//全局加载导航栏消和待办
+$(function () {
+    if (userId != "") {
+        //全局加载导航栏消和待办
+        $(function () {
+            my_message(userId);
+            my_message_need_to_do(userId);
+        })
+    }
+})
 
 //请求数据库
 function nav_message(userId, needToDo, divNumber, divTitleName, messageDiv) {
@@ -23,6 +28,7 @@ function nav_message(userId, needToDo, divNumber, divTitleName, messageDiv) {
         }
     })
 }
+
 
 //数据库返回数据，添加待办消息
 function addMessageToDo(list, divNumber, divTitle, div) {
@@ -112,7 +118,7 @@ function agreeNeedToDo(messageId) {
 }
 
 //拒绝待办
-function doNotAgreeNeedToDo(messageId){
+function doNotAgreeNeedToDo(messageId) {
     console.log(messageId);
     $.ajax({
         type: "put",
@@ -130,14 +136,8 @@ function doNotAgreeNeedToDo(messageId){
     })
 }
 
-//全局加载导航栏消和待办
-$(function () {
-    my_message();
-    my_message_need_to_do();
-})
-
 //调用请求数据库
-function my_message_need_to_do() {
+function my_message_need_to_do(userId) {
     var divNumber = $('#myMessageNeedToDoNumber');
     var divTitleName = $('#myMessageNeedToDoTitle');
     var divName = $('#myMessageNeedToDo');
@@ -145,7 +145,7 @@ function my_message_need_to_do() {
 }
 
 //调用请求数据库
-function my_message() {
+function my_message(userId) {
     var divName = $('#myMessage');
     var divNumber = $('#myMessageNumber');
     var divTitleName = $('');
@@ -183,10 +183,10 @@ function updateMessageIsRead(messageId) {
                 my_message();
             } else {
                 swal("系统出现错误！", result.message, {
-                    icon : "error",
+                    icon: "error",
                     buttons: {
                         confirm: {
-                            className : 'btn btn-danger'
+                            className: 'btn btn-danger'
                         }
                     },
                 });
@@ -194,4 +194,5 @@ function updateMessageIsRead(messageId) {
         }
     })
 }
+
 

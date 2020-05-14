@@ -43,7 +43,7 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
         if(loginType.equalsIgnoreCase("JSON")){
             afterLoginOrLoginOutHandler.afterLoginOrLoginOutHandler(request, "登录系统");
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(AJaxResponse.success("/index.html","登录成功！")));
+            response.getWriter().write(objectMapper.writeValueAsString(AJaxResponse.success("/index","登录成功！")));
         }else {
             //跳转登录之前请求的页面
             super.onAuthenticationSuccess(request, response, authentication);
