@@ -339,27 +339,65 @@ public class ProjectsFunctionController {
         return "project/projectplanview";
     }
 
+    public Map<String, Object> functionPageCom(Integer page,Integer count){
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 计算总页数
+            int totalPage = count / pageSize;
+            // 不满一页的数据按一页计算
+            if (count % pageSize != 0) {
+                totalPage++;
+            }
+            // 当页数大于总页数，直接返回
+            if (page > totalPage){
+                return null;
+            }
+            // 计算sql需要的起始索引
+            int offset = (page - 1) * pageSize;
+            // 封装数据，并返回
+            map.put("page", page);
+            map.put("pageSize", pageSize);
+            map.put("totalPage", totalPage);
+            map.put("offset",offset);
+            return map;
+        } catch (Exception e) {
+            System.out.println("获取函数数据失败" + e);
+            return map;
+        }
+    }
+
     //获取项目的所有功能点计划
     @GetMapping("/projects_plan")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> projectsPlan(Integer projectId){
-        System.out.println("项目id"+projectId);
+    public ResponseEntity<Map<String, Object>> projectsPlan(Integer page,Integer projectId){
+        System.out.println("当前页：" + page+"  项目id"+projectId);
         Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
         try {
+            // 获取总条目数
+            List<ProjectsFunction> projectsFunctionList = projectsFunctionService.getProjectPlanFunctions(projectId);
+            int count = projectsFunctionList.size();
+            map = functionPageCom(page,count);
             Projects projects = projectService.getById(projectId);
             System.out.println("获得项目信息:" + projects);
-            map.put("project", projects);
-            List<ProjectsFunction> list = projectsFunctionService.getProjectPlanFunctions(projectId);
-            System.out.println("获得项目计划信息:" + list);
+            map.put("projects", projects);
+            int offset = (int) map.get("offset");
+            // 根据起始索引和页面大小去查询数据
+            List<ProjectsFunction> list = projectsFunctionService.getProjectPlanFunctionsPage(projectId,offset,pageSize);
+            System.out.println("分页list"+list);
             // 封装数据，并返回
             map.put("list", list);
-            System.out.println("map"+map);
+            System.out.println("分页map"+map);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println("获取数据失败" + e);
+            System.out.println("获取分页数据失败" + e);
             return new ResponseEntity<Map<String, Object>>(
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 }
 

@@ -135,6 +135,11 @@ public class ProjectsFunctionServiceImpl implements ProjectsFunctionService {
         return projectsFunctionMapper.getProjectPlanFunctions(projectsId);
     }
 
+    @Override
+    public List<ProjectsFunction> getProjectPlanFunctionsPage(Integer projectsId, Integer offset, Integer pageSize) {
+        return projectsFunctionMapper.getProjectPlanFunctionsPage(projectsId,offset,pageSize);
+    }
+
 
     @Override
     public boolean addProjectFunction(ProjectsFunction projectsFunction) {

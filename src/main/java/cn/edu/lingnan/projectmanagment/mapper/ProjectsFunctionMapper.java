@@ -198,5 +198,11 @@ public interface ProjectsFunctionMapper {
      */
     List<ProjectsFunction> getProjectPlanFunctions(Integer projectsId);
 
+    /**
+     * 分页--通过项目id获得项目计划
+     * @return
+     */
+    List<ProjectsFunction> getProjectPlanFunctionsPage(@Param("projectsId")Integer projectsId, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
+
 }
 
