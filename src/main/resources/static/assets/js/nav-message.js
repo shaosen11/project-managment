@@ -29,7 +29,6 @@ function nav_message(userId, needToDo, divNumber, divTitleName, messageDiv) {
     })
 }
 
-
 //数据库返回数据，添加待办消息
 function addMessageToDo(list, divNumber, divTitle, div) {
     $(divNumber).html("");

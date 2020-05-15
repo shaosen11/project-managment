@@ -47,7 +47,7 @@ public class ProjectsUserController {
     @Autowired
     private MessageNeedToDoRelationshipServiceImpl messageNeedToDoRelationshipService;
 
-    @GetMapping("/user_prjects")
+    @GetMapping("/user_projects")
     @ResponseBody
     public List getProjectsByUserId(@Param("userId") Integer userId) {
         List<Projects> projectListByUserId = projectService.getProjectListByUserId(userId);

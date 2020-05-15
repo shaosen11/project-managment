@@ -93,9 +93,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //需要权限的请求
                 .authorizeRequests()
                 //允许所有访问
-                .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()
+                .antMatchers("/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()
                 .antMatchers("/forgetpassword","/forget_password","/resetpassword","/reset_password").permitAll()
-                .antMatchers("/index.html","/index","/todayProjectsAndWeekProjects","/getProjectsByTypePage").permitAll()
+
+                //nav_message.js
+                .antMatchers("/myMessage").permitAll()
+                //nav_sider.js
+                .antMatchers("/user_projects").permitAll()
+                //nav_sider_project.js
+                .antMatchers("/projectsPackages","/projectMessageCount").permitAll()
+
+                //inedx
+                .antMatchers("/","/index.html","/index","/todayProjectsAndWeekProjects","/getProjectsByTypePage","/projects_index_click").permitAll()
+                //project_view
+                .antMatchers("/projects_view","/getCodeInsertData","/getCodeDevoteData","/getLineChartDate","/documentRecordPage","/project").permitAll()
+                //project_plan_view
+                .antMatchers("/projects_plan_view","/projects_plan").permitAll()
+                //project_function_view
+                .antMatchers("/project_function_view","/allFunctionPage","/projectFunctionDataCicleChart","/projectFunctionTotal").permitAll()
+                //project_user_view
+                .antMatchers("/project_user_view","/projectUserPage","/projectsUser","/user_finish_function","/user_developing_function","/projectUserTotal").permitAll()
+                //project_user_cooperation_view
+                .antMatchers("/project_user_cooperation_view","/projectUserPage","/inviteUser","/user_informetion").permitAll()
+                //document
+                .antMatchers("/document","/files/projects/*/*").permitAll()
+
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()
                 .sessionManagement()

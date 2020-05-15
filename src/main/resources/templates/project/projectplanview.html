@@ -60,12 +60,10 @@
 <!--公共JS-->
 <th:block th:replace="commom/bar :: commom_js" />
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_js" />
+<th:block th:replace="commom/bar :: nav_project_js" />
 
 <!--获取功能点数据-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     $(function () {
         projectsPlan();
     })

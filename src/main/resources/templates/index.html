@@ -251,6 +251,7 @@
 <!--更新点击量-->
 <script type="text/javascript">
     function UpdateTraffs(projectId) {
+        console.log(projectId)
         $.ajax({
             type: "post",
             url: "/projects_index_click",
@@ -262,6 +263,9 @@
                 if (json.ok) {
                     location.href = json.data;
                 }
+            },
+            error:function () {
+                console.log("请求失败")
             }
         })
     }

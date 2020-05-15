@@ -4,7 +4,9 @@ $(function () {
     $("#packageName").keyup(function () {
         setTimeout('checkPackage()', 1000);
     })
-    projectMessageCount();
+    if (userId != "") {
+        projectMessageCount();
+    }
 })
 
 
@@ -87,13 +89,14 @@ function package_list(projectId) {
 
 //检查包名是否存在
 var packageFlag = false;
+
 function checkPackage() {
     var projectId = $("#newPackageProjectId").val();
     var packageName = $("#packageName").val();
     var packageNamecss = $("#packageName");
     $.ajax({
         type: "get",
-        url: "projectsPackage",
+        url: "/projectsPackage",
         data: {
             "projectId": projectId,
             "packageName": packageName
@@ -137,7 +140,20 @@ function projectMessageCount() {
     })
 }
 
+function initNavSiderProjectJs(user) {
+    $("#newPackageUserId").val(user.id);
+}
 
+$(function () {
+    if (userId != "") {
+        $("#projectSideBarA1").attr("href", '/projectmessage?projectId=' + projectId + '&userId=' + userId);
+    }
+    $("#projectSideBarA2").attr("href", '/projects_view?projectId=' + projectId);
+    $("#projectSideBarA3").attr("href", '/projects_plan_view?projectId=' + projectId);
+    $("#projectSideBarA4").attr("href", '/project_function_view?projectId=' + projectId)
+    $("#projectSideBarA5").attr("href", '/project_user_view?projectId=' + projectId)
+    $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
+})
 
 
 

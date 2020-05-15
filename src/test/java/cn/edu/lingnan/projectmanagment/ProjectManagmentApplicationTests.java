@@ -64,5 +64,7 @@ class ProjectManagmentApplicationTests {
     MessageNeedToDoRelationshipServiceImpl messageNeedToDoRelationshipService;
     @Test
     void t1(){
+        List<DocumentsRecord> documentsRecordPageByProjectIdAndUserId = documentsRecordService.getDocumentsRecordPageByProjectIdAndUserId(1, 1, 1, 5);
+        System.out.println(documentsRecordPageByProjectIdAndUserId);
     }
 }

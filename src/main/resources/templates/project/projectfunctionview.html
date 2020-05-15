@@ -412,13 +412,11 @@
 <!--公共JS-->
 <th:block th:replace="commom/bar :: commom_js" />
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_js" />
+<th:block th:replace="commom/bar :: nav_project_js" />
 
 
 <!--功能点分页-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     var functionStatusFlag = 0;
     $(function () {
         allFunctionPage();
@@ -531,6 +529,7 @@
 </script>
 <!--功能点进度条-->
 <script type="text/javascript">
+    var projectId = "[[${param.projectId}]]";
     $(function () {
         getChart();
     })
@@ -592,7 +591,7 @@
         var functionName = $("#addName").val();
         var realizeUserId = $("#addRealizeUserId").val();
         var projectsId = projectId;
-        var publishUserId = [[${#authentication.principal.id}]];
+        var publishUserId = userId;
         if (!checkAddFunction()) {
             return;
         } else {
@@ -670,8 +669,6 @@
 </script>
 <!--删除功能点-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     function delFunction() {
         $.ajax(
             {
@@ -687,7 +684,6 @@
                         $('#delFunction').modal('show');
                         projectFunctionAppendHtml(data.list);
                     }else{
-
                         swal({
                             icon : "warning",
                             title: "权限不够！",
@@ -697,6 +693,15 @@
                             timer: 1500,
                         })
                     }
+                },
+                error:function () {
+                    swal({
+                        icon : "warning",
+                        text: "请先登录！",
+                        type: "warning",
+                        buttons: false,
+                        timer: 1500,
+                    })
                 }
             }
         );

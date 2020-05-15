@@ -352,7 +352,7 @@
                         <h4 class="text-section">message</h4>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/projectmessage(projectId=${param.projectId},userId=${#authentication.principal.id})}">
+                        <a id="projectSideBarA1">
                             <i class="fas fa-comment-dots"></i>
                             <p>项目消息</p>
                             <span class="badge badge-count" id="projectMessageCount"></span>
@@ -375,31 +375,31 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/projects_view(projectId=${param.projectId})}">
+                        <a id="projectSideBarA2">
                             <i class="fas fa-chart-area"></i>
                             <p>项目详情</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/projects_plan_view(projectId=${param.projectId})}">
+                        <a id="projectSideBarA3">
                             <i class="fas fa-calendar-alt"></i>
                             <p>项目计划</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/project_function_view(projectId=${param.projectId})}">
+                        <a id="projectSideBarA4">
                             <i class="fas fa-align-left"></i>
                             <p>项目功能点</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/project_user_view(projectId=${param.projectId})}">
+                        <a id="projectSideBarA5">
                             <i class="fas fa-users"></i>
                             <p>项目人员</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/project_user_cooperation_view(projectId=${param.projectId})}">
+                        <a id="projectSideBarA6">
                             <i class="fas fa-user-plus"></i>
                             <p>合作伙伴</p>
                         </a>
@@ -485,7 +485,7 @@
         <div class="modal-content">
             <form th:action="@{/projectsPackage}" method="post" onSubmit="return submitPackageCheck();">
                 <input type="hidden" id="newPackageProjectId" name="projectId" th:value="${param.projectId}">
-                <input type="hidden" id="newPackageUserId" name="userId" th:value="${#authentication.principal.id}">
+                <input type="hidden" id="newPackageUserId" name="userId">
                 <!--                <input type="hidden" id="filename" name="filename" value="${filename}">-->
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabe">新建包</h5>
@@ -566,6 +566,38 @@
     <script th:src="@{/assets/js/nav-message.js}"></script>
     <!--加载侧边栏公共js-->
     <script th:src="@{/assets/js/nav-sider.js}"></script>
+    <!--初始化公共js的userId-->
+    <script type="text/javascript" th:fragment="navjs">
+        var userId = "[[${session.userId}]]";
+        var username = "[[${session.username}]]";
+        var email = "[[${session.email}]]";
+        var photo = "[[${session.photo}]]";
+        if (userId != "") {
+            var user = {
+                id: userId,
+                username: username,
+                email: email,
+                photo: photo,
+            };
+            initNavJs(user);
+            initNavSiderJs(user);
+        }
+    </script>
+    <!--初始化公共js的projectId-->
+    <script type="text/javascript">
+        var projectId = "[[${param.projectId}]]";
+    </script>
+</div>
+<!--所有页面公共js-->
+<div th:fragment="nav_project_js">
+    <!--加载导航栏user公共js-->
+    <script th:src="@{/assets/js/nav.js}"></script>
+    <!--在家导航栏退出公共js-->
+    <script th:src="@{/assets/js/nav-loginOut.js}"></script>
+    <!--加载导航栏消息公共js-->
+    <script th:src="@{/assets/js/nav-message.js}"></script>
+    <!--加载侧边栏公共js-->
+    <script th:src="@{/assets/js/nav-sider.js}"></script>
     <!--加载项目包侧边栏公共js-->
     <script th:src="@{/assets/js/nav-sider-project.js}"></script>
     <!--初始化公共js的userId-->
@@ -581,7 +613,8 @@
                 email: email,
                 photo: photo,
             };
-            initNavJs(user)
+            initNavJs(user);
+            initNavSiderProjectJs(user);
         }
     </script>
     <!--初始化公共js的projectId-->

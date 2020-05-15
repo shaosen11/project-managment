@@ -306,9 +306,9 @@
 
 
 <!--公共JS-->
-<th:block th:replace="commom/bar :: commom_js" />
+<th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_js" />
+<th:block th:replace="commom/bar :: nav_project_js"/>
 
 
 <!--饼图-->
@@ -372,8 +372,10 @@
         $.ajax({
             type: "get",
             async: true,
-            url: "/getCodeDevoteData?projectId=" + projectId,
-            data: [],
+            url: "/getCodeDevoteData",
+            data: {
+                projectId: projectId
+            },
             dataType: "json",
             success: function (result) {
                 $(result).each(function (index, item) {
@@ -509,10 +511,10 @@
 <!--项目日志分页-->
 <script type="text/javascript">
     $(function () {
-        var projectId = [[${param.projectId}]];
-        var userId = [[${#authentication.principal.id}]];
         addDocumentRecordPage(projectId, 0, allDiv, allPage);
-        addDocumentRecordPage(projectId, userId, myDiv, myPage);
+        if (userId != "") {
+            addDocumentRecordPage(projectId, userId, myDiv, myPage);
+        }
     })
 
     function addDocumentRecordPage(projectId, userId, div, ul) {
@@ -565,6 +567,9 @@
                         }
                     };
                     $(ul).bootstrapPaginator(options);//设置分页
+                },
+                error: function () {
+                    console.log("请求失败")
                 }
             });
         }
@@ -589,7 +594,7 @@
                     '                    <span class="text-muted">' + list[i].operateMessage + '</span>\n' +
                     '                </div>\n' +
                     '                <div class="float-right pt-1">\n' +
-                    '                    <small class="text-muted">' + list[i].operateTime + '</small>\n' +
+                    '                    <small class="text-muted">' + list[i].operateTimeString + '</small>\n' +
                     '                </div>\n' +
                     '            </div>\n' +
                     '            <div class="separator-dashed"></div>'
@@ -609,7 +614,6 @@
                 projectId: projectId,
             },
             success: function (json) {
-                console.log(json)
                 $("#projectCodeLineNumber").text(json.codeLineNumber);
                 $("#projectCodeUpdateCount").text(json.codeUpdateCount);
                 $("#projectDocumentCount").text(json.documentCount);

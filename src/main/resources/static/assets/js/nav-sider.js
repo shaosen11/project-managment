@@ -1,13 +1,13 @@
 $(function () {
     if (userId != "") {
-        user_prjects(userId);
+        user_projects(userId);
     }
 })
 
 //用户项目列表
-function user_prjects(userId) {
+function user_projects(userId) {
     $.ajax({
-        url: "/user_prjects",
+        url: "/user_projects",
         type: "get",
         data: {
             userId: userId
@@ -27,4 +27,16 @@ function user_prjects(userId) {
         }
     })
 }
+
+function initNavSiderJs(user) {
+    $("#sideBarUserImg1").attr("src", '/files/photo/' + user.photo);
+    $("#sideBarUsername").html(user.username);
+    $("#sideBarA").attr("href", '/projects_index/' + user.id);
+
+    $("#sideBarA1").attr("href", '/my_projects/' + user.id);
+    $("#sideBarA2").attr("href", '/my_projects_store/' + user.id);
+
+}
+
+
 

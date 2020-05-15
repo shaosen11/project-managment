@@ -107,15 +107,13 @@
 <div th:replace="commom/bar :: newprojectpackage"></div>
 
 <!--公共JS-->
-<th:block th:replace="commom/bar :: commom_js" />
+<th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_js" />
+<th:block th:replace="commom/bar :: nav_project_js"/>
 
 
 <!--加载人才市场-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     $(function () {
         addpage(projectId, 1, UserDiv, UserPage);
     })
@@ -197,25 +195,36 @@
     }
 
     function invite(projectId, fromUserId, toUserId) {
-        $.ajax({
-            type: "post",
-            url: "/inviteUser",
-            dataType: "json",
-            data: {
-                projectId: projectId,
-                fromUserId: fromUserId,
-                toUserId: toUserId
-            },
-            success: function (json) {
-                if (json.ok) {
-                    swal(json.message, {
-                        icon: "success",
-                        buttons: false,
-                        timer: 1500,
-                    });
+        if (fromUserId != "") {
+            $.ajax({
+                type: "post",
+                url: "/inviteUser",
+                dataType: "json",
+                data: {
+                    projectId: projectId,
+                    fromUserId: fromUserId,
+                    toUserId: toUserId
+                },
+                success: function (json) {
+                    if (json.ok) {
+                        swal(json.message, {
+                            icon: "success",
+                            buttons: false,
+                            timer: 1500,
+                        });
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            swal({
+                icon : "warning",
+                text: "请先登录！",
+                type: "warning",
+                buttons: false,
+                timer: 1500,
+            })
+        }
+
     }
 </script>
 <!--人员信息-->
