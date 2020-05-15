@@ -29,13 +29,16 @@ function user_projects(userId) {
 }
 
 function initNavSiderJs(user) {
-    $("#sideBarUserImg1").attr("src", '/files/photo/' + user.photo);
+    if (user.photo != "") {
+        $("#sideBarUserImg1").attr("src", '/files/photo/' + user.photo);
+    }else {
+        $("#sideBarUserImg1").attr("src", '/files/photo/profile.jpg');
+    }
     $("#sideBarUsername").html(user.username);
     $("#sideBarA").attr("href", '/projects_index/' + user.id);
 
     $("#sideBarA1").attr("href", '/my_projects/' + user.id);
     $("#sideBarA2").attr("href", '/my_projects_store/' + user.id);
-
 }
 
 
