@@ -196,5 +196,12 @@ public interface ProjectsFunctionService {
      * @return
      */
     List<ProjectsFunction> getProjectPlanFunctions(Integer projectsId);
+
+    /**
+     * 分页--通过项目id获得项目计划
+     * @return
+     */
+    List<ProjectsFunction> getProjectPlanFunctionsPage(Integer projectsId,Integer offset,Integer pageSize);
+
 }
 
