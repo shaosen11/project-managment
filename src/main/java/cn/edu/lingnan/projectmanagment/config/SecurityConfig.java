@@ -124,7 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //如果有需要就创建session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 //当session超时，重新跳转到指定页面
-                .invalidSessionUrl("/login.html")
+                .invalidSessionUrl("/index")
                 //每次登录都替换sesionID
                 .sessionFixation().migrateSession()
                 //只允许最多一个登录
