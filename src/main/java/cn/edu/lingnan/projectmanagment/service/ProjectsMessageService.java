@@ -47,7 +47,7 @@ public interface ProjectsMessageService {
     boolean update(ProjectsMessage projectsMessage);
 
     /**
-     * 修改项目已读
+     * 修改项目消息已读
      *
      * @param projectMessageId
      * @return

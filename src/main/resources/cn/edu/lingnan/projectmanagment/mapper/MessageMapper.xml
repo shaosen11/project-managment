@@ -18,6 +18,10 @@
        select * from message where is_read = 1 and delete_flag = 1 and to_user_id = #{userId} and need_to_do = #{needToDo}
    </select>
 
+    <select id="getByUserIdAndOffsetAndPageSize" resultMap="MessageList">
+       select * from message where is_read = 1 and delete_flag = 1 and to_user_id = #{userId} and need_to_do = #{needToDo} order by time desc limit #{offset},#{pageSize}
+   </select>
+
     <!--插入一条消息-->
     <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
         insert into message
@@ -103,4 +107,21 @@
         </trim>
         where delete_flag = 1 and id = #{messageId}
     </update>
+
+    <select id="messageCount" resultType="int">
+        select count(*)
+        from message
+        where delete_flag = 1
+        and is_read = 1
+        and to_user_id = #{userId}
+   </select>
+
+    <select id="messageNeedToDoCount" resultType="int">
+        select count(*)
+        from message
+        where delete_flag = 1
+        and is_read = 1
+        and need_to_do = 1
+        and to_user_id = #{userId}
+   </select>
 </mapper>

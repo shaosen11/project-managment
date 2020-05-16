@@ -31,6 +31,7 @@ public class AJaxResponse {
         resultBean.setData(data);
         return resultBean;
     }
+
     public static AJaxResponse success(String msg){
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(true);
@@ -38,6 +39,7 @@ public class AJaxResponse {
         resultBean.setMessage(msg);
         return resultBean;
     }
+
     public static AJaxResponse success(Object data, String msg){
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(true);
@@ -58,6 +60,14 @@ public class AJaxResponse {
         }else{
             resultBean.setMessage("系统出现未知异常");
         }
+        return resultBean;
+    }
+
+    public static AJaxResponse error(String msg) {
+        AJaxResponse resultBean = new AJaxResponse();
+        resultBean.setOk(false);
+        resultBean.setCode(200);
+        resultBean.setMessage(msg);
         return resultBean;
     }
 }

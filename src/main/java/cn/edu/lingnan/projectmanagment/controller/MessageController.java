@@ -177,5 +177,30 @@ public class MessageController {
         }
         return null;
     }
+
+    @GetMapping("/message_view")
+    public String messages() {
+        return "/message";
+    }
+
+    @GetMapping("/message_person")
+    @ResponseBody
+    public List<Message> messagePerson(Integer userId, Integer offset, Integer pageSize) {
+        return messageService.getByUserIdAndOffsetAndPageSize(userId, 0, offset, pageSize);
+    }
+
+    @GetMapping("/messageCount")
+    @ResponseBody
+    public Integer messageCount(Integer userId) {
+        return messageService.messageCount(userId) + messageService.messageNeedToDoCount(userId);
+    }
+
+    @GetMapping("/message_need_to_do")
+    @ResponseBody
+    public List<Message> message_need_to_do(Integer userId, Integer offset, Integer pageSize) {
+        return messageService.getByUserIdAndOffsetAndPageSize(userId, 1, offset, pageSize);
+    }
+
+
 }
 

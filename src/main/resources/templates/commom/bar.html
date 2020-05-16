@@ -131,35 +131,48 @@
                             <i class="fa fa-plus"></i>
                         </a>
                     </li>
-                    <li class="nav-item dropdown hidden-caret">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <div class="avatar-sm">
-                                <img id="topBarUserImg1" alt="..." class="avatar-img rounded-circle">
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user animated fadeIn">
-                            <li>
-                                <div class="user-box">
-                                    <div class="avatar-lg">
-                                        <img id="topBarUserImg2" alt="..." class="avatar-img rounded-circle">
-                                    </div>
-                                    <div class="u-text">
-                                        <h4 id="topBarUsername">用户名</h4>
-                                        <p class="text-muted" id="topBarEmail"> 邮箱</p>
-                                        <a th:href="@{/userprofile}"
-                                           class="btn btn-rounded btn-secondary btn-sm">我的信息</a>
-                                    </div>
+                    <div th:if="${session.userId!=null}">
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
+                               aria-expanded="false">
+                                <div class="avatar-sm">
+                                    <img id="topBarUserImg1" alt="..." class="avatar-img rounded-circle">
                                 </div>
-                            </li>
-                            <li>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" id="topBarA1">我的项目</a>
-                                <a class="dropdown-item" id="topBarA2">我的收藏</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" onclick="login_out()" href="#">退出</a>
-                            </li>
-                        </ul>
-                    </li>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                <li>
+                                    <div class="user-box">
+                                        <div class="avatar-lg">
+                                            <img id="topBarUserImg2" alt="..." class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="u-text">
+                                            <h4 id="topBarUsername">用户名</h4>
+                                            <p class="text-muted" id="topBarEmail"> 邮箱</p>
+                                            <a th:href="@{/userprofile}"
+                                               class="btn btn-rounded btn-secondary btn-sm">我的信息</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" id="topBarA1">我的项目</a>
+                                    <a class="dropdown-item" id="topBarA2">我的收藏</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" onclick="login_out()">
+                                        退出
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div th:if="${session.userId==null}">
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link dropdown-toggle" th:href="@{/login}">
+                                <i class="fa fa-sign-in-alt"></i>
+                            </a>
+                        </li>
+
+                    </div>
 
                 </ul>
             </div>
@@ -211,6 +224,19 @@
                         <a th:href="@{/index}">
                             <i class="fas fa-home"></i>
                             <p>主页</p>
+                        </a>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">message</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="messageView()">
+                            <i class="fas fa-comment-dots"></i>
+                            <p>消息</p>
+                            <span class="badge badge-count" id="messageCount"></span>
                         </a>
                     </li>
                     <li class="nav-section">
@@ -586,6 +612,22 @@
     <!--初始化公共js的projectId-->
     <script type="text/javascript">
         var projectId = "[[${param.projectId}]]";
+    </script>
+    <!--个人消息js-->
+    <script type="text/javascript">
+        function messageView() {
+            if (userId != "") {
+                location.href = "/message_view"
+            } else {
+                swal({
+                    icon: "warning",
+                    text: "请先登录！",
+                    type: "warning",
+                    buttons: false,
+                    timer: 1500,
+                })
+            }
+        }
     </script>
 </div>
 <!--所有页面公共js-->

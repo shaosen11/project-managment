@@ -13,5 +13,6 @@ public class MessageType {
     private String icon;
     private String type;
     private String background;
+    private String background2;
 }
 

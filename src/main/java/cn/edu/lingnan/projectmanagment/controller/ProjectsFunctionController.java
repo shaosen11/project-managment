@@ -1,10 +1,9 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
-import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.ProjectUserServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
-import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
+import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
+import cn.edu.lingnan.projectmanagment.service.impl.*;
+import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +13,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,9 @@ public class ProjectsFunctionController {
 
     @Autowired
     private ProjectUserServiceImpl projectUserService;
+
+    @Autowired
+    private ProjectsMessageServiceImpl projectsMessageService;
 
     //查询所有项目功能点信息
     @GetMapping("/project_function_list")
@@ -102,7 +105,7 @@ public class ProjectsFunctionController {
     @Transactional
     @ResponseBody
     @PostMapping("/del_project_function")
-    public Boolean delProjectFunction(Integer id,String reason) {
+    public Boolean delProjectFunction(Integer id, String reason) {
         try {
             ProjectsFunction projectsFunction = projectsFunctionService.getOneProjectFunction(id);
             projectsFunction.setDelReason(reason);
@@ -269,9 +272,9 @@ public class ProjectsFunctionController {
     }
 
     @GetMapping("/project_function_view")
-    public String projectView(@RequestParam Integer projectId,Model model) {
+    public String projectView(@RequestParam Integer projectId, Model model) {
         Projects projects = projectService.getById(projectId);
-        model.addAttribute("project",projects);
+        model.addAttribute("project", projects);
         return "project/projectfunctionview";
     }
 
@@ -297,7 +300,7 @@ public class ProjectsFunctionController {
         Integer data2 = projectsFunctionService.countByProjectIdAndStatus(projectId, 2);
         Integer data3 = projectsFunctionService.countByProjectIdAndStatus(projectId, 3);
         Integer data4 = projectsFunctionService.countDelByProjectId(projectId);
-        Map<String,Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         map.put("data0", data0);
         map.put("data1", data1);
         map.put("data2", data2);
@@ -309,20 +312,20 @@ public class ProjectsFunctionController {
     //获取项目的所有功能点
     @GetMapping("/project_function")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> myProjectsJoin(Integer projectId,Integer userId){
-        System.out.println("项目id"+projectId+" "+userId);
+    public ResponseEntity<Map<String, Object>> myProjectsJoin(Integer projectId, Integer userId) {
+        System.out.println("项目id" + projectId + " " + userId);
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId,projectId);
-            if(projectsUser.getDutyCode()==3){
-                map.put("duty","false");
-            }else{
-                map.put("duty","true");
+            ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
+            if (projectsUser.getDutyCode() == 3) {
+                map.put("duty", "false");
+            } else {
+                map.put("duty", "true");
                 List<ProjectsFunction> list = projectsFunctionService.getAllFunctionByProjectId(projectId);
                 System.out.println("获得项目功能点信息:" + list);
                 // 封装数据，并返回
                 map.put("list", list);
-                System.out.println("map"+map);
+                System.out.println("map" + map);
             }
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } catch (Exception e) {
@@ -333,13 +336,13 @@ public class ProjectsFunctionController {
     }
 
     @GetMapping("/projects_plan_view")
-    public String projectPlanView(@RequestParam Integer projectId,Model model) {
+    public String projectPlanView(@RequestParam Integer projectId, Model model) {
         Projects projects = projectService.getById(projectId);
-        model.addAttribute("project",projects);
+        model.addAttribute("project", projects);
         return "project/projectplanview";
     }
 
-    public Map<String, Object> functionPageCom(Integer page,Integer count){
+    public Map<String, Object> functionPageCom(Integer page, Integer count) {
         Map<String, Object> map = new HashMap<String, Object>();
         // 每页显示条数
         int pageSize = 5;
@@ -351,7 +354,7 @@ public class ProjectsFunctionController {
                 totalPage++;
             }
             // 当页数大于总页数，直接返回
-            if (page > totalPage){
+            if (page > totalPage) {
                 return null;
             }
             // 计算sql需要的起始索引
@@ -360,7 +363,7 @@ public class ProjectsFunctionController {
             map.put("page", page);
             map.put("pageSize", pageSize);
             map.put("totalPage", totalPage);
-            map.put("offset",offset);
+            map.put("offset", offset);
             return map;
         } catch (Exception e) {
             System.out.println("获取函数数据失败" + e);
@@ -371,8 +374,8 @@ public class ProjectsFunctionController {
     //获取项目的所有功能点计划
     @GetMapping("/projects_plan")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> projectsPlan(Integer page,Integer projectId){
-        System.out.println("当前页：" + page+"  项目id"+projectId);
+    public ResponseEntity<Map<String, Object>> projectsPlan(Integer page, Integer projectId) {
+        System.out.println("当前页：" + page + "  项目id" + projectId);
         Map<String, Object> map = new HashMap<String, Object>();
         // 每页显示条数
         int pageSize = 5;
@@ -380,17 +383,17 @@ public class ProjectsFunctionController {
             // 获取总条目数
             List<ProjectsFunction> projectsFunctionList = projectsFunctionService.getProjectPlanFunctions(projectId);
             int count = projectsFunctionList.size();
-            map = functionPageCom(page,count);
+            map = functionPageCom(page, count);
             Projects projects = projectService.getById(projectId);
             System.out.println("获得项目信息:" + projects);
             map.put("projects", projects);
             int offset = (int) map.get("offset");
             // 根据起始索引和页面大小去查询数据
-            List<ProjectsFunction> list = projectsFunctionService.getProjectPlanFunctionsPage(projectId,offset,pageSize);
-            System.out.println("分页list"+list);
+            List<ProjectsFunction> list = projectsFunctionService.getProjectPlanFunctionsPage(projectId, offset, pageSize);
+            System.out.println("分页list" + list);
             // 封装数据，并返回
             map.put("list", list);
-            System.out.println("分页map"+map);
+            System.out.println("分页map" + map);
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("获取分页数据失败" + e);
@@ -398,6 +401,37 @@ public class ProjectsFunctionController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @PostMapping("/projectFunctionMessageAlert")
+    @ResponseBody
+    public AJaxResponse projectFunctionMessageAlert(Integer functionId, Integer projectId, Integer userId) {
+        //项目是否存在此人
+        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
+        if (projectsUser != null) {
+            //查询是否管理员或者功能点发布者
+            if (projectsUser.getDutyCode() != 1 && projectsUser.getDutyCode() != 2) {
+                return AJaxResponse.error("你不是项目管理员或功能发布者，不可操作！");
+            }
+            //查找出项目功能点
+            ProjectsFunction function = projectsFunctionService.getById(functionId);
+            System.out.println(function);
+            //封装信息
+            ProjectsMessage projectsMessage = new ProjectsMessage();
+            projectsMessage.setProjectId(projectId);
+            projectsMessage.setFromUserId(userId);
+            projectsMessage.setToUserId(function.getRealizeUserId());
+            projectsMessage.setTypeId(16);
+            projectsMessage.setTime(DateFromatUtil.getNowDate(new Date()));
+            String msg = projectsUser.getProjectsUserDuty().getDutyName() + projectsUser.getMyUserDetails().getUsername()
+                    + "提醒你尽快完成功能点";
+            projectsMessage.setMessage(msg);
+            System.out.println(projectsMessage);
+            projectsMessageService.insert(projectsMessage);
+            return AJaxResponse.success("提醒成功！");
+        } else {
+            return AJaxResponse.error("你不是项目人员，不可操作！");
+        }
     }
 }
 

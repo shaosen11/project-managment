@@ -1,6 +1,7 @@
 $(function () {
     if (userId != "") {
         user_projects(userId);
+        messageCount();
     }
 })
 
@@ -24,6 +25,21 @@ function user_projects(userId) {
                 a.innerHTML = data[i].name;
                 li.appendChild(a);
             }
+        }
+    })
+}
+
+//加载项目个人消息和待办数量
+function messageCount() {
+    $.ajax({
+        url: "/messageCount",
+        type: "get",
+        datatype: "json",
+        data: {
+            userId: userId
+        },
+        success: function (json) {
+            $("#messageCount").text(json)
         }
     })
 }

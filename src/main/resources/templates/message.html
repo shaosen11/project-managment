@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <div th:replace="commom/bar :: commom_css"></div>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="commom/bar :: topbar"></div>
+    <!-- Sidebar -->
+    <div th:replace="commom/bar :: sidebar"></div>
+    <!-- End Sidebar -->
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h4 class="page-title">个人消息</h4>
+                    <ul class="breadcrumbs">
+                        <li class="nav-home">
+                            <a href="#">
+                                <i class="flaticon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Base</a>
+                        </li>
+                        <li class="separator">
+                            <i class="flaticon-right-arrow"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#">Panels</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd" id="pills-tab-without-border"
+                            role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-person-tab-nobd" data-toggle="pill"
+                                   href="#pills-person-nobd" role="tab" aria-controls="pills-person-nobd"
+                                   aria-selected="true">Person</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-todo-tab-nobd" data-toggle="pill"
+                                   href="#pills-todo-nobd" role="tab" aria-controls="pills-todo-nobd"
+                                   aria-selected="false">Todo</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- TimeLine -->
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                            <div class="tab-pane fade show active" id="pills-person-nobd" role="tabpanel"
+                                 aria-labelledby="pills-person-tab-nobd">
+                                <ul class="timeline" id="personMessageUl">
+                                </ul>
+                                <div class="text-right mt-3 mb-3">
+                                    <button class="btn btn-secondary" onclick="appendMorePersonMessageHtml()">加载更多
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-todo-nobd" role="tabpanel"
+                                 aria-labelledby="pills-todo-tab-nobd">
+                                <ul class="timeline" id="messageNeedToDoUl">
+                                </ul>
+                                <div class="text-right mt-3 mb-3">
+                                    <button class="btn btn-secondary" onclick="appendMoremessageNeedToDoHtml()">
+                                        加载更多
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js" />
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_js" />
+
+
+<!--加载项目个人消息-->
+<script type="text/javascript">
+    var personOffset = 0;
+    var personPageSize = 5;
+    var personMessageIndex = 0;
+    $(function () {
+        ajaxAppendPersonMessage(userId, personOffset, personPageSize);
+    })
+
+    function ajaxAppendPersonMessage(userId, offset, pageSize) {
+        $.ajax({
+            type: "get",
+            url: "/message_person",
+            dataType: "json",
+            data: {
+                userId: userId,
+                offset: offset,
+                pageSize: pageSize
+            },
+            success: function (json) {
+                appendPersonMessageHtml(json);
+            }
+        })
+    }
+
+    //此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    function appendPersonMessageHtml(list) {
+        var messageLi = '';
+        for (var i = 0; i < list.length; i++, personMessageIndex++) {
+            if (personMessageIndex % 2 == 0) {
+                messageLi += ' <li>'
+            } else {
+                messageLi += ' <li class="timeline-inverted">'
+            }
+            messageLi += '                       <div class="timeline-badge ' + list[i].messageType.background2 + '">' +
+                '                                    <i class="fas ' + list[i].messageType.icon + '"></i>' +
+                '                                </div>\n' +
+                '                                <div class="timeline-panel" onclick="updatePersonMessageIsRead(' + list[i].id + ')">\n' +
+                '                                    <div class="timeline-heading">\n' +
+                '                                        <h4 class="timeline-title">'
+            if (list[i].isRead == 1) {
+                messageLi += '<span style="color: red" id="PersonMessageIsReadSpan' + list[i].id + '">*</span>\n'
+            }
+            messageLi += '                                  ' + list[i].messageType.type + ' </h4>\n' +
+                '                                        <p>\n' +
+                '                                            <small class="text-muted"> ' + list[i].time + '\n' +
+                '                                            </small>\n' +
+                '                                        </p>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="timeline-body">\n' +
+                '                                        <p>' + list[i].message + '</p>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </li>'
+        }
+        $("#personMessageUl").append(messageLi);
+    }
+</script>
+<!--加载更多个人消息-->
+<script type="text/javascript">
+
+    function appendMorePersonMessageHtml() {
+        personOffset = personOffset + personPageSize;
+        personPageSize = personPageSize + 10;
+        ajaxAppendPersonMessage(userId, personOffset, personPageSize);
+    }
+</script>
+<!--标志项目个人消息已读-->
+<script type="text/javascript">
+    function updatePersonMessageIsRead(messageId) {
+        $.ajax({
+            type: "get",
+            url: "/updateMessageIsReadByMessageId",
+            dataType: "json",
+            data: {
+                messageId: messageId,
+            },
+            success: function (result) {
+                if (result.ok) {
+                    $("#PersonMessageIsReadSpan" + messageId).html("");
+                    messageCount();
+                } else {
+                    swal("系统出现错误！", result.message, {
+                        icon: "error",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-danger'
+                            }
+                        },
+                    });
+                }
+            }
+        })
+    }
+</script>
+
+<!--加载待办消息-->
+<script type="text/javascript">
+    var needToDoOffset = 0;
+    var needToDoPageSize = 5;
+    var messageNeedToDoIndex = 0;
+    $(function () {
+        ajaxAppendmessageNeedToDo(userId, needToDoOffset, needToDoPageSize);
+    })
+
+    function ajaxAppendmessageNeedToDo(userId, offset, pageSize) {
+        $.ajax({
+            type: "get",
+            url: "/message_need_to_do",
+            dataType: "json",
+            data: {
+                userId: userId,
+                offset: offset,
+                pageSize: pageSize,
+            },
+            success: function (json) {
+                appendmessageNeedToDoHtml(json);
+            }
+        })
+    }
+
+    function appendmessageNeedToDoHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var messageLi = '';
+        for (var i = 0; i < list.length; i++, messageNeedToDoIndex++) {
+            if (messageNeedToDoIndex % 2 == 0) {
+                messageLi += ' <li id="PersonMessageNeedToDo' + list[i].id + '">'
+            } else {
+                messageLi += ' <li class="timeline-inverted" id="PersonMessageNeedToDo' + list[i].id + '">'
+            }
+            messageLi += '<div class="timeline-badge ' + list[i].messageType.background2 + '"><i class="fas ' + list[i].messageType.icon + '"></i></div>\n' +
+                '                                <div class="timeline-panel">\n' +
+                '                                    <div class="timeline-heading">\n' +
+                '                                        <h4 class="timeline-title">' + list[i].messageType.type + '</h4>\n' +
+                '                                        <p>\n' +
+                '                                            <small class="text-muted"> ' + list[i].time + '\n' +
+                '                                            </small>\n' +
+                '                                        </p>\n' +
+                '                                    </div>\n' +
+                '                                    <div class="timeline-body">\n' +
+                '                                        <p>' + list[i].message + '</p>\n' +
+                '                                        <hr>' +
+                '                                        <div class="btn-group dropdown">\n' +
+                '                                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">\n' +
+                '                                                 <span class="btn-label">\n' +
+                '                                                      <i class="fa fa-cog"></i>\n' +
+                '                                                 </span>\n' +
+                '                                             </button>\n' +
+                '                                             <ul class="dropdown-menu" role="menu">\n' +
+                '                                                 <li>\n' +
+                '                                                 <a class="dropdown-item" onclick="agreeMessageToDo(' + list[i].id + ',' + userId + ')">同意</a>\n' +
+                '                                                 <a class="dropdown-item" onclick="doNotAgreeMessageToDo(' + list[i].id + ',' + userId + ')">拒绝</a>\n' +
+                '                                                 </li>\n' +
+                '                                             </ul>\n' +
+                '                                          </div>' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </li>'
+        }
+        $("#messageNeedToDoUl").append(messageLi);
+    }
+</script>
+<!--加载更多待办消息-->
+<script type="text/javascript">
+    function appendMoremessageNeedToDoHtml() {
+        needToDoOffset = needToDoOffset + needToDoPageSize;
+        needToDoPageSize = needToDoPageSize + 10;
+        ajaxAppendmessageNeedToDo(userId, needToDoOffset, needToDoPageSize);
+    }
+</script>
+
+<!--同意待办消息-->
+<script type="text/javascript">
+    function agreeMessageToDo(messageId) {
+        $.ajax({
+            type: "put",
+            url: "/agreeNeedToDo",
+            dataType: "json",
+            data: {
+                messageId: messageId,
+            },
+            success: function (result) {
+                console.log(result);
+                if (result) {
+                    $("#PersonMessageNeedToDo" + messageId).html("")
+                }
+            }
+        })
+    }
+</script>
+<!--不同意待办消息-->
+<script type="text/javascript">
+    function doNotAgreeMessageToDo(messageId) {
+        $.ajax({
+            type: "put",
+            url: "/doNotAgreeNeedToDo",
+            dataType: "json",
+            data: {
+                messageId: messageId,
+            },
+            success: function (result) {
+                if (result) {
+                    $("#PersonMessageNeedToDo" + messageId).html("")
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
