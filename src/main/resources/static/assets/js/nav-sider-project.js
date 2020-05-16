@@ -77,11 +77,20 @@ function package_list(projectId) {
         dataType: "json",
         success: function (data) {
             var packagennameul = document.getElementById("uploadPackageName");
+            // var packagennameul2 = document.getElementById("packageName1");
             for (var i = 0; i < data.length; i++) {
                 var opts = document.createElement("option");
                 opts.value = data[i].packageName;
                 opts.innerHTML = data[i].packageName;
                 packagennameul.appendChild(opts);
+                // packagennameul2.appendChild(opts);
+            }
+            var packagennameul2 = document.getElementById("packageName1");
+            for (var i = 0; i < data.length; i++) {
+                var opts = document.createElement("option");
+                opts.value = data[i].packageName;
+                opts.innerHTML = data[i].packageName;
+                packagennameul2.appendChild(opts);
             }
         }
     });
