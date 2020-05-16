@@ -159,5 +159,11 @@ public interface UserService {
      * @return
      */
     MyUserDetails getSimpleMyUserDetailsByUserId(Integer userId);
+
+    /**
+     * 统计用户数量
+     * @return
+     */
+    Integer userCount();
 }
 

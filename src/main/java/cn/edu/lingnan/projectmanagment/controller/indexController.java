@@ -1,7 +1,10 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
+import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
+import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.UserUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -19,6 +22,12 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class indexController {
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private ProjectServiceImpl projectService;
+
     @GetMapping(value = {"/index", "/"})
     public String index(HttpServletRequest request) {
         //获取myUserDetails对象
@@ -38,6 +47,11 @@ public class indexController {
         session.setAttribute("username", username);
         session.setAttribute("email", email);
         session.setAttribute("photo", photo);
+        //统计用户，项目数量
+        Integer userCount = userService.userCount();
+        session.setAttribute("userCount", userCount);
+        Integer projectCount = projectService.projectCount();
+        session.setAttribute("projectCount", projectCount);
         return "index";
     }
 }

@@ -124,5 +124,11 @@ public interface ProjectMapper {
      * @return
      */
     Integer countProjectsNumberByType(String type);
+
+    /**
+     * 统计项目数量
+     * @return
+     */
+    Integer projectCount();
 }
 
