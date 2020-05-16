@@ -5,6 +5,7 @@
     <title>Home</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <div th:replace="commom/bar :: commom_css"></div>
+    <link rel="stylesheet" th:href="@{/assets/js/highlight/styles/atelier-cave-dark.css}">
 </head>
 <body>
 <div class="wrapper">
@@ -226,9 +227,9 @@
 </div>
 
 <!--公共JS-->
-<th:block th:replace="commom/bar :: commom_js" />
+<th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_project_js" />
+<th:block th:replace="commom/bar :: nav_project_js"/>
 
 <!--代码高亮-->
 <script th:src="@{/assets/js/highlight/highlight.js}"></script>
@@ -260,7 +261,7 @@
                     $("#addressd2").html(highCode);
                 }
             })
-        } else{
+        } else {
             $.ajax({
                 url: addressdocument,
                 type: "get",
@@ -279,11 +280,21 @@
 
 <!--下载文件-->
 <script type="text/javascript">
-    // function downloadFile() {
-    //     var addressdocument = [[${addressdocument}]]
-    //     console.log([[${addressdocument}]])
-    //     location.href = [[${addressdocument}]]
-    // }
+    var documentName = "[[${param.documentName}]]";
+    function downloadFile() {
+        $.ajax({
+            url: "/download",
+            type: "get",
+            data: {
+                projectId: projectId,
+                documentName: documentName,
+            },
+            datatype: "json",
+            success: function (data) {
+                location.href=data;
+            }
+        })
+    }
 </script>
 
 </body>

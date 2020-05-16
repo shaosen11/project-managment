@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -64,5 +65,11 @@ class ProjectManagmentApplicationTests {
     MessageNeedToDoRelationshipServiceImpl messageNeedToDoRelationshipService;
     @Test
     void t1(){
+        String downloadPath = "http://www.projectsmanagment.top/files/projects/1/66ce0a9f59094c869ecfaf262907bc7a-DocumentsController.java";
+        System.out.println(downloadPath);
+        File file = new File(downloadPath);
+        if (file.exists()) {
+            System.out.println("文件存在");
+        }
     }
 }

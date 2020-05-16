@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
+import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
 import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsMessageNeedToDoRelationshipServiceImpl;
@@ -8,6 +9,7 @@ import cn.edu.lingnan.projectmanagment.service.impl.ProjectsMessageServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -265,11 +270,48 @@ public class DocumentsController {
     }
 
     @GetMapping("/download")
-    public String download(Documents documents) {
-        System.out.println(documents);
-        documents = documentsService.getById(documents.getId());
-        String downloadPath = "/files/projects/" + documents.getProjectId() + "/" + documents.getSerialNumber() + "-" + documents.getName();
+    @ResponseBody
+    public String download(Integer projectId, String documentName) {
+        Documents documents = documentsService.getByProjectsIdAndVersionFlagAndName(projectId, 1, documentName);
+        String downloadPath = "http://www.projectsmanagment.top" + FileUtil.DocumentsGetAddrress(documents);
+        System.out.println(downloadPath);
         return downloadPath;
+//        File file = new File(downloadPath);
+//        if (file.exists()) {
+//            System.out.println("文件存在");
+//            response.setHeader("content-type", "application/octet-stream");
+//            response.setContentType("application/octet-stream");
+//            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
+//            byte[] buffer = new byte[1024];
+//            FileInputStream fis = null;
+//            BufferedInputStream bis = null;
+//            try {
+//                fis = new FileInputStream(file);
+//                bis = new BufferedInputStream(fis);
+//                OutputStream os = response.getOutputStream();
+//                int i = bis.read(buffer);
+//                while (i != -1) {
+//                    os.write(buffer, 0, i);
+//                    i = bis.read(buffer);
+//                }
+//                return AJaxResponse.success("下载成功!");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return AJaxResponse.error("抛出错误!");
+//            } finally {
+//                {
+//                    try {
+//                        bis.close();
+//                        fis.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }
+//        }else {
+//            return AJaxResponse.error("文件不存在!");
+//        }
     }
 }
 
