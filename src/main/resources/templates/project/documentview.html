@@ -206,11 +206,9 @@
                     <input type="hidden" name="projectId" th:value="${projectId}">
                     <input type="hidden" name="creator" value="${loginUser.id}">
                     <input type="hidden" name="filename" value="${filename}">
-                    <div class="from-group" style="width: 100%">
-                        <div class="form-group" style="width: 100%">
-                            <select class="form-control input-fixed" id="packageName1" name="packageName">
-                            </select>
-                        </div>
+                    <div class="col-md-12">
+                        <select class="form-control" id="packageName1" name="packageName">
+                        </select>
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" rows="3" placeholder="版本信息" id="versionMessage1"

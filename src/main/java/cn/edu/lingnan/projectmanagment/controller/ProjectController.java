@@ -3,6 +3,7 @@ package cn.edu.lingnan.projectmanagment.controller;
 import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.PathUtil;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,6 +42,9 @@ public class ProjectController {
     @Autowired
     ProjectsCodeLineServiceImpl projectsCodeLineService;
 
+    @Autowired
+    private UserClickServiceImpl userClickService;
+
     //查询一条项目信息
     @GetMapping("/get_by_id")
     public String getById(Integer id, Model model) {
@@ -66,7 +70,19 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_view")
-    public String projectView() {
+    public String projectView(HttpServletRequest request, Integer projectId) {
+        //记录点击量
+        projectService.updateProjectClickNumber(projectId);
+        Date now = new Date();
+        UserClick userClick1 = new UserClick();
+        //获取myUserDetails对象
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        if (myUserDetails != null){
+            userClick1.setUserId(myUserDetails.getId());
+        }
+        userClick1.setProjectsId(projectId);
+        userClick1.setClickTime(now);
+        userClickService.addUserClick(userClick1);
         return "project/projectview";
     }
 
@@ -198,7 +214,7 @@ public class ProjectController {
 
     @GetMapping("/todayProjectsAndWeekProjects")
     @ResponseBody
-    public Object getTodayProjectsAndWeekProjects(){
+    public Object getTodayProjectsAndWeekProjects() {
         List todayProjectsList = projectService.getTodayProject();
         List weekProjectsList = projectService.getWeekProject();
         Map<String, List> projectMap = new HashMap<>();

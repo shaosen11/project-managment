@@ -86,11 +86,13 @@ function package_list(projectId) {
                 // packagennameul2.appendChild(opts);
             }
             var packagennameul2 = document.getElementById("packageName1");
-            for (var i = 0; i < data.length; i++) {
-                var opts = document.createElement("option");
-                opts.value = data[i].packageName;
-                opts.innerHTML = data[i].packageName;
-                packagennameul2.appendChild(opts);
+            if (packagennameul2 != null) {
+                for (var i = 0; i < data.length; i++) {
+                    var opts = document.createElement("option");
+                    opts.value = data[i].packageName;
+                    opts.innerHTML = data[i].packageName;
+                    packagennameul2.appendChild(opts);
+                }
             }
         }
     });
@@ -163,6 +165,78 @@ $(function () {
     $("#projectSideBarA5").attr("href", '/project_user_view?projectId=' + projectId)
     $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
 })
+
+//判断用户是否有权限标记
+var projectAdminFlag;
+
+//判断用户是否登录，是否有权限
+function judgrUser() {
+    $.ajax({
+        type: "Get",
+        url: "/projectUser",
+        data: {
+            projectId: projectId,
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data != null) {
+                $.ajax({
+                    type: "Get",
+                    url: "/projectUserDuty",
+                    data: {
+                        projectId: projectId,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.id != 3) {
+                            projectAdminFlag = true;
+                        } else {
+                            projectAdminFlag = false;
+                        }
+                    }
+                });
+            }
+        },
+    });
+}
+
+//不是管理员提醒
+function noProjectAdminAlert() {
+    swal({
+        icon: "warning",
+        text: "你不是管理员，没有权限！",
+        type: "warning",
+        buttons: false,
+        timer: 1500,
+    })
+}
+
+//没有登录提醒
+function noLoginALert() {
+    swal({
+        icon: "warning",
+        text: "请先登录！",
+        type: "warning",
+        buttons: false,
+        timer: 1500,
+    })
+}
+
+//检查用户是否登录，是否有管理员权限，都通过之后执行函数
+function checkLoginAndPowerAndDoFunction(doFunction) {
+    //检查是否登录
+    if (userId != "") {
+        judgrUser();
+        //检查是否项目管理员
+        if (projectAdminFlag) {
+            doFunction(arguments);
+        } else {
+            noProjectAdminAlert();
+        }
+    } else {
+        noLoginALert()
+    }
+}
 
 
 

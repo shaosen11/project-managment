@@ -197,28 +197,24 @@
 <!--公共JS-->
 <th:block th:replace="commom/bar :: nav_js" />
 
-<!--更新点击量-->
-<script type="text/javascript">
-    function UpdateTraffs(projectId) {
-        console.log(projectId)
-        $.ajax({
-            type: "post",
-            url: "/projects_index_click",
-            data: {
-                userId: userId,
-                projectId: projectId
-            },
-            success: function (json) {
-                if (json.ok) {
-                    location.href = json.data;
-                }
-            },
-            error:function () {
-                console.log("请求失败")
-            }
-        })
-    }
-</script>
+<!--&lt;!&ndash;更新点击量&ndash;&gt;-->
+<!--<script type="text/javascript">-->
+<!--    function UpdateTraffs(projectId) {-->
+<!--        $.ajax({-->
+<!--            type: "post",-->
+<!--            url: "/projects_index_click",-->
+<!--            data: {-->
+<!--                userId: userId,-->
+<!--                projectId: projectId-->
+<!--            },-->
+<!--            success: function (json) {-->
+<!--                if (json.ok) {-->
+<!--                    location.href = json.data;-->
+<!--                }-->
+<!--            },-->
+<!--        })-->
+<!--    }-->
+<!--</script>-->
 <!--加载更多项目-->
 <script type="text/javascript">
     $(function () {
@@ -333,7 +329,7 @@
                 '           <span class="avatar-title rounded-circle border border-white bg-info">' + list[i].firstname + '</span>\n' +
                 '       </span>\n' +
                 '       <div style="float: left">\n' +
-                '           <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')" href="javascript:void(0);">\n' +
+                '           <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '">\n' +
                 '               <span style="color: #145180;font-size: 18px">\n' +
                 '                   ' + list[i].username + '/' + list[i].name + '\n' +
                 '               </span>\n' +
@@ -492,7 +488,7 @@
                 for (var i = 0; i < list.length; i++) {
                     tableShow += '<div>\n' +
                         '              <div class="col-lg-10">\n' +
-                        '                   <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')"\n' +
+                        '                   <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '")"\n' +
                         '                      style="color: #145180;font-size: 18px">\n' +
                         '                      <span>' + list[i].username + '/' + list[i].name + '</span>\n' +
                         '                   </a>\n' +

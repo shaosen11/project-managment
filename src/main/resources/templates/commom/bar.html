@@ -582,7 +582,7 @@
     <!-- 功能点分页 -->
     <script th:src="@{/assets/js/functionpage.js}"></script>
 </div>
-<!--所有页面公共js-->
+<!--所有非项目页面公共js-->
 <div th:fragment="nav_js">
     <!--加载导航栏user公共js-->
     <script th:src="@{/assets/js/nav.js}"></script>
@@ -630,7 +630,7 @@
         }
     </script>
 </div>
-<!--所有页面公共js-->
+<!--所有项目页面公共js-->
 <div th:fragment="nav_project_js">
     <!--加载导航栏user公共js-->
     <script th:src="@{/assets/js/nav.js}"></script>
@@ -660,9 +660,12 @@
             initNavSiderProjectJs(user);
         }
     </script>
-    <!--初始化公共js的projectId-->
+    <!--初始化公共js的projectId和初始化项目权限-->
     <script type="text/javascript">
         var projectId = "[[${param.projectId}]]";
+        $(function () {
+            judgrUser();
+        })
     </script>
 </div>
 </body>

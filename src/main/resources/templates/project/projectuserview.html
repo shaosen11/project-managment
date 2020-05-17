@@ -52,7 +52,7 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">项目人数</p>
-                                            <h4 class="card-title" id="projectUserCount"></h4>
+                                            <h4 class="card-title" id="projectUserCount">[[${countByProjectId}]]</h4>
 
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">管理员</p>
-                                            <h4 class="card-title" id="projectUserAdmin"></h4>
+                                            <h4 class="card-title" id="projectUserAdmin">[[${admin}]]</h4>
 
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">开发者</p>
-                                            <h4 class="card-title" id="projectUserCodeDevelop"></h4>
+                                            <h4 class="card-title" id="projectUserCodeDevelop">[[${codeDevelop}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -401,7 +401,7 @@
     function appendPersonInformationHtml(userId) {
         $.ajax({
             type: "get",
-            url: "/projectsUser",
+            url: "/projectsUserDevotion",
             dataType: "json",
             data: {
                 projectId: projectId,
@@ -480,25 +480,6 @@
         }
         $(developingFunction).html(button)
     }
-</script>
-<!--加载项目功能点数量-->
-<script type="text/javascript">
-    $(function () {
-        $.ajax({
-            type: "get",
-            url: "/projectUserTotal",
-            dataType: "json",
-            data: {
-                projectId: projectId,
-            },
-            success: function (data) {
-                //项目人员数量
-                $("#projectUserCount").text(data.countByProjectId);
-                $("#projectUserAdmin").text(data.admin);
-                $("#projectUserCodeDevelop").text(data.codeDevelop);
-            }
-        })
-    })
 </script>
 </body>
 </html>

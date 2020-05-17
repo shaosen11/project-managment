@@ -332,7 +332,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/user_informetion")
+    @GetMapping("/user_information")
     public MyUserDetails userInformetion(Integer userId){
         return userService.getMyUserDetailsByUserId(userId);
     }

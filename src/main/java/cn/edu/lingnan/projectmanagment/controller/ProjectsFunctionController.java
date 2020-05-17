@@ -4,6 +4,7 @@ import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -312,27 +314,29 @@ public class ProjectsFunctionController {
     //获取项目的所有功能点
     @GetMapping("/project_function")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> myProjectsJoin(Integer projectId, Integer userId) {
-        System.out.println("项目id" + projectId + " " + userId);
-        Map<String, Object> map = new HashMap<String, Object>();
-        try {
-            ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
-            if (projectsUser.getDutyCode() == 3) {
-                map.put("duty", "false");
-            } else {
-                map.put("duty", "true");
-                List<ProjectsFunction> list = projectsFunctionService.getAllFunctionByProjectId(projectId);
-                System.out.println("获得项目功能点信息:" + list);
-                // 封装数据，并返回
-                map.put("list", list);
-                System.out.println("map" + map);
-            }
-            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println("获取数据失败" + e);
-            return new ResponseEntity<Map<String, Object>>(
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public AJaxResponse myProjectsJoin(Integer projectId) {
+        List<ProjectsFunction> list = projectsFunctionService.getAllFunctionByProjectId(projectId);
+        return AJaxResponse.success(list);
+//        map.put("list", list);
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        try {
+//            ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
+//            if (projectsUser.getDutyCode() == 3) {
+//                map.put("duty", "false");
+//            } else {
+//                map.put("duty", "true");
+//                List<ProjectsFunction> list = projectsFunctionService.getAllFunctionByProjectId(projectId);
+//                System.out.println("获得项目功能点信息:" + list);
+//                // 封装数据，并返回
+//                map.put("list", list);
+//                System.out.println("map" + map);
+//            }
+//            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+//        } catch (Exception e) {
+//            System.out.println("获取数据失败" + e);
+//            return new ResponseEntity<Map<String, Object>>(
+//                    HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
     }
 
     @GetMapping("/projects_plan_view")
@@ -405,32 +409,37 @@ public class ProjectsFunctionController {
 
     @PostMapping("/projectFunctionMessageAlert")
     @ResponseBody
-    public AJaxResponse projectFunctionMessageAlert(Integer functionId, Integer projectId, Integer userId) {
-        //项目是否存在此人
-        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
-        if (projectsUser != null) {
-            //查询是否管理员或者功能点发布者
-            if (projectsUser.getDutyCode() != 1 && projectsUser.getDutyCode() != 2) {
-                return AJaxResponse.error("你不是项目管理员或功能发布者，不可操作！");
+    public AJaxResponse projectFunctionMessageAlert(Integer functionId, Integer projectId, HttpServletRequest request) {
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        if (myUserDetails != null) {
+            //项目是否存在此人
+            ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
+            if (projectsUser != null) {
+                //查询是否管理员或者功能点发布者
+                if (projectsUser.getDutyCode() == 3) {
+                    return AJaxResponse.error("你不是项目管理员，不可操作！");
+                }
+                //查找出项目功能点
+                ProjectsFunction function = projectsFunctionService.getById(functionId);
+                System.out.println(function);
+                //封装信息
+                ProjectsMessage projectsMessage = new ProjectsMessage();
+                projectsMessage.setProjectId(projectId);
+                projectsMessage.setFromUserId(myUserDetails.getId());
+                projectsMessage.setToUserId(function.getRealizeUserId());
+                projectsMessage.setTypeId(16);
+                projectsMessage.setTime(DateFromatUtil.getNowDate(new Date()));
+                String msg = projectsUser.getProjectsUserDuty().getDutyName() + projectsUser.getMyUserDetails().getUsername()
+                        + "提醒你尽快完成功能点" + function.getFunctionName();
+                projectsMessage.setMessage(msg);
+                System.out.println(projectsMessage);
+                projectsMessageService.insert(projectsMessage);
+                return AJaxResponse.success("提醒成功！");
+            } else {
+                return AJaxResponse.error("你不是管理员，没有权限！");
             }
-            //查找出项目功能点
-            ProjectsFunction function = projectsFunctionService.getById(functionId);
-            System.out.println(function);
-            //封装信息
-            ProjectsMessage projectsMessage = new ProjectsMessage();
-            projectsMessage.setProjectId(projectId);
-            projectsMessage.setFromUserId(userId);
-            projectsMessage.setToUserId(function.getRealizeUserId());
-            projectsMessage.setTypeId(16);
-            projectsMessage.setTime(DateFromatUtil.getNowDate(new Date()));
-            String msg = projectsUser.getProjectsUserDuty().getDutyName() + projectsUser.getMyUserDetails().getUsername()
-                    + "提醒你尽快完成功能点";
-            projectsMessage.setMessage(msg);
-            System.out.println(projectsMessage);
-            projectsMessageService.insert(projectsMessage);
-            return AJaxResponse.success("提醒成功！");
         } else {
-            return AJaxResponse.error("你不是项目人员，不可操作！");
+            return AJaxResponse.error("请先登录！");
         }
     }
 }

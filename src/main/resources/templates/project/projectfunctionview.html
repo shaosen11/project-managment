@@ -161,17 +161,16 @@
                             </div>
                             <br>
                             <div class="text-center">
-                                    <button class="btn btn-primary" data-toggle="modal"
-                                            data-target="#addFunction">
+                                <button class="btn btn-primary" onclick="addFunctionModel()">
                                                 <span class="btn-label">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
-                                        新建功能
-                                    </button>
+                                    新建功能
+                                </button>
                             </div>
                             <br>
                             <div class="text-center">
-                                <button class="btn btn-danger" onclick="delFunction()">
+                                <button class="btn btn-danger" onclick="delFunctionModel()">
                                                 <span class="btn-label">
                                                     <i class="fas fa-times"></i>
                                                 </span>
@@ -185,136 +184,136 @@
                         <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel"
                              aria-labelledby="v-pills-four-tab">
                             <div style="width: 19%;float: left">
-                                    <div class="card" style="height: 700px;">
-                                        <div class="card-header"
-                                             style="background-color: rgba(245,232,200,0.5)">
-                                            <div class="card-title" style="color: black">
-                                                <i class="fas fa-battery-empty" style="color: #FF9933"></i>&nbsp;待办的
-                                            </div>
-                                        </div>
-                                        <div class="card-body"
-                                             style="background-color: rgba(220,220,220,0.3)">
-                                            <div style="margin-top: -15px">
-                                                <!-- 分页容器：显示数据--参与 -->
-                                                <div id="TodoDiv"></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <!-- 分页容器： 显示分页按钮-->
-                                            <div class="text-center">
-                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                <ul id="TodoFunctionPage"
-                                                    class="pagination pagination-sm"></ul>
-                                            </div>
+                                <div class="card" style="height: 700px;">
+                                    <div class="card-header"
+                                         style="background-color: rgba(245,232,200,0.5)">
+                                        <div class="card-title" style="color: black">
+                                            <i class="fas fa-battery-empty" style="color: #FF9933"></i>&nbsp;待办的
                                         </div>
                                     </div>
+                                    <div class="card-body"
+                                         style="background-color: rgba(220,220,220,0.3)">
+                                        <div style="margin-top: -15px">
+                                            <!-- 分页容器：显示数据--参与 -->
+                                            <div id="TodoDiv"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-center">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="TodoFunctionPage"
+                                                class="pagination pagination-sm"></ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div style="width: 1%;float: left">&nbsp;</div>
                             <div style="width: 19%;float: left">
-                                    <div class="card" style="height: 700px;">
-                                        <div class="card-header"
-                                             style="background-color: rgba(157,211,250,0.5)">
-                                            <div class="card-title" style="color: black">
-                                                <i class="fas fa-battery-half" style="color: #1F6FB5"></i>&nbsp;进行中
-                                            </div>
-                                        </div>
-                                        <div class="card-body"
-                                             style="background-color: rgba(220,220,220,0.3)">
-                                            <div style="margin-top: -15px">
-                                                <!-- 分页容器：显示数据 -->
-                                                <div id="ProcesingDiv"></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <!-- 分页容器： 显示分页按钮-->
-                                            <div class="text-center">
-                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                <ul id="ProcesingFunctionPage"
-                                                    class="pagination pagination-sm"></ul>
-                                            </div>
+                                <div class="card" style="height: 700px;">
+                                    <div class="card-header"
+                                         style="background-color: rgba(157,211,250,0.5)">
+                                        <div class="card-title" style="color: black">
+                                            <i class="fas fa-battery-half" style="color: #1F6FB5"></i>&nbsp;进行中
                                         </div>
                                     </div>
+                                    <div class="card-body"
+                                         style="background-color: rgba(220,220,220,0.3)">
+                                        <div style="margin-top: -15px">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="ProcesingDiv"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-center">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="ProcesingFunctionPage"
+                                                class="pagination pagination-sm"></ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div style="width: 1%;float: left">&nbsp;</div>
                             <div style="width: 19%;float: left">
-                                    <div class="card" style="height: 700px;">
-                                        <div class="card-header"
-                                             style="background-color: rgba(118,126,199,0.5)">
-                                            <div class="card-title" style="color: black"><i
-                                                    class="fas fa-battery-three-quarters"
-                                                    style="color: #795DDE"></i>&nbsp;已完成
-                                            </div>
-                                        </div>
-                                        <div class="card-body"
-                                             style="background-color: rgba(220,220,220,0.3)">
-                                            <div style="margin-top: -15px">
-                                                <!-- 分页容器：显示数据 -->
-                                                <div id="CompletedDiv"></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <!-- 分页容器： 显示分页按钮-->
-                                            <div class="text-center">
-                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                <ul id="CompletedFunctionPage"
-                                                    class="pagination pagination-sm"></ul>
-                                            </div>
+                                <div class="card" style="height: 700px;">
+                                    <div class="card-header"
+                                         style="background-color: rgba(118,126,199,0.5)">
+                                        <div class="card-title" style="color: black"><i
+                                                class="fas fa-battery-three-quarters"
+                                                style="color: #795DDE"></i>&nbsp;已完成
                                         </div>
                                     </div>
+                                    <div class="card-body"
+                                         style="background-color: rgba(220,220,220,0.3)">
+                                        <div style="margin-top: -15px">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="CompletedDiv"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-center">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="CompletedFunctionPage"
+                                                class="pagination pagination-sm"></ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div style="width: 1%;float: left">&nbsp;</div>
                             <div style="width: 19%;float: left">
-                                    <div class="card" style="height: 700px;">
-                                        <div class="card-header"
-                                             style="background-color: rgba(25,148,117,0.5)">
-                                            <div class="card-title" style="color: black"><i
-                                                    class="fas fa-battery-full"
-                                                    style="color: #007850"></i>&nbsp;已验收
-                                            </div>
-                                        </div>
-                                        <div class="card-body"
-                                             style="background-color: rgba(220,220,220,0.3)">
-                                            <div style="margin-top: -15px">
-                                                <!-- 分页容器：显示数据 -->
-                                                <div id="AcceptedDiv"></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <!-- 分页容器： 显示分页按钮-->
-                                            <div class="text-center">
-                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                <ul id="AcceptedFunctionPage"
-                                                    class="pagination pagination-sm"></ul>
-                                            </div>
+                                <div class="card" style="height: 700px;">
+                                    <div class="card-header"
+                                         style="background-color: rgba(25,148,117,0.5)">
+                                        <div class="card-title" style="color: black"><i
+                                                class="fas fa-battery-full"
+                                                style="color: #007850"></i>&nbsp;已验收
                                         </div>
                                     </div>
+                                    <div class="card-body"
+                                         style="background-color: rgba(220,220,220,0.3)">
+                                        <div style="margin-top: -15px">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="AcceptedDiv"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-center">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="AcceptedFunctionPage"
+                                                class="pagination pagination-sm"></ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div style="width: 1%;float: left">&nbsp;</div>
                             <div style="width: 19%;float: left">
-                                    <div class="card" style="height: 700px;">
-                                        <div class="card-header"
-                                             style="background-color: rgba(172,173,172,0.5)">
-                                            <div class="card-title" style="color: black"><i
-                                                    class="fas fa-broom"
-                                                    style="color: #7B7687"></i>&nbsp;已取消
-                                            </div>
-                                        </div>
-                                        <div class="card-body"
-                                             style="background-color: rgba(220,220,220,0.3)">
-                                            <div style="margin-top: -15px">
-                                                <!-- 分页容器：显示数据 -->
-                                                <div id="CancelDiv"></div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <!-- 分页容器： 显示分页按钮-->
-                                            <div class="text-center">
-                                                <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                                <ul id="CancelFunctionPage"
-                                                    class="pagination pagination-sm"></ul>
-                                            </div>
+                                <div class="card" style="height: 700px;">
+                                    <div class="card-header"
+                                         style="background-color: rgba(172,173,172,0.5)">
+                                        <div class="card-title" style="color: black"><i
+                                                class="fas fa-broom"
+                                                style="color: #7B7687"></i>&nbsp;已取消
                                         </div>
                                     </div>
+                                    <div class="card-body"
+                                         style="background-color: rgba(220,220,220,0.3)">
+                                        <div style="margin-top: -15px">
+                                            <!-- 分页容器：显示数据 -->
+                                            <div id="CancelDiv"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <!-- 分页容器： 显示分页按钮-->
+                                        <div class="text-center">
+                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+                                            <ul id="CancelFunctionPage"
+                                                class="pagination pagination-sm"></ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -356,8 +355,7 @@
                     <div class="col-md-6 pr-0">
                         <div class="form-group form-group-default">
                             <label>实现用户</label>
-                            <input id="addRealizeUserId" name="realizeUserId" type="text" class="form-control"
-                                   placeholder="fill realizeUserId">
+                            <select name="realizeUserId" id="addRealizeUserId" class="form-control"></select>
                         </div>
                     </div>
                 </div>
@@ -410,9 +408,9 @@
 </div>
 
 <!--公共JS-->
-<th:block th:replace="commom/bar :: commom_js" />
+<th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_project_js" />
+<th:block th:replace="commom/bar :: nav_project_js"/>
 
 
 <!--功能点分页-->
@@ -522,7 +520,7 @@
         $(divName5).html("");
         var pagecolor5 = "#7B7687";
         var functionStatus5 = 4;
-        functionPageStart2(url, projectId,userId,functionStatus5, functionPage5, divName5, pagecolor5);//全部功能-已取消
+        functionPageStart2(url, projectId, userId, functionStatus5, functionPage5, divName5, pagecolor5);//全部功能-已取消
     }
 
 
@@ -657,7 +655,6 @@
                 projectId: projectId,
             },
             success: function (json) {
-                console.log(json)
                 $("#projectFunctionTodo").text(json.data0);
                 $("#projectFunctionProcesing").text(json.data1);
                 $("#projectFunctionCompleted").text(json.data2);
@@ -667,44 +664,58 @@
         })
     }
 </script>
-<!--删除功能点-->
+<!--新建项目弹出框-->
 <script type="text/javascript">
-    function delFunction() {
-        $.ajax(
-            {
-                type: "Get",
-                url: "/project_function",
-                data: {
-                    projectId: projectId,
-                    userId: userId
-                },
-                dataType: "json",
-                success: function (data) {
-                    if(data.duty == "true"){
-                        $('#delFunction').modal('show');
-                        projectFunctionAppendHtml(data.list);
-                    }else{
-                        swal({
-                            icon : "warning",
-                            title: "权限不够！",
-                            text: "只有项目创建者和管理员才可以删除项目！",
-                            type: "warning",
-                            buttons: false,
-                            timer: 1500,
-                        })
-                    }
-                },
-                error:function () {
-                    swal({
-                        icon : "warning",
-                        text: "请先登录！",
-                        type: "warning",
-                        buttons: false,
-                        timer: 1500,
-                    })
-                }
+    function addFunctionModel() {
+        checkLoginAndPowerAndDoFunction(addFunctionDo, projectId)
+    }
+
+    function addFunctionDo(arguments) {
+        $('#addFunction').modal('show');
+        $.ajax({
+            type: "Get",
+            url: "/projectUsers",
+            data: {
+                projectId: arguments[1],
+            },
+            success: function (result) {
+                addFunctionProjectUserAppendHtml(result)
             }
-        );
+        })
+    }
+
+    //页面渲染
+    function addFunctionProjectUserAppendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var tableShow = '';
+        for (var i = 0; i < list.length; i++) {
+            tableShow +=
+                '<option value=' + list[i].id + '>' + list[i].myUserDetails.username + '</option>\n'
+        }
+        $('#addRealizeUserId').html(tableShow)
+    }
+</script>
+<!--删除功能弹出框-->
+<script type="text/javascript">
+    function delFunctionModel() {
+        checkLoginAndPowerAndDoFunction(delFunctionDo, projectId, userId)
+    }
+
+    function delFunctionDo(arguments) {
+        for (var i = 0; i < arguments.length; i++) {
+            console.log(arguments[i])
+        }
+        $('#delFunction').modal('show');
+        $.ajax({
+            type: "Get",
+            url: "/project_function",
+            data: {
+                projectId: arguments[1],
+                userId: arguments[2]
+            },
+            success: function (result) {
+                projectFunctionAppendHtml(result.data);
+            }
+        })
     }
 
     //页面渲染
@@ -718,33 +729,33 @@
     }
 
     //删除功能
-    function deleteProjectFunction(){
+    function deleteProjectFunction() {
         var id = $("#functionName").val();
         var reason = $("#delReason").val();
-        if(reason.length == 0){
+        if (reason.length == 0) {
             swal({
-                icon : "warning",
+                icon: "warning",
                 title: "删除原因不能为空！",
                 text: "请输入！",
                 type: "warning",
                 buttons: false,
                 timer: 1500,
             })
-        } else{
+        } else {
             swal({
-                icon : "warning",
+                icon: "warning",
                 title: "您确定要删除该功能吗?",
                 text: "请谨慎操作！",
                 type: "warning",
-                buttons:{
+                buttons: {
                     cancel: {
                         visible: true,
-                        text : '取消',
+                        text: '取消',
                         className: 'btn btn-danger'
                     },
                     confirm: {
-                        text : '确定删除',
-                        className : 'btn btn-success'
+                        text: '确定删除',
+                        className: 'btn btn-success'
                     }
                 },
                 closeOnConfirm: false,
@@ -763,11 +774,11 @@
                             success: function (data) {
                                 if (data) {
                                     swal("删除成功！", {
-                                        icon : "success",
+                                        icon: "success",
                                         buttons: false,
                                         timer: 1500,
                                     });
-                                    setTimeout(function(){
+                                    setTimeout(function () {
                                         allFunctionPage();
                                         assignFunctionPage();
                                         publishFunctionPage();
@@ -775,10 +786,9 @@
                                         delFunction();
                                         functionNum();
                                         getChart();
-                                    },1500);
-                                }
-                                else {
-                                    swal("删除失败！",{
+                                    }, 1500);
+                                } else {
+                                    swal("删除失败！", {
                                         icon: "error",
                                         buttons: {
                                             confirm: {

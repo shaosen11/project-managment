@@ -308,29 +308,31 @@
 </script>
 <!--消息提醒-->
 <script type="text/javascript">
+
     function messageAlert(functionId) {
+        checkLoginAndPowerAndDoFunction(messageAlertDo, functionId, projectId)
+    }
+    function messageAlertDo(arguments) {
         $.ajax({
             type: "post",
             url: "/projectFunctionMessageAlert",
             data: {
-                functionId: functionId,
-                projectId: projectId,
-                userId: userId
+                functionId: arguments[1],
+                projectId: arguments[2],
             },
             dataType: "json",
             success: function (data) {
                 console.log(data)
-                if(data.ok){
+                if (data.ok) {
                     swal({
                         icon: "success",
                         text: data.message,
                         buttons: false,
                         timer: 1500,
                     });
-                }else {
+                } else {
                     swal({
-                        icon : "warning",
-                        title: "权限不够！",
+                        icon: "warning",
                         text: data.message,
                         type: "warning",
                         buttons: false,
@@ -340,6 +342,7 @@
             }
         })
     }
+
 </script>
 </body>
 </html>

@@ -117,7 +117,7 @@ public class ProjectsIndexController {
     }
 
     /**
-     * 统计点击量
+     * 统计点击量(已经转移到project_view进行)
      *
      * @param userId
      * @param projectId

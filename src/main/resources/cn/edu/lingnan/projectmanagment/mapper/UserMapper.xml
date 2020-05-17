@@ -265,7 +265,7 @@
         </collection>
     </resultMap>
     <select id="getMyUserDetailsByUserId" resultMap="MyUserDetailsAndProjectList">
-        select * from sys_user where enabled = 1 and id = #{userId}
+        select id,username,email,photo from sys_user where enabled = 1 and id = #{userId}
     </select>
 
     <select id="getSimpleMyUserDetailsByUserId" resultType="MyUserDetails">
