@@ -671,6 +671,9 @@
     }
 
     function addFunctionDo(arguments) {
+        for (var i=0;i<arguments.length;i++){
+            console.log(arguments[i])
+        }
         $('#addFunction').modal('show');
         $.ajax({
             type: "Get",

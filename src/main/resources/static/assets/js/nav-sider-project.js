@@ -169,8 +169,30 @@ $(function () {
 //判断用户是否有权限标记
 var projectAdminFlag;
 
-//判断用户是否登录，是否有权限
-function judgrUser() {
+//判断用户是否登录,是否项目人员,是否有权限
+function judgeProjectAdmin() {
+    $.ajax({
+        type: "Get",
+        url: "/projectUserDuty",
+        data: {
+            projectId: projectId,
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.id != 3) {
+                projectAdminFlag = true;
+            } else {
+                projectAdminFlag = false;
+            }
+        }
+    });
+}
+
+//判断用户是否有权限标记
+var projectUserFlag;
+
+//判断用户是否登录,是否项目人员
+function judgeProjectUser() {
     $.ajax({
         type: "Get",
         url: "/projectUser",
@@ -180,21 +202,9 @@ function judgrUser() {
         dataType: "json",
         success: function (data) {
             if (data != null) {
-                $.ajax({
-                    type: "Get",
-                    url: "/projectUserDuty",
-                    data: {
-                        projectId: projectId,
-                    },
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.id != 3) {
-                            projectAdminFlag = true;
-                        } else {
-                            projectAdminFlag = false;
-                        }
-                    }
-                });
+                projectUserFlag = true;
+            } else {
+                projectUserFlag = false;
             }
         },
     });
@@ -205,6 +215,17 @@ function noProjectAdminAlert() {
     swal({
         icon: "warning",
         text: "你不是管理员，没有权限！",
+        type: "warning",
+        buttons: false,
+        timer: 1500,
+    })
+}
+
+//不是项目人员提醒
+function noProjectUserAlert() {
+    swal({
+        icon: "warning",
+        text: "你不是项目人员，没有权限！",
         type: "warning",
         buttons: false,
         timer: 1500,
@@ -226,18 +247,51 @@ function noLoginALert() {
 function checkLoginAndPowerAndDoFunction(doFunction) {
     //检查是否登录
     if (userId != "") {
-        judgrUser();
-        //检查是否项目管理员
-        if (projectAdminFlag) {
-            doFunction(arguments);
+        //检查是否项目人员
+        judgeProjectUser()
+        if (projectUserFlag) {
+            //检查是否项目管理员
+            judgeProjectAdmin();
+            if (projectAdminFlag) {
+                doFunction(arguments);
+            } else {
+                noProjectAdminAlert();
+            }
         } else {
-            noProjectAdminAlert();
+            noProjectUserAlert();
         }
     } else {
         noLoginALert()
     }
 }
 
+//检查用户是否登录，是否有管理员权限，都通过之后执行函数
+function checkLoginAndProjectUserAndDoFunction(doFunction) {
+    //检查是否登录
+    if (userId != "") {
+        judgeProjectUser()
+        if (projectUserFlag) {
+            doFunction(arguments)
+        } else {
+            noProjectUserAlert();
+        }
+    } else {
+        noLoginALert()
+    }
+}
 
+//上传文件弹出框
+function uploadFileModel() {
+    checkLoginAndProjectUserAndDoFunction(uploadFileDo)
+}
+function uploadFileDo() {
+    $("#uploadFileModel").modal('show');
+}
 
-
+//新建包弹出框
+function addPackageModel() {
+    checkLoginAndProjectUserAndDoFunction(addPackageDo)
+}
+function addPackageDo() {
+    $("#addPackageModel").modal('show');
+}

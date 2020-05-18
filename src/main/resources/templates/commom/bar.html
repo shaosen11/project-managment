@@ -437,13 +437,13 @@
                         <h4 class="text-section">files</h4>
                     </li>
                     <li class="nav-item">
-                        <a data-toggle="modal" data-target="#addpackage">
+                        <a onclick="addPackageModel()">
                             <i class="fas fa-plus-square"></i>
                             <p>new package</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a data-toggle="modal" data-target="#uploadfile">
+                        <a onclick="uploadFileModel()">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>upload file</p>
                         </a>
@@ -466,7 +466,7 @@
     <!-- End Sidebar -->
 </div>
 <!--上传文件model-->
-<div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="uploadFileModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true" th:fragment="uploadfilemodel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -505,7 +505,7 @@
     </div>
 </div>
 <!--新建包-->
-<div class="modal fade" id="addpackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="addPackageModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true" th:fragment="newprojectpackage">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -664,7 +664,10 @@
     <script type="text/javascript">
         var projectId = "[[${param.projectId}]]";
         $(function () {
-            judgrUser();
+            if (userId != "") {
+                judgeProjectUser();
+                judgeProjectAdmin();
+            }
         })
     </script>
 </div>

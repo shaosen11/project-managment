@@ -148,16 +148,14 @@
                                     </button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button class="btn btn-secondary btn-round col-md-12" data-toggle="modal"
-                                            data-target="#uploadfile" data-id="edit">
+                                    <button class="btn btn-secondary btn-round col-md-12" onclick="uploadFileModel()">
                                             <span class="btn-label">
                                                <i class="fas fa-cloud-upload-alt"></i>
                                             </span>
                                     </button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button class="btn btn-secondary btn-round col-md-12" data-toggle="modal"
-                                            data-target="#updateDocument" data-id="edit">
+                                    <button class="btn btn-secondary btn-round col-md-12" onclick="updateFileModel()">
                                             <span class="btn-label">
                                                <i class="fas fa-cog"></i>
                                             </span>
@@ -191,7 +189,7 @@
 <!--model框-->
 <div th:replace="commom/bar :: uploadfilemodel"></div>
 <div th:replace="commom/bar :: newprojectpackage"></div>
-<div class="modal fade" id="updateDocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="updateFileModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -231,7 +229,6 @@
 
 <!--代码高亮-->
 <script th:src="@{/assets/js/highlight/highlight.js}"></script>
-
 <!--加载文件-->
 <script type="text/javascript">
     $(function () {
@@ -275,7 +272,6 @@
 
     })
 </script>
-
 <!--下载文件-->
 <script type="text/javascript">
     var documentName = "[[${param.documentName}]]";
@@ -294,6 +290,14 @@
         })
     }
 </script>
-
+<!--修改文件弹出框-->
+<script type="text/javascript">
+    function updateFileModel(){
+        checkLoginAndPowerAndDoFunction(updateFileDo)
+    }
+    function updateFileDo() {
+        $("#updateFileModel").modal('show');
+    }
+</script>
 </body>
 </html>
