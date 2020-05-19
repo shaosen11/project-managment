@@ -180,7 +180,7 @@ public class MessageController {
 
     @GetMapping("/message_view")
     public String messages() {
-        return "/message";
+        return "message";
     }
 
     @GetMapping("/message_person")

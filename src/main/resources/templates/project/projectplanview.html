@@ -69,6 +69,7 @@
 <script type="text/javascript">
     $(function () {
         projectsPlan();
+        console.log("projects_plan请求")
     })
 
     function projectsPlan() {
@@ -312,6 +313,7 @@
     function messageAlert(functionId) {
         checkLoginAndPowerAndDoFunction(messageAlertDo, functionId, projectId)
     }
+
     function messageAlertDo(arguments) {
         $.ajax({
             type: "post",

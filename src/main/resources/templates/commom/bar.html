@@ -201,17 +201,17 @@
                         <div class="collapse in" id="collapseExample">
                             <ul class="nav">
                                 <li>
-                                    <a th:href="@{/userprofile}">
+                                    <a onclick="userprofileView()">
                                         <span class="link-collapse">我的信息</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a id="sideBarA1">
+                                    <a onclick="myProjectView()">
                                         <span class="link-collapse">我的项目</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a id="sideBarA2">
+                                    <a onclick="myProjectStoreView()">
                                         <span class="link-collapse">我的收藏</span>
                                     </a>
                                 </li>
@@ -346,17 +346,17 @@
                         <div class="collapse in" id="collapseExample">
                             <ul class="nav">
                                 <li>
-                                    <a th:href="@{/userprofile}">
+                                    <a onclick="userprofileView()">
                                         <span class="link-collapse">我的信息</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a id="sideBarA1">
+                                    <a onclick="myProjectView()">
                                         <span class="link-collapse">我的项目</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a id="sideBarA2">
+                                    <a onclick="myProjectStoreView()">
                                         <span class="link-collapse">我的收藏</span>
                                     </a>
                                 </li>
@@ -378,7 +378,7 @@
                         <h4 class="text-section">message</h4>
                     </li>
                     <li class="nav-item">
-                        <a id="projectSideBarA1">
+                        <a onclick="projectMessageView()">
                             <i class="fas fa-comment-dots"></i>
                             <p>项目消息</p>
                             <span class="badge badge-count" id="projectMessageCount"></span>
@@ -582,7 +582,7 @@
     <!-- 功能点分页 -->
     <script th:src="@{/assets/js/functionpage.js}"></script>
 </div>
-<!--所有非项目页面公共js-->
+<!--所有"非项目"页面公共js-->
 <div th:fragment="nav_js">
     <!--加载导航栏user公共js-->
     <script th:src="@{/assets/js/nav.js}"></script>
@@ -613,24 +613,8 @@
     <script type="text/javascript">
         var projectId = "[[${param.projectId}]]";
     </script>
-    <!--个人消息js-->
-    <script type="text/javascript">
-        function messageView() {
-            if (userId != "") {
-                location.href = "/message_view"
-            } else {
-                swal({
-                    icon: "warning",
-                    text: "请先登录！",
-                    type: "warning",
-                    buttons: false,
-                    timer: 1500,
-                })
-            }
-        }
-    </script>
 </div>
-<!--所有项目页面公共js-->
+<!--所有"项目"页面公共js-->
 <div th:fragment="nav_project_js">
     <!--加载导航栏user公共js-->
     <script th:src="@{/assets/js/nav.js}"></script>

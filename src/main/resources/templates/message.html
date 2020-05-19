@@ -74,7 +74,7 @@
                                 <ul class="timeline" id="messageNeedToDoUl">
                                 </ul>
                                 <div class="text-right mt-3 mb-3">
-                                    <button class="btn btn-secondary" onclick="appendMoremessageNeedToDoHtml()">
+                                    <button class="btn btn-secondary" onclick="appendMoreMessageNeedToDoHtml()">
                                         加载更多
                                     </button>
                                 </div>
@@ -259,7 +259,7 @@
 </script>
 <!--加载更多待办消息-->
 <script type="text/javascript">
-    function appendMoremessageNeedToDoHtml() {
+    function appendMoreMessageNeedToDoHtml() {
         needToDoOffset = needToDoOffset + needToDoPageSize;
         needToDoPageSize = needToDoPageSize + 10;
         ajaxAppendmessageNeedToDo(userId, needToDoOffset, needToDoPageSize);

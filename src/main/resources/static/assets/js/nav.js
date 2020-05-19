@@ -2,7 +2,7 @@ function initNavJs(user) {
     if (user.photo != "") {
         $("#topBarUserImg1").attr("src", '/files/photo/' + user.photo);
         $("#topBarUserImg2").attr("src", '/files/photo/' + user.photo);
-    }else {
+    } else {
         $("#topBarUserImg1").attr("src", '/files/photo/profile.jpg');
         $("#topBarUserImg2").attr("src", '/files/photo/profile.jpg');
     }
@@ -11,3 +11,47 @@ function initNavJs(user) {
     $("#topBarA1").attr("href", '/my_projects/' + user.id);
     $("#topBarA2").attr("href", '/my_projects_store/' + user.id);
 }
+
+//不是管理员提醒
+function noProjectAdminAlert() {
+    swal({
+        icon: "warning",
+        text: "你不是管理员，没有权限！",
+        type: "warning",
+        buttons: false,
+        timer: 1500,
+    })
+}
+
+//不是项目人员提醒
+function noProjectUserAlert() {
+    swal({
+        icon: "warning",
+        text: "你不是项目人员，没有权限！",
+        type: "warning",
+        buttons: false,
+        timer: 1500,
+    })
+}
+
+//没有登录提醒
+function noLoginALert() {
+    swal({
+        icon: "warning",
+        text: "请先登录！",
+        type: "warning",
+        buttons: false,
+        timer: 1500,
+    })
+}
+
+//检查用户是否登录
+function checkLoginAndAndDoFunction(doFunction) {
+    //检查是否登录
+    if (userId != "") {
+        doFunction(arguments);
+    } else {
+        noLoginALert()
+    }
+}
+

@@ -386,12 +386,15 @@ public class ProjectsFunctionController {
         try {
             // 获取总条目数
             List<ProjectsFunction> projectsFunctionList = projectsFunctionService.getProjectPlanFunctions(projectId);
+            System.out.println(projectsFunctionList);
             int count = projectsFunctionList.size();
             map = functionPageCom(page, count);
             Projects projects = projectService.getById(projectId);
             System.out.println("获得项目信息:" + projects);
             map.put("projects", projects);
             int offset = (int) map.get("offset");
+//            int offset = (page - 1) * pageSize;
+            System.out.println(offset + "========================");
             // 根据起始索引和页面大小去查询数据
             List<ProjectsFunction> list = projectsFunctionService.getProjectPlanFunctionsPage(projectId, offset, pageSize);
             System.out.println("分页list" + list);

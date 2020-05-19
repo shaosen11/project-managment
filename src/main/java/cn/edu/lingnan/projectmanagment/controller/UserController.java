@@ -95,7 +95,7 @@ public class UserController {
         UserRole userRole = new UserRole();
         userRole.setUserId(myUserDetails.getId());
         //暂时默认设置为管理员
-        userRole.setRoleId(MyContants.USER_ROLE_ADMIN);
+        userRole.setRoleId(MyContants.USER_ROLE_COMMMON);
         userRoleService.insertUserRole(userRole);
         return "redirect:/login.html";
     }
@@ -121,7 +121,7 @@ public class UserController {
             auth.setDetails(authentication.getDetails());
             //4.重新设置SecurityContextImpl对象的Authentication
             securityContextImpl.setAuthentication(auth);
-            return "redirect:/userprofile.html";
+            return "redirect:/userprofile";
         }else {
             return "login";
         }

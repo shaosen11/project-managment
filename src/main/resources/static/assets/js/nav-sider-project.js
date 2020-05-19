@@ -210,38 +210,6 @@ function judgeProjectUser() {
     });
 }
 
-//不是管理员提醒
-function noProjectAdminAlert() {
-    swal({
-        icon: "warning",
-        text: "你不是管理员，没有权限！",
-        type: "warning",
-        buttons: false,
-        timer: 1500,
-    })
-}
-
-//不是项目人员提醒
-function noProjectUserAlert() {
-    swal({
-        icon: "warning",
-        text: "你不是项目人员，没有权限！",
-        type: "warning",
-        buttons: false,
-        timer: 1500,
-    })
-}
-
-//没有登录提醒
-function noLoginALert() {
-    swal({
-        icon: "warning",
-        text: "请先登录！",
-        type: "warning",
-        buttons: false,
-        timer: 1500,
-    })
-}
 
 //检查用户是否登录，是否有管理员权限，都通过之后执行函数
 function checkLoginAndPowerAndDoFunction(doFunction) {
@@ -265,7 +233,7 @@ function checkLoginAndPowerAndDoFunction(doFunction) {
     }
 }
 
-//检查用户是否登录，是否有管理员权限，都通过之后执行函数
+//检查用户是否登录，是否有项目人员，都通过之后执行函数
 function checkLoginAndProjectUserAndDoFunction(doFunction) {
     //检查是否登录
     if (userId != "") {
@@ -294,4 +262,13 @@ function addPackageModel() {
 }
 function addPackageDo() {
     $("#addPackageModel").modal('show');
+}
+
+//项目消息跳转
+function projectMessageView() {
+    checkLoginAndProjectUserAndDoFunction(projectMessageViewDo, projectId, userId);
+}
+
+function projectMessageViewDo(arguments) {
+    location.href = '/projectmessage?projectId=' + arguments[1] + '&userId=' + arguments[2]
 }

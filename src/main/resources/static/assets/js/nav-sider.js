@@ -47,15 +47,44 @@ function messageCount() {
 function initNavSiderJs(user) {
     if (user.photo != "") {
         $("#sideBarUserImg1").attr("src", '/files/photo/' + user.photo);
-    }else {
+    } else {
         $("#sideBarUserImg1").attr("src", '/files/photo/profile.jpg');
     }
     $("#sideBarUsername").html(user.username);
     $("#sideBarA").attr("href", '/projects_index/' + user.id);
 
-    $("#sideBarA1").attr("href", '/my_projects/' + user.id);
-    $("#sideBarA2").attr("href", '/my_projects_store/' + user.id);
 }
 
+//跳转修改信息页面userprofile
+function userprofileView() {
+    checkLoginAndAndDoFunction(userprofileViewDo)
+}
 
+function userprofileViewDo() {
+    location.href = "/userprofile"
+}
 
+//跳转我的项目my_projects
+function myProjectView() {
+    checkLoginAndAndDoFunction(myProjectViewDo, userId)
+}
+
+function myProjectViewDo(arguments) {
+    location.href = "/my_projects/" + arguments[1]
+}
+
+//跳转我的项目my_projects_store
+function myProjectStoreView() {
+    checkLoginAndAndDoFunction(myProjectStoreViewDo, userId)
+}
+function myProjectStoreViewDo(arguments) {
+    location.href = "/my_projects_store/" + arguments[1]
+}
+
+//跳转个人消息
+function messageView() {
+    checkLoginAndAndDoFunction(messageViewDo)
+}
+function messageViewDo() {
+    location.href = "/message_view"
+}
