@@ -6,8 +6,6 @@
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
 
     <div th:fragment="commom_css">
-        <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
-
         <!-- Fonts and icons -->
         <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
         <script>
@@ -36,7 +34,7 @@
         <!-- Logo Header -->
         <div class="logo-header">
 
-            <a th:href="@{/index}" class="logo">
+            <a th:href="@{/}" class="logo">
                 <img th:src="@{/assets/img/LogoProject.svg}" alt="navbar brand" class="navbar-brand">
             </a>
             <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
@@ -80,7 +78,7 @@
                     <li class="nav-item dropdown hidden-caret">
                         <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-clock"></i>
+                            <i class="fa fa-tasks"></i>
                             <div id="myMessageNeedToDoNumber"></div>
                         </a>
                         <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
@@ -193,7 +191,7 @@
                             <span id="sideBarUsername">
 									用户名
 								</span>
-                            <span class="user-level">Administrator</span>
+                            <span class="user-level">User</span>
                             <span class="caret"></span>
                         </a>
                         <div class="clearfix"></div>
@@ -221,7 +219,7 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a th:href="@{/index}">
+                        <a th:href="@{/}">
                             <i class="fas fa-home"></i>
                             <p>主页</p>
                         </a>
@@ -245,69 +243,6 @@
 							</span>
                         <h4 class="text-section">Components</h4>
                     </li>
-                    <li class="nav-item">
-                        <a data-toggle="collapse" href="#tables">
-                            <i class="fas fa-table"></i>
-                            <p>表格</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="tables">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a th:href="@{/user_list}">
-                                        <span class="sub-item">用户信息</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/projects_list}">
-                                        <span class="sub-item">项目信息</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a th:href="@{/project_user_list}">
-                                        <span class="sub-item">项目用户信息</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/project_function_list}">
-                                        <span class="sub-item">项目功能信息</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a data-toggle="collapse" href="#maps">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <p>Deleted</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="maps">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a th:href="@{/deleted_user_list}">
-                                        <span class="sub-item">已注销用户</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/del_project_list}">
-                                        <span class="sub-item">已注销项目</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/del_project_user_list}">
-                                        <span class="sub-item">已注销项目用户</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/del_project_function_list}">
-                                        <span class="sub-item">已注销项目功能</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                     <li class="nav-item" id="test">
                         <a data-toggle="collapse" href="#base1">
                             <i class="fas fa-box"></i>
@@ -319,7 +254,121 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+                        <h4 class="text-section">hlep</h4>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/projectIntroduce}">
+                            <i class="fas fa-h-square"></i>
+                            <p>系统介绍</p>
+                            <span class="badge badge-count" id="messageCount"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#guides">
+                            <i class="fas fa-location-arrow"></i>
+                            <p>系统引导</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="guides">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a onclick="userListView()">
+                                        <span class="sub-item">用户信息</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="projectsListView()">
+                                        <span class="sub-item">项目信息</span>
+                                    </a>
+                                </li>
 
+                                <li>
+                                    <a onclick="projectUserListView()">
+                                        <span class="sub-item">项目用户信息</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="projectFunctionListView()">
+                                        <span class="sub-item">项目功能信息</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-section">
+							<span class="sidebar-mini-icon">
+							</span>
+                        <h4 class="text-section">Admin</h4>
+                    </li>
+                    <!--表格-->
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#tables">
+                            <i class="fas fa-table"></i>
+                            <p>表格</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="tables">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a onclick="userListView()">
+                                        <span class="sub-item">用户信息</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="projectsListView()">
+                                        <span class="sub-item">项目信息</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a onclick="projectUserListView()">
+                                        <span class="sub-item">项目用户信息</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="projectFunctionListView()">
+                                        <span class="sub-item">项目功能信息</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!--删除表格-->
+                    <li class="nav-item">
+                        <a data-toggle="collapse" href="#maps">
+                            <i class="fas fa-trash"></i>
+                            <p>Deleted</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="maps">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a onclick="deletedUserListView()">
+                                        <span class="sub-item">已注销用户</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="delProjectListView()">
+                                        <span class="sub-item">已注销项目</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="delProjectUserListView()">
+                                        <span class="sub-item">已注销项目用户</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="delProjectFunctionListView()">
+                                        <span class="sub-item">已注销项目功能</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -338,7 +387,7 @@
                                     <span id="sideBarUsername">
 									用户名
 								</span>
-                            <span class="user-level">Administrator</span>
+                            <span class="user-level">User</span>
                             <span class="caret"></span>
                         </a>
                         <div class="clearfix"></div>
@@ -366,7 +415,7 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a th:href="@{/index}">
+                        <a th:href="@{/}">
                             <i class="fas fa-home"></i>
                             <p>主页</p>
                         </a>
@@ -439,19 +488,19 @@
                     <li class="nav-item">
                         <a onclick="addPackageModel()">
                             <i class="fas fa-plus-square"></i>
-                            <p>new package</p>
+                            <p>新建包</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a onclick="uploadFileModel()">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <p>upload file</p>
+                            <p>上传文件</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a data-toggle="collapse" href="#base2">
                             <i class="fas fa-folder"></i>
-                            <p>All Package</p>
+                            <p>所有文件</p>
                             <span class="caret"></span>
                         </a>
                         <div class="collapse" id="base2">

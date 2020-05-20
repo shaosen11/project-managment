@@ -10,6 +10,8 @@ import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.FtpUtil;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -335,6 +337,20 @@ public class UserController {
     @GetMapping("/user_information")
     public MyUserDetails userInformetion(Integer userId){
         return userService.getMyUserDetailsByUserId(userId);
+    }
+
+
+    @GetMapping("/projectManagementAdmin")
+    @ResponseBody
+    public String projectManagementAdmin(HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        List<String> role = myUserDetailsService.findRoleByEmail(myUserDetails.getEmail());
+        for (String s : role) {
+            if (s.equals("admin")){
+                return s;
+            }
+        }
+        return null;
     }
 }
 

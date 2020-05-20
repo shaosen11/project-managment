@@ -104,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/projectsPackages","/projectMessageCount").permitAll()
 
                 //inedx
-                .antMatchers("/","/index.html","/index","/todayProjectsAndWeekProjects","/getProjectsByTypePage","/projects_index_click").permitAll()
+                .antMatchers("/","/index.html","/index","/todayProjectsAndWeekProjects","/getProjectsByTypePage","/projects_index_click","/projectManagementAdmin").permitAll()
                 //project_view
                 .antMatchers("/projects_view","/getCodeInsertData","/getCodeDevoteData","/getLineChartDate","/documentRecordPage","/project").permitAll()
                 //project_plan_view
@@ -117,6 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/project_user_cooperation_view","/projectUserPage","/inviteUser","/user_information").permitAll()
                 //document
                 .antMatchers("/document","/files/projects/*/*").permitAll()
+                //projectIntroduce
+                .antMatchers("/projectIntroduce").permitAll()
 
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()

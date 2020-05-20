@@ -2,6 +2,7 @@ $(function () {
     if (userId != "") {
         user_projects(userId);
         messageCount();
+        judgeProjectManagementAdmin();
     }
 })
 
@@ -51,7 +52,6 @@ function initNavSiderJs(user) {
         $("#sideBarUserImg1").attr("src", '/files/photo/profile.jpg');
     }
     $("#sideBarUsername").html(user.username);
-    $("#sideBarA").attr("href", '/projects_index/' + user.id);
 
 }
 
@@ -59,7 +59,6 @@ function initNavSiderJs(user) {
 function userprofileView() {
     checkLoginAndAndDoFunction(userprofileViewDo)
 }
-
 function userprofileViewDo() {
     location.href = "/userprofile"
 }
@@ -68,7 +67,6 @@ function userprofileViewDo() {
 function myProjectView() {
     checkLoginAndAndDoFunction(myProjectViewDo, userId)
 }
-
 function myProjectViewDo(arguments) {
     location.href = "/my_projects/" + arguments[1]
 }
@@ -87,4 +85,112 @@ function messageView() {
 }
 function messageViewDo() {
     location.href = "/message_view"
+}
+
+//不是系统开发者提醒
+function noProjectManagementAdminAlert(){
+    swal({
+        icon: "warning",
+        text: "你不是系统开发者，没有权限！",
+        type: "warning",
+        buttons: false,
+        timer: 1500,
+    })
+}
+
+var projectManagementAdminFlag = false;
+//判断用户是否系统开发者提醒
+function judgeProjectManagementAdmin() {
+    $.ajax({
+        type: "Get",
+        url: "/projectManagementAdmin",
+        success: function (data) {
+            console.log(data)
+            if (data != "") {
+                projectManagementAdminFlag = true;
+            } else {
+                projectManagementAdminFlag = false;
+            }
+        },
+    });
+}
+
+//检查是否本系统开发管理员
+function checkProjectManagmentAdminAndDoFunction(doFunction) {
+    //检查是否登录
+    if (userId != "") {
+        if (projectManagementAdminFlag) {
+            doFunction(arguments);
+        } else {
+            noProjectManagementAdminAlert();
+        }
+    } else {
+        noLoginALert();
+    }
+}
+
+//跳转管理员user_list
+function userListView() {
+    checkProjectManagmentAdminAndDoFunction(userListViewDo)
+}
+function userListViewDo() {
+    location.href = "/user_list"
+}
+
+//跳转管理员projects_list
+function projectsListView() {
+    checkProjectManagmentAdminAndDoFunction(projectsListViewDo)
+}
+function projectsListViewDo() {
+    location.href = "/projects_list"
+}
+
+//跳转管理员project_user_list
+function projectUserListView() {
+    checkProjectManagmentAdminAndDoFunction(projectUserListViewDo)
+}
+function projectUserListViewDo() {
+    location.href = "/project_user_list"
+}
+
+//跳转管理员project_function_list
+function projectFunctionListView() {
+    checkProjectManagmentAdminAndDoFunction(projectFunctionListViewDo)
+}
+function projectFunctionListViewDo() {
+    location.href = "/project_function_list"
+}
+
+
+
+//跳转管理员deleted_user_list
+function deletedUserListView() {
+    checkProjectManagmentAdminAndDoFunction(deletedUserListViewDo)
+}
+function deletedUserListViewDo() {
+    location.href = "/deleted_user_list"
+}
+
+//跳转管理员del_project_list
+function delProjectListView() {
+    checkProjectManagmentAdminAndDoFunction(delProjectListViewDo)
+}
+function delProjectListViewDo() {
+    location.href = "/del_project_list"
+}
+
+//跳转管理员del_project_user_list
+function delProjectUserListView() {
+    checkProjectManagmentAdminAndDoFunction(delProjectUserListViewDo)
+}
+function delProjectUserListViewDo() {
+    location.href = "/del_project_user_list"
+}
+
+//跳转管理员del_project_function_list
+function delProjectFunctionListView() {
+    checkProjectManagmentAdminAndDoFunction(delProjectFunctionListViewDo)
+}
+function delProjectFunctionListViewDo() {
+    location.href = "/del_project_function_list"
 }
