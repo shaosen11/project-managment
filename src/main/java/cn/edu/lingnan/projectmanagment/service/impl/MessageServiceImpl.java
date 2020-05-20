@@ -24,6 +24,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<Message> getByUserIdAndOffsetAndPageSize(Integer userId, Integer needToDo, Integer offset, Integer pageSize) {
+        return messageMapper.getByUserIdAndOffsetAndPageSize(userId, needToDo, offset, pageSize);
+    }
+
+
+    @Override
     public boolean insert(Message message) {
         return messageMapper.insert(message);
     }
@@ -46,6 +52,16 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public boolean updateMessageIsReadByMessageId(Integer messageId, Integer isRead) {
         return messageMapper.updateMessageIsReadByMessageId(messageId, isRead);
+    }
+
+    @Override
+    public Integer messageCount(Integer userId) {
+        return messageMapper.messageCount(userId);
+    }
+
+    @Override
+    public Integer messageNeedToDoCount(Integer userId) {
+        return messageMapper.messageNeedToDoCount(userId);
     }
 
 

@@ -2,52 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Home</title>
+    <title>Home-ProjectManagment</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
-
-    <!-- Fonts and icons -->
-    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
-
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+    <div th:replace="commom/bar :: commom_css"></div>
 </head>
 <body>
 <div class="wrapper">
-    <!--
-        Tip 1: You can change the background color of the main header using: data-background-color="blue | purple | light-blue | green | orange | red"
-    -->
-    <div class="main-header" data-background-color="purple">
-        <!-- Logo Header -->
-        <div class="logo-header">
-
-            <a href="index.html" class="logo">
-                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
-            </a>
-            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="fa fa-bars"></i>
-					</span>
-            </button>
-            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
-            <div class="navbar-minimize">
-                <button class="btn btn-minimize btn-rounded">
-                    <i class="fa fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        <!-- End Logo Header -->
-
-        <!-- Navbar Header -->
-        <div th:replace="commom/bar :: topbar"></div>
-        <!-- End Navbar -->
-    </div>
+    <div th:replace="commom/bar :: topbar"></div>
 
     <!-- Sidebar -->
     <div th:replace="commom/bar :: sidebar"></div>
@@ -57,25 +19,12 @@
         <div class="content">
             <div class="page-inner">
                 <div class="page-header">
-                    <h4 class="page-title">全站统计</h4>
-                    <div class="btn-group btn-group-page-header ml-auto">
-                        <button type="button" class="btn btn-light btn-round btn-page-header-dropdown dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-h"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <div class="arrow"></div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </div>
+                    <h4 class="page-title">项目管理系统</h4>
+
                 </div>
                 <!--数据统计-->
                 <div class="row">
-                    <div class="col-sm-6 col-md-3">
+                    <div class="col-sm-6 col-md-6">
                         <div class="card card-stats card-round">
                             <div class="card-body ">
                                 <div class="row align-items-center">
@@ -86,65 +35,27 @@
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Visitors</p>
-                                            <h4 class="card-title">1,294</h4>
+                                            <p class="card-category">user</p>
+                                            <h4 class="card-title" th:text="${session.userCount}"></h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
+                    <div class="col-sm-6 col-md-6">
                         <div class="card card-stats card-round">
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-icon">
                                         <div class="icon-big text-center icon-info bubble-shadow-small">
-                                            <i class="far fa-newspaper"></i>
+                                            <i class="fas fa-box"></i>
                                         </div>
                                     </div>
                                     <div class="col col-stats ml-3 ml-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Subscribers</p>
-                                            <h4 class="card-title">1303</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="card card-stats card-round">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-success bubble-shadow-small">
-                                            <i class="far fa-chart-bar"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ml-3 ml-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">Sales</p>
-                                            <h4 class="card-title">$ 1,345</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="card card-stats card-round">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-icon">
-                                        <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                            <i class="far fa-check-circle"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ml-3 ml-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">Order</p>
-                                            <h4 class="card-title">576</h4>
+                                            <p class="card-category">project</p>
+                                            <h4 class="card-title" th:text="${session.projectCount}"></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -162,37 +73,37 @@
                                 <div class="row row-nav-line">
                                     <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active show" id="pills-recommend-tab-nobd"
+                                            <a class="nav-link active show" id="pills-more-tab-nobd" data-toggle="pill"
+                                               href="#pills-more-tab" role="tab" aria-controls="pills-more-nobd"
+                                               aria-selected="false">更多</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-recommend-tab-nobd"
                                                data-toggle="pill"
                                                href="#pills-recommend-tab" role="tab"
                                                aria-controls="pills-recommend-nobd"
                                                aria-selected="true">推荐项目</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="pills-more-tab-nobd" data-toggle="pill"
-                                               href="#pills-more-tab" role="tab" aria-controls="pills-more-nobd"
-                                               aria-selected="false">更多</a>
-                                        </li>
+
                                     </ul>
                                 </div>
 
                                 <!--主体-->
                                 <div class="tab-content mt-2 mb-3" id="pills-tabContent">
-                                    <!--推荐项目-->
-                                    <div class="tab-pane fade show active" id="pills-recommend-tab" role="tabpanel"
-                                         aria-labelledby="pills-recommend-tab-nobd">
-                                        <div id="recommendDiv"></div>
-                                        <div class="text-right mt-3 mb-3">
-                                            <ul id="recommendPage" class="pagination"></ul>
-                                        </div>
-                                    </div>
-
                                     <!--更多项目-->
-                                    <div class="tab-pane fade" id="pills-more-tab" role="tabpanel"
+                                    <div class="tab-pane fade show active" id="pills-more-tab" role="tabpanel"
                                          aria-labelledby="pills-more-tab-nobd">
                                         <div id="allDiv"></div>
                                         <div class="text-right mt-3 mb-3">
                                             <ul id="allPage" class="pagination"></ul>
+                                        </div>
+                                    </div>
+                                    <!--推荐项目-->
+                                    <div class="tab-pane fade " id="pills-recommend-tab" role="tabpanel"
+                                         aria-labelledby="pills-recommend-tab-nobd">
+                                        <div id="recommendDiv"></div>
+                                        <div class="text-right mt-3 mb-3">
+                                            <ul id="recommendPage" class="pagination"></ul>
                                         </div>
                                     </div>
                                 </div>
@@ -281,67 +192,12 @@
         </div>
     </div>
 </div>
-<!--   Core JS Files   -->
-<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-<script th:src="@{/assets/js/core/popper.min.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
-<!-- jQuery UI -->
-<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
-<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
-<!-- Bootstrap Toggle -->
-<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
-<!-- jQuery Scrollbar -->
-<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
-<!-- Datatables -->
-<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
-<!-- Azzara JS -->
-<script th:src="@{/assets/js/ready.min.js}"></script>
-<!-- Azzara DEMO methods, don't include it in your project! -->
-<script th:src="@{/assets/js/setting-demo.js}"></script>
-<script th:src="@{/assets/js/formcheck.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
-<!-- Sweet Alert -->
-<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
-<!-- Chart JS -->
-<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
-<!-- Chart Circle -->
-<script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
-<script th:src="@{/assets/js/formcheck.js}"></script>
 
-<!-- 功能点分页 -->
-<script th:src="@{/assets/js/functionpage.js}"></script>
-<!--在家导航栏退出公共js-->
-<script th:src="@{/assets/js/nav-loginOut.js}"></script>
-<!--加载导航栏消息公共js-->
-<script th:src="@{/assets/js/nav-message.js}"></script>
-<!--加载侧边栏公共js-->
-<script th:src="@{/assets/js/nav-sider.js}"></script>
-<!--初始化公共js的userId-->
-<script type="text/javascript">
-    var userId = [[${#authentication.principal.id}]];
-    initJsUserId(userId);
-</script>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js" />
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_js" />
 
-
-<!--更新点击量-->
-<script type="text/javascript">
-    function UpdateTraffs(projectId) {
-        $.ajax({
-            type: "post",
-            url: "/projects_index_click",
-            data: {
-                userId: userId,
-                projectId: projectId
-            },
-            success: function (json) {
-                if (json.ok) {
-                    location.href = json.data;
-                }
-            }
-        })
-    }
-</script>
 <!--加载更多项目-->
 <script type="text/javascript">
     $(function () {
@@ -360,6 +216,7 @@
     /*请求数据*/
     function addProjectsPage(div, ul, projectsType) {
         pageStart();
+
         function pageStart() {
             $.ajax({
                 type: "get",
@@ -455,7 +312,7 @@
                 '           <span class="avatar-title rounded-circle border border-white bg-info">' + list[i].firstname + '</span>\n' +
                 '       </span>\n' +
                 '       <div style="float: left">\n' +
-                '           <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')" href="javascript:void(0);">\n' +
+                '           <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '">\n' +
                 '               <span style="color: #145180;font-size: 18px">\n' +
                 '                   ' + list[i].username + '/' + list[i].name + '\n' +
                 '               </span>\n' +
@@ -614,7 +471,7 @@
                 for (var i = 0; i < list.length; i++) {
                     tableShow += '<div>\n' +
                         '              <div class="col-lg-10">\n' +
-                        '                   <a class="defineBStyle" onclick="UpdateTraffs(' + list[i].projectId + ')"\n' +
+                        '                   <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '")"\n' +
                         '                      style="color: #145180;font-size: 18px">\n' +
                         '                      <span>' + list[i].username + '/' + list[i].name + '</span>\n' +
                         '                   </a>\n' +
@@ -632,24 +489,23 @@
 
 
     })
-
-
 </script>
 <!--推荐项目-->
 <script type="text/javascript">
-    $(function () {
-        $.ajax({
-            type: "get",
-            url: "/projectsRecommendationPage",
-            data: {
-                userId: userId
-            },
-            success: function (json) {
-                console.log(json)
-                appendProjectsRecordHtml(json, recommendDiv)
-            }
+    if (userId != "") {
+        $(function () {
+            $.ajax({
+                type: "get",
+                url: "/projectsRecommendationPage",
+                data: {
+                    userId: userId
+                },
+                success: function (json) {
+                    appendProjectsRecordHtml(json, recommendDiv)
+                }
+            })
         })
-    })
+    }
 </script>
 </body>
 </html>

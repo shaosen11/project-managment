@@ -1,13 +1,17 @@
-var userId;
-var projectId;
+$(function () {
+    projects_package(projectId);
+    package_list(projectId);
+    $("#packageName").keyup(function () {
+        setTimeout('checkPackage()', 1000);
+    })
+    if (userId != "") {
+        projectMessageCount();
+    }
+})
 
-function initJsUserIdAndProjectId(userId, projectId) {
-    this.userId = userId;
-    this.projectId = projectId;
-}
 
 //项目包结构
-function projects_package(projectId, userId) {
+function projects_package(projectId) {
     $.ajax({
         url: "/projectsPackages?projectId=" + projectId,
         type: "get",
@@ -51,7 +55,7 @@ function projects_package(projectId, userId) {
                         var li1 = document.createElement("li");
                         ul.append(li1);
                         var a1 = document.createElement("a");
-                        a1.href = '/document?userId=' + userId + '&projectId=' + projectId + '&documentName=' + data[i].projectsPackageList[j].documentName;
+                        a1.href = '/document?projectId=' + projectId + '&documentName=' + data[i].projectsPackageList[j].documentName;
                         li1.appendChild(a1);
                         //创建span
                         var span1 = document.createElement("span");
@@ -73,26 +77,37 @@ function package_list(projectId) {
         dataType: "json",
         success: function (data) {
             var packagennameul = document.getElementById("uploadPackageName");
+            // var packagennameul2 = document.getElementById("packageName1");
             for (var i = 0; i < data.length; i++) {
                 var opts = document.createElement("option");
                 opts.value = data[i].packageName;
                 opts.innerHTML = data[i].packageName;
                 packagennameul.appendChild(opts);
+                // packagennameul2.appendChild(opts);
+            }
+            var packagennameul2 = document.getElementById("packageName1");
+            if (packagennameul2 != null) {
+                for (var i = 0; i < data.length; i++) {
+                    var opts = document.createElement("option");
+                    opts.value = data[i].packageName;
+                    opts.innerHTML = data[i].packageName;
+                    packagennameul2.appendChild(opts);
+                }
             }
         }
     });
 }
 
-
 //检查包名是否存在
 var packageFlag = false;
+
 function checkPackage() {
     var projectId = $("#newPackageProjectId").val();
     var packageName = $("#packageName").val();
     var packageNamecss = $("#packageName");
     $.ajax({
         type: "get",
-        url: "projectsPackage",
+        url: "/projectsPackage",
         data: {
             "projectId": projectId,
             "packageName": packageName
@@ -120,15 +135,6 @@ function submitPackageCheck() {
     }
 }
 
-$(function () {
-    projects_package(projectId, userId);
-    package_list(projectId);
-    $("#packageName").keyup(function () {
-        setTimeout('checkPackage()', 1000);
-    })
-    projectMessageCount();
-})
-
 //加载项目个人消息和待办数量
 function projectMessageCount() {
     $.ajax({
@@ -145,5 +151,124 @@ function projectMessageCount() {
     })
 }
 
+function initNavSiderProjectJs(user) {
+    $("#newPackageUserId").val(user.id);
+}
+
+$(function () {
+    if (userId != "") {
+        $("#projectSideBarA1").attr("href", '/projectmessage?projectId=' + projectId + '&userId=' + userId);
+    }
+    $("#projectSideBarA2").attr("href", '/projects_view?projectId=' + projectId);
+    $("#projectSideBarA3").attr("href", '/projects_plan_view?projectId=' + projectId);
+    $("#projectSideBarA4").attr("href", '/project_function_view?projectId=' + projectId)
+    $("#projectSideBarA5").attr("href", '/project_user_view?projectId=' + projectId)
+    $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
+})
+
+//判断用户是否有权限标记
+var projectAdminFlag;
+
+//判断用户是否登录,是否项目人员,是否有权限
+function judgeProjectAdmin() {
+    $.ajax({
+        type: "Get",
+        url: "/projectUserDuty",
+        data: {
+            projectId: projectId,
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.id != 3) {
+                projectAdminFlag = true;
+            } else {
+                projectAdminFlag = false;
+            }
+        }
+    });
+}
+
+//判断用户是否有权限标记
+var projectUserFlag;
+
+//判断用户是否登录,是否项目人员
+function judgeProjectUser() {
+    $.ajax({
+        type: "Get",
+        url: "/projectUser",
+        data: {
+            projectId: projectId,
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data != null) {
+                projectUserFlag = true;
+            } else {
+                projectUserFlag = false;
+            }
+        },
+    });
+}
 
 
+//检查用户是否登录，是否有管理员权限，都通过之后执行函数
+function checkLoginAndPowerAndDoFunction(doFunction) {
+    //检查是否登录
+    if (userId != "") {
+        //检查是否项目人员
+        judgeProjectUser()
+        if (projectUserFlag) {
+            //检查是否项目管理员
+            judgeProjectAdmin();
+            if (projectAdminFlag) {
+                doFunction(arguments);
+            } else {
+                noProjectAdminAlert();
+            }
+        } else {
+            noProjectUserAlert();
+        }
+    } else {
+        noLoginALert()
+    }
+}
+
+//检查用户是否登录，是否有项目人员，都通过之后执行函数
+function checkLoginAndProjectUserAndDoFunction(doFunction) {
+    //检查是否登录
+    if (userId != "") {
+        judgeProjectUser()
+        if (projectUserFlag) {
+            doFunction(arguments)
+        } else {
+            noProjectUserAlert();
+        }
+    } else {
+        noLoginALert()
+    }
+}
+
+//上传文件弹出框
+function uploadFileModel() {
+    checkLoginAndProjectUserAndDoFunction(uploadFileDo)
+}
+function uploadFileDo() {
+    $("#uploadFileModel").modal('show');
+}
+
+//新建包弹出框
+function addPackageModel() {
+    checkLoginAndProjectUserAndDoFunction(addPackageDo)
+}
+function addPackageDo() {
+    $("#addPackageModel").modal('show');
+}
+
+//项目消息跳转
+function projectMessageView() {
+    checkLoginAndProjectUserAndDoFunction(projectMessageViewDo, projectId, userId);
+}
+
+function projectMessageViewDo(arguments) {
+    location.href = '/projectmessage?projectId=' + arguments[1] + '&userId=' + arguments[2]
+}

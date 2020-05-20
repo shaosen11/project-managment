@@ -109,4 +109,9 @@ public class ProjectServiceImpl implements ProjectsService {
         return projectMapper.countProjectsNumberByType(type);
     }
 
+    @Override
+    public Integer projectCount() {
+        return projectMapper.projectCount();
+    }
+
 }

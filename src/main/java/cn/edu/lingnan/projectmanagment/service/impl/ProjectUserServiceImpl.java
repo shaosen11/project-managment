@@ -81,8 +81,13 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     }
 
     @Override
-    public List<ProjectsUser> getAllProjectsUserByProjectId(Integer projectId, Integer offset, Integer pageSize) {
-        return projectUserMapper.getAllProjectsUserByProjectId(projectId, offset, pageSize);
+    public List<ProjectsUser> getPageProjectsUserByProjectId(Integer projectId, Integer offset, Integer pageSize) {
+        return projectUserMapper.getPageProjectsUserByProjectId(projectId, offset, pageSize);
+    }
+
+    @Override
+    public List<ProjectsUser> getAllProjectsUserByProjectId(Integer projectId) {
+        return projectUserMapper.getAllProjectsUserByProjectId(projectId);
     }
 
     @Override

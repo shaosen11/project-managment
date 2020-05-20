@@ -6,13 +6,13 @@ function login_out() {
         type: 'warning',
         buttons: {
             confirm: {
-                text: '是的，退出!',
+                text: 'Yes!',
                 className: 'btn btn-success',
                 className: 'btn btn-secondary'
             },
             cancel: {
                 visible: true,
-                text: '不，取消',
+                text: 'No',
                 className: 'btn btn-primary'
             }
         }

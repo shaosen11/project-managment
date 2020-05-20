@@ -176,6 +176,12 @@ public interface UserMapper {
      * @return
      */
     MyUserDetails getSimpleMyUserDetailsByUserId(Integer id);
+
+    /**
+     * 统计用户数量
+     * @return
+     */
+    Integer userCount();
 }
 
 

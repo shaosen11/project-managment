@@ -20,6 +20,16 @@ public interface MessageService {
     List<Message> getByUserId(Integer userId, Integer needToDo);
 
     /**
+     * 通过userId查询所有消息
+     * @param userId
+     * @param needToDo
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    List<Message> getByUserIdAndOffsetAndPageSize(Integer userId, Integer needToDo, Integer offset, Integer pageSize);
+
+    /**
      * 插入一条消息
      *
      * @param message
@@ -60,5 +70,21 @@ public interface MessageService {
      * @return
      */
     boolean updateMessageIsReadByMessageId(Integer messageId, Integer isRead);
+
+    /**
+     * 获取消息数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer messageCount(Integer userId);
+
+    /**
+     * 获取待办消息数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer messageNeedToDoCount(Integer userId);
 }
 

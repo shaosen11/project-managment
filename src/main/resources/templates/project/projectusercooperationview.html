@@ -2,50 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Home</title>
+    <title>ProjectUserCooperation-ProjectManagment</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
-
-    <!-- Fonts and icons -->
-    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-    <!-- echarts -->
-    <script type="text/javascript" th:src="@{/assets/js/echarts.min.js}"></script>
-    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
-    <!-- CSS Files -->
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
+    <div th:replace="commom/bar :: commom_css"></div>
 
 </head>
-
 <body>
 <div class="wrapper">
-    <div class="main-header" data-background-color="purple">
-        <!-- Logo Header -->
-        <div class="logo-header">
-
-            <a th:href="index.html" class="logo">
-                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
-            </a>
-            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="fa fa-bars"></i>
-					</span>
-            </button>
-            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
-            <div class="navbar-minimize">
-                <button class="btn btn-minimize btn-rounded">
-                    <i class="fa fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        <!-- End Logo Header -->
-
-        <!-- Navbar Header -->
-        <div th:replace="commom/bar :: topbar"></div>
-        <!-- End Navbar -->
-    </div>
+    <div th:replace="commom/bar :: topbar"></div>
     <!-- Sidebar -->
     <div th:replace="commom/bar :: projectsidebar"></div>
     <!-- End Sidebar -->
@@ -78,7 +43,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title"><h3>人才市场</h3></div>
+                                <div class="card-title"><h3>推荐人员</h3></div>
                             </div>
                             <div class="card-body">
                                 <div class="card-list">
@@ -142,48 +107,55 @@
 <!--model框-->
 <div th:replace="commom/bar :: uploadfilemodel"></div>
 <div th:replace="commom/bar :: newprojectpackage"></div>
+<div class="modal fade" id="inviteUserModel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            Invite User</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>用户名</label>
+                            <input id="inviteUserModelProjectId" name="inviteUserModelProjectId" type="hidden">
+                            <input id="inviteUserModelUserId" name="inviteUserModelUserId" type="hidden">
+                            <input id="inviteUserModelUsername" name="inviteUserModelUsername" type="text"
+                                   class="form-control" placeholder="UserName" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>权限</label>
+                            <select name="inviteUserModelDuty" id="inviteUserModelDuty" class="form-control">
+                                <option value="2">管理员</option>
+                                <option value="3">开发者</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-primary" onclick="intite()">invite</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<!--   Core JS Files   -->
-<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
-<script th:src="@{/assets/js/core/popper.min.js}"></script>
-<!-- jQuery UI -->
-<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
-<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
-<!-- Bootstrap Toggle -->
-<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
-<!-- jQuery Scrollbar -->
-<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
-<!-- Datatables -->
-<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
-<!-- Azzara JS -->
-<script th:src="@{/assets/js/ready.min.js}"></script>
-<!-- Azzara DEMO methods, don't include it in your project! -->
-<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
-<!-- Sweet Alert -->
-<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
-<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js"/>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_project_js"/>
 
-<!--在家导航栏退出公共js-->
-<script th:src="@{/assets/js/nav-loginOut.js}"></script>
-<!--加载导航栏消息公共js-->
-<script th:src="@{/assets/js/nav-message.js}"></script>
-<!--加载侧边栏公共js-->
-<script th:src="@{/assets/js/nav-sider.js}"></script>
-<!--加载项目包侧边栏公共js-->
-<script th:src="@{/assets/js/nav-sider-project.js}"></script>
-<!--初始化公共js的userId和projectId-->
+<!--加载人才市场,邀请人员-->
 <script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
-    initJsUserIdAndProjectId(userId, projectId);
-</script>
-
-<!--加载人才市场-->
-<script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
     $(function () {
         addpage(projectId, 1, UserDiv, UserPage);
     })
@@ -247,15 +219,15 @@
             $(div).html("");
             var tableShow = '';
             for (var i = 0; i < list.length; i++) {
-                tableShow += '<div class="item-list" onclick="javascript:appendPersonInformationHtml(' + list[i].id + ')">\n' +
+                tableShow += '<div class="item-list" onclick="appendPersonInformationHtml(' + list[i].id + ')">\n' +
                     '               <div class="avatar">\n' +
                     '                 <img src="/files/photo/' + list[i].photo + '" alt="..." class="avatar-img rounded-circle">\n' +
                     '               </div>\n' +
                     '               <div class="info-user ml-3">\n' +
-                    '               <div class="username"> ' + list[i].username + '</div>\n' +
+                    '               <div class="username" id="toUsername' + list[i].id + '"> ' + list[i].username + '</div>\n' +
                     '                   <div class="status">' + list[i].tag + '</div>\n' +
                     '               </div>\n' +
-                    '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="invite(' + projectId + ',' + userId + ',' + list[i].id + ')">\n' +
+                    '               <button class="btn btn-icon btn-primary btn-round btn-sm" onclick="inviteModel(' + projectId + ',' + list[i].id + ')">\n' +
                     '                       <i class="fa fa-plus"></i>\n' +
                     '               </button>\n' +
                     '             </div>'
@@ -263,24 +235,51 @@
             $(div).html(tableShow)
         }
     }
+</script>
+<!--邀请项目人员弹出框-->
+<script type="text/javascript">
+    function inviteModel(projectId, toUserId) {
+        var toUsername = $('#toUsername' + toUserId).text();
+        checkLoginAndPowerAndDoFunction(inviteDo, projectId, toUserId, toUsername)
+    }
 
-    function invite(projectId, fromUserId, toUserId) {
+    function inviteDo(arguments) {
+        for (var i = 0; i < arguments.length; i++) {
+            console.log(arguments[i])
+        }
+        $('#inviteUserModel').modal('show');
+        $('#inviteUserModelProjectId').val(arguments[1]);
+        $('#inviteUserModelUserId').val(arguments[2]);
+        $('#inviteUserModelUsername').val(arguments[3]);
+    }
+
+    function intite() {
+        var projectId = $('#inviteUserModelProjectId').val();
+        var toUserId = $('#inviteUserModelUserId').val();
         $.ajax({
             type: "post",
             url: "/inviteUser",
-            dataType: "json",
             data: {
                 projectId: projectId,
-                fromUserId: fromUserId,
                 toUserId: toUserId
             },
-            success: function (json) {
-                if (json.ok) {
-                    swal(json.message, {
+            success: function (result) {
+                if (result.ok) {
+                    swal({
                         icon: "success",
+                        text: result.message,
+                        typd: "success",
                         buttons: false,
                         timer: 1500,
                     });
+                } else {
+                    swal({
+                        icon: "warning",
+                        text: result.message,
+                        type: "warning",
+                        buttons: false,
+                        timer: 1500,
+                    })
                 }
             }
         })
@@ -291,10 +290,9 @@
     function appendPersonInformationHtml(userId) {
         $.ajax({
             type: "get",
-            url: "/user_informetion",
+            url: "/user_information",
             dataType: "json",
             data: {
-                projectId: projectId,
                 userId: userId
             },
             success: function (json) {
@@ -312,23 +310,28 @@
 <!--加载用户项目-->
 <script type="text/javascript">
     function userProject(myprojectsList) {
+        console.log(myprojectsList)
         $(userProjects).html("");
         var userProjectDiv = '';
-        if (myprojectsList.length = 0) {
+        if (myprojectsList.length != 0) {
             for (var i = 0; i < myprojectsList.length && i < 2; i++) {
                 userProjectDiv += '<div class="col-md-6">\n' +
                     '                                            <div class="form-group form-group-default">\n' +
                     '                                                <div class="col-md-12 row">\n' +
                     '                                                    <div class="col-md-8">\n' +
-                    '                                                        <a href="#">\n' +
+                    '                                                        <a href="/projects_view?projectId=' + myprojectsList[i].projectId + '">\n' +
                     '                                                            <h2 style="color: #145180">\n' +
                     '                                                                <i class="fas fa-file-alt"></i>' + myprojectsList[i].projectName + '\n' +
                     '                                                            </h2>\n' +
                     '                                                        </a>\n' +
                     '                                                    </div>\n' +
                     '                                                    <div class="col-md-4 text-right">\n' +
-                    '                                                        <i class="fas fa-star"></i><span>1</span>\n' +
-                    '                                                        <i class="fas fa-heart"></i><span>2</span>\n' +
+                    '                                                        <a style="color: #F29F3F">' +
+                    '                                                           <i class="fas fa-star"></i><span>' + myprojectsList[i].storeCount + '</span>\n' +
+                    '                                                        </a>' +
+                    '                                                        <a style="color:#C1194E">' +
+                    '                                                        <i class="fas fa-heart"></i><span>' + myprojectsList[i].likeCount + '</span>\n' +
+                    '                                                        </a>' +
                     '                                                    </div>\n' +
                     '                                                    <div class="col-md-6">\n' +
                     '                                                    <span style="color: #4e555b">\n' +
@@ -366,11 +369,12 @@
 </script>
 <!--日历图-->
 <script type="text/javascript">
+    var myCharts;
+
     function calendarDevote(year, json) {
-        var myChart = echarts.init(document.getElementById('calendarDevote'));
+        myCharts = echarts.init(document.getElementById('calendarDevote'));
 
         function getVirtulData(year) {
-            year = year;
             var date = +echarts.number.parseDate(year + '-01-01');
             var end = +echarts.number.parseDate(year + '-12-31');
             var dayTime = 3600 * 24 * 1000;
@@ -428,7 +432,7 @@
                 data: getVirtulData(year)
             }
         };
-        myChart.setOption(option);
+        myCharts.setOption(option);
     }
 </script>
 </body>

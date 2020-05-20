@@ -16,7 +16,7 @@ public interface UserClickMapper {
 
     /**
      * 添加点击记录
-     * @param serClick
+     * @param userClick
      * @return
      */
     boolean addUserClick(UserClick userClick);

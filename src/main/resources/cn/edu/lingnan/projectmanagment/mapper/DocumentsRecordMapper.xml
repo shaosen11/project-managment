@@ -98,7 +98,6 @@
     <!--	    SELECT * FROM documents_record where delete_flag = 1 and project_id = #{projectId} order by id desc limit #{offset},#{pageSize}-->
     <!--    </select>-->
 
-    <!--查找所有项目功能点信息-->
     <resultMap id="documentRecordList" type="DocumentsRecord">
         <result column="id" property="id"></result>
         <result column="project_id" property="projectId"></result>

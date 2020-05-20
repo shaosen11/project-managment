@@ -6,6 +6,7 @@ import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
 import cn.edu.lingnan.projectmanagment.utils.MessageTypeContants;
 import cn.edu.lingnan.projectmanagment.utils.PathUtil;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +49,7 @@ public class ProjectsUserController {
     @Autowired
     private MessageNeedToDoRelationshipServiceImpl messageNeedToDoRelationshipService;
 
-    @GetMapping("/user_prjects")
+    @GetMapping("/user_projects")
     @ResponseBody
     public List getProjectsByUserId(@Param("userId") Integer userId) {
         List<Projects> projectListByUserId = projectService.getProjectListByUserId(userId);
@@ -227,7 +229,14 @@ public class ProjectsUserController {
     }
 
     @GetMapping("/project_user_view")
-    public String projectUserView() {
+    public String projectUserView(Integer projectId, Model model) {
+        Integer countByProjectId = projectUserService.getCountByProjectId(projectId);
+        Integer managment = projectUserService.getCountByProjectIdAndDuty(projectId, 1);
+        Integer admin = projectUserService.getCountByProjectIdAndDuty(projectId, 2);
+        Integer codeDevelop = projectUserService.getCountByProjectIdAndDuty(projectId, 3);
+        model.addAttribute("countByProjectId", countByProjectId);
+        model.addAttribute("admin", managment + admin);
+        model.addAttribute("codeDevelop", codeDevelop);
         return "project/projectuserview";
     }
 
@@ -262,7 +271,7 @@ public class ProjectsUserController {
             List<ProjectsUser> projectsUserList = null;
             List<MyUserDetails> myUserDetailsList = null;
             if (market == null) {
-                projectsUserList = projectUserService.getAllProjectsUserByProjectId(projectId, offset, pageSize);
+                projectsUserList = projectUserService.getPageProjectsUserByProjectId(projectId, offset, pageSize);
                 map.put("list", projectsUserList);
             } else {
                 myUserDetailsList = projectUserService.getProjectsUserNoInProjectByProjectId(projectId, offset, pageSize);
@@ -283,9 +292,9 @@ public class ProjectsUserController {
     }
 
 
-    @GetMapping("/projectsUser")
+    @GetMapping("/projectsUserDevotion")
     @ResponseBody
-    public ProjectsUser projectsUser(Integer projectId, Integer userId) {
+    public ProjectsUser projectsUserDevotion(Integer projectId, Integer userId) {
         Projects projects = projectService.getById(projectId);
         ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(userId, projectId);
         projectsUser.setCodeDevoteLineRatio((double) projectsUser.getCodeDevoteLine() / (double) projects.getCodeLineNumber() * 100);
@@ -293,18 +302,40 @@ public class ProjectsUserController {
         return projectsUser;
     }
 
-    @GetMapping("/projectUserTotal")
+    /**
+     * 判断用户是项目人员
+     *
+     * @param projectId
+     * @param request
+     * @return
+     */
+    @GetMapping("/projectUser")
     @ResponseBody
-    public Object projectUserTotal(Integer projectId) {
-        Integer countByProjectId = projectUserService.getCountByProjectId(projectId);
-        Integer managment = projectUserService.getCountByProjectIdAndDuty(projectId, 1);
-        Integer admin = projectUserService.getCountByProjectIdAndDuty(projectId, 2);
-        Integer codeDevelop = projectUserService.getCountByProjectIdAndDuty(projectId, 4);
-        Map<String, Integer> map = new HashMap<>();
-        map.put("countByProjectId", countByProjectId);
-        map.put("admin", managment+admin);
-        map.put("codeDevelop", codeDevelop);
-        return map;
+    public ProjectsUser projectsUser(Integer projectId, HttpServletRequest request) {
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
+        return projectsUser;
+    }
+
+    /**
+     * 判断用户是项目管理员
+     *
+     * @param projectId
+     * @param request
+     * @return
+     */
+    @GetMapping("/projectUserDuty")
+    @ResponseBody
+    public ProjectsUserDuty projectsUserDuty(Integer projectId, HttpServletRequest request) {
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
+        return projectsUser.getProjectsUserDuty();
+    }
+
+    @GetMapping("/projectUsers")
+    @ResponseBody
+    public List projectUsers(Integer projectId) {
+        return projectUserService.getAllProjectsUserByProjectId(projectId);
     }
 }
 

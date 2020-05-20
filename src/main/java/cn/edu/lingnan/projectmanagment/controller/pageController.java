@@ -6,6 +6,7 @@ import cn.edu.lingnan.projectmanagment.bean.ProjectsRecommendation;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsRecordServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,11 +72,16 @@ public class pageController {
             } else {
                 list = documentsRecordService.getDocumentsRecordPageByProjectIdAndUserId(projectId, userId, offset, pageSize);
             }
+            List<DocumentsRecord> list1 = new ArrayList<>();
+            for (DocumentsRecord documentsRecord : list) {
+                documentsRecord.setOperateTimeString(DateFromatUtil.getNowDate(documentsRecord.getOperateTime()));
+                list1.add(documentsRecord);
+            }
             // 封装数据，并返回
             map.put("page", page);
             map.put("pageSize", pageSize);
             map.put("totalPage", totalPage);
-            map.put("list", list);
+            map.put("list", list1);
 
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 
@@ -120,19 +127,33 @@ public class pageController {
     public ResponseEntity<Map<String, Object>> allFunctionPage(Integer page, Integer projectId, Integer functionStatus) {
         System.out.println("当前页：" + page + "  当前项目：" + projectId);
         Map<String, Object> map = new HashMap<String, Object>();
+        String functionStatus2 = null;
         // 每页显示条数
         int pageSize = 5;
         try {
-            // 获取总条目数
-            int count = projectsFunctionService.countByProjectIdAndStatus(projectId, functionStatus);
-            map = functionPageCom(page, projectId, count);
-            int offset = (int) map.get("offset");
-            // 根据起始索引和页面大小去查询数据
-            List<ProjectsFunction> list = projectsFunctionService.getAllFunctionPage(projectId, offset, pageSize, functionStatus);
-            // 封装数据，并返回
-            map.put("list", list);
-            System.out.println("分页map" + map);
-            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            if(functionStatus == 4){//查找项目已取消功能点
+                // 获取总条目数
+                int count = projectsFunctionService.countDelByProjectId(projectId);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getDelAllFunctionPage(projectId, offset, pageSize);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }else{
+                // 获取总条目数
+                int count = projectsFunctionService.countByProjectIdAndStatus(projectId,functionStatus);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getAllFunctionPage(projectId, offset, pageSize,functionStatus);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
         } catch (Exception e) {
             System.out.println("获取分页数据失败" + e);
             return new ResponseEntity<Map<String, Object>>(
@@ -149,16 +170,29 @@ public class pageController {
         // 每页显示条数
         int pageSize = 5;
         try {
-            // 获取总条目数
-            int count = projectsFunctionService.countProjectFunctionByProjectIdAndRealizeUserId(projectId, userId, functionStatus);
-            map = functionPageCom(page, projectId, count);
-            int offset = (int) map.get("offset");
-            // 根据起始索引和页面大小去查询数据
-            List<ProjectsFunction> list = projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, offset, pageSize, userId, functionStatus);
-            // 封装数据，并返回
-            map.put("list", list);
-            System.out.println("分页map" + map);
-            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            if(functionStatus == 4){//查找项目已取消功能点
+                // 获取总条目数
+                int count = projectsFunctionService.countDelProjectFunctionByProjectIdAndRealizeUserId(projectId,userId);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getDelFunctionByProjectIdAndRealizeUserId(projectId, offset, pageSize,userId);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }else{
+                // 获取总条目数
+                int count = projectsFunctionService.countProjectFunctionByProjectIdAndRealizeUserId(projectId,userId,functionStatus);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, offset, pageSize,userId,functionStatus);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
         } catch (Exception e) {
             System.out.println("获取分页数据失败" + e);
             return new ResponseEntity<Map<String, Object>>(
@@ -175,16 +209,29 @@ public class pageController {
         // 每页显示条数
         int pageSize = 5;
         try {
-            // 获取总条目数
-            int count = projectsFunctionService.countProjectFunctionByProjectIdAndPublishUserId(projectId, userId, functionStatus);
-            map = functionPageCom(page, projectId, count);
-            int offset = (int) map.get("offset");
-            // 根据起始索引和页面大小去查询数据
-            List<ProjectsFunction> list = projectsFunctionService.getFunctionByProjectIdAndPublishUserId(projectId, offset, pageSize, userId, functionStatus);
-            // 封装数据，并返回
-            map.put("list", list);
-            System.out.println("分页map" + map);
-            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            if(functionStatus == 4) {//查找项目已取消功能点
+                // 获取总条目数
+                int count = projectsFunctionService.countDelProjectFunctionByProjectIdAndPublishUserId(projectId,userId);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getDelFunctionByProjectIdAndPublishUserId(projectId, offset, pageSize,userId);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }else{
+                // 获取总条目数
+                int count = projectsFunctionService.countProjectFunctionByProjectIdAndPublishUserId(projectId,userId,functionStatus);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getFunctionByProjectIdAndPublishUserId(projectId, offset, pageSize,userId,functionStatus);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
         } catch (Exception e) {
             System.out.println("获取分页数据失败" + e);
             return new ResponseEntity<Map<String, Object>>(
@@ -201,16 +248,29 @@ public class pageController {
         // 每页显示条数
         int pageSize = 5;
         try {
-            // 获取总条目数
-            int count = projectsFunctionService.countProjectFunctionByProjectIdAndUserId(projectId, userId, functionStatus);
-            map = functionPageCom(page, projectId, count);
-            int offset = (int) map.get("offset");
-            // 根据起始索引和页面大小去查询数据
-            List<ProjectsFunction> list = projectsFunctionService.getFunctionByProjectIdAndUserId(projectId, offset, pageSize, userId, functionStatus);
-            // 封装数据，并返回
-            map.put("list", list);
-            System.out.println("分页map" + map);
-            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            if(functionStatus == 4) {//查找项目已取消功能点
+                // 获取总条目数
+                int count = projectsFunctionService.countDelProjectFunctionByProjectIdAndUserId(projectId,userId);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getDelFunctionByProjectIdAndUserId(projectId, offset, pageSize,userId);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }else{
+                // 获取总条目数
+                int count = projectsFunctionService.countProjectFunctionByProjectIdAndUserId(projectId,userId,functionStatus);
+                map = functionPageCom(page,projectId,count);
+                int offset = (int) map.get("offset");
+                // 根据起始索引和页面大小去查询数据
+                List<ProjectsFunction> list = projectsFunctionService.getFunctionByProjectIdAndUserId(projectId, offset, pageSize,userId,functionStatus);
+                // 封装数据，并返回
+                map.put("list", list);
+                System.out.println("分页map"+map);
+                return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            }
         } catch (Exception e) {
             System.out.println("获取分页数据失败" + e);
             return new ResponseEntity<Map<String, Object>>(

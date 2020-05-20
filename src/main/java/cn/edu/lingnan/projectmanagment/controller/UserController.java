@@ -10,6 +10,8 @@ import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.FtpUtil;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -95,7 +97,7 @@ public class UserController {
         UserRole userRole = new UserRole();
         userRole.setUserId(myUserDetails.getId());
         //暂时默认设置为管理员
-        userRole.setRoleId(MyContants.USER_ROLE_ADMIN);
+        userRole.setRoleId(MyContants.USER_ROLE_COMMMON);
         userRoleService.insertUserRole(userRole);
         return "redirect:/login.html";
     }
@@ -121,7 +123,7 @@ public class UserController {
             auth.setDetails(authentication.getDetails());
             //4.重新设置SecurityContextImpl对象的Authentication
             securityContextImpl.setAuthentication(auth);
-            return "redirect:/userprofile.html";
+            return "redirect:/userprofile";
         }else {
             return "login";
         }
@@ -332,9 +334,23 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/user_informetion")
+    @GetMapping("/user_information")
     public MyUserDetails userInformetion(Integer userId){
         return userService.getMyUserDetailsByUserId(userId);
+    }
+
+
+    @GetMapping("/projectManagementAdmin")
+    @ResponseBody
+    public String projectManagementAdmin(HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        List<String> role = myUserDetailsService.findRoleByEmail(myUserDetails.getEmail());
+        for (String s : role) {
+            if (s.equals("admin")){
+                return s;
+            }
+        }
+        return null;
     }
 }
 

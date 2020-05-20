@@ -93,16 +93,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //需要权限的请求
                 .authorizeRequests()
                 //允许所有访问
-                .antMatchers("/","/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()
+                .antMatchers("/login.html","/login", "/kaptcha", "/loginUser", "/user").permitAll()
                 .antMatchers("/forgetpassword","/forget_password","/resetpassword","/reset_password").permitAll()
-                .antMatchers("/index.html").authenticated()
+
+                //nav_message.js
+                .antMatchers("/myMessage").permitAll()
+                //nav_sider.js
+                .antMatchers("/user_projects").permitAll()
+                //nav_sider_project.js
+                .antMatchers("/projectsPackages","/projectMessageCount").permitAll()
+
+                //inedx
+                .antMatchers("/","/index.html","/index","/todayProjectsAndWeekProjects","/getProjectsByTypePage","/projects_index_click","/projectManagementAdmin").permitAll()
+                //project_view
+                .antMatchers("/projects_view","/getCodeInsertData","/getCodeDevoteData","/getLineChartDate","/documentRecordPage","/project").permitAll()
+                //project_plan_view
+                .antMatchers("/projects_plan_view","/projects_plan","/projectFunctionMessageAlert").permitAll()
+                //project_function_view
+                .antMatchers("/project_function_view","/allFunctionPage","/projectFunctionDataCicleChart","/projectFunctionTotal").permitAll()
+                //project_user_view
+                .antMatchers("/project_user_view","/projectUserPage","/projectsUserDevotion","/user_finish_function","/user_developing_function","/projectUserTotal").permitAll()
+                //project_user_cooperation_view
+                .antMatchers("/project_user_cooperation_view","/projectUserPage","/inviteUser","/user_information").permitAll()
+                //document
+                .antMatchers("/document","/files/projects/*/*").permitAll()
+                //projectIntroduce
+                .antMatchers("/projectIntroduce").permitAll()
+
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()
                 .sessionManagement()
                 //如果有需要就创建session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 //当session超时，重新跳转到指定页面
-                .invalidSessionUrl("/login.html")
+                .invalidSessionUrl("/")
                 //每次登录都替换sesionID
                 .sessionFixation().migrateSession()
                 //只允许最多一个登录

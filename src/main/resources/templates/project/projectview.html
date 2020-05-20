@@ -2,51 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Home</title>
+    <title>Project-ProjectManagment</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
-
-    <!-- Fonts and icons -->
-    <script th:src="@{/assets/js/plugin/webfont/webfont.min.js}"></script>
-    <!-- echarts -->
-    <script type="text/javascript" th:src="@{/assets/js/echarts.min.js}"></script>
-    <script type="text/javascript" th:src="@{/assets/js/echarts.js}"></script>
-    <!-- CSS Files -->
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/azzara.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/fonts.css}">
-
+    <div th:replace="commom/bar :: commom_css"></div>
 </head>
-
 <body>
-
 <div class="wrapper">
-    <div class="main-header" data-background-color="purple">
-        <!-- Logo Header -->
-        <div class="logo-header">
-
-            <a th:href="index.html" class="logo">
-                <img th:src="@{/assets/img/logoazzara.svg}" alt="navbar brand" class="navbar-brand">
-            </a>
-            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="fa fa-bars"></i>
-					</span>
-            </button>
-            <button class="topbar-toggler more"><i class="fa fa-ellipsis-v"></i></button>
-            <div class="navbar-minimize">
-                <button class="btn btn-minimize btn-rounded">
-                    <i class="fa fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        <!-- End Logo Header -->
-
-        <!-- Navbar Header -->
-        <div th:replace="commom/bar :: topbar"></div>
-        <!-- End Navbar -->
-    </div>
+    <div th:replace="commom/bar :: topbar"></div>
     <!-- Sidebar -->
     <div th:replace="commom/bar :: projectsidebar"></div>
     <!-- End Sidebar -->
@@ -343,49 +306,10 @@
 </div>
 
 
-<!--   Core JS Files   -->
-<script th:src="@{/assets/js/core/jquery.3.2.1.min.js}"></script>
-<script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
-<script th:src="@{/assets/js/core/popper.min.js}"></script>
-<!-- jQuery UI -->
-<script th:src="@{/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js}"></script>
-<script th:src="@{/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js}"></script>
-<!-- Bootstrap Toggle -->
-<script th:src="@{/assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
-<!-- jQuery Scrollbar -->
-<script th:src="@{/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js}"></script>
-<!-- Datatables -->
-<script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
-<!-- Azzara JS -->
-<script th:src="@{/assets/js/ready.min.js}"></script>
-<!-- Azzara DEMO methods, don't include it in your project! -->
-<script th:src="@{/assets/js/setting-demo.js}"></script>
-<!-- Sweet Alert -->
-<script th:src="@{/assets/js/plugin/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/assets/js/myjs.js}"></script>
-<script th:src="@{/assets/js/plugin/paginator/bootstrap-paginator.js}"></script>
-<!-- Chart JS -->
-<script th:src="@{/assets/js/plugin/chart.js/chart.min.js}"></script>
-<!-- Chart Circle -->
-<script th:src="@{/assets/js/plugin/chart-circle/circles.min.js}"></script>
-<script th:src="@{/assets/js/formcheck.js}"></script>
-<!-- 功能点分页 -->
-<script th:src="@{/assets/js/functionpage.js}"></script>
-
-<!--在家导航栏退出公共js-->
-<script th:src="@{/assets/js/nav-loginOut.js}"></script>
-<!--加载导航栏消息公共js-->
-<script th:src="@{/assets/js/nav-message.js}"></script>
-<!--加载侧边栏公共js-->
-<script th:src="@{/assets/js/nav-sider.js}"></script>
-<!--加载项目包侧边栏公共js-->
-<script th:src="@{/assets/js/nav-sider-project.js}"></script>
-<!--初始化公共js的userId和projectId-->
-<script type="text/javascript">
-    var projectId = [[${param.projectId}]];
-    var userId = [[${#authentication.principal.id}]];
-    initJsUserIdAndProjectId(userId, projectId);
-</script>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js"/>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_project_js"/>
 
 
 <!--饼图-->
@@ -449,8 +373,10 @@
         $.ajax({
             type: "get",
             async: true,
-            url: "/getCodeDevoteData?projectId=" + projectId,
-            data: [],
+            url: "/getCodeDevoteData",
+            data: {
+                projectId: projectId
+            },
             dataType: "json",
             success: function (result) {
                 $(result).each(function (index, item) {
@@ -586,10 +512,11 @@
 <!--项目日志分页-->
 <script type="text/javascript">
     $(function () {
-        var projectId = [[${param.projectId}]];
-        var userId = [[${#authentication.principal.id}]];
         addDocumentRecordPage(projectId, 0, allDiv, allPage);
-        addDocumentRecordPage(projectId, userId, myDiv, myPage);
+        if (userId != "") {
+            console.log("请求了")
+            addDocumentRecordPage(projectId, userId, myDiv, myPage);
+        }
     })
 
     function addDocumentRecordPage(projectId, userId, div, ul) {
@@ -642,6 +569,9 @@
                         }
                     };
                     $(ul).bootstrapPaginator(options);//设置分页
+                },
+                error: function () {
+                    console.log("请求失败")
                 }
             });
         }
@@ -666,7 +596,7 @@
                     '                    <span class="text-muted">' + list[i].operateMessage + '</span>\n' +
                     '                </div>\n' +
                     '                <div class="float-right pt-1">\n' +
-                    '                    <small class="text-muted">' + list[i].operateTime + '</small>\n' +
+                    '                    <small class="text-muted">' + list[i].operateTimeString + '</small>\n' +
                     '                </div>\n' +
                     '            </div>\n' +
                     '            <div class="separator-dashed"></div>'
@@ -686,7 +616,6 @@
                 projectId: projectId,
             },
             success: function (json) {
-                console.log(json)
                 $("#projectCodeLineNumber").text(json.codeLineNumber);
                 $("#projectCodeUpdateCount").text(json.codeUpdateCount);
                 $("#projectDocumentCount").text(json.documentCount);

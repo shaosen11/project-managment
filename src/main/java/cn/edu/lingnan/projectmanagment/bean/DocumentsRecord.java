@@ -15,6 +15,7 @@ public class DocumentsRecord {
     private Integer projectId;
     private Integer userId;
     private Date operateTime;
+    private String operateTimeString;
     private String ip;
     private String operateMessage;
     private MyUserDetails myUserDetails;

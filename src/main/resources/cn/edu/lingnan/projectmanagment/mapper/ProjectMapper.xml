@@ -207,4 +207,5 @@
         where a.charge_user_id=b.id and a.type=#{type} and a.enabled = 1 and b.enabled=1;
     </select>
 
+
 </mapper>

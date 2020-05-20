@@ -143,8 +143,12 @@
         <collection property="projectsUserDuty" column="{id=duty_code}" select="cn.edu.lingnan.projectmanagment.mapper.ProjectsUserDutyMapper.getById">
         </collection>
     </resultMap>
-    <select id="getAllProjectsUserByProjectId" resultMap="ProjectsUserList">
+    <select id="getPageProjectsUserByProjectId" resultMap="ProjectsUserList">
         select * from projects_user where delete_flag = 1 and projects_id = #{projectId} order by code_devote_line desc limit #{offset},#{pageSize};
+    </select>
+
+    <select id="getAllProjectsUserByProjectId" resultMap="ProjectsUserList">
+        select * from projects_user where delete_flag = 1 and projects_id = #{projectId} order by code_devote_line desc
     </select>
 
     <select id="getCountNoInProjectByProjectId" resultType="int">

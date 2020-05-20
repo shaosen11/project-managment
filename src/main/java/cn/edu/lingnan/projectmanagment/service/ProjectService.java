@@ -68,5 +68,6 @@ public interface ProjectService {
      * @return
      */
     Projects getAdminByUserIdAndProjectId(Integer userId, Integer projectId);
+
 }
 

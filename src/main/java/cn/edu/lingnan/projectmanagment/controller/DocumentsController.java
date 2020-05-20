@@ -1,6 +1,7 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.*;
+import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
 import cn.edu.lingnan.projectmanagment.service.ProjectsService;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsMessageNeedToDoRelationshipServiceImpl;
@@ -8,6 +9,7 @@ import cn.edu.lingnan.projectmanagment.service.impl.ProjectsMessageServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsPackageServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,12 +57,7 @@ public class DocumentsController {
 
 
     @GetMapping("/document")
-    public String text(String documentName, Integer projectId, Integer userId, Model model, HttpServletRequest request) {
-        //获取myUserDetails对象
-        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
-        System.out.println("myUserDetails:" + myUserDetails);
+    public String text(String documentName, Integer projectId, Model model, HttpServletRequest request) {
         System.out.println("文件名：" + documentName);
         System.out.println("项目id：" + projectId);
         //获取文件名为filename和版本标识符为1的
@@ -95,28 +95,21 @@ public class DocumentsController {
         model.addAttribute("projectId", projectId);
         //判断是否为项目组长
         Integer projectAdmin = null;
-        if (projectService.getAdminByUserIdAndProjectId(userId, projectId) != null) {
-            projectAdmin = 1;
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        if (myUserDetails != null) {
+            if (projectService.getAdminByUserIdAndProjectId(myUserDetails.getId(), projectId) != null) {
+                projectAdmin = 1;
+            }
         }
         model.addAttribute("projectAdmin", projectAdmin);
         return "project/documentview";
     }
 
-//    @RequestMapping("/getall")
-//    public String getAll(@RequestParam("projectId") Integer projectId, Model model) {
-//        List<Documents> List = documentsService.getAllByProjectId(projectId);
-//        System.out.println(List);
-//        model.addAttribute("allDocuments", List);
-//        //设置项目id
-//        model.addAttribute("projectId", projectId);
-//        return "datatables";
-//    }
-
     @PostMapping("/document")
-    public String uploadFile(MultipartFile[] files, Integer projectId, Documents documents, String packageName, Integer userId, HttpServletRequest request) throws Exception {
+    public String uploadFile(MultipartFile[] files, Integer projectId, Documents documents, String packageName, HttpServletRequest request) throws Exception {
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
         System.out.println("项目id：" + projectId);
         System.out.println("packageName:::" + packageName);
-        System.out.println("userId:::" + userId);
         if (files.length == 0) {
             return "failure";
         }
@@ -137,7 +130,7 @@ public class DocumentsController {
             documents.setSerialNumber(uuid);
             //以后需要修改projiectId
             documents.setProjectId(projectId);
-            documents.setUserId(userId);
+            documents.setUserId(myUserDetails.getId());
             documents.setUploadTime(new Date());
             //装换文件类型，且读取代码行数
             System.out.println("开始转换文件");
@@ -238,9 +231,9 @@ public class DocumentsController {
         //获取文件名为filename和版本标识符为2的
         Documents d2 = documentsService.getByProjectsIdAndVersionFlagAndName(projectsId, 2, documentName);
         ProjectsMessageNeedToDoRelationship relationship = projectsMessageNeedToDoRelationshipService.getByDocumentId(d2.getId());
-        if (operate == 1){
+        if (operate == 1) {
             porojectsMessageController.agreeNeedToDo(relationship.getProjectMessageId(), userId, request);
-        }else {
+        } else {
             porojectsMessageController.doNotagreeProjectMessageToDo(relationship.getProjectMessageId(), userId, request);
         }
         Map<String, Object> pathMap = new HashMap<>();
@@ -277,11 +270,48 @@ public class DocumentsController {
     }
 
     @GetMapping("/download")
-    public String download(Documents documents) {
-        System.out.println(documents);
-        documents = documentsService.getById(documents.getId());
-        String downloadPath = "/files/projects/" + documents.getProjectId() + "/" + documents.getSerialNumber() + "-" + documents.getName();
+    @ResponseBody
+    public String download(Integer projectId, String documentName) {
+        Documents documents = documentsService.getByProjectsIdAndVersionFlagAndName(projectId, 1, documentName);
+        String downloadPath = "http://www.projectsmanagment.top" + FileUtil.DocumentsGetAddrress(documents);
+        System.out.println(downloadPath);
         return downloadPath;
+//        File file = new File(downloadPath);
+//        if (file.exists()) {
+//            System.out.println("文件存在");
+//            response.setHeader("content-type", "application/octet-stream");
+//            response.setContentType("application/octet-stream");
+//            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
+//            byte[] buffer = new byte[1024];
+//            FileInputStream fis = null;
+//            BufferedInputStream bis = null;
+//            try {
+//                fis = new FileInputStream(file);
+//                bis = new BufferedInputStream(fis);
+//                OutputStream os = response.getOutputStream();
+//                int i = bis.read(buffer);
+//                while (i != -1) {
+//                    os.write(buffer, 0, i);
+//                    i = bis.read(buffer);
+//                }
+//                return AJaxResponse.success("下载成功!");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return AJaxResponse.error("抛出错误!");
+//            } finally {
+//                {
+//                    try {
+//                        bis.close();
+//                        fis.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }
+//        }else {
+//            return AJaxResponse.error("文件不存在!");
+//        }
     }
 }
 

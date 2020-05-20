@@ -101,7 +101,16 @@ public interface ProjectUserMapper {
      * @param projectId
      * @return
      */
-    List<ProjectsUser> getAllProjectsUserByProjectId(Integer projectId, Integer offset, Integer pageSize);
+    List<ProjectsUser> getPageProjectsUserByProjectId(Integer projectId, Integer offset, Integer pageSize);
+
+    /**
+     * 通过项目id查找所有项目成员
+     *
+     * @param projectId
+     * @return
+     */
+    List<ProjectsUser> getAllProjectsUserByProjectId(Integer projectId);
+
 
     /**
      * 查询项目总共人数
