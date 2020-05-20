@@ -118,7 +118,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //document
                 .antMatchers("/document","/files/projects/*/*").permitAll()
                 //projectIntroduce
-                .antMatchers("/projectIntroduce").permitAll()
+                .antMatchers("/projectIntroduce","/projectIndexIntroduce","/projectViewIntroduce","/projectDocumentIntroduce").permitAll()
 
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()

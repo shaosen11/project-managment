@@ -38,10 +38,10 @@ function noProjectUserAlert() {
 function noLoginALert() {
     swal({
         icon: "warning",
-        text: "请先登录！",
+        text: "你未登录，请点击左上角登录！",
         type: "warning",
         buttons: false,
-        timer: 1500,
+        timer: 2000,
     })
 }
 
@@ -55,3 +55,10 @@ function checkLoginAndAndDoFunction(doFunction) {
     }
 }
 
+//跳转新建项目页面
+function newProjectView() {
+    checkLoginAndAndDoFunction(newProjectViewDo)
+}
+function newProjectViewDo() {
+    location.href = "/newprojectview"
+}
