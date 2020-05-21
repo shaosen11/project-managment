@@ -5,6 +5,7 @@ import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserLikeServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.UserStoreServiceImpl;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -439,5 +441,276 @@ public class MyProjectsController {
         System.out.println("取消点赞收藏项目,返回："+m);
         return m;
     }
+
+    //我的全部项目--按类型和进度搜索
+    @GetMapping("/get_project_by_type")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getMyProjectsByType(Integer page,String type,String schedule,HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        System.out.println("当前页：" +page+"  当前用户：" + myUserDetails);
+        System.out.println("type："+type+" schedule="+schedule);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        List<Myprojects> myprojectsList= null;
+        int count;
+        List<Myprojects> list = null;
+        try {
+            // 获取总条目数
+            if("null".equals(type) && "null".equals(schedule) ){
+                myprojectsList = userService.getMyProjects(myUserDetails.getId());
+                count = myprojectsList.size();
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsPage(myUserDetails.getId(),offset,pageSize);
+            }else if("null".equals(schedule)){
+                //按类型查
+                count = userService.getMyProjectsByType(myUserDetails.getId(),type);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsPageByType(myUserDetails.getId(),type,offset,pageSize);
+            }else if("null".equals(type)){
+                //按进度查
+                count = userService.getMyProjectsBySchedule(myUserDetails.getId(),schedule);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsPageBySchedule(myUserDetails.getId(),schedule,offset,pageSize);
+            }else{
+                //按类型、进度查
+                count = userService.getMyProjectsByTypeSchedule(myUserDetails.getId(),type,schedule);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsPageByTypeSchedule(myUserDetails.getId(),type,schedule,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我的全部项目--按项目名或负责人模糊搜索
+    @GetMapping("/get_project_by_name_or_user")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getMyProjectsByNameOrUser(Integer page,String nameOrUser,HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        System.out.println("当前页：" +page+"  nameOrUser："+nameOrUser+"  当前用户：" + myUserDetails);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        List<Myprojects> myprojectsList= null;
+        int count=0;
+        List<Myprojects> list = null;
+        try {
+            // 获取总条目数
+            if(nameOrUser == null){
+                myprojectsList = userService.getMyProjects(myUserDetails.getId());
+                count = myprojectsList.size();
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsPage(myUserDetails.getId(),offset,pageSize);
+            }else{
+                count = userService.getMyProjectsByNameOrUser(myUserDetails.getId(),nameOrUser);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsPageByNameOrUser(myUserDetails.getId(),nameOrUser,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我负责的项目--按类型和进度搜索
+    @GetMapping("/get_project_charge_by_type")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getMyProjectsChargeByType(Integer page,String type,String schedule,HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        System.out.println("当前页：" +page+"  当前用户：" + myUserDetails);
+        System.out.println("type："+type+" schedule="+schedule);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        List<Myprojects> myprojectsList= null;
+        int count;
+        List<Myprojects> list = null;
+        try {
+            // 获取总条目数
+            if("null".equals(type) && "null".equals(schedule) ){
+                myprojectsList = userService.getMyChargeProjects(myUserDetails.getId());
+                count = myprojectsList.size();
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyChargeProjectsPage(myUserDetails.getId(),offset,pageSize);
+            }else if("null".equals(schedule)){
+                //按类型查
+                count = userService.getMyProjectsChargeByType(myUserDetails.getId(),type);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsChargePageByType(myUserDetails.getId(),type,offset,pageSize);
+            }else if("null".equals(type)){
+                //按进度查
+                count = userService.getMyProjectsChargeBySchedule(myUserDetails.getId(),schedule);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsChargePageBySchedule(myUserDetails.getId(),schedule,offset,pageSize);
+            }else{
+                //按类型、进度查
+                count = userService.getMyProjectsChargeByTypeSchedule(myUserDetails.getId(),type,schedule);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsChargePageByTypeSchedule(myUserDetails.getId(),type,schedule,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我负责的项目--按项目名或负责人模糊搜索
+    @GetMapping("/get_project_charge_by_name_or_user")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getMyProjectsChargeByNameOrUser(Integer page,String nameOrUser,HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        System.out.println("当前页：" +page+"  nameOrUser："+nameOrUser+"  当前用户：" + myUserDetails);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        List<Myprojects> myprojectsList= null;
+        int count=0;
+        List<Myprojects> list = null;
+        try {
+            // 获取总条目数
+            if(nameOrUser == null){
+                myprojectsList = userService.getMyChargeProjects(myUserDetails.getId());
+                count = myprojectsList.size();
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyChargeProjectsPage(myUserDetails.getId(),offset,pageSize);
+            }else{
+                count = userService.getMyProjectsChargeByNameOrUser(myUserDetails.getId(),nameOrUser);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsChargePageByNameOrUser(myUserDetails.getId(),nameOrUser,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我参与的项目--按类型和进度搜索
+    @GetMapping("/get_project_join_by_type")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getMyProjectsJoinByType(Integer page,String type,String schedule,HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        System.out.println("当前页：" +page+"  当前用户：" + myUserDetails);
+        System.out.println("type："+type+" schedule="+schedule);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        List<Myprojects> myprojectsList= null;
+        int count;
+        List<Myprojects> list = null;
+        try {
+            // 获取总条目数
+            if("null".equals(type) && "null".equals(schedule) ){
+                myprojectsList = userService.getMyJoinProjects(myUserDetails.getId());
+                count = myprojectsList.size();
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyJoinProjectsPage(myUserDetails.getId(),offset,pageSize);
+            }else if("null".equals(schedule)){
+                //按类型查
+                count = userService.getMyProjectsJoinByType(myUserDetails.getId(),type);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsJoinPageByType(myUserDetails.getId(),type,offset,pageSize);
+            }else if("null".equals(type)){
+                //按进度查
+                count = userService.getMyProjectsJoinBySchedule(myUserDetails.getId(),schedule);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsJoinPageBySchedule(myUserDetails.getId(),schedule,offset,pageSize);
+            }else{
+                //按类型、进度查
+                count = userService.getMyProjectsJoinByTypeSchedule(myUserDetails.getId(),type,schedule);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsJoinPageByTypeSchedule(myUserDetails.getId(),type,schedule,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //我参与的项目--按项目名或负责人模糊搜索
+    @GetMapping("/get_project_join_by_name_or_user")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getMyProjectsJoinByNameOrUser(Integer page,String nameOrUser,HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        System.out.println("当前页：" +page+"  nameOrUser："+nameOrUser+"  当前用户：" + myUserDetails);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        List<Myprojects> myprojectsList= null;
+        int count=0;
+        List<Myprojects> list = null;
+        try {
+            // 获取总条目数
+            if(nameOrUser == null){
+                myprojectsList = userService.getMyJoinProjects(myUserDetails.getId());
+                count = myprojectsList.size();
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyJoinProjectsPage(myUserDetails.getId(),offset,pageSize);
+            }else{
+                count = userService.getMyProjectsJoinByNameOrUser(myUserDetails.getId(),nameOrUser);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = userService.getMyProjectsJoinPageByNameOrUser(myUserDetails.getId(),nameOrUser,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
 

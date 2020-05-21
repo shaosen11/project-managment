@@ -389,9 +389,6 @@ public class ProjectsFunctionController {
             System.out.println(projectsFunctionList);
             int count = projectsFunctionList.size();
             map = functionPageCom(page, count);
-            Projects projects = projectService.getById(projectId);
-            System.out.println("获得项目信息:" + projects);
-            map.put("projects", projects);
             int offset = (int) map.get("offset");
 //            int offset = (page - 1) * pageSize;
             System.out.println(offset + "========================");
@@ -404,6 +401,28 @@ public class ProjectsFunctionController {
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    //获取项目计划的项目时间
+    @GetMapping("/projects_plan_time")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> projectsPlanTime(Integer projectId) {
+        System.out.println(" 项目id=" + projectId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            Projects projects = projectService.getById(projectId);
+            System.out.println("获得项目信息:" + projects);
+            map.put("projects", projects);
+            System.out.println("分页map" + map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取数据失败" + e);
             return new ResponseEntity<Map<String, Object>>(
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
