@@ -165,5 +165,150 @@ public interface UserService {
      * @return
      */
     Integer userCount();
+
+    /**
+     * 查询我的所有项目--按类型
+     * @return
+     */
+    Integer getMyProjectsByType(Integer id,String type);
+
+    /**
+     * 分页--查询我的所有项目--按类型
+     * @return
+     */
+    List<Myprojects> getMyProjectsPageByType(Integer userId,String type,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我的所有项目--按项目名或负责人模糊搜索
+     * @return
+     */
+    Integer getMyProjectsByNameOrUser(Integer id,String nameOrUser);
+
+    /**
+     * 分页--查询我的所有项目--按项目名或负责人模糊搜索
+     * @return
+     */
+    List<Myprojects> getMyProjectsPageByNameOrUser(Integer userId,String nameOrUser,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我的所有项目--按进度
+     * @return
+     */
+    Integer getMyProjectsBySchedule(Integer id,String schedule);
+
+    /**
+     * 分页--查询我的所有项目--按进度
+     * @return
+     */
+    List<Myprojects> getMyProjectsPageBySchedule(Integer userId,String schedule,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我的所有项目--按类型和进度
+     * @return
+     */
+    Integer getMyProjectsByTypeSchedule(Integer id,String type,String schedule);
+
+    /**
+     * 分页--查询我的所有项目--按类型和进度
+     * @return
+     */
+    List<Myprojects> getMyProjectsPageByTypeSchedule(Integer userId, String type,String schedule,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我负责的项目--按类型
+     * @return
+     */
+    Integer getMyProjectsChargeByType(Integer id,String type);
+
+    /**
+     * 分页--查询我负责的项目--按类型
+     * @return
+     */
+    List<Myprojects> getMyProjectsChargePageByType(Integer userId,String type,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我负责的项目--按项目名或负责人模糊搜索
+     * @return
+     */
+    Integer getMyProjectsChargeByNameOrUser(Integer id,String nameOrUser);
+
+    /**
+     * 分页--查询我负责的项目--按项目名或负责人模糊搜索
+     * @return
+     */
+    List<Myprojects> getMyProjectsChargePageByNameOrUser(Integer userId,String nameOrUser,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我负责的项目--按进度
+     * @return
+     */
+    Integer getMyProjectsChargeBySchedule(Integer id,String schedule);
+
+    /**
+     * 分页--查询我负责的项目--按进度
+     * @return
+     */
+    List<Myprojects> getMyProjectsChargePageBySchedule(Integer userId,String schedule,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我负责的项目--按类型和进度
+     * @return
+     */
+    Integer getMyProjectsChargeByTypeSchedule(Integer id,String type,String schedule);
+
+    /**
+     * 分页--查询我负责的项目--按类型和进度
+     * @return
+     */
+    List<Myprojects> getMyProjectsChargePageByTypeSchedule(Integer userId,String type,String schedule,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我参加的项目--按类型
+     * @return
+     */
+    Integer getMyProjectsJoinByType(Integer id,String type);
+
+    /**
+     * 分页--查询我参加的项目--按类型
+     * @return
+     */
+    List<Myprojects> getMyProjectsJoinPageByType(Integer userId,String type,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我参加的项目--按项目名或负责人模糊搜索
+     * @return
+     */
+    Integer getMyProjectsJoinByNameOrUser(Integer id,String nameOrUser);
+
+    /**
+     * 分页--查询我参加的项目--按项目名或负责人模糊搜索
+     * @return
+     */
+    List<Myprojects> getMyProjectsJoinPageByNameOrUser(Integer userId,String nameOrUser,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我参加的项目--按进度
+     * @return
+     */
+    Integer getMyProjectsJoinBySchedule(Integer id,String schedule);
+
+    /**
+     * 分页--查询我参加的项目--按进度
+     * @return
+     */
+    List<Myprojects> getMyProjectsJoinPageBySchedule(Integer userId,String schedule,Integer offset,Integer pageSize);
+
+    /**
+     * 查询我参加的项目--按类型和进度
+     * @return
+     */
+    Integer getMyProjectsJoinByTypeSchedule(Integer id,String type,String schedule);
+
+    /**
+     * 分页--查询我参加的项目--按类型和进度
+     * @return
+     */
+    List<Myprojects> getMyProjectsJoinPageByTypeSchedule(Integer userId,String type,String schedule,Integer offset,Integer pageSize);
+
 }
 

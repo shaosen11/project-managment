@@ -93,7 +93,7 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="see-all" href="javascript:void(0);">See all messages<i
+                                <a class="see-all" onclick="messageView()">查看所有待办事务<i
                                         class="fa fa-angle-right"></i> </a>
                             </li>
                         </ul>
@@ -108,7 +108,7 @@
                             <li>
                                 <div class="dropdown-title d-flex justify-content-between align-items-center">
                                     消息
-                                    <a href="#" onclick="updateAllMessageIsRead()">标记所有已读</a>
+                                    <a onclick="updateAllMessageIsRead()">标记所有已读</a>
                                 </div>
                             </li>
 
@@ -119,13 +119,13 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="see-all" href="javascript:void(0);">See all notifications<i
+                                <a class="see-all" onclick="messageView()">查看所有消息<i
                                         class="fa fa-angle-right"></i> </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown hidden-caret">
-                        <a class="nav-link dropdown-toggle" th:href="@{/newprojectview}">
+                        <a class="nav-link dropdown-toggle" onclick="newProjectView()">
                             <i class="fa fa-plus"></i>
                         </a>
                     </li>
@@ -261,8 +261,8 @@
                         <h4 class="text-section">hlep</h4>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/projectIntroduce}">
-                            <i class="fas fa-h-square"></i>
+                        <a th:href="@{/projectIntroduce}" target="_blank">
+                            <i class="fas fa-info-circle"></i>
                             <p>系统介绍</p>
                             <span class="badge badge-count" id="messageCount"></span>
                         </a>
@@ -276,24 +276,19 @@
                         <div class="collapse" id="guides">
                             <ul class="nav nav-collapse">
                                 <li>
-                                    <a onclick="userListView()">
-                                        <span class="sub-item">用户信息</span>
+                                    <a th:href="@{/projectIndexIntroduce}" target="_blank">
+                                        <span class="sub-item">主页引导</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a onclick="projectsListView()">
-                                        <span class="sub-item">项目信息</span>
+                                    <a th:href="@{/projectViewIntroduce}" target="_blank">
+                                        <span class="sub-item">项目主页引导</span>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a onclick="projectUserListView()">
-                                        <span class="sub-item">项目用户信息</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onclick="projectFunctionListView()">
-                                        <span class="sub-item">项目功能信息</span>
+                                    <a th:href="@{/projectDocumentIntroduce}" target="_blank">
+                                        <span class="sub-item">项目文件页面引导</span>
                                     </a>
                                 </li>
                             </ul>

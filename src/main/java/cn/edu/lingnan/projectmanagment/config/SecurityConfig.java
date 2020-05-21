@@ -108,7 +108,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //project_view
                 .antMatchers("/projects_view","/getCodeInsertData","/getCodeDevoteData","/getLineChartDate","/documentRecordPage","/project").permitAll()
                 //project_plan_view
-                .antMatchers("/projects_plan_view","/projects_plan","/projectFunctionMessageAlert").permitAll()
+                .antMatchers("/projects_plan_view","/projects_plan","/projects_plan_time","/projectFunctionMessageAlert").permitAll()
                 //project_function_view
                 .antMatchers("/project_function_view","/allFunctionPage","/projectFunctionDataCicleChart","/projectFunctionTotal").permitAll()
                 //project_user_view
@@ -118,7 +118,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //document
                 .antMatchers("/document","/files/projects/*/*").permitAll()
                 //projectIntroduce
-                .antMatchers("/projectIntroduce").permitAll()
+                .antMatchers("/projectIntroduce","/projectIndexIntroduce","/projectViewIntroduce","/projectDocumentIntroduce").permitAll()
 
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()

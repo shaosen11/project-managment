@@ -69,15 +69,30 @@
 <!--获取功能点数据-->
 <script type="text/javascript">
     $(function () {
+        projectsPlanTime();
         projectsPlan();
         console.log("projects_plan请求")
     })
 
+    function projectsPlanTime() {
+        var divName2 = $('#projectTime');
+        $(divName2).html("");
+        $.ajax({
+            type: "get",
+            url: "/projects_plan_time",
+            dataType: "json",
+            data: {
+                projectId: projectId,
+            },
+            success: function (data) {
+                projectTimeAppendHtml(data.projects, divName2);
+            }
+        })
+    }
+
     function projectsPlan() {
         var divName = $('#projectsPlan');
         $(divName).html("");
-        var divName2 = $('#projectTime');
-        $(divName2).html("");
         $.ajax({
             type: "get",
             url: "/projects_plan",
@@ -87,7 +102,6 @@
                 projectId: projectId,
             },
             success: function (data) {
-                projectTimeAppendHtml(data.projects, divName2);
                 projectPlanAppendHtml(data.list, divName);
                 var options = {//根据后台返回的分页相关信息，设置插件参数
                     bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
@@ -118,12 +132,18 @@
                                 projectId: projectId,
                             },
                             success: function (data) {
-                                projectPlanAppendHtml(data.list, divName);//处理数据
+                                projectPlanAppendHtml(data.list, divName);
+                            },
+                            error:function (data){
+                                projectPlanAppendHtml2(divName);
                             }
                         });
                     }
                 };
                 $(projectPlanPage).bootstrapPaginator(options);//设置分页
+            },
+            error:function (data){
+                projectPlanAppendHtml2(divName);
             }
         })
     }
@@ -204,6 +224,14 @@
         divName.html(tableShow)
     }
 
+    //页面渲染
+    function projectPlanAppendHtml2(divName) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var tableShow = '';
+        tableShow += '<ul class="timeline col-md-12">\n'+
+                     '<div class="text-center"><h3>暂无项目计划</h3>></div>\n'+
+                     '</ul>\n';
+        divName.html(tableShow)
+    }
     //页面渲染
     function projectTimeAppendHtml(project, divName) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
         var tableShow = '';
@@ -314,7 +342,6 @@
     function messageAlert(functionId) {
         checkLoginAndPowerAndDoFunction(messageAlertDo, functionId, projectId)
     }
-
     function messageAlertDo(arguments) {
         $.ajax({
             type: "post",

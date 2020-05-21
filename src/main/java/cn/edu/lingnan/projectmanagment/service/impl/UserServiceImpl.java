@@ -147,5 +147,125 @@ public class UserServiceImpl implements UserService {
     public Integer userCount() {
         return userMapper.userCount();
     }
+
+    @Override
+    public Integer getMyProjectsByType(Integer id,String type) {
+        return userMapper.getMyProjectsByType(id,type);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsPageByType(Integer userId, String type, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsPageByType(userId,type,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsByNameOrUser(Integer id, String nameOrUser) {
+        return userMapper.getMyProjectsByNameOrUser(id,nameOrUser);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsPageByNameOrUser(Integer userId, String nameOrUser, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsPageByNameOrUser(userId,nameOrUser,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsBySchedule(Integer id, String schedule) {
+        return userMapper.getMyProjectsBySchedule(id,schedule);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsPageBySchedule(Integer userId, String schedule, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsPageBySchedule(userId,schedule,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsByTypeSchedule(Integer id, String type, String schedule) {
+        return userMapper.getMyProjectsByTypeSchedule(id,type,schedule);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsPageByTypeSchedule(Integer userId, String type, String schedule, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsPageByTypeSchedule(userId,type,schedule,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsChargeByType(Integer id, String type) {
+        return userMapper.getMyProjectsChargeByType(id,type);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsChargePageByType(Integer userId, String type, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsChargePageByType(userId,type,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsChargeByNameOrUser(Integer id, String nameOrUser) {
+        return userMapper.getMyProjectsChargeByNameOrUser(id,nameOrUser);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsChargePageByNameOrUser(Integer userId, String nameOrUser, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsChargePageByNameOrUser(userId,nameOrUser,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsChargeBySchedule(Integer id, String schedule) {
+        return userMapper.getMyProjectsChargeBySchedule(id,schedule);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsChargePageBySchedule(Integer userId, String schedule, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsChargePageBySchedule(userId,schedule,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsChargeByTypeSchedule(Integer id, String type, String schedule) {
+        return userMapper.getMyProjectsChargeByTypeSchedule(id,type,schedule);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsChargePageByTypeSchedule(Integer userId, String type, String schedule, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsChargePageByTypeSchedule(userId,type,schedule,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsJoinByType(Integer id, String type) {
+        return userMapper.getMyProjectsJoinByType(id,type);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsJoinPageByType(Integer userId, String type, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsJoinPageByType(userId,type,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsJoinByNameOrUser(Integer id, String nameOrUser) {
+        return userMapper.getMyProjectsJoinByNameOrUser(id,nameOrUser);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsJoinPageByNameOrUser(Integer userId, String nameOrUser, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsJoinPageByNameOrUser(userId,nameOrUser,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsJoinBySchedule(Integer id, String schedule) {
+        return userMapper.getMyProjectsJoinBySchedule(id,schedule);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsJoinPageBySchedule(Integer userId, String schedule, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsJoinPageBySchedule(userId,schedule,offset,pageSize);
+    }
+
+    @Override
+    public Integer getMyProjectsJoinByTypeSchedule(Integer id, String type, String schedule) {
+        return userMapper.getMyProjectsJoinByTypeSchedule(id,type,schedule);
+    }
+
+    @Override
+    public List<Myprojects> getMyProjectsJoinPageByTypeSchedule(Integer userId, String type, String schedule, Integer offset, Integer pageSize) {
+        return userMapper.getMyProjectsJoinPageByTypeSchedule(userId,type,schedule,offset,pageSize);
+    }
 }
 

@@ -40,11 +40,40 @@
                                 <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
                                     <div class="tab-pane fade show active" id="pills-one-nobd" role="tabpanel" aria-labelledby="pills-one-tab-nobd">
                                         <!-- 项目列表1 -->
+                                        <div class="row">
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
+                                                <select id="typeName" class="form-control" onchange="searchByTypeOrSchedule(1)">
+                                                    <option value="null"> </option>
+                                                    <option value="Web应用开发">Web应用开发</option>
+                                                    <option value="大数据">大数据</option>
+                                                    <option value="物联网">物联网</option>
+                                                    <option value="人工智能">人工智能</option>
+                                                    <option value="微信小程序">微信小程序</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
+                                                <select id="scheduleName" class="form-control" onchange="searchByTypeOrSchedule(1)">
+                                                    <option value="null"> </option>
+                                                    <option value="未开始">未开始</option>
+                                                    <option value="进行中">进行中</option>
+                                                    <option value="已完成">已完成</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-3">
+                                                <input type="text" class="form-control" placeholder="Search..." id="searchByName">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary btn-search" onclick="searchByName(1)"><i class="fas fa-search"></i></button>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                        <br><br>
                                         <div class="col-md-8" style="float: left">
                                             <!-- 分页容器：显示数据 -->
                                             <div id="myProjectAll" class="row"></div>
                                             <!-- 分页容器： 显示分页按钮-->
-                                            <div class="text-center">
+                                            <div class="text-center" id="projectAllPage">
                                                 <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
                                                 <ul id="myProjectAllPage" class="pagination"></ul>
                                             </div>
@@ -58,6 +87,35 @@
                                     </div>
                                     <div class="tab-pane fade" id="pills-two-nobd" role="tabpanel" aria-labelledby="pills-two-tab-nobd">
                                         <!-- 项目列表2 -->
+                                        <div class="row">
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
+                                                <select id="typeNameCharge" class="form-control" onchange="searchByTypeOrSchedule(2)">
+                                                    <option value="null"> </option>
+                                                    <option value="Web应用开发">Web应用开发</option>
+                                                    <option value="大数据">大数据</option>
+                                                    <option value="物联网">物联网</option>
+                                                    <option value="人工智能">人工智能</option>
+                                                    <option value="微信小程序">微信小程序</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
+                                                <select id="scheduleNameCharge" class="form-control" onchange="searchByTypeOrSchedule(2)">
+                                                    <option value="null"> </option>
+                                                    <option value="未开始">未开始</option>
+                                                    <option value="进行中">进行中</option>
+                                                    <option value="已完成">已完成</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-3">
+                                                <input type="text" class="form-control" placeholder="Search..." id="searchByNameCharge">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary btn-search" onclick="searchByName(2)"><i class="fas fa-search"></i></button>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                        <br><br>
                                         <div class="col-md-8" style="float: left">
                                             <!-- 分页容器：显示数据 -->
                                             <div id="myProjectCharge" class="row"></div>
@@ -75,6 +133,35 @@
                                     </div>
                                     <div class="tab-pane fade" id="pills-three-nobd" role="tabpanel" aria-labelledby="pills-three-tab-nobd">
                                         <!-- 项目列表3 -->
+                                        <div class="row">
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">类型</h3>&nbsp;
+                                                <select id="typeNameJoin" class="form-control" onchange="searchByTypeOrSchedule(3)">
+                                                    <option value="null"> </option>
+                                                    <option value="Web应用开发">Web应用开发</option>
+                                                    <option value="大数据">大数据</option>
+                                                    <option value="物联网">物联网</option>
+                                                    <option value="人工智能">人工智能</option>
+                                                    <option value="微信小程序">微信小程序</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-2" >
+                                                <h3 class="text-center" style="margin: auto">进度</h3>&nbsp;
+                                                <select id="scheduleNameJoin" class="form-control" onchange="searchByTypeOrSchedule(3)">
+                                                    <option value="null"> </option>
+                                                    <option value="未开始">未开始</option>
+                                                    <option value="进行中">进行中</option>
+                                                    <option value="已完成">已完成</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-3">
+                                                <input type="text" class="form-control" placeholder="Search..." id="searchByNameJoin">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-secondary btn-search" onclick="searchByName(3)"><i class="fas fa-search"></i></button>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                        <br><br>
                                         <div class="col-md-8" style="float: left">
                                             <!-- 分页容器：显示数据 -->
                                             <div id="myProjectJoin" class="row"></div>
@@ -344,7 +431,6 @@
 
 </script>
 <script type="text/javascript">
-
     var userId = [[${#authentication.principal.id}]];
 
     //加载我的项目
@@ -367,7 +453,6 @@
         $(divName).html("");
         addMyProjectJoinPage(userId, divName, myProjectJoinPage,3);
     }
-
 
     //我的所有项目
     function addMyProjectPage(userId,div,ul,status) {
@@ -581,20 +666,32 @@
                 '</a>\n' +
                 '</div>\n' +
                 '<hr style="color: #4C5B5C" size="3" width="96%">\n' +
-                '</div>\n'
+                '</div>\n';
         }
-        div.html(tableShow)
+        div.html(tableShow);
+    }
+
+    //页面渲染
+    function myprojectAppendHtml2(div) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+        var tableShow = '';
+        tableShow +=
+                '<div class="col-md-12">\n' +
+                '<div class="text-center">\n'+
+                '<h3><b>无</b></h3>\n' +
+                '</div>\n'+
+                '</div>\n';
+        div.html(tableShow);
     }
 
     function cancelstore(userId,projectId,status,page) {
         if(status == 1){
-            var divName = $('#myProjectAll');
+            var searchValues = $("#searchByName").val();
         }
         else if(status == 2){
-            var divName = $('#myProjectCharge');
+            var searchValues = $("#searchByNameCharge").val();
         }
         else if(status == 3){
-            var divName = $('#myProjectJoin');
+            var searchValues = $("#searchByNameJoin").val();
         }
         $.ajax(
             {
@@ -608,7 +705,11 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data.list,divName,status,data.page);
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
                 }
             }
         );
@@ -616,13 +717,13 @@
 
     function addstore(userId,projectId,status,page) {
         if(status == 1){
-            var divName = $('#myProjectAll');
+            var searchValues = $("#searchByName").val();
         }
         else if(status == 2){
-            var divName = $('#myProjectCharge');
+            var searchValues = $("#searchByNameCharge").val();
         }
         else if(status == 3){
-            var divName = $('#myProjectJoin');
+            var searchValues = $("#searchByNameJoin").val();
         }
         $.ajax(
             {
@@ -636,7 +737,11 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data.list,divName,status,data.page);
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
                 }
             }
         );
@@ -644,13 +749,13 @@
 
     function cancellike(userId,projectId,status,page) {
         if(status == 1){
-            var divName = $('#myProjectAll');
+            var searchValues = $("#searchByName").val();
         }
         else if(status == 2){
-            var divName = $('#myProjectCharge');
+            var searchValues = $("#searchByNameCharge").val();
         }
         else if(status == 3){
-            var divName = $('#myProjectJoin');
+            var searchValues = $("#searchByNameJoin").val();
         }
         $.ajax(
             {
@@ -664,7 +769,11 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data.list,divName,status,data.page);
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
                 }
             }
         );
@@ -672,13 +781,13 @@
 
     function addlike(userId,projectId,status,page) {
         if(status == 1){
-            var divName = $('#myProjectAll');
+            var searchValues = $("#searchByName").val();
         }
         else if(status == 2){
-            var divName = $('#myProjectCharge');
+            var searchValues = $("#searchByNameCharge").val();
         }
         else if(status == 3){
-            var divName = $('#myProjectJoin');
+            var searchValues = $("#searchByNameJoin").val();
         }
         $.ajax(
             {
@@ -692,13 +801,208 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    myprojectAppendHtml(data.list,divName,status,data.page);
+                    if(searchValues.length == 0){
+                        searchByTypeOrSchedule(status);
+                    }else{
+                        searchByName(status);
+                    }
                 }
             }
         );
     }
+
+    function searchByTypeOrSchedule(status) {
+        if(status==1){//全部项目
+            var divName = $('#myProjectAll');
+            var type = $("#typeName").val();
+            var schedule = $("#scheduleName").val();
+            var url = "/get_project_by_type";
+            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectAllPage);
+        }else if(status==2){//负责项目
+            var divName = $('#myProjectCharge');
+            var type = $("#typeNameCharge").val();
+            var schedule = $("#scheduleNameCharge").val();
+            var url = "/get_project_charge_by_type";
+            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectChargePage);
+        }else if(status==3){//参与项目
+            var divName = $('#myProjectJoin');
+            var type = $("#typeNameJoin").val();
+            var schedule = $("#scheduleNameJoin").val();
+            var url = "/get_project_join_by_type";
+            searchAllByTypeOrSchedule(divName,type,schedule,url,status,myProjectJoinPage);
+        }
+    }
+
+    function searchByName(status) {
+        if(status==1){//全部项目
+            var divName = $('#myProjectAll');
+            var searchValues = $("#searchByName").val();
+            var url = "/get_project_by_name_or_user";
+            searchAllByName(divName,searchValues,url,status,myProjectAllPage);
+        }else if(status==2){//负责项目
+            var divName = $('#myProjectCharge');
+            var searchValues = $("#searchByNameCharge").val();
+            var url = "/get_project_charge_by_name_or_user";
+            searchAllByName(divName,searchValues,url,status,myProjectChargePage);
+        }else if(status==3){//参与项目
+            var divName = $('#myProjectJoin');
+            var searchValues = $("#searchByNameJoin").val();
+            var url = "/get_project_join_by_name_or_user";
+            searchAllByName(divName,searchValues,url,status,myProjectJoinPage);
+        }
+    }
+
+    //按类型、进度搜索
+    function searchAllByTypeOrSchedule(divName,type,schedule,url,status,ul){
+        $.ajax({
+            type: "Get",
+            url: url,
+            data: {
+                page: '1',
+                type:type,
+                schedule:schedule
+            },
+            success: function (data) {
+                myprojectAppendHtml(data.list,divName,status,1);//处理第一页的数据
+                var options = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: data.page, //当前页数
+                    totalPages: data.totalPage, //总页数
+                    numberOfPages: data.pageSize,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                        $.ajax({//根据page去后台加载数据
+                            url: url,
+                            type: "get",
+                            dataType: "json",
+                            data: {
+                                page: page,
+                                type:type,
+                                schedule:schedule
+                            },
+                            success: function (data) {
+                                myprojectAppendHtml(data.list,divName,status,page);//处理数据
+                            }
+                        });
+                    }
+                };
+                $(ul).bootstrapPaginator(options);//设置分页
+            },
+            error:function () {
+                myprojectAppendHtml2(divName);
+                var options2 = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: 1, //当前页数
+                    totalPages: 1, //总页数
+                    numberOfPages: 5,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                };
+                $(ul).bootstrapPaginator(options2);//设置分页
+            }
+        })
+    }
+
+    //对项目名、负责人搜索模糊查询
+    function searchAllByName(divName,searchValues,url,status,ul) {
+        $.ajax({
+            type: "Get",
+            url: url,
+            data: {
+                page: '1',
+                nameOrUser:searchValues
+            },
+            success: function (data) {
+                myprojectAppendHtml(data.list,divName,status,1);//处理第一页的数据
+                var options = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: data.page, //当前页数
+                    totalPages: data.totalPage, //总页数
+                    numberOfPages: data.pageSize,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {//分页按钮点击事件
+                        $.ajax({//根据page去后台加载数据
+                            url: url,
+                            type: "get",
+                            dataType: "json",
+                            data: {
+                                page: page,
+                                nameOrUser:searchValues
+                            },
+                            success: function (data) {
+                                myprojectAppendHtml(data.list,divName,status,page);//处理数据
+                            }
+                        });
+                    }
+                };
+                $(ul).bootstrapPaginator(options);//设置分页
+            },
+            error:function () {
+                myprojectAppendHtml2(divName);
+                var options2 = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: 1, //当前页数
+                    totalPages: 1, //总页数
+                    numberOfPages: 5,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首";
+                            case "prev":
+                                return "<";
+                            case "next":
+                                return ">";
+                            case "last":
+                                return "末";
+                            case "page":
+                                return page;
+                        }
+                    },
+                };
+                $(ul).bootstrapPaginator(options2);//设置分页
+            }
+        })
+    }
+
+
 </script>
-
-
 </body>
 </html>

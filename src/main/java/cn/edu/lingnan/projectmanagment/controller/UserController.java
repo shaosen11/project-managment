@@ -11,7 +11,6 @@ import cn.edu.lingnan.projectmanagment.service.impl.*;
 import cn.edu.lingnan.projectmanagment.utils.FtpUtil;
 import cn.edu.lingnan.projectmanagment.utils.MyContants;
 import cn.edu.lingnan.projectmanagment.utils.UserUtil;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
