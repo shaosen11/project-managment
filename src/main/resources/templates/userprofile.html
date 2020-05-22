@@ -6,6 +6,7 @@
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
     <div th:replace="commom/bar :: commom_css"></div>
+    <link rel="stylesheet" th:href="@{/assets/js/bootstrap-datepicker-master/css/bootstrap-datepicker3.standalone.css}">
 </head>
 <body>
 <div class="wrapper">
@@ -248,50 +249,18 @@
         </div>
     </div>
 
-    <!-- Custom template | don't include it in your project! -->
-    <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-            <div class="switcher">
-                <div class="switch-block">
-                    <h4>Topbar</h4>
-                    <div class="btnSwitch">
-                        <button type="button" class="changeMainHeaderColor" data-color="blue"></button>
-                        <button type="button" class="selected changeMainHeaderColor" data-color="purple"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="light-blue"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="green"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="orange"></button>
-                        <button type="button" class="changeMainHeaderColor" data-color="red"></button>
-                    </div>
-                </div>
-                <div class="switch-block">
-                    <h4>Background</h4>
-                    <div class="btnSwitch">
-                        <button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-                        <button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-                        <button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="custom-toggle">
-            <i class="flaticon-settings"></i>
-        </div>
-    </div>
-    <!-- End Custom template -->
 </div>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: commom_js" />
+<th:block th:replace="commom/bar :: commom_js"/>
 <!-- fileinput -->
 <script th:src="@{/assets/js/plugin/fileinput/fileinput.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/plugin/fileinput/fileinput_locale_zh.js}" type="text/javascript"></script>
+
+<script th:src="@{/assets/js/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap-datepicker-master/locales/bootstrap-datepicker.zh-CN.min.js}"></script>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_js" />
-<script>
-    $('#datepicker').datetimepicker({
-        format: 'MM/DD/YYYY',
-    });
-</script>
+<th:block th:replace="commom/bar :: nav_js"/>
+
 <!--检查密码是否一致-->
 <script>
     $(function () {
@@ -358,6 +327,12 @@
             }, 1500);
         }
     });
+</script>
+<!--时间插件-->
+<script type="text/javascript">
+    $('#birthday').datepicker({
+        language: "zh-CN"
+    })
 </script>
 </body>
 </html>

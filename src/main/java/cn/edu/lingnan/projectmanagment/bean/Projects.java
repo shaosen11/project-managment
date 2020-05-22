@@ -26,12 +26,16 @@ public class Projects {
     private Integer userCount;
     private Integer documentCount;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date plannedStartTime;//计划开始时间
+    //计划开始时间
+    private Date plannedStartTime;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date plannedEndTime;//计划结束时间
+    //计划结束时间
+    private Date plannedEndTime;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date actualStartTime;////实际开始时间
+    ////实际开始时间
+    private Date actualStartTime;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date actualEndTime;//实际结束时间
+    //实际结束时间
+    private Date actualEndTime;
 }
 

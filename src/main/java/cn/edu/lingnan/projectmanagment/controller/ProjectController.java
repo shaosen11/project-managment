@@ -70,7 +70,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects_view")
-    public String projectView(HttpServletRequest request, Integer projectId) {
+    public String projectView(HttpServletRequest request, Integer projectId, Model model) {
         //记录点击量
         projectService.updateProjectClickNumber(projectId);
         Date now = new Date();
@@ -83,6 +83,9 @@ public class ProjectController {
         userClick1.setProjectsId(projectId);
         userClick1.setClickTime(now);
         userClickService.addUserClick(userClick1);
+        //获取项目信息
+        Projects projects = projectService.getById(projectId);
+        model.addAttribute("projects", projects);
         return "project/projectview";
     }
 
@@ -185,15 +188,20 @@ public class ProjectController {
     }
 
     @PostMapping("/projects")
-    public String newprojects(Projects projects) {
+    public String newProjects(Projects projects,HttpServletRequest request) {
+        System.out.println(projects);
         //设置项目初始状态
         projects.setSchedule("未开始");
         //插入数据库
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        projects.setChargeUserId(myUserDetails.getId());
         projectService.addProject(projects);
         //插入projectuser表
         ProjectsUser projectsUser = new ProjectsUser();
         projectsUser.setProjectsId(projects.getId());
-        projectsUser.setUserId(projects.getChargeUserId());
+        projectsUser.setUserId(myUserDetails.getId());
+        projectsUser.setDutyCode(1);
+        projectsUser.setJoinTime(new Date());
         projectUserService.addProjectUser(projectsUser);
         //插入project_code_line表
         ProjectsCodeLine projectsCodeLine = new ProjectsCodeLine();
@@ -201,7 +209,6 @@ public class ProjectController {
         projectsCodeLineService.insert(projectsCodeLine);
         Map<String, Object> pathMap = new HashMap<>();
         pathMap.put("projectId", projects.getId());
-        pathMap.put("userId", projects.getChargeUserId());
         String pathString = PathUtil.pathUtil(pathMap);
         return "redirect:projects_view" + pathString;
     }

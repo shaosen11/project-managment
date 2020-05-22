@@ -6,6 +6,7 @@
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
     <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
     <div th:replace="commom/bar :: commom_css"></div>
+    <link rel="stylesheet" th:href="@{/assets/js/bootstrap-datepicker-master/css/bootstrap-datepicker3.standalone.css}">
 </head>
 <body>
 <div class="wrapper">
@@ -46,31 +47,55 @@
                             </div>
                             <div class="card-body">
                                 <form th:action="@{/projects}" method="post">
-                                    <input type="hidden" id="chargeUserId" name="chargeUserId"
-                                           th:value="${#authentication.principal.id!=null}?${#authentication.principal.id}">
-                                    <label class="mb-3"><b>项目信息</b></label>
-                                    <div class="form-group form-floating-label">
-                                        <input id="name" name="name" type="text"
-                                               class="form-control input-border-bottom" required autocomplete="off">
-                                        <label for="name" class="placeholder">项目名称</label>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>项目名称</label>
+                                                <input id="name" name="name" type="text"
+                                                       class="form-control" required autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>项目类型</label>
+                                                <select class="form-control" id="type" name="type">
+                                                    <option value="Web应用开发">Web应用开发</option>
+                                                    <option value="大数据">大数据</option>
+                                                    <option value="物联网">物联网</option>
+                                                    <option value="人工智能">人工智能</option>
+                                                    <option value="微信小程序">微信小程序</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <label>项目类型</label>
-                                    <select class="form-control" id="type" name="type">
-                                        <option value="Web应用开发">Web应用开发</option>
-                                        <option value="大数据">大数据</option>
-                                        <option value="物联网">物联网</option>
-                                        <option value="人工智能">人工智能</option>
-                                        <option value="微信小程序">微信小程序</option>
-                                    </select>
-                                    <div class="dropdown-divider"></div>
-                                    <label class="mb-3"><b>项目描述</b></label>
-                                    <div class="form-group form-group-default">
-                                        <textarea class="form-control" id="characterization" name="characterization"
-                                                  placeholder="这家伙很懒，什么都没有留下" rows="5" autocomplete="off"></textarea>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>计划开始时间</label>
+                                                <input type="text" class="form-control" id="plannedStartTime" name="plannedStartTime" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>计划结束时间</label>
+                                                <input type="text" class="form-control" id="plannedEndTime" name="plannedEndTime" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group form-group-default">
+                                                <label>项目描述</label>
+                                                <textarea class="form-control" id="characterization"
+                                                          name="characterization"
+                                                          placeholder="这家伙很懒，什么都没有留下" rows="5"
+                                                          autocomplete="off"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="text-right mt-3 mb-3">
                                         <button class="btn btn-secondary" type="submit">新建</button>
-                                        <button class="btn btn-info" type="reset">重置</button>
+                                        <button class="btn btn-primary" type="reset">重置</button>
                                     </div>
                                 </form>
                             </div>
@@ -117,11 +142,12 @@
 
 </div>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: commom_js" />
+<th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_js" />
+<th:block th:replace="commom/bar :: nav_js"/>
 
-
+<script th:src="@{/assets/js/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap-datepicker-master/locales/bootstrap-datepicker.zh-CN.min.js}"></script>
 
 <!--创建项目js-->
 <script type="text/javascript">
@@ -130,7 +156,6 @@
         var name = $("#name").val();
         var type = $("#type").val();
         var characterization = $("#characterization").val();
-        console.log(chargeUserId + name + type + characterization);
         if (name === "" || characterization === "") {
             return;
         }
@@ -165,6 +190,17 @@
                 }
             },
         })
+    })
+</script>
+时间插件
+<script type="text/javascript">
+    $('#plannedStartTime').datepicker({
+        format: 'yyyy/mm/dd',
+        language: "zh-CN"
+    })
+    $('#plannedEndTime').datepicker({
+        format: 'yyyy/mm/dd',
+        language: "zh-CN"
     })
 </script>
 </body>

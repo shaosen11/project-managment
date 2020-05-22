@@ -54,7 +54,8 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">代码行</p>
-                                            <h4 class="card-title" id="projectCodeLineNumber"></h4>
+                                            <h4 class="card-title" id="projectCodeLineNumber">
+                                                [[${projects.codeLineNumber}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +74,8 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">上传次数</p>
-                                            <h4 class="card-title" id="projectCodeUpdateCount"></h4>
+                                            <h4 class="card-title" id="projectCodeUpdateCount">
+                                                [[${projects.codeUpdateCount}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +94,8 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">文件数量</p>
-                                            <h4 class="card-title" id="projectDocumentCount"></h4>
+                                            <h4 class="card-title" id="projectDocumentCount">
+                                                [[${projects.documentCount}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +114,7 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">贡献者</p>
-                                            <h4 class="card-title" id="projectUserCount"></h4>
+                                            <h4 class="card-title" id="projectUserCount">[[${projects.userCount}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -138,73 +141,79 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title">代码贡献量及上传次数</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="tab-content col-md-12" id="pills-without-border-tabContent">
-                                    <div class="row">
-                                        <div class="card-body col-md-6">
-                                            <div class="chart-container">
-                                                <div id="devoteChart" style="height: 300px; margin: auto;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body col-md-6">
-                                            <div class="chart-container">
-                                                <div id="reduceChart"
-                                                     style="height: 300px; margin: auto;"></div>
-                                            </div>
-                                        </div>
+                                <div class="card-head-row">
+                                    <div class="card-title">共享比</div>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="pill"
+                                                   onclick="switchDevoteChart()">代码贡献量</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="pill"
+                                                   onclick="switchUpdateChart()">上传次数</a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content mt-2 mb-3">
+                                    <div class="card-body col-md-12">
+                                        <div class="chart-container">
+                                            <canvas id="pieChart" style="width: 50%; height: 50%"></canvas>
+                                        </div>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <!--待完成-->
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Feed Activity</div>
-                            </div>
-                            <div class="card-body">
-                                <ol class="activity-feed">
-                                    <li class="feed-item feed-item-secondary">
-                                        <time class="date" datetime="9-25">Sep 25</time>
-                                        <span class="text">Responded to need <a
-                                                href="#">"Volunteer opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-success">
-                                        <time class="date" datetime="9-24">Sep 24</time>
-                                        <span class="text">Added an interest <a
-                                                href="#">"Volunteer Activities"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-info">
-                                        <time class="date" datetime="9-23">Sep 23</time>
-                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-warning">
-                                        <time class="date" datetime="9-21">Sep 21</time>
-                                        <span class="text">Responded to need <a
-                                                href="#">"In-Kind Opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item feed-item-danger">
-                                        <time class="date" datetime="9-18">Sep 18</time>
-                                        <span class="text">Created need <a
-                                                href="#">"Volunteer Opportunity"</a></span>
-                                    </li>
-                                    <li class="feed-item">
-                                        <time class="date" datetime="9-17">Sep 17</time>
-                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
+                    <!--                    <div class="col-md-6">-->
+                    <!--                        <div class="card">-->
+                    <!--                            <div class="card-header">-->
+                    <!--                                <div class="card-title">Feed Activity</div>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="card-body">-->
+                    <!--                                <ol class="activity-feed">-->
+                    <!--                                    <li class="feed-item feed-item-secondary">-->
+                    <!--                                        <time class="date" datetime="9-25">Sep 25</time>-->
+                    <!--                                        <span class="text">Responded to need <a-->
+                    <!--                                                href="#">"Volunteer opportunity"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-success">-->
+                    <!--                                        <time class="date" datetime="9-24">Sep 24</time>-->
+                    <!--                                        <span class="text">Added an interest <a-->
+                    <!--                                                href="#">"Volunteer Activities"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-info">-->
+                    <!--                                        <time class="date" datetime="9-23">Sep 23</time>-->
+                    <!--                                        <span class="text">Joined the group <a href="single-group.php">"Boardsmanship Forum"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-warning">-->
+                    <!--                                        <time class="date" datetime="9-21">Sep 21</time>-->
+                    <!--                                        <span class="text">Responded to need <a-->
+                    <!--                                                href="#">"In-Kind Opportunity"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item feed-item-danger">-->
+                    <!--                                        <time class="date" datetime="9-18">Sep 18</time>-->
+                    <!--                                        <span class="text">Created need <a-->
+                    <!--                                                href="#">"Volunteer Opportunity"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                    <li class="feed-item">-->
+                    <!--                                        <time class="date" datetime="9-17">Sep 17</time>-->
+                    <!--                                        <span class="text">Attending the event <a href="single-event.php">"Some New Event"</a></span>-->
+                    <!--                                    </li>-->
+                    <!--                                </ol>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
                     <!--项目日志-->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-head-row">
@@ -248,7 +257,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -314,8 +322,8 @@
 
 <!--饼图-->
 <script type="text/javascript">
+    var pieChart = document.getElementById('pieChart').getContext('2d');
     $(function () {
-        var pieCharts2 = echarts.init(document.getElementById("reduceChart"));
         $.ajax({
             type: "get",
             async: true,
@@ -325,109 +333,91 @@
             },
             dataType: "json",
             success: function (result) {
-                pieCharts2.setOption({
-                    title: {
-                        text: '上传次数',
-                        subtext: '百分比',
-                        x: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            mark: {show: true},
-                            magicType: {
-                                show: true,
-                                type: ['pie', 'funnel'],
-                                option: {
-                                    funnel: {
-                                        x: '25%',
-                                        width: '50%',
-                                        funnelAlign: 'left',
-                                        max: 1548
-                                    }
-                                }
-                            },
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    series: [
-                        {
-                            name: '数量',
-                            type: 'pie',
-                            radius: '55%',
-                            data: result
-                        }
-                    ]
-                });
+                ChartsFunction(result)
             }
         })
     })
-    $(function () {
-        var pieCharts1 = echarts.init(document.getElementById("devoteChart"));
+
+    function ChartsFunction(result) {
         var xdata = [];
         var ydata = [];
+        $(result).each(function (index, item) {
+            xdata.push(item.name);
+            ydata.push(item.value);
+        })
+        var myPieChart = new Chart(pieChart, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: ydata,
+                    backgroundColor: [
+                        "#1d7af3", "#f3545d", "#fdaf4b",
+                        "#716aca", "#f3545d", "#28a745",
+                        "#6610f2", "#007bff", "#6610f2",
+                        "#6f42c1", "#e83e8c", "#dc3545",
+                        "#fd7e14", "#ffc107", "#28a745",
+                        "#20c997", "#17a2b8", "#343a40",
+                        "#007bff", "#6c757d", "#28a745",
+                        "#17a2b8", "#ffc107", "#dc3545",
+                        "#f8f9fa", "#343a40"],
+                    borderWidth: 0
+                }],
+                labels: xdata
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        fontColor: 'rgb(154, 154, 154)',
+                        fontSize: 11,
+                        usePointStyle: true,
+                        padding: 20
+                    }
+                },
+                pieceLabel: {
+                    render: 'percentage',
+                    fontColor: 'white',
+                    fontSize: 14,
+                },
+                tooltips: false,
+                layout: {
+                    padding: {
+                        left: 20,
+                        right: 20,
+                        top: 20,
+                        bottom: 20
+                    }
+                }
+            }
+        })
+    }
+</script>
+<!--切换饼状图-->
+<script type="text/javascript">
+    function switchDevoteChart() {
+        ajaxDevoteAndUpdateChart("/getCodeDevoteData")
+    }
+
+    function switchUpdateChart() {
+        ajaxDevoteAndUpdateChart("/getCodeInsertData")
+    }
+
+    function ajaxDevoteAndUpdateChart(url) {
         $.ajax({
             type: "get",
             async: true,
-            url: "/getCodeDevoteData",
+            url: url,
             data: {
                 projectId: projectId
             },
             dataType: "json",
             success: function (result) {
-                $(result).each(function (index, item) {
-                    xdata.push(echarts.format.formatTime('yyyy-MM-dd', item.uploadTime));
-                    ydata.push(item.codeLineNumber);
-                })
-                pieCharts1.setOption({
-                    title: {
-                        text: '代码行',
-                        subtext: '百分比',
-                        x: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            mark: {show: true},
-                            magicType: {
-                                show: true,
-                                type: ['pie', 'funnel'],
-                                option: {
-                                    funnel: {
-                                        x: '25%',
-                                        width: '50%',
-                                        funnelAlign: 'left',
-                                        max: 1548
-                                    }
-                                }
-                            },
-                            saveAsImage: {show: true}
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    calculable: true,
-                    series: [
-                        {
-                            name: '代码行',
-                            type: 'pie',
-                            radius: '55%',
-                            data: result
-                        }
-                    ]
-                });
-
+                ChartsFunction(result)
             }
         })
-    })
+    }
 </script>
 <!--折线图-->
 <script type="text/javascript">
@@ -514,7 +504,6 @@
     $(function () {
         addDocumentRecordPage(projectId, 0, allDiv, allPage);
         if (userId != "") {
-            console.log("请求了")
             addDocumentRecordPage(projectId, userId, myDiv, myPage);
         }
     })
@@ -570,9 +559,6 @@
                     };
                     $(ul).bootstrapPaginator(options);//设置分页
                 },
-                error: function () {
-                    console.log("请求失败")
-                }
             });
         }
 
@@ -604,25 +590,6 @@
             $(div).html(tableShow)
         }
     }
-</script>
-<!--加载项目上传代码行，上传次数，文件数量，项目人员-->
-<script type="text/javascript">
-    $(function () {
-        $.ajax({
-            type: "get",
-            url: "/project",
-            dataType: "json",
-            data: {
-                projectId: projectId,
-            },
-            success: function (json) {
-                $("#projectCodeLineNumber").text(json.codeLineNumber);
-                $("#projectCodeUpdateCount").text(json.codeUpdateCount);
-                $("#projectDocumentCount").text(json.documentCount);
-                $("#projectUserCount").text(json.userCount);
-            }
-        })
-    })
 </script>
 </body>
 </html>
