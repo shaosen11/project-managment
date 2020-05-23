@@ -326,6 +326,12 @@ public class pageController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getProjectsByTypePage(Integer page, String projectsType, HttpServletRequest request) {
         MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        Integer userId = null;
+        if (myUserDetails!=null){
+            userId = myUserDetails.getId();
+        }else {
+            userId = 0;
+        }
         System.out.println("getProjectsByTypePage::当前页：" + page + "，type::类型为：" + projectsType);
         Map<String, Object> map = new HashMap<>();
         // 每页显示条数
@@ -351,7 +357,7 @@ public class pageController {
             int offset = (page - 1) * pageSize;
             List<ProjectsRecommendation> list = null;
             if ("".equals(projectsType)) {
-                list =  projectService.getProject(myUserDetails.getId(), offset, pageSize);
+                list =  projectService.getProject(userId, offset, pageSize);
         for (ProjectsRecommendation projectsRecommendation : list) {
           System.out.println(projectsRecommendation);
         }

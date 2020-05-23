@@ -85,15 +85,16 @@
                                                aria-selected="true">推荐项目</a>
                                         </li>
                                     </ul>
-<!--                                    <div id="add-row-filter" class="dataTables_filter" style="float: right; margin-top:12px; ">-->
-<!--                                        <span class="input-group">-->
-<!--                                            <input aria-controls="add-row" type="text" class="form-control form-control-sm" placeholder="请输入关键字" th:onkeyup="searchWord(this)" id="search1" autocomplete="off">-->
-<!--                                            <span class="input-group-btn" style="float: right">-->
-<!--                                                <button class="btn btn-primary" onclick="searchByWord()"><i class="fas fa-search"></i></button>-->
-<!--                                            </span>-->
-<!--                                        </span>-->
-<!--                                    </div>-->
-                                    <div id="showDiv1" style="display:none; position:absolute;margin-left: 60%; margin-top: 52px; z-index:1000;background:white; width:195px;font-size: 16px;color:#575962;border:1px solid #ccc;">
+                                    <!--                                    <div id="add-row-filter" class="dataTables_filter" style="float: right; margin-top:12px; ">-->
+                                    <!--                                        <span class="input-group">-->
+                                    <!--                                            <input aria-controls="add-row" type="text" class="form-control form-control-sm" placeholder="请输入关键字" th:onkeyup="searchWord(this)" id="search1" autocomplete="off">-->
+                                    <!--                                            <span class="input-group-btn" style="float: right">-->
+                                    <!--                                                <button class="btn btn-primary" onclick="searchByWord()"><i class="fas fa-search"></i></button>-->
+                                    <!--                                            </span>-->
+                                    <!--                                        </span>-->
+                                    <!--                                    </div>-->
+                                    <div id="showDiv1"
+                                         style="display:none; position:absolute;margin-left: 60%; margin-top: 52px; z-index:1000;background:white; width:195px;font-size: 16px;color:#575962;border:1px solid #ccc;">
                                     </div>
                                 </div>
 
@@ -203,9 +204,9 @@
 </div>
 
 <!--公共JS-->
-<th:block th:replace="commom/bar :: commom_js" />
+<th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
-<th:block th:replace="commom/bar :: nav_js" />
+<th:block th:replace="commom/bar :: nav_js"/>
 
 <!--加载更多项目-->
 <script type="text/javascript">
@@ -353,10 +354,19 @@
             /*判断是否收藏*/
             if (list[i].storeFlag == 1) {
                 var storeColor = "#F29F3F";
-                tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_del_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                if (userId != "") {
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_del_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                } else {
+
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_del_refrech(' + 0 + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                }
             } else if (list[i].storeFlag == 0) {
                 var storeColor = "darkgrey";
-                tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                if (userId != "") {
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                } else {
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_refrech(' + 0 + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                }
             }
             tableShow +=
                 '           <i class="fas fa-star"></i><span id="storeCount' + list[i].projectId + '">' + list[i].storeCount + '</span>\n' +
@@ -415,19 +425,27 @@
 <!--收藏与取消收藏状态切换-->
 <script type="text/javascript">
     function projects_index_refrech(userId, projectId) {
+        if (userId != 0) {
+            checkLoginAndDoFunction(projects_index_refrechDo, userId, projectId)
+        } else {
+            noLoginALert();
+        }
+    }
+
+    function projects_index_refrechDo(arguments1) {
         $.ajax({
             type: "post",
             url: "/projects_index_refrech",
             dataType: "json",
             data: {
-                userId: userId,
-                projectId: projectId
+                userId: arguments1[1],
+                projectId: arguments1[2]
             },
             success: function (json) {
                 if (json.ok) {
-                    $("#stored" + projectId).css("color", "#F29F3F");
+                    $("#stored" + arguments1[2]).css("color", "#F29F3F");
                     var tranfunction = "projects_index_del_refrech(" + userId + "," + projectId + ")"
-                    $("#stored" + projectId).attr("onclick", tranfunction);
+                    $("#stored" + arguments1[2]).attr("onclick", tranfunction);
                     $("#storeCount" + projectId).html(json.data.storeCount)
                 }
             }
@@ -435,19 +453,27 @@
     }
 
     function projects_index_del_refrech(userId, projectId) {
+        if (userId != 0) {
+            checkLoginAndDoFunction(projects_index_del_refrechDo, userId, projectId)
+        } else {
+            noLoginALert();
+        }
+    }
+
+    function projects_index_del_refrechDo(arguments1) {
         $.ajax({
             type: "post",
             url: "/projects_index_del_refrech",
             dataType: "json",
             data: {
-                userId: userId,
-                projectId: projectId
+                userId: arguments1[1],
+                projectId: arguments1[2]
             },
             success: function (json) {
                 if (json.ok) {
-                    $("#stored" + projectId).css("color", "darkgrey");
+                    $("#stored" + arguments1[2]).css("color", "darkgrey");
                     var tranfunction = "projects_index_refrech(" + userId + "," + projectId + ")"
-                    $("#stored" + projectId).attr("onclick", tranfunction);
+                    $("#stored" + arguments1[2]).attr("onclick", tranfunction);
                     $("#storeCount" + projectId).html(json.data.storeCount)
                 }
             }
@@ -519,19 +545,21 @@
 <!-- 完成异步搜索//不能同时运行两个不同的ajax，问题暂未解决 -->
 <script type="text/javascript">
 
-    function overFn(obj){//鼠标在上面
-        $(obj).css("background","#F0F8FF");
+    function overFn(obj) {//鼠标在上面
+        $(obj).css("background", "#F0F8FF");
     }
-    function outFn(obj){//鼠标离开
-        $(obj).css("background","white");
+
+    function outFn(obj) {//鼠标离开
+        $(obj).css("background", "white");
     }
-    function clickFn(obj){//鼠标点击
+
+    function clickFn(obj) {//鼠标点击
         $("#search1").val($(obj).html());
-        $("#showDiv1").css("display","none");
+        $("#showDiv1").css("display", "none");
     }
 
     //上面的是提示框的css代码，下面的是ajax获取代码
-    function searchWord(obj){
+    function searchWord(obj) {
         //alert(111);
         //1、获得输入框的输入的内容
         var word = $(obj).val();
@@ -567,38 +595,38 @@
         var tableShow = '';
         tableShow +=
             '<div class="col-md-12">\n' +
-            '<div class="text-center">\n'+
-            '<div style="color: #F29F3F;">\n'+
-            '<span class="fas fa-dizzy"></span>\n'+
-            '</div>\n'+
+            '<div class="text-center">\n' +
+            '<div style="color: #F29F3F;">\n' +
+            '<span class="fas fa-dizzy"></span>\n' +
+            '</div>\n' +
             '<h3><b>很抱歉，找不到此数据</b></h3>\n' +
-            '</div>\n'+
+            '</div>\n' +
             '</div>\n';
         div.html(tableShow);
     }
 
     function searchByWord() {
-            if($("#pills-more-tab").is(":visible")) {
-                var div = $('#allDiv');
-                var word = $("#search1").val();
-                var url = "/get_project_by_word";
-                searchAllByName(div,word,url,allPage);
-            }else if ($("#pills-recommend-tab").is(":visible")){
-                var div = $('#recommendDiv');
-                var word = $("#search1").val();
-                var url = "/get_project_by_word";
-                searchAllByName(div,word,url,recommendPage);
-            }
+        if ($("#pills-more-tab").is(":visible")) {
+            var div = $('#allDiv');
+            var word = $("#search1").val();
+            var url = "/get_project_by_word";
+            searchAllByName(div, word, url, allPage);
+        } else if ($("#pills-recommend-tab").is(":visible")) {
+            var div = $('#recommendDiv');
+            var word = $("#search1").val();
+            var url = "/get_project_by_word";
+            searchAllByName(div, word, url, recommendPage);
+        }
     }
 
     //对项目名、负责人搜索模糊查询
-    function searchAllByName(div,word,url,ul) {
+    function searchAllByName(div, word, url, ul) {
         $.ajax({
             type: "Get",
             url: url,
             data: {
                 page: '1',
-                word:word
+                word: word
             },
             success: function (data) {
                 appendProjectsRecordHtml(data.list, div)
@@ -628,7 +656,7 @@
                             dataType: "json",
                             data: {
                                 page: page,
-                                word:word
+                                word: word
                             },
                             success: function (data) {
                                 appendProjectsRecordHtml(data.list, div);
@@ -638,7 +666,7 @@
                 };
                 $(ul).bootstrapPaginator(options);
             },
-            error:function () {
+            error: function () {
                 appendProjectsRecordErrorHtml(div);
                 var options2 = {//根据后台返回的分页相关信息，设置插件参数
                     bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV

@@ -57,7 +57,7 @@ function initNavSiderJs(user) {
 
 //跳转修改信息页面userprofile
 function userprofileView() {
-    checkLoginAndAndDoFunction(userprofileViewDo)
+    checkLoginAndDoFunction(userprofileViewDo)
 }
 function userprofileViewDo() {
     location.href = "/userprofile"
@@ -65,7 +65,7 @@ function userprofileViewDo() {
 
 //跳转我的项目my_projects
 function myProjectView() {
-    checkLoginAndAndDoFunction(myProjectViewDo, userId)
+    checkLoginAndDoFunction(myProjectViewDo, userId)
 }
 function myProjectViewDo(arguments) {
     location.href = "/my_projects/" + arguments[1]
@@ -73,7 +73,7 @@ function myProjectViewDo(arguments) {
 
 //跳转我的项目my_projects_store
 function myProjectStoreView() {
-    checkLoginAndAndDoFunction(myProjectStoreViewDo, userId)
+    checkLoginAndDoFunction(myProjectStoreViewDo, userId)
 }
 function myProjectStoreViewDo(arguments) {
     location.href = "/my_projects_store/" + arguments[1]
@@ -81,7 +81,7 @@ function myProjectStoreViewDo(arguments) {
 
 //跳转个人消息
 function messageView() {
-    checkLoginAndAndDoFunction(messageViewDo)
+    checkLoginAndDoFunction(messageViewDo)
 }
 function messageViewDo() {
     location.href = "/message_view"
