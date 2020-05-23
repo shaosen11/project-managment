@@ -213,7 +213,7 @@ public class UserController {
             return model;
         }
         //返回到修改密码的界面
-        model.setViewName("/resetpassword");
+        model.setViewName("resetpassword");
         model.addObject("email",email);
         return model;
     }
