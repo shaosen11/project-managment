@@ -62,9 +62,9 @@ spring:
         enabled: true
 
   mail:
-    username: projectsmanagment@163.com
-    password: RWMIFXTAYAZLVDRS
-    host: smtp.163.com
+    username: 1244785737@qq.com
+    password: ebvyavgmkxebbabb
+    host: smtp.qq.com
     properties:
       mail:
         smtp:

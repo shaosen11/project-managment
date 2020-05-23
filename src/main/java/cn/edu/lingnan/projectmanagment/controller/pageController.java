@@ -1,19 +1,23 @@
 package cn.edu.lingnan.projectmanagment.controller;
 
 import cn.edu.lingnan.projectmanagment.bean.DocumentsRecord;
+import cn.edu.lingnan.projectmanagment.bean.MyUserDetails;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsFunction;
 import cn.edu.lingnan.projectmanagment.bean.ProjectsRecommendation;
 import cn.edu.lingnan.projectmanagment.service.impl.DocumentsRecordServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectServiceImpl;
 import cn.edu.lingnan.projectmanagment.service.impl.ProjectsFunctionServiceImpl;
 import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -320,7 +324,8 @@ public class pageController {
 
     @GetMapping("/getProjectsByTypePage")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> getProjectsByTypePage(Integer page, String projectsType) {
+    public ResponseEntity<Map<String, Object>> getProjectsByTypePage(Integer page, String projectsType, HttpServletRequest request) {
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
         System.out.println("getProjectsByTypePage::当前页：" + page + "，type::类型为：" + projectsType);
         Map<String, Object> map = new HashMap<>();
         // 每页显示条数
@@ -346,7 +351,10 @@ public class pageController {
             int offset = (page - 1) * pageSize;
             List<ProjectsRecommendation> list = null;
             if ("".equals(projectsType)) {
-                list =  projectService.getProject(offset, pageSize);
+                list =  projectService.getProject(myUserDetails.getId(), offset, pageSize);
+        for (ProjectsRecommendation projectsRecommendation : list) {
+          System.out.println(projectsRecommendation);
+        }
             } else {
                 list = projectService.getProjectsByType(offset, pageSize, projectsType);
             }
