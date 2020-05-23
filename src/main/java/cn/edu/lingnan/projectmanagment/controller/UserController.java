@@ -179,7 +179,7 @@ public class UserController {
 
     @GetMapping("/reset_password")
     public ModelAndView checkResetLink(String sid, String email){
-        ModelAndView model = new ModelAndView("/resetpassword");
+        ModelAndView model = new ModelAndView("resetpassword");
         String msg = "";
         if(sid.equals("") || email.equals("")){
             msg="链接不完整,请重新生成";
