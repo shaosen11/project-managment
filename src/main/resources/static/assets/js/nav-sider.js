@@ -105,7 +105,6 @@ function judgeProjectManagementAdmin() {
         type: "Get",
         url: "/projectManagementAdmin",
         success: function (data) {
-            console.log(data)
             if (data != "") {
                 projectManagementAdminFlag = true;
             } else {

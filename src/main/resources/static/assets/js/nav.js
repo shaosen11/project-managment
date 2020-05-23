@@ -38,7 +38,7 @@ function noProjectUserAlert() {
 function noLoginALert() {
     swal({
         icon: "warning",
-        text: "你未登录，请点击左上角登录！",
+        text: "你未登录，请点击右上角登录！",
         type: "warning",
         buttons: false,
         timer: 2000,

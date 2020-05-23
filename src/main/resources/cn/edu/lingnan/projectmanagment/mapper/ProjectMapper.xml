@@ -83,6 +83,10 @@
             <if test="clickCount != null">click_count,</if>
             <if test="userCount != null">user_count,</if>
             <if test="documentCount != null">document_count,</if>
+            <if test="plannedStartTime != null">planned_start_time,</if>
+            <if test="plannedEndTime != null">planned_end_time,</if>
+            <if test="actualStartTime != null">actual_start_time,</if>
+            <if test="actualEndTime != null">actual_end_time,</if>
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -100,6 +104,10 @@
             <if test="clickCount != null">#{clickCount},</if>
             <if test="userCount != null">#{userCount},</if>
             <if test="documentCount != null">#{documentCount},</if>
+            <if test="plannedStartTime != null">#{plannedStartTime},</if>
+            <if test="plannedEndTime != null">#{plannedEndTime},</if>
+            <if test="actualStartTime != null">#{actualStartTime},</if>
+            <if test="actualEndTime != null">#{actualEndTime},</if>
         </trim>
     </insert>
 
