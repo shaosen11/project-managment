@@ -71,7 +71,7 @@
                             <div class="card-body">
                                 <!--导航栏-->
                                 <div class="row row-nav-line">
-                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist" style="width: 60%">
                                         <li class="nav-item">
                                             <a class="nav-link active show" id="pills-more-tab-nobd" data-toggle="pill"
                                                href="#pills-more-tab" role="tab" aria-controls="pills-more-nobd"
@@ -84,8 +84,17 @@
                                                aria-controls="pills-recommend-nobd"
                                                aria-selected="true">推荐项目</a>
                                         </li>
-
                                     </ul>
+                                    <div id="add-row-filter" class="dataTables_filter" style="float: right; margin-top:12px; ">
+                                        <span class="input-group">
+                                            <input aria-controls="add-row" type="text" class="form-control form-control-sm" placeholder="请输入关键字" th:onkeyup="searchWord(this)" id="search1" autocomplete="off">
+                                            <span class="input-group-btn" style="float: right">
+                                                <button class="btn btn-primary" onclick="searchByWord()"><i class="fas fa-search"></i></button>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div id="showDiv1" style="display:none; position:absolute;margin-left: 60%; margin-top: 52px; z-index:1000;background:white; width:195px;font-size: 16px;color:#575962;border:1px solid #ccc;">
+                                    </div>
                                 </div>
 
                                 <!--主体-->
@@ -507,5 +516,156 @@
         })
     }
 </script>
+
+<!-- 完成异步搜索//不能同时运行两个不同的ajax，问题暂未解决 -->
+<script type="text/javascript">
+
+    function overFn(obj){//鼠标在上面
+        $(obj).css("background","#F0F8FF");
+    }
+    function outFn(obj){//鼠标离开
+        $(obj).css("background","white");
+    }
+    function clickFn(obj){//鼠标点击
+        $("#search1").val($(obj).html());
+        $("#showDiv1").css("display","none");
+    }
+
+    //上面的是提示框的css代码，下面的是ajax获取代码
+    function searchWord(obj){
+        //alert(111);
+        //1、获得输入框的输入的内容
+        var word = $(obj).val();
+        //2、根据输入框的内容去数据库中模糊查询---List<Product>
+        $.ajax({
+            type: "get",
+            url: "/searchWord",
+            data: {
+                word: word,
+            },
+            success: function (data) {
+                //3、将返回的商品的名称 现在showDiv中
+                //alert(data);
+                if (data.length > 0) {
+                    var content = '';
+                    for (var i = 0; i < data.length; i++) {
+                        //alert(data[i]);
+                        content += '<div style="padding:5px;cursor:pointer" onclick="clickFn(this)" onmouseover="overFn(this)" onmouseout="outFn(this)">' + data[i] + '</div>';
+                    }
+                    $("#showDiv1").html(content);
+                    $("#showDiv1").css("display", "block");
+                }
+                if (obj.value.length == 0) {//判断输入框是否为空，如果为空则隐藏提示区域
+                    $("#showDiv1").css("display", "none");
+                }
+            },
+        });
+
+    }
+
+
+    function appendProjectsRecordErrorHtml(div) {//此函数用于处理后台数据失败后所返回的页面
+        var tableShow = '';
+        tableShow +=
+            '<div class="col-md-12">\n' +
+            '<div class="text-center">\n'+
+            '<div style="color: #F29F3F;">\n'+
+            '<span class="fas fa-dizzy"></span>\n'+
+            '</div>\n'+
+            '<h3><b>很抱歉，找不到此数据</b></h3>\n' +
+            '</div>\n'+
+            '</div>\n';
+        div.html(tableShow);
+    }
+
+    function searchByWord() {
+            if($("#pills-more-tab").is(":visible")) {
+                var div = $('#allDiv');
+                var word = $("#search1").val();
+                var url = "/get_project_by_word";
+                searchAllByName(div,word,url,allPage);
+            }else if ($("#pills-recommend-tab").is(":visible")){
+                var div = $('#recommendDiv');
+                var word = $("#search1").val();
+                var url = "/get_project_by_word";
+                searchAllByName(div,word,url,recommendPage);
+            }
+    }
+
+    //对项目名、负责人搜索模糊查询
+    function searchAllByName(div,word,url,ul) {
+        $.ajax({
+            type: "Get",
+            url: url,
+            data: {
+                page: '1',
+                word:word
+            },
+            success: function (data) {
+                appendProjectsRecordHtml(data.list, div)
+                var options = {
+                    bootstrapMajorVersion: 3,
+                    currentPage: data.page,
+                    totalPages: data.totalPage,
+                    numberOfPages: data.pageSize,
+                    itemTexts: function (type, page, current) {
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {
+                        $.ajax({
+                            type: "get",
+                            url: url,
+                            dataType: "json",
+                            data: {
+                                page: page,
+                                word:word
+                            },
+                            success: function (data) {
+                                appendProjectsRecordHtml(data.list, div);
+                            }
+                        });
+                    }
+                };
+                $(ul).bootstrapPaginator(options);
+            },
+            error:function () {
+                appendProjectsRecordErrorHtml(div);
+                var options2 = {//根据后台返回的分页相关信息，设置插件参数
+                    bootstrapMajorVersion: 3, //如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                    currentPage: 1, //当前页数
+                    totalPages: 1, //总页数
+                    numberOfPages: 5,//每页记录数
+                    itemTexts: function (type, page, current) {//设置分页按钮显示字体样式
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return page;
+                        }
+                    },
+                };
+                $(ul).bootstrapPaginator(options2);//设置分页
+            }
+        })
+    }
+</script>
+
 </body>
 </html>

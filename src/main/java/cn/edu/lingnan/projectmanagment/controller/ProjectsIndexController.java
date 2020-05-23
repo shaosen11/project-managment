@@ -3,12 +3,15 @@ package cn.edu.lingnan.projectmanagment.controller;
 import cn.edu.lingnan.projectmanagment.bean.*;
 import cn.edu.lingnan.projectmanagment.exception.AJaxResponse;
 import cn.edu.lingnan.projectmanagment.service.impl.*;
+import cn.edu.lingnan.projectmanagment.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
@@ -262,5 +265,89 @@ public class ProjectsIndexController {
             return null;
         }
 
+    }
+
+    //根据关键字获取搜索提示
+    @GetMapping("/searchWord")
+    @ResponseBody
+    public List getMyProjectsByType(String word){
+        System.out.println("关键字："+word);
+        List<String> list = projectService.getProjectNameByWord(word);
+        List<String> list1 = projectService.getTypeByWord(word);
+        List<String> list2 = projectService.getUserNameByWord(word);
+        if (list.size()>0){
+            return list;
+        }else if (list1.size()>0){
+            return list1;
+        }else if (list2.size()>0){
+            return list2;
+        } else {
+            return null;
+        }
+    }
+
+    public Map<String, Object> functionPageCom(Integer page,Integer count) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        try {
+            // 计算总页数
+            int totalPage = count / pageSize;
+            // 不满一页的数据按一页计算
+            if (count % pageSize != 0) {
+                totalPage++;
+            }
+            // 当页数大于总页数，直接返回
+            if (page > totalPage) {
+                return null;
+            }
+            // 计算sql需要的起始索引
+            int offset = (page - 1) * pageSize;
+            // 封装数据，并返回
+            map.put("page", page);
+            map.put("pageSize", pageSize);
+            map.put("totalPage", totalPage);
+            map.put("offset", offset);
+            return map;
+        } catch (Exception e) {
+            System.out.println("获取函数数据失败" + e);
+            return map;
+        }
+    }
+
+    //按项目名、用户名以及项目类型进行搜索
+    @GetMapping("/get_project_by_word")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getProjectsByWord(Integer page,String word,HttpServletRequest request){
+        MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
+        System.out.println("当前页：" +page+"  关键字："+word+"  当前用户：" + myUserDetails);
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 每页显示条数
+        int pageSize = 5;
+        int count=0;
+        List<ProjectsRecommendation> list = null;
+        try {
+            // 获取总条目数
+            if(word == null || word.equals("")){
+                count = projectService.countProjectsRecommendation();
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list =  projectService.getProject(offset, pageSize);
+            } else{
+                count = projectService.countProjectsByWord(word);
+                map = functionPageCom(page,count);
+                int offset = (int) map.get("offset");
+                list = projectService.getMyProjectsByWord(word,offset,pageSize);
+            }
+            System.out.println("分页list"+list);
+            // 封装数据，并返回
+            map.put("list", list);
+            System.out.println("分页map"+map);
+            return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("获取分页数据失败" + e);
+            return new ResponseEntity<Map<String, Object>>(
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

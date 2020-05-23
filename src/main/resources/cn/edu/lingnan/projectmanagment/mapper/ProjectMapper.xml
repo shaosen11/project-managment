@@ -207,5 +207,51 @@
         where a.charge_user_id=b.id and a.type=#{type} and a.enabled = 1 and b.enabled=1;
     </select>
 
+    <!--查找所有项目-->
+    <select id="projectCount" resultType="Integer">
+        select count(*)
+        from projects
+        where enabled = 1
+    </select>
 
+    <!-- 根据关键字模糊查询项目名 -->
+    <select id="getProjectNameByWord" resultType="String">
+        select DISTINCT name
+        from projects
+        where enabled = 1 and name like CONCAT('%',#{word},'%') limit 10
+    </select>
+
+    <!-- 模糊查询得到用户名 -->
+    <select id="getUserNameByWord" resultType="String">
+        select DISTINCT username
+        from sys_user
+        where enabled = 1 and username like CONCAT('%',#{word},'%') limit 10
+    </select>
+
+    <!-- 根据关键字模糊查询项目类型 -->
+    <select id="getTypeByWord" resultType="String">
+        select DISTINCT type
+        from projects
+        where enabled = 1 and type like CONCAT('%',#{word},'%') limit 10
+    </select>
+
+    <!-- 根据关键字统计项目数 -->
+    <select id="countProjectsByWord" resultType="integer">
+        select count(*)
+        from projects p,sys_user su
+        where p.charge_user_id=su.id and p.enabled = 1 and su.enabled = 1 and (p.name=#{word} or su.username=#{word} or p.type=#{word})
+    </select>
+
+    <!--根据关键字模糊查询所有项目-->
+    <select id="getMyProjectsByWord" resultType="ProjectsRecommendation">
+        select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization,a.store_count as storeCount,a.click_count as clickCount,
+        (select count(*) from user_store us where us.user_id = b.id and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
+        hour(timediff(now(), last_update_time)) as updateTime,
+        DATE_FORMAT(last_update_time,'%Y-%m-%d') as updateDate,
+        DATE_FORMAT(a.create_time,'%Y-%m-%d') as createDate,
+        getFirstHanZiCode(b.username) as firstname
+        from projects a,sys_user b
+        where a.charge_user_id=b.id and a.enabled = 1 and b.enabled=1 and (a.name=#{word} or b.username=#{word} or a.type=#{word})
+        order by a.id desc limit #{pageNum},#{pageSize};
+    </select>
 </mapper>

@@ -114,4 +114,29 @@ public class ProjectServiceImpl implements ProjectsService {
         return projectMapper.projectCount();
     }
 
+    @Override
+    public List<String> getProjectNameByWord(String word) {
+        return projectMapper.getProjectNameByWord(word);
+    }
+
+    @Override
+    public List<String> getTypeByWord(String word) {
+        return projectMapper.getTypeByWord(word);
+    }
+
+    @Override
+    public List<String> getUserNameByWord(String word) {
+        return projectMapper.getUserNameByWord(word);
+    }
+
+    @Override
+    public Integer countProjectsByWord(String word) {
+        return projectMapper.countProjectsByWord(word);
+    }
+
+    @Override
+    public List<ProjectsRecommendation> getMyProjectsByWord(String word, Integer pageNum, Integer pageSize) {
+        return projectMapper.getMyProjectsByWord(word,pageNum,pageSize);
+    }
+
 }

@@ -143,5 +143,36 @@ public interface ProjectsService {
      * @return
      */
     Integer projectCount();
+
+    /**
+     * 根据关键字模糊查询项目名
+     * @return
+     */
+    List<String> getProjectNameByWord(String word);
+
+    /**
+     * 根据关键字模糊查询项目类型
+     * @return
+     */
+    List<String> getTypeByWord(String word);
+
+    /**
+     * 根据关键字模糊查询用户名
+     * @return
+     */
+    List<String> getUserNameByWord(String word);
+
+    /**
+     * 根据关键字统计项目数
+     * @return
+     */
+    Integer countProjectsByWord(String word);
+
+    /**
+     * 根据关键字模糊查询所有项目
+     * @return
+     */
+    List<ProjectsRecommendation> getMyProjectsByWord(String word,Integer pageNum, Integer pageSize);
+
 }
 
