@@ -247,7 +247,7 @@
     <select id="countProjectsByWord" resultType="integer">
         select count(*)
         from projects p,sys_user su
-        where p.charge_user_id=su.id and p.enabled = 1 and su.enabled = 1 and (p.name=#{word} or su.username=#{word} or p.type=#{word})
+        where p.charge_user_id=su.id and p.enabled = 1 and su.enabled = 1 and (p.name like CONCAT('%',#{word},'%') or su.username like CONCAT('%',#{word},'%') or p.type like CONCAT ('%',#{word},'%'))
     </select>
 
     <!--根据关键字模糊查询所有项目-->
@@ -259,7 +259,7 @@
         DATE_FORMAT(a.create_time,'%Y-%m-%d') as createDate,
         getFirstHanZiCode(b.username) as firstname
         from projects a,sys_user b
-        where a.charge_user_id=b.id and a.enabled = 1 and b.enabled=1 and (a.name=#{word} or b.username=#{word} or a.type=#{word})
+        where a.charge_user_id=b.id and a.enabled = 1 and b.enabled=1 and (a.name like CONCAT('%',#{word},'%') or b.username like CONCAT('%',#{word},'%') or a.type like CONCAT('%',#{word},'%'))
         order by a.id desc limit #{pageNum},#{pageSize};
     </select>
 </mapper>
