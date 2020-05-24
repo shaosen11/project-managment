@@ -163,7 +163,7 @@ $(function () {
     $("#projectSideBarA3").attr("href", '/projects_plan_view?projectId=' + projectId);
     $("#projectSideBarA4").attr("href", '/project_function_view?projectId=' + projectId)
     $("#projectSideBarA5").attr("href", '/project_user_view?projectId=' + projectId)
-    $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
+    // $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
 })
 
 //判断用户是否有权限标记
@@ -246,6 +246,14 @@ function checkLoginAndProjectUserAndDoFunction(doFunction) {
     } else {
         noLoginALert()
     }
+}
+
+//跳转合作伙伴
+function projectUserCooperationView() {
+    checkLoginAndProjectUserAndDoFunction(projectUserCooperationViewDo)
+}
+function projectUserCooperationViewDo() {
+    location.href = '/project_user_cooperation_view?projectId=' + projectId
 }
 
 //上传文件弹出框

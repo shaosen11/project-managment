@@ -84,6 +84,7 @@
                 projectId: projectId,
             },
             success: function (data) {
+                console.log(data)
                 projectTimeAppendHtml(data.projects, divName2);
             }
         })
@@ -224,7 +225,7 @@
     }
 
     //页面渲染
-    function projectPlanAppendHtml2(divName) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    function projectPlanAppendHtml2(divName) {
         var tableShow = '';
         tableShow += '<ul class="timeline col-md-12">\n'+
                      '<div class="text-center"><h3>暂无项目计划</h3>></div>\n'+
@@ -232,17 +233,18 @@
         divName.html(tableShow)
     }
     //页面渲染
-    function projectTimeAppendHtml(project, divName) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    function projectTimeAppendHtml(project, divName) {
+        console.log(project)
         var tableShow = '';
         if (project.plannedStartTime == null) {
             var plannedStartTime = "未确定";
         } else {
-            var plannedStartTime = project.actualStartTime;
+            var plannedStartTime = project.plannedStartTime;
         }
         if (project.plannedEndTime == null) {
             var plannedEndTime = "未确定";
         } else {
-            var plannedEndTime = project.actualEndTime;
+            var plannedEndTime = project.plannedEndTime;
         }
         if (project.actualStartTime == null) {
             var actualStartTime = "未开始";
