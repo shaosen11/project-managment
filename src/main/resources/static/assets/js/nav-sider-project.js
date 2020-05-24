@@ -254,6 +254,7 @@ function projectUserCooperationView() {
 }
 function projectUserCooperationViewDo() {
     location.href = '/project_user_cooperation_view?projectId=' + projectId
+
 }
 
 //上传文件弹出框
