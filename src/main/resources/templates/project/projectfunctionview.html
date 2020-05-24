@@ -686,11 +686,12 @@
     }
 
     //页面渲染
-    function addFunctionProjectUserAppendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    function addFunctionProjectUserAppendHtml(list) {
         var tableShow = '';
         for (var i = 0; i < list.length; i++) {
+            console.log(list[i])
             tableShow +=
-                '<option value=' + list[i].id + '>' + list[i].myUserDetails.username + '</option>\n'
+                '<option value=' + list[i].myUserDetails.id + '>' + list[i].myUserDetails.username + '</option>\n'
         }
         $('#addRealizeUserId').html(tableShow)
     }
