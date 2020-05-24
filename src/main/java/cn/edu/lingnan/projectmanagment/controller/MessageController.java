@@ -192,7 +192,7 @@ public class MessageController {
     @GetMapping("/messageCount")
     @ResponseBody
     public Integer messageCount(Integer userId) {
-        return messageService.messageCount(userId) + messageService.messageNeedToDoCount(userId);
+        return messageService.messageCount(userId);
     }
 
     @GetMapping("/message_need_to_do")
