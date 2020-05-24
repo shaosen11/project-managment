@@ -248,17 +248,6 @@ function checkLoginAndProjectUserAndDoFunction(doFunction) {
     }
 }
 
-//跳转合作伙伴
-function projectUserCooperationView() {
-    checkLoginAndProjectUserAndDoFunction(projectUserCooperationViewDo)
-}
-function projectUserCooperationViewDo() {
-    location.href = '/project_user_cooperation_view?projectId=' + projectId
-
-
-
-
-}
 
 //上传文件弹出框
 function uploadFileModel() {
@@ -283,4 +272,12 @@ function projectMessageView() {
 
 function projectMessageViewDo(arguments) {
     location.href = '/projectmessage?projectId=' + arguments[1] + '&userId=' + arguments[2]
+}
+
+//跳转合作伙伴
+function projectUserCooperationView() {
+    checkLoginAndProjectUserAndDoFunction(projectUserCooperationViewDo)
+}
+function projectUserCooperationViewDo() {
+    location.href = '/project_user_cooperation_view?projectId=' + projectId
 }
