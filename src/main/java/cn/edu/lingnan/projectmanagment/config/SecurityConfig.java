@@ -110,7 +110,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //project_plan_view
                 .antMatchers("/projects_plan_view","/projects_plan","/projects_plan_time","/projectFunctionMessageAlert").permitAll()
                 //project_function_view
-                .antMatchers("/project_function_view","/allFunctionPage","/projectFunctionDataCicleChart","/projectFunctionTotal").permitAll()
+                .antMatchers("/project_function_view","/allFunctionPage","/projectFunctionDataCicleChart","/projectFunctionTotal","/projectFunction").permitAll()
                 //project_user_view
                 .antMatchers("/project_user_view","/projectUserPage","/projectsUserDevotion","/user_finish_function","/user_developing_function","/projectUserTotal").permitAll()
                 //project_user_cooperation_view

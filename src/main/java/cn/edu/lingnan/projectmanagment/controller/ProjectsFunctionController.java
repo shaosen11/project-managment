@@ -52,6 +52,7 @@ public class ProjectsFunctionController {
     @ResponseBody
     @PostMapping("/add_project_function")
     public Integer addProjectFunction(ProjectsFunction projectsFunction) {
+        System.out.println(projectsFunction);
         Projects projects = projectService.getById(projectsFunction.getProjectsId());
         System.out.println("projectsFunction=" + projectsFunction);
         if (projects == null) {
@@ -463,6 +464,15 @@ public class ProjectsFunctionController {
         } else {
             return AJaxResponse.error("请先登录！");
         }
+    }
+
+    @GetMapping("/projectFunction")
+    @ResponseBody
+    public ProjectsFunction projectFunctionById(Integer id){
+        System.out.println(id);
+        ProjectsFunction projectsFunction = projectsFunctionService.getById(id);
+        System.out.println(projectsFunction);
+        return projectsFunction;
     }
 }
 

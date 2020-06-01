@@ -27,5 +27,6 @@ public class ProjectsFunction {
     private Date actualEndTime;//实际结束时间
     private String delReason;
     private Integer deleteFlag;
+    private String description;
 }
 
