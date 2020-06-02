@@ -274,10 +274,11 @@ public class ProjectsFunctionController {
         return projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, userId, 1);
     }
 
-    @GetMapping("/project_function_view")
-    public String projectView(@RequestParam Integer projectId, Model model) {
+    @GetMapping("/project_function_view/{projectId}")
+    public String projectView(@PathVariable("projectId") Integer projectId, Model model) {
         Projects projects = projectService.getById(projectId);
         model.addAttribute("project", projects);
+        model.addAttribute("projectId", projectId);
         return "project/projectfunctionview";
     }
 
@@ -340,10 +341,11 @@ public class ProjectsFunctionController {
 //        }
     }
 
-    @GetMapping("/projects_plan_view")
-    public String projectPlanView(@RequestParam Integer projectId, Model model) {
+    @GetMapping("/projects_plan_view/{projectId}")
+    public String projectPlanView(@PathVariable("projectId") Integer projectId, Model model) {
         Projects projects = projectService.getById(projectId);
         model.addAttribute("project", projects);
+        model.addAttribute("projectId", projectId);
         return "project/projectplanview";
     }
 

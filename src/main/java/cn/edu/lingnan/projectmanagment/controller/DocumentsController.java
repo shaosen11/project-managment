@@ -56,8 +56,8 @@ public class DocumentsController {
     ProjectsMessageNeedToDoRelationshipServiceImpl projectsMessageNeedToDoRelationshipService;
 
 
-    @GetMapping("/document")
-    public String text(String documentName, Integer projectId, Model model, HttpServletRequest request) {
+    @GetMapping("/document/{projectId}/{documentName}")
+    public String text(@PathVariable("documentName") String documentName,@PathVariable("projectId") Integer projectId, Model model, HttpServletRequest request) {
         System.out.println("文件名：" + documentName);
         System.out.println("项目id：" + projectId);
         //获取文件名为filename和版本标识符为1的

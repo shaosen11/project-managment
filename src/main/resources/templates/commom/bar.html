@@ -655,7 +655,7 @@
     </script>
     <!--初始化公共js的projectId-->
     <script type="text/javascript">
-        var projectId = "[[${param.projectId}]]";
+        var projectId = "[[${projectId}]]";
     </script>
 </div>
 <!--所有"项目"页面公共js-->
@@ -690,7 +690,7 @@
     </script>
     <!--初始化公共js的projectId和初始化项目权限-->
     <script type="text/javascript">
-        var projectId = "[[${param.projectId}]]";
+        var projectId = "[[${projectId}]]";
         $(function () {
             if (userId != "") {
                 judgeProjectUser();

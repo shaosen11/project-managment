@@ -322,7 +322,7 @@
                 '           <span class="avatar-title rounded-circle border border-white bg-info">' + list[i].firstname + '</span>\n' +
                 '       </span>\n' +
                 '       <div style="float: left">\n' +
-                '           <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '">\n' +
+                '           <a class="defineBStyle" href="projects_view/' + list[i].projectId + '">\n' +
                 '               <span style="color: #145180;font-size: 18px">\n' +
                 '                   ' + list[i].username + '/' + list[i].name + '\n' +
                 '               </span>\n' +
@@ -506,7 +506,7 @@
                 for (var i = 0; i < list.length; i++) {
                     tableShow += '<div>\n' +
                         '              <div class="col-lg-10">\n' +
-                        '                   <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '")"\n' +
+                        '                   <a class="defineBStyle" href="projects_view/' + list[i].projectId + '")"\n' +
                         '                      style="color: #145180;font-size: 18px">\n' +
                         '                      <span>' + list[i].username + '/' + list[i].name + '</span>\n' +
                         '                   </a>\n' +

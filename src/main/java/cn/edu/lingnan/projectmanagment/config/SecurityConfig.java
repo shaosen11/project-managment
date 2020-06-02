@@ -106,17 +106,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //inedx
                 .antMatchers("/","/index.html","/index","/todayProjectsAndWeekProjects","/getProjectsByTypePage","/projects_index_click","/projectManagementAdmin").permitAll()
                 //project_view
-                .antMatchers("/projects_view","/getCodeInsertData","/getCodeDevoteData","/getLineChartDate","/documentRecordPage","/project").permitAll()
+                .antMatchers("/projects_view/*","/getCodeInsertData","/getCodeDevoteData","/getLineChartDate","/documentRecordPage","/project").permitAll()
                 //project_plan_view
-                .antMatchers("/projects_plan_view","/projects_plan","/projects_plan_time","/projectFunctionMessageAlert").permitAll()
+                .antMatchers("/projects_plan_view/*","/projects_plan","/projects_plan_time","/projectFunctionMessageAlert").permitAll()
                 //project_function_view
-                .antMatchers("/project_function_view","/allFunctionPage","/projectFunctionDataCicleChart","/projectFunctionTotal","/projectFunction").permitAll()
+                .antMatchers("/project_function_view/*","/allFunctionPage","/projectFunctionDataCicleChart","/projectFunctionTotal","/projectFunction").permitAll()
                 //project_user_view
-                .antMatchers("/project_user_view","/projectUserPage","/projectsUserDevotion","/user_finish_function","/user_developing_function","/projectUserTotal").permitAll()
+                .antMatchers("/project_user_view/*","/projectUserPage","/projectsUserDevotion","/user_finish_function","/user_developing_function","/projectUserTotal").permitAll()
                 //project_user_cooperation_view
                 .antMatchers("/project_user_cooperation_view","/projectUserPage","/inviteUser","/user_information").permitAll()
                 //document
-                .antMatchers("/document","/files/projects/*/*").permitAll()
+                .antMatchers("/document/*/*","/files/projects/*/*").permitAll()
                 //projectIntroduce
                 .antMatchers("/projectIntroduce","/projectIndexIntroduce","/projectViewIntroduce","/projectDocumentIntroduce").permitAll()
 

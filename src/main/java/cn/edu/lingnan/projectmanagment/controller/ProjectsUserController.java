@@ -223,13 +223,14 @@ public class ProjectsUserController {
         return codeInsertList;
     }
 
-    @GetMapping("/project_user_cooperation_view")
-    public String projectUserCooperationView() {
+    @GetMapping("/project_user_cooperation_view/{projectId}")
+    public String projectUserCooperationView(@PathVariable("projectId")Integer projectId, Model model) {
+        model.addAttribute("projectId", projectId);
         return "project/projectusercooperationview";
     }
 
-    @GetMapping("/project_user_view")
-    public String projectUserView(Integer projectId, Model model) {
+    @GetMapping("/project_user_view/{projectId}")
+    public String projectUserView(@PathVariable("projectId") Integer projectId, Model model) {
         Integer countByProjectId = projectUserService.getCountByProjectId(projectId);
         Integer managment = projectUserService.getCountByProjectIdAndDuty(projectId, 1);
         Integer admin = projectUserService.getCountByProjectIdAndDuty(projectId, 2);
@@ -237,6 +238,7 @@ public class ProjectsUserController {
         model.addAttribute("countByProjectId", countByProjectId);
         model.addAttribute("admin", managment + admin);
         model.addAttribute("codeDevelop", codeDevelop);
+        model.addAttribute("projectId", projectId);
         return "project/projectuserview";
     }
 

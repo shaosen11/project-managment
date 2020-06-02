@@ -69,8 +69,8 @@ public class ProjectController {
         return "tables/projectlist";
     }
 
-    @GetMapping("/projects_view")
-    public String projectView(HttpServletRequest request, Integer projectId, Model model) {
+    @GetMapping("/projects_view/{projectId}")
+    public String projectView(HttpServletRequest request, @PathVariable("projectId") Integer projectId, Model model) {
         //记录点击量
         projectService.updateProjectClickNumber(projectId);
         Date now = new Date();
@@ -86,6 +86,7 @@ public class ProjectController {
         //获取项目信息
         Projects projects = projectService.getById(projectId);
         model.addAttribute("projects", projects);
+        model.addAttribute("projectId", projectId);
         return "project/projectview";
     }
 
