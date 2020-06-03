@@ -50,6 +50,8 @@ public class PorojectsMessageController {
     public String projectMessage(@PathVariable("projectId") Integer projectId, @PathVariable("userId") Integer userId, Model model) {
         model.addAttribute("projectId", projectId);
         model.addAttribute("userId", userId);
+        Projects project = projectService.getById(projectId);
+        model.addAttribute("project", project);
         return "project/projectmessage";
     }
 

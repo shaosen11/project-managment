@@ -96,6 +96,9 @@
             <if test="publishUserId != null">publish_user_id = #{publishUserId},</if>
             <if test="realizeUserId != null">realize_user_id = #{realizeUserId},</if>
             <if test="delReason != null">del_reason = #{delReason},</if>
+            <if test="plannedStartTime != null">planned_start_time = #{plannedStartTime},</if>
+            <if test="plannedEndTime != null">planned_end_time = #{plannedEndTime},</if>
+            <if test="description != null">description = #{description},</if>
         </trim>
         where id = #{id}
     </update>

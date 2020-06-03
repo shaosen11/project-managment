@@ -17,10 +17,10 @@
         <div class="content">
             <div class="page-inner">
                 <div class="page-header">
-                    <h4 class="page-title">项目消息</h4>
+                    <h4 class="page-title">[[${project.name}]]消息</h4>
                     <ul class="breadcrumbs">
                         <li class="nav-home">
-                            <a href="#">
+                            <a th:href="@{/}">
                                 <i class="flaticon-home"></i>
                             </a>
                         </li>
@@ -28,13 +28,13 @@
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Base</a>
+                            <a th:href="@{/projects_view/{id}(id=${project.id})}">项目主面板</a>
                         </li>
                         <li class="separator">
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Panels</a>
+                            <a th:href="@{/projectmessage/{id}(id=${project.id})}">项目消息</a>
                         </li>
                     </ul>
                 </div>

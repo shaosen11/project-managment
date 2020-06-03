@@ -108,7 +108,7 @@ function functionAppendHtml(list,divName,pagecolor) {//此函数用于处理后�
     var tableShow = '';
     for (var i = 0; i < list.length; i++) {
         tableShow +=
-            '<div class="row" style="background-color: white;margin-top: 10px" onclick="projectFunctionModel(' + list[i].id + ')">\n'+
+            '<div class="row" style="background-color: white;margin-top: 10px" onclick="projectFunctionDetail(' + list[i].id + ')">\n'+
             '  <div style="background-color:'+ pagecolor +';width: 5px;""></div>\n' +
             '<div class="col-md-11" style="margin-top: 8px;margin-bottom: 8px">\n' +
             '         <h3>' + list[i].functionName + '</h3>\n' +

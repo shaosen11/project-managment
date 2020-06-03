@@ -476,5 +476,22 @@ public class ProjectsFunctionController {
         System.out.println(projectsFunction);
         return projectsFunction;
     }
+
+    @PutMapping("/projectFunction")
+    @ResponseBody
+    public AJaxResponse projectFunctionById(ProjectsFunction projectsFunction){
+        projectsFunctionService.editProjectFunction(projectsFunction);
+        return AJaxResponse.success();
+    }
+
+    @GetMapping("/project_function_detail_view/{projectFunctionId}")
+    public String projectFunctionDetailView(@PathVariable("projectFunctionId") Integer projectFunctionId, Model model){
+        ProjectsFunction projectsFunction = projectsFunctionService.getById(projectFunctionId);
+        Projects project = projectService.getById(projectsFunction.getProjectsId());
+        model.addAttribute("projectsFunction", projectsFunction);
+        model.addAttribute("project", project);
+        model.addAttribute("projectId", projectsFunction.getProjectsId());
+        return "project/projectfunctiondetailview";
+    }
 }
 
