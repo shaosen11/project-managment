@@ -92,7 +92,7 @@ public interface ProjectsService {
      *
      * @return
      */
-    List<ProjectsRecommendation> getProject(Integer pageNum, Integer pageSize);
+    List<ProjectsRecommendation> getProject(Integer userId, Integer pageNum, Integer pageSize);
 
     boolean updateProjectClickNumber(Integer projectId);
 
@@ -115,7 +115,7 @@ public interface ProjectsService {
      *
      * @return
      */
-    List<ProjectsRecommendation> getRecommendedCommodities(Integer projectId);
+    List<ProjectsRecommendation> getRecommendedCommodities(Integer userId,Integer projectId);
 
     /**
      * 查询推荐商品总记录数

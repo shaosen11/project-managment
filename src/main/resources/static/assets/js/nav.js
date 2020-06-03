@@ -46,7 +46,7 @@ function noLoginALert() {
 }
 
 //检查用户是否登录
-function checkLoginAndAndDoFunction(doFunction) {
+function checkLoginAndDoFunction(doFunction) {
     //检查是否登录
     if (userId != "") {
         doFunction(arguments);
@@ -57,7 +57,7 @@ function checkLoginAndAndDoFunction(doFunction) {
 
 //跳转新建项目页面
 function newProjectView() {
-    checkLoginAndAndDoFunction(newProjectViewDo)
+    checkLoginAndDoFunction(newProjectViewDo)
 }
 function newProjectViewDo() {
     location.href = "/newprojectview"

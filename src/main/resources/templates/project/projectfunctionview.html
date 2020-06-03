@@ -1,418 +1,486 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>ProjectFunction-ProjectManagment</title>
-    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
-    <link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
-    <div th:replace="commom/bar :: commom_css"></div>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>ProjectFunction-ProjectManagment</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+	<link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+	<div th:replace="commom/bar :: commom_css"></div>
+	<link rel="stylesheet" th:href="@{/assets/js/bootstrap-datepicker-master/css/bootstrap-datepicker3.standalone.css}">
 </head>
 <body>
 <div class="wrapper">
-    <div th:replace="commom/bar :: topbar"></div>
-    <!-- Sidebar -->
-    <div th:replace="commom/bar :: projectsidebar"></div>
-    <!-- End Sidebar -->
+	<div th:replace="commom/bar :: topbar"></div>
+	<!-- Sidebar -->
+	<div th:replace="commom/bar :: projectsidebar"></div>
+	<!-- End Sidebar -->
 
-    <div class="main-panel">
-        <div class="content">
-            <div class="page-inner">
-                <div class="page-header col-md-6">
-                    <h4 class="page-title">[[${project.name}]]功能点</h4>
-                    <ul class="breadcrumbs">
-                        <li class="nav-home">
-                            <a href="#">
-                                <i class="flaticon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Base</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Panels</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--功能点概览-->
-                <div class="row">
-                    <div style="width: 19%;float: left">
-                        <div class="card card-stats card-round">
-                            <div class="card-body ">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="icon-big text-center">
-                                            <i class="fas fa-battery-empty text-warning"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats">
-                                        <div class="numbers">
-                                            <p class="card-category">待办功能点</p>
-                                            <h4 class="card-title" id="projectFunctionTodo"></h4>
+	<div class="main-panel">
+		<div class="content">
+			<div class="page-inner">
+				<div class="page-header col-md-6">
+					<h4 class="page-title">[[${project.name}]]功能点</h4>
+					<ul class="breadcrumbs">
+						<li class="nav-home">
+							<a href="#">
+								<i class="flaticon-home"></i>
+							</a>
+						</li>
+						<li class="separator">
+							<i class="flaticon-right-arrow"></i>
+						</li>
+						<li class="nav-item">
+							<a href="#">Base</a>
+						</li>
+						<li class="separator">
+							<i class="flaticon-right-arrow"></i>
+						</li>
+						<li class="nav-item">
+							<a href="#">Panels</a>
+						</li>
+					</ul>
+				</div>
+				<!--功能点概览-->
+				<div class="row">
+					<div style="width: 19%;float: left">
+						<div class="card card-stats card-round">
+							<div class="card-body ">
+								<div class="row">
+									<div class="col-5">
+										<div class="icon-big text-center">
+											<i class="fas fa-battery-empty text-warning"></i>
+										</div>
+									</div>
+									<div class="col col-stats">
+										<div class="numbers">
+											<p class="card-category">待办功能点</p>
+											<h4 class="card-title" id="projectFunctionTodo"></h4>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 1%;float: left">&nbsp;</div>
-                    <div style="width: 19%;float: left">
-                        <div class="card card-stats card-round">
-                            <div class="card-body ">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="icon-big text-center">
-                                            <i class="fas fa-battery-half text-primary"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats">
-                                        <div class="numbers">
-                                            <p class="card-category">进行中功能点</p>
-                                            <h4 class="card-title" id="projectFunctionProcesing"></h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="width: 1%;float: left">&nbsp;</div>
+					<div style="width: 19%;float: left">
+						<div class="card card-stats card-round">
+							<div class="card-body ">
+								<div class="row">
+									<div class="col-5">
+										<div class="icon-big text-center">
+											<i class="fas fa-battery-half text-primary"></i>
+										</div>
+									</div>
+									<div class="col col-stats">
+										<div class="numbers">
+											<p class="card-category">进行中功能点</p>
+											<h4 class="card-title" id="projectFunctionProcesing"></h4>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 1%;float: left">&nbsp;</div>
-                    <div style="width: 19%;float: left">
-                        <div class="card card-stats card-round">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="icon-big text-center">
-                                            <i class="fas fa-battery-three-quarters text-secondary"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats">
-                                        <div class="numbers">
-                                            <p class="card-category">已完成功能点</p>
-                                            <h4 class="card-title" id="projectFunctionCompleted"></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 1%;float: left">&nbsp;</div>
-                    <div style="width: 19%;float: left">
-                        <div class="card card-stats card-round">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="icon-big text-center">
-                                            <i class="fas fa-battery-full text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats">
-                                        <div class="numbers">
-                                            <p class="card-category">已验收功能点</p>
-                                            <h4 class="card-title" id="projectFunctionAccepted"></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="width: 1%;float: left">&nbsp;</div>
-                    <div style="width: 19%;float: left">
-                        <div class="card card-stats card-round">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="icon-big text-center">
-                                            <i class="fas fa-broom" style="color: #7B7687"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats">
-                                        <div class="numbers">
-                                            <p class="card-category">已取消功能点</p>
-                                            <h4 class="card-title" id="projectFunctionCancel"></h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--功能点详情-->
-                <div class="row">
-                    <div class="col-md-2 card" style="height: 700px;">
-                        <div class="card-header">
-                            <h2 style="margin-top: 10px" class="text-center">功能</h2>
-                        </div>
-                        <div class="card-body">
-                            <!--进度条-->
-                            <div id="function-complete" class="chart-circle mt-4 mb-3"></div>
-                            <div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist"
-                                 aria-orientation="vertical" style="margin-top: 20px">
-                                <a class="nav-link active" data-toggle="pill" href="#"
-                                   onclick="allFunctionPage()"><i class="fas fa-layer-group"></i>全部功能</a>
-                                <a class="nav-link" data-toggle="pill" href="#" onclick="assignFunctionPage()">指派给我的</a>
-                                <a class="nav-link" data-toggle="pill" href="#" onclick="publishFunctionPage()">我发布的</a>
-                                <a class="nav-link" data-toggle="pill" href="#" onclick="joinFunctionPage()">我参与的</a>
-                            </div>
-                            <br>
-                            <div class="text-center">
-                                <button class="btn btn-primary" onclick="addFunctionModel()">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="width: 1%;float: left">&nbsp;</div>
+					<div style="width: 19%;float: left">
+						<div class="card card-stats card-round">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-5">
+										<div class="icon-big text-center">
+											<i class="fas fa-battery-three-quarters text-secondary"></i>
+										</div>
+									</div>
+									<div class="col col-stats">
+										<div class="numbers">
+											<p class="card-category">已完成功能点</p>
+											<h4 class="card-title" id="projectFunctionCompleted"></h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="width: 1%;float: left">&nbsp;</div>
+					<div style="width: 19%;float: left">
+						<div class="card card-stats card-round">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-5">
+										<div class="icon-big text-center">
+											<i class="fas fa-battery-full text-success"></i>
+										</div>
+									</div>
+									<div class="col col-stats">
+										<div class="numbers">
+											<p class="card-category">已验收功能点</p>
+											<h4 class="card-title" id="projectFunctionAccepted"></h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div style="width: 1%;float: left">&nbsp;</div>
+					<div style="width: 19%;float: left">
+						<div class="card card-stats card-round">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-5">
+										<div class="icon-big text-center">
+											<i class="fas fa-broom" style="color: #7B7687"></i>
+										</div>
+									</div>
+									<div class="col col-stats">
+										<div class="numbers">
+											<p class="card-category">已取消功能点</p>
+											<h4 class="card-title" id="projectFunctionCancel"></h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--功能点详情-->
+				<div class="row">
+					<div class="col-md-2 card" style="height: 700px;">
+						<div class="card-header">
+							<h2 style="margin-top: 10px" class="text-center">功能</h2>
+						</div>
+						<div class="card-body">
+							<!--进度条-->
+							<div id="function-complete" class="chart-circle mt-4 mb-3"></div>
+							<div class="nav flex-column nav-pills nav-secondary" id="v-pills-tab" role="tablist"
+							     aria-orientation="vertical" style="margin-top: 20px">
+								<a class="nav-link active" data-toggle="pill" href="#"
+								   onclick="allFunctionPage()"><i class="fas fa-layer-group"></i>全部功能</a>
+								<a class="nav-link" data-toggle="pill" href="#" onclick="assignFunctionPage()">指派给我的</a>
+								<a class="nav-link" data-toggle="pill" href="#" onclick="publishFunctionPage()">我发布的</a>
+								<a class="nav-link" data-toggle="pill" href="#" onclick="joinFunctionPage()">我参与的</a>
+							</div>
+							<br>
+							<div class="text-center">
+								<button class="btn btn-primary" onclick="addFunctionModel()">
                                                 <span class="btn-label">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
-                                    新建功能
-                                </button>
-                            </div>
-                            <br>
-                            <div class="text-center">
-                                <button class="btn btn-danger" onclick="delFunctionModel()">
+									新建功能
+								</button>
+							</div>
+							<br>
+							<div class="text-center">
+								<button class="btn btn-danger" onclick="delFunctionModel()">
                                                 <span class="btn-label">
                                                     <i class="fas fa-times"></i>
                                                 </span>
-                                    删除功能
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!--功能-->
-                    <div class="tab-content col-md-10" style="height: 630px;" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-four" role="tabpanel"
-                             aria-labelledby="v-pills-four-tab">
-                            <div style="width: 19%;float: left">
-                                <div class="card" style="height: 700px;">
-                                    <div class="card-header"
-                                         style="background-color: rgba(245,232,200,0.5)">
-                                        <div class="card-title" style="color: black">
-                                            <i class="fas fa-battery-empty" style="color: #FF9933"></i>&nbsp;待办的
-                                        </div>
-                                    </div>
-                                    <div class="card-body"
-                                         style="background-color: rgba(220,220,220,0.3)">
-                                        <div style="margin-top: -15px">
-                                            <!-- 分页容器：显示数据--参与 -->
-                                            <div id="TodoDiv"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <!-- 分页容器： 显示分页按钮-->
-                                        <div class="text-center">
-                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                            <ul id="TodoFunctionPage"
-                                                class="pagination pagination-sm"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width: 1%;float: left">&nbsp;</div>
-                            <div style="width: 19%;float: left">
-                                <div class="card" style="height: 700px;">
-                                    <div class="card-header"
-                                         style="background-color: rgba(157,211,250,0.5)">
-                                        <div class="card-title" style="color: black">
-                                            <i class="fas fa-battery-half" style="color: #1F6FB5"></i>&nbsp;进行中
-                                        </div>
-                                    </div>
-                                    <div class="card-body"
-                                         style="background-color: rgba(220,220,220,0.3)">
-                                        <div style="margin-top: -15px">
-                                            <!-- 分页容器：显示数据 -->
-                                            <div id="ProcesingDiv"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <!-- 分页容器： 显示分页按钮-->
-                                        <div class="text-center">
-                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                            <ul id="ProcesingFunctionPage"
-                                                class="pagination pagination-sm"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width: 1%;float: left">&nbsp;</div>
-                            <div style="width: 19%;float: left">
-                                <div class="card" style="height: 700px;">
-                                    <div class="card-header"
-                                         style="background-color: rgba(118,126,199,0.5)">
-                                        <div class="card-title" style="color: black"><i
-                                                class="fas fa-battery-three-quarters"
-                                                style="color: #795DDE"></i>&nbsp;已完成
-                                        </div>
-                                    </div>
-                                    <div class="card-body"
-                                         style="background-color: rgba(220,220,220,0.3)">
-                                        <div style="margin-top: -15px">
-                                            <!-- 分页容器：显示数据 -->
-                                            <div id="CompletedDiv"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <!-- 分页容器： 显示分页按钮-->
-                                        <div class="text-center">
-                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                            <ul id="CompletedFunctionPage"
-                                                class="pagination pagination-sm"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width: 1%;float: left">&nbsp;</div>
-                            <div style="width: 19%;float: left">
-                                <div class="card" style="height: 700px;">
-                                    <div class="card-header"
-                                         style="background-color: rgba(25,148,117,0.5)">
-                                        <div class="card-title" style="color: black"><i
-                                                class="fas fa-battery-full"
-                                                style="color: #007850"></i>&nbsp;已验收
-                                        </div>
-                                    </div>
-                                    <div class="card-body"
-                                         style="background-color: rgba(220,220,220,0.3)">
-                                        <div style="margin-top: -15px">
-                                            <!-- 分页容器：显示数据 -->
-                                            <div id="AcceptedDiv"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <!-- 分页容器： 显示分页按钮-->
-                                        <div class="text-center">
-                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                            <ul id="AcceptedFunctionPage"
-                                                class="pagination pagination-sm"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width: 1%;float: left">&nbsp;</div>
-                            <div style="width: 19%;float: left">
-                                <div class="card" style="height: 700px;">
-                                    <div class="card-header"
-                                         style="background-color: rgba(172,173,172,0.5)">
-                                        <div class="card-title" style="color: black"><i
-                                                class="fas fa-broom"
-                                                style="color: #7B7687"></i>&nbsp;已取消
-                                        </div>
-                                    </div>
-                                    <div class="card-body"
-                                         style="background-color: rgba(220,220,220,0.3)">
-                                        <div style="margin-top: -15px">
-                                            <!-- 分页容器：显示数据 -->
-                                            <div id="CancelDiv"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <!-- 分页容器： 显示分页按钮-->
-                                        <div class="text-center">
-                                            <!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
-                                            <ul id="CancelFunctionPage"
-                                                class="pagination pagination-sm"></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+									删除功能
+								</button>
+							</div>
+						</div>
+					</div>
+					<!--功能-->
+					<div class="tab-content col-md-10" style="height: 630px;" id="v-pills-tabContent">
+						<div class="tab-pane fade show active" id="v-pills-four" role="tabpanel"
+						     aria-labelledby="v-pills-four-tab">
+							<div style="width: 19%;float: left">
+								<div class="card" style="height: 700px;">
+									<div class="card-header"
+									     style="background-color: rgba(245,232,200,0.5)">
+										<div class="card-title" style="color: black">
+											<i class="fas fa-battery-empty" style="color: #FF9933"></i>&nbsp;待办的
+										</div>
+									</div>
+									<div class="card-body"
+									     style="background-color: rgba(220,220,220,0.3)">
+										<div style="margin-top: -15px">
+											<!-- 分页容器：显示数据--参与 -->
+											<div id="TodoDiv"></div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<!-- 分页容器： 显示分页按钮-->
+										<div class="text-center">
+											<!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+											<ul id="TodoFunctionPage"
+											    class="pagination pagination-sm"></ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="width: 1%;float: left">&nbsp;</div>
+							<div style="width: 19%;float: left">
+								<div class="card" style="height: 700px;">
+									<div class="card-header"
+									     style="background-color: rgba(157,211,250,0.5)">
+										<div class="card-title" style="color: black">
+											<i class="fas fa-battery-half" style="color: #1F6FB5"></i>&nbsp;进行中
+										</div>
+									</div>
+									<div class="card-body"
+									     style="background-color: rgba(220,220,220,0.3)">
+										<div style="margin-top: -15px">
+											<!-- 分页容器：显示数据 -->
+											<div id="ProcesingDiv"></div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<!-- 分页容器： 显示分页按钮-->
+										<div class="text-center">
+											<!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+											<ul id="ProcesingFunctionPage"
+											    class="pagination pagination-sm"></ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="width: 1%;float: left">&nbsp;</div>
+							<div style="width: 19%;float: left">
+								<div class="card" style="height: 700px;">
+									<div class="card-header"
+									     style="background-color: rgba(118,126,199,0.5)">
+										<div class="card-title" style="color: black"><i
+												class="fas fa-battery-three-quarters"
+												style="color: #795DDE"></i>&nbsp;已完成
+										</div>
+									</div>
+									<div class="card-body"
+									     style="background-color: rgba(220,220,220,0.3)">
+										<div style="margin-top: -15px">
+											<!-- 分页容器：显示数据 -->
+											<div id="CompletedDiv"></div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<!-- 分页容器： 显示分页按钮-->
+										<div class="text-center">
+											<!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+											<ul id="CompletedFunctionPage"
+											    class="pagination pagination-sm"></ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="width: 1%;float: left">&nbsp;</div>
+							<div style="width: 19%;float: left">
+								<div class="card" style="height: 700px;">
+									<div class="card-header"
+									     style="background-color: rgba(25,148,117,0.5)">
+										<div class="card-title" style="color: black"><i
+												class="fas fa-battery-full"
+												style="color: #007850"></i>&nbsp;已验收
+										</div>
+									</div>
+									<div class="card-body"
+									     style="background-color: rgba(220,220,220,0.3)">
+										<div style="margin-top: -15px">
+											<!-- 分页容器：显示数据 -->
+											<div id="AcceptedDiv"></div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<!-- 分页容器： 显示分页按钮-->
+										<div class="text-center">
+											<!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+											<ul id="AcceptedFunctionPage"
+											    class="pagination pagination-sm"></ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="width: 1%;float: left">&nbsp;</div>
+							<div style="width: 19%;float: left">
+								<div class="card" style="height: 700px;">
+									<div class="card-header"
+									     style="background-color: rgba(172,173,172,0.5)">
+										<div class="card-title" style="color: black"><i
+												class="fas fa-broom"
+												style="color: #7B7687"></i>&nbsp;已取消
+										</div>
+									</div>
+									<div class="card-body"
+									     style="background-color: rgba(220,220,220,0.3)">
+										<div style="margin-top: -15px">
+											<!-- 分页容器：显示数据 -->
+											<div id="CancelDiv"></div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<!-- 分页容器： 显示分页按钮-->
+										<div class="text-center">
+											<!-- 注意:3版本的分页容器标签是<ul>，2版本的容器标签是<div> -->
+											<ul id="CancelFunctionPage"
+											    class="pagination pagination-sm"></ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!--model框-->
 <div th:replace="commom/bar :: uploadfilemodel"></div>
 <div th:replace="commom/bar :: newprojectpackage"></div>
+<!--添加功能弹出框-->
 <div class="modal fade" id="addFunction" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h5 class="modal-title">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
                         <span class="fw-mediumbold">
-                            New</span>
-                    <span class="fw-light">
-                            Function
-                        </span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="small">Create a new Function using this form, make sure you fill them all</p>
-                <div class="row">
-                    <div class="col-md-6 pr-0">
-                        <div class="form-group form-group-default">
-                            <label>功能名</label>
-                            <input id="addName" name="functionName" type="text" class="form-control"
-                                   placeholder="fill functionName" onBlur="checkFunctionName()">
-                            <span class="default" style="color: #3c763d" id="nameErr">请输入功能名称</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pr-0">
-                        <div class="form-group form-group-default">
-                            <label>实现用户</label>
-                            <select name="realizeUserId" id="addRealizeUserId" class="form-control"></select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer no-bd">
-                <button type="button" class="btn btn-primary" onclick="addFunction()">Add</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="delFunction" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h5 class="modal-title">
-                        <span class="fw-mediumbold">
-                            Deltel</span>
-                    <span class="fw-light">
-                            Function
-                        </span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 pr-0">
-                        <div class="form-group form-group-default">
-                            <label>功能名</label>
-                            <select name="functionName" id="functionName" class="form-control">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pr-0">
-                        <div class="form-group form-group-default">
-                            <label>删除原因</label>
-                            <input id="delReason" type="text" class="form-control" required>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer no-bd">
-                <button type="button" class="btn btn-primary" onclick="deleteProjectFunction()">确定</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-            </div>
-        </div>
-    </div>
-</div>
+                            新建功能</span>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6 pr-0">
+						<div class="form-group">
+							<label for="addName">功能名</label>
+							<input id="addName" name="functionName" type="text" class="form-control" autocomplete="off"
+							       onBlur="checkFunctionName()">
+							<span class="default" style="color: #3c763d" id="nameErr">请输入功能名称</span>
+						</div>
+					</div>
+					<div class="col-md-6 pr-0">
+						<div class="form-group">
+							<label for="addRealizeUserId">实现用户</label>
+							<select name="realizeUserId" id="addRealizeUserId" class="form-control"></select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="plannedStartTime">计划开始时间</label>
+							<input type="text" name="plannedStartTime" id="plannedStartTime" class="form-control"
+							       autocomplete="off">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="plannedEndTime">计划结束时间</label>
+							<input type="text" name="plannedEndTime" id="plannedEndTime" class="form-control"
+							       autocomplete="off">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="description">功能描述</label>
+							<textarea type="text" class="form-control" name="description" id="description"
+							          autocomplete="off"></textarea>
+						</div>
 
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer no-bd">
+				<button type="button" class="btn btn-primary" onclick="addFunction()">Add</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--删除功能弹出框-->
+<div class="modal fade" id="delFunction" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+                        <span class="fw-mediumbold">
+                            删除功能</span>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6 pr-0">
+						<div class="form-group form-group-default">
+							<label>功能名</label>
+							<select name="functionName" id="functionName" class="form-control">
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6 pr-0">
+						<div class="form-group form-group-default">
+							<label>删除原因</label>
+							<input id="delReason" type="text" class="form-control" required>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer no-bd">
+				<button type="button" class="btn btn-primary" onclick="deleteProjectFunction()">确定</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--功能详情弹出框-->
+<div class="modal fade" id="functionDetial" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="card card-pricing">
+				<div class="card-header">
+					<h4 class="card-title" id="ProjectFunctionName">我的收藏</h4>
+				</div>
+				<div class="card-body">
+					<ul class="specification-list">
+						<li>
+							<span class="name-specification">发布者</span>
+							<span class="status-specification" id="ProjectFunctionPublicUser"></span>
+						</li>
+						<li>
+							<span class="name-specification">实现者</span>
+							<span class="status-specification" id="ProjectFunctionRealize"></span>
+						</li>
+						<li>
+							<span class="name-specification">计划开始时间</span>
+							<span class="status-specification" id="ProjectFunctionPlanStartTime"></span>
+						</li>
+						<li>
+							<span class="name-specification">实际开始时间</span>
+							<span class="status-specification" id="ProjectFunctionActualStartTime"></span>
+						</li>
+						<li>
+							<span class="name-specification">计划结束时间</span>
+							<span class="status-specification" id="ProjectFunctionPlanEndTime"></span>
+						</li>
+						<li>
+							<span class="name-specification">实际结束时间</span>
+							<span class="status-specification" id="ProjectFunctionActualEndTime"></span>
+						</li>
+						<li>
+							<p class="card-category text-info mb-1">功能描述</p>
+							<p class="card-text" id="ProjectFunctionDescription">
+
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="card-footer">
+					<button class="btn btn-primary btn-block" onclick="abc()"><b>修改</b></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <!--公共JS-->
 <th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
 <th:block th:replace="commom/bar :: nav_project_js"/>
-
+<!--日期选择器-->
+<script th:src="@{/assets/js/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap-datepicker-master/locales/bootstrap-datepicker.zh-CN.min.js}"></script>
 
 <!--功能点分页-->
 <script type="text/javascript">
@@ -528,7 +596,6 @@
 </script>
 <!--功能点进度条-->
 <script type="text/javascript">
-    var projectId = "[[${param.projectId}]]";
     $(function () {
         getChart();
     })
@@ -589,6 +656,9 @@
     function addFunction() {
         var functionName = $("#addName").val();
         var realizeUserId = $("#addRealizeUserId").val();
+        var plannedStartTime = $("#plannedStartTime").val();
+        var plannedEndTime = $("#plannedEndTime").val();
+        var description = $("#description").val();
         var projectsId = projectId;
         var publishUserId = userId;
         if (!checkAddFunction()) {
@@ -599,10 +669,13 @@
                     type: "POST",
                     url: "/add_project_function",
                     data: {
-                        "projectsId": projectsId,
-                        "functionName": functionName,
-                        "realizeUserId": realizeUserId,
-                        "publishUserId": publishUserId
+                        projectsId: projectsId,
+                        functionName: functionName,
+                        realizeUserId: realizeUserId,
+                        publishUserId: publishUserId,
+                        plannedStartTime: plannedStartTime,
+                        plannedEndTime: plannedEndTime,
+                        description: description
                     },
                     dataType: "json",
                     success: function (data) {
@@ -614,6 +687,7 @@
                             });
                             setTimeout(function () {
                                 refreshTodoFunction(projectsId);
+                                $('#addFunction').modal('hide');
                             }, 1500);
                         } else if (data == 6) {
                             swal("添加失败！", "功能点名称不能为空!", {
@@ -686,11 +760,12 @@
     }
 
     //页面渲染
-    function addFunctionProjectUserAppendHtml(list) {//此函数用于处理后台返回的数据，根据自己需求来实现页面拼接
+    function addFunctionProjectUserAppendHtml(list) {
         var tableShow = '';
         for (var i = 0; i < list.length; i++) {
+            console.log(list[i])
             tableShow +=
-                '<option value=' + list[i].id + '>' + list[i].myUserDetails.username + '</option>\n'
+                '<option value=' + list[i].myUserDetails.id + '>' + list[i].myUserDetails.username + '</option>\n'
         }
         $('#addRealizeUserId').html(tableShow)
     }
@@ -712,6 +787,7 @@
             },
             success: function (result) {
                 projectFunctionAppendHtml(result.data);
+                $('#delFunction').modal('hide');
             }
         })
     }
@@ -801,6 +877,47 @@
                 }
             );
         }
+    }
+</script>
+<!--功能点详情-->
+<script type="text/javascript">
+    function projectFunctionModel(id) {
+        console.log(id);
+        $.ajax({
+            type: "Get",
+            url: "/projectFunction",
+            data: {
+                id: id,
+            },
+            success: function (result) {
+                $("#ProjectFunctionName").text(result.functionName);
+                $("#ProjectFunctionPublicUser").text(result.publishUserName);
+                $("#ProjectFunctionRealize").text(result.realizeUserName);
+                $("#ProjectFunctionPlanStartTime").text(result.plannedStartTime);
+                $("#ProjectFunctionPlanEndTime").text(result.plannedEndTime);
+                $("#ProjectFunctionActualStartTime").text(result.actualStartTime);
+                $("#ProjectFunctionActualEndTime").text(result.actualEndTime);
+                $("#ProjectFunctionDescription").text(result.description);
+            }
+        })
+        $('#functionDetial').modal('show');
+    }
+</script>
+<!--时间插件-->
+<script type="text/javascript">
+    $('#plannedStartTime').datepicker({
+        format: 'yyyy/mm/dd',
+        language: "zh-CN"
+    })
+    $('#plannedEndTime').datepicker({
+        format: 'yyyy/mm/dd',
+        language: "zh-CN"
+    })
+</script>
+<!--修改功能点-->
+<script type="text/javascript">
+    function abc() {
+        console.log(111);
     }
 </script>
 </body>

@@ -1,4 +1,5 @@
 $(function () {
+    console.log(projectId);
     projects_package(projectId);
     package_list(projectId);
     $("#packageName").keyup(function () {
@@ -55,7 +56,7 @@ function projects_package(projectId) {
                         var li1 = document.createElement("li");
                         ul.append(li1);
                         var a1 = document.createElement("a");
-                        a1.href = '/document?projectId=' + projectId + '&documentName=' + data[i].projectsPackageList[j].documentName;
+                        a1.href = '/document/' + projectId + '/' + data[i].projectsPackageList[j].documentName;
                         li1.appendChild(a1);
                         //创建span
                         var span1 = document.createElement("span");
@@ -159,11 +160,11 @@ $(function () {
     if (userId != "") {
         $("#projectSideBarA1").attr("href", '/projectmessage?projectId=' + projectId + '&userId=' + userId);
     }
-    $("#projectSideBarA2").attr("href", '/projects_view?projectId=' + projectId);
-    $("#projectSideBarA3").attr("href", '/projects_plan_view?projectId=' + projectId);
-    $("#projectSideBarA4").attr("href", '/project_function_view?projectId=' + projectId)
-    $("#projectSideBarA5").attr("href", '/project_user_view?projectId=' + projectId)
-    $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
+    $("#projectSideBarA2").attr("href", '/projects_view/' + projectId);
+    $("#projectSideBarA3").attr("href", '/projects_plan_view/' + projectId);
+    $("#projectSideBarA4").attr("href", '/project_function_view/' + projectId)
+    $("#projectSideBarA5").attr("href", '/project_user_view/' + projectId)
+    // $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
 })
 
 //判断用户是否有权限标记
@@ -248,6 +249,7 @@ function checkLoginAndProjectUserAndDoFunction(doFunction) {
     }
 }
 
+
 //上传文件弹出框
 function uploadFileModel() {
     checkLoginAndProjectUserAndDoFunction(uploadFileDo)
@@ -270,5 +272,13 @@ function projectMessageView() {
 }
 
 function projectMessageViewDo(arguments) {
-    location.href = '/projectmessage?projectId=' + arguments[1] + '&userId=' + arguments[2]
+    location.href = '/projectmessage/' + arguments[1] + '/' + arguments[2]
+}
+
+//跳转合作伙伴
+function projectUserCooperationView() {
+    checkLoginAndProjectUserAndDoFunction(projectUserCooperationViewDo)
+}
+function projectUserCooperationViewDo() {
+    location.href = '/project_user_cooperation_view/' + projectId
 }

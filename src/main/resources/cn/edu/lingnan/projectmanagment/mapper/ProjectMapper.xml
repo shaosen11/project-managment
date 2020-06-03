@@ -125,7 +125,7 @@
     <!--查找所有项目-->
     <select id="getProject" resultType="ProjectsRecommendation">
         select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization,a.store_count as storeCount,a.click_count as clickCount,
-        (select count(*) from user_store us where us.user_id = b.id and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
+        (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
         hour(timediff(now(), last_update_time)) as updateTime,
         DATE_FORMAT(last_update_time,'%Y-%m-%d') as updateDate,
         DATE_FORMAT(a.create_time,'%Y-%m-%d') as createDate,
@@ -178,13 +178,13 @@
     <!--查找所有项目-->
     <select id="getRecommendedCommodities" resultType="ProjectsRecommendation">
         select a.id as projectId,b.id as userId,a.name,b.username,a.type,a.characterization as characterization,a.store_count as storeCount,a.click_count as clickCount,
-               (select count(*) from user_store us where us.user_id = b.id and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
+               (select count(*) from user_store us where us.user_id = #{userId} and us.projects_id = a.id and us.delete_flag = 1) as storeFlag,
                 hour(timediff(now(), last_update_time)) as updateTime,
                 DATE_FORMAT(last_update_time,'%Y-%m-%d') as updateDate,
                 DATE_FORMAT(a.create_time,'%Y-%m-%d') as createDate,
                 getFirstHanZiCode(b.username) as firstname
         from projects a,sys_user b
-        where a.charge_user_id=b.id and a.id=#{projecstId} and a.enabled = 1 and b.enabled=1
+        where a.charge_user_id=b.id and a.id=#{projectId} and a.enabled = 1 and b.enabled=1
         order by rand() limit 10;
     </select>
 

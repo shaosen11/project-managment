@@ -11,10 +11,8 @@ import cn.edu.lingnan.projectmanagment.utils.DateFromatUtil;
 import cn.edu.lingnan.projectmanagment.utils.IPUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -48,8 +46,10 @@ public class PorojectsMessageController {
     @Autowired
     ProjectServiceImpl projectService;
 
-    @GetMapping("/projectmessage")
-    public String projectMessage() {
+    @GetMapping("/projectmessage/{projectId}/{userId}")
+    public String projectMessage(@PathVariable("projectId") Integer projectId, @PathVariable("userId") Integer userId, Model model) {
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("userId", userId);
         return "project/projectmessage";
     }
 

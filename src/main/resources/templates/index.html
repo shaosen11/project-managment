@@ -71,8 +71,7 @@
                             <div class="card-body">
                                 <!--导航栏-->
                                 <div class="row row-nav-line">
-                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist"
-                                        style="width: 60%">
+                                    <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active show" id="pills-more-tab-nobd" data-toggle="pill"
                                                href="#pills-more-tab" role="tab" aria-controls="pills-more-nobd"
@@ -86,21 +85,6 @@
                                                aria-selected="true">推荐项目</a>
                                         </li>
                                     </ul>
-                                    <!--<div id="add-row-filter" class="dataTables_filter"
-                                         style="float: right; margin-top:12px; ">
-                                        <span class="input-group">
-                                            <input aria-controls="add-row" type="text"
-                                                   class="form-control form-control-sm" placeholder="请输入关键字"
-                                                   th:onkeyup="searchWord(this)" id="search1" autocomplete="off">
-                                            <span class="input-group-btn" style="float: right">
-                                                <button class="btn btn-primary" onclick="searchByWord()"><i
-                                                        class="fas fa-search"></i></button>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div id="showDiv1"
-                                         style="display:none; position:absolute;margin-left: 60%; margin-top: 52px; z-index:1000;background:white; width:195px;font-size: 16px;color:#575962;border:1px solid #ccc;">
-                                    </div>-->
                                 </div>
 
                                 <!--主体-->
@@ -327,7 +311,7 @@
                 '           <span class="avatar-title rounded-circle border border-white bg-info">' + list[i].firstname + '</span>\n' +
                 '       </span>\n' +
                 '       <div style="float: left">\n' +
-                '           <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '">\n' +
+                '           <a class="defineBStyle" href="projects_view/' + list[i].projectId + '">\n' +
                 '               <span style="color: #145180;font-size: 18px">\n' +
                 '                   ' + list[i].username + '/' + list[i].name + '\n' +
                 '               </span>\n' +
@@ -359,10 +343,19 @@
             /*判断是否收藏*/
             if (list[i].storeFlag == 1) {
                 var storeColor = "#F29F3F";
-                tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_del_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                if (userId != "") {
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_del_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                } else {
+
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_del_refrech(' + 0 + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                }
             } else if (list[i].storeFlag == 0) {
                 var storeColor = "darkgrey";
-                tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                if (userId != "") {
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_refrech(' + userId + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                } else {
+                    tableShow += '       <a id="stored' + list[i].projectId + '" onclick="projects_index_refrech(' + 0 + ',' + list[i].projectId + ')" style="color: ' + storeColor + '">\n'
+                }
             }
             tableShow +=
                 '           <i class="fas fa-star"></i><span id="storeCount' + list[i].projectId + '">' + list[i].storeCount + '</span>\n' +
@@ -421,19 +414,27 @@
 <!--收藏与取消收藏状态切换-->
 <script type="text/javascript">
     function projects_index_refrech(userId, projectId) {
+        if (userId != 0) {
+            checkLoginAndDoFunction(projects_index_refrechDo, userId, projectId)
+        } else {
+            noLoginALert();
+        }
+    }
+
+    function projects_index_refrechDo(arguments1) {
         $.ajax({
             type: "post",
             url: "/projects_index_refrech",
             dataType: "json",
             data: {
-                userId: userId,
-                projectId: projectId
+                userId: arguments1[1],
+                projectId: arguments1[2]
             },
             success: function (json) {
                 if (json.ok) {
-                    $("#stored" + projectId).css("color", "#F29F3F");
+                    $("#stored" + arguments1[2]).css("color", "#F29F3F");
                     var tranfunction = "projects_index_del_refrech(" + userId + "," + projectId + ")"
-                    $("#stored" + projectId).attr("onclick", tranfunction);
+                    $("#stored" + arguments1[2]).attr("onclick", tranfunction);
                     $("#storeCount" + projectId).html(json.data.storeCount)
                 }
             }
@@ -441,19 +442,27 @@
     }
 
     function projects_index_del_refrech(userId, projectId) {
+        if (userId != 0) {
+            checkLoginAndDoFunction(projects_index_del_refrechDo, userId, projectId)
+        } else {
+            noLoginALert();
+        }
+    }
+
+    function projects_index_del_refrechDo(arguments1) {
         $.ajax({
             type: "post",
             url: "/projects_index_del_refrech",
             dataType: "json",
             data: {
-                userId: userId,
-                projectId: projectId
+                userId: arguments1[1],
+                projectId: arguments1[2]
             },
             success: function (json) {
                 if (json.ok) {
-                    $("#stored" + projectId).css("color", "darkgrey");
+                    $("#stored" + arguments1[2]).css("color", "darkgrey");
                     var tranfunction = "projects_index_refrech(" + userId + "," + projectId + ")"
-                    $("#stored" + projectId).attr("onclick", tranfunction);
+                    $("#stored" + arguments1[2]).attr("onclick", tranfunction);
                     $("#storeCount" + projectId).html(json.data.storeCount)
                 }
             }
@@ -486,7 +495,7 @@
                 for (var i = 0; i < list.length; i++) {
                     tableShow += '<div>\n' +
                         '              <div class="col-lg-10">\n' +
-                        '                   <a class="defineBStyle" href="projects_view?projectId=' + list[i].projectId + '")"\n' +
+                        '                   <a class="defineBStyle" href="projects_view/' + list[i].projectId + '")"\n' +
                         '                      style="color: #145180;font-size: 18px">\n' +
                         '                      <span>' + list[i].username + '/' + list[i].name + '</span>\n' +
                         '                   </a>\n' +

@@ -85,13 +85,13 @@ public interface ProjectMapper {
      * 查询所有项目主页信息
      * @return
      */
-    List<ProjectsRecommendation> getProject(Integer pageNum, Integer pageSize);
+    List<ProjectsRecommendation> getProject(Integer userId, Integer pageNum, Integer pageSize);
 
     /**
      * 查询当前推荐商品信息
      * @return
      */
-    List<ProjectsRecommendation> getRecommendedCommodities(Integer projectId);
+    List<ProjectsRecommendation> getRecommendedCommodities(Integer userId,Integer projectId);
 
     boolean updateProjectClickNumber(Integer projectId);
 

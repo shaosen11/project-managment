@@ -45,17 +45,17 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="pills-person-tab-nobd" data-toggle="pill"
                                    href="#pills-person-nobd" role="tab" aria-controls="pills-person-nobd"
-                                   aria-selected="true">Person</a>
+                                   aria-selected="true">个人</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-project-tab-nobd" data-toggle="pill"
                                    href="#pills-project-nobd" role="tab" aria-controls="pills-project-nobd"
-                                   aria-selected="false">Project</a>
+                                   aria-selected="false">项目</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-todo-tab-nobd" data-toggle="pill"
                                    href="#pills-todo-nobd" role="tab" aria-controls="pills-todo-nobd"
-                                   aria-selected="false">Todo</a>
+                                   aria-selected="false">待办</a>
                             </li>
                         </ul>
                     </div>
@@ -118,6 +118,7 @@
     var personOffset = 0;
     var personPageSize = 5;
     var personMessageIndex = 0;
+    console.log(projectId);
     $(function () {
         ajaxAppendPersonMessage(projectId, userId, personOffset, personPageSize);
     })

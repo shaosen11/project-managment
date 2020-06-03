@@ -70,8 +70,8 @@ public class ProjectServiceImpl implements ProjectsService {
     }
 
     @Override
-    public List<ProjectsRecommendation> getProject(Integer pageNum, Integer pageSize) {
-        return projectMapper.getProject(pageNum,pageSize);
+    public List<ProjectsRecommendation> getProject(Integer userId, Integer pageNum, Integer pageSize) {
+        return projectMapper.getProject(userId, pageNum, pageSize);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class ProjectServiceImpl implements ProjectsService {
     }
 
     @Override
-    public List<ProjectsRecommendation> getRecommendedCommodities(Integer projectId) {
-        return projectMapper.getRecommendedCommodities(projectId);
+    public List<ProjectsRecommendation> getRecommendedCommodities(Integer userId,Integer projectId) {
+        return projectMapper.getRecommendedCommodities(userId,projectId);
     }
 
     @Override

@@ -63,7 +63,7 @@ spring:
 
   mail:
     username: projectsmanagment@163.com
-    password: RWMIFXTAYAZLVDRS
+    password: YTCJTAFCYGSTMSWZ
     host: smtp.163.com
     properties:
       mail:

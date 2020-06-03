@@ -245,7 +245,7 @@ public class ProjectsIndexController {
                 }
                 System.out.println("The item " + item + " for " + recommendUser + "'s recommended degree:" + itemRecommendDegree);
                 if (itemRecommendDegree > 0.0) {
-                    List<ProjectsRecommendation> projects = projectService.getRecommendedCommodities(Integer.valueOf(item));
+                    List<ProjectsRecommendation> projects = projectService.getRecommendedCommodities(userId,Integer.valueOf(item));
                     list.add(projects);
                 }
             }
@@ -332,7 +332,7 @@ public class ProjectsIndexController {
                 count = projectService.countProjectsRecommendation();
                 map = functionPageCom(page,count);
                 int offset = (int) map.get("offset");
-                list =  projectService.getProject(offset, pageSize);
+                list =  projectService.getProject(myUserDetails.getId(),offset, pageSize);
             } else{
                 count = projectService.countProjectsByWord(word);
                 map = functionPageCom(page,count);

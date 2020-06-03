@@ -52,6 +52,7 @@ public class ProjectsFunctionController {
     @ResponseBody
     @PostMapping("/add_project_function")
     public Integer addProjectFunction(ProjectsFunction projectsFunction) {
+        System.out.println(projectsFunction);
         Projects projects = projectService.getById(projectsFunction.getProjectsId());
         System.out.println("projectsFunction=" + projectsFunction);
         if (projects == null) {
@@ -273,10 +274,11 @@ public class ProjectsFunctionController {
         return projectsFunctionService.getFunctionByProjectIdAndRealizeUserId(projectId, userId, 1);
     }
 
-    @GetMapping("/project_function_view")
-    public String projectView(@RequestParam Integer projectId, Model model) {
+    @GetMapping("/project_function_view/{projectId}")
+    public String projectView(@PathVariable("projectId") Integer projectId, Model model) {
         Projects projects = projectService.getById(projectId);
         model.addAttribute("project", projects);
+        model.addAttribute("projectId", projectId);
         return "project/projectfunctionview";
     }
 
@@ -339,10 +341,11 @@ public class ProjectsFunctionController {
 //        }
     }
 
-    @GetMapping("/projects_plan_view")
-    public String projectPlanView(@RequestParam Integer projectId, Model model) {
+    @GetMapping("/projects_plan_view/{projectId}")
+    public String projectPlanView(@PathVariable("projectId") Integer projectId, Model model) {
         Projects projects = projectService.getById(projectId);
         model.addAttribute("project", projects);
+        model.addAttribute("projectId", projectId);
         return "project/projectplanview";
     }
 
@@ -463,6 +466,15 @@ public class ProjectsFunctionController {
         } else {
             return AJaxResponse.error("请先登录！");
         }
+    }
+
+    @GetMapping("/projectFunction")
+    @ResponseBody
+    public ProjectsFunction projectFunctionById(Integer id){
+        System.out.println(id);
+        ProjectsFunction projectsFunction = projectsFunctionService.getById(id);
+        System.out.println(projectsFunction);
+        return projectsFunction;
     }
 }
 

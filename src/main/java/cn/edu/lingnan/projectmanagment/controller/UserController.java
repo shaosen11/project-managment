@@ -158,9 +158,9 @@ public class UserController {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             //邮件设置
             String emailTitle = "密码找回";
-            String path = request.getContextPath();
-            String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-            String resetPassHref =  basePath+"reset_password?sid="+digitalSignature+"&email="+myUserDetails.getEmail();
+//            String path = request.getContextPath();
+//            String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+            String resetPassHref =  "http://www.projectsmanagment.top/"+"reset_password?sid="+digitalSignature+"&email="+myUserDetails.getEmail();
             String emailContent = "请勿回复本邮件.点击下面的链接,重设密码<br/><a href="+resetPassHref +" target='_BLANK'>点击我重新设置密码</a>" +
                     "<br/>tips:本邮件超过30分钟,链接将会失效，需要重新申请";
             System.out.println(resetPassHref);
@@ -179,7 +179,7 @@ public class UserController {
 
     @GetMapping("/reset_password")
     public ModelAndView checkResetLink(String sid, String email){
-        ModelAndView model = new ModelAndView("/resetpassword");
+        ModelAndView model = new ModelAndView("resetpassword");
         String msg = "";
         if(sid.equals("") || email.equals("")){
             msg="链接不完整,请重新生成";
@@ -213,7 +213,7 @@ public class UserController {
             return model;
         }
         //返回到修改密码的界面
-        model.setViewName("/resetpassword");
+        model.setViewName("resetpassword");
         model.addObject("email",email);
         return model;
     }
