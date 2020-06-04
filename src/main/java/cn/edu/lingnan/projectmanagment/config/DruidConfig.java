@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * @author shaosen
  */
@@ -28,6 +29,7 @@ public class DruidConfig {
     /**
      * 配置Druid的监控
      * 1.配置一个管理后台的servlet
+     *
      * @return
      */
     @Bean
@@ -44,6 +46,7 @@ public class DruidConfig {
 
     /**
      * 2.配置一个web监控的filter
+     *
      * @return
      */
     @Bean
