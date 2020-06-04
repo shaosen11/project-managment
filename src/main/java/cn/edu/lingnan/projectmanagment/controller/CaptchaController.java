@@ -43,7 +43,7 @@ public class CaptchaController {
             //创建验证码图片
             BufferedImage image = captchaProducer.createImage(text);
             //把图片送到页面
-            ImageIO.write(image,"jpg", outputStream);
+            ImageIO.write(image, "jpg", outputStream);
             outputStream.flush();
         }
     }
