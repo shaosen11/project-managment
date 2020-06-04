@@ -30,8 +30,8 @@ public class Page {
         // 获取总条目数
         this.totalRecord = totalRecord;
         // 获取前一页
-        fromIndex=(pageNum-1)*pageSize;
-        toIndex=pageNum*pageSize>totalRecord?totalRecord:pageNum*pageSize;
+        fromIndex = (pageNum - 1) * pageSize;
+        toIndex = pageNum * pageSize > totalRecord ? totalRecord : pageNum * pageSize;
 
         if (totalRecord % pageSize == 0) {
             this.totalPage = totalRecord / pageSize;
