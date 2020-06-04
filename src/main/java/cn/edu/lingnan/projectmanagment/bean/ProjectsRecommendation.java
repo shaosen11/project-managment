@@ -18,9 +18,9 @@ public class ProjectsRecommendation {
     private Integer clickCount;
     private Integer storeFlag;
     private Integer updateTime;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateDate;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createDate;
 
 }
