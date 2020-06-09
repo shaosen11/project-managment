@@ -155,7 +155,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         //将项目中的静态资源路径开放
         web.ignoring()
-            .antMatchers("/assets/**");
+            .antMatchers("/assets/**")
+            .antMatchers("/assets2/**");
     }
 
     @Bean

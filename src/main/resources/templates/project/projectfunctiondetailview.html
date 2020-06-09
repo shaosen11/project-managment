@@ -188,6 +188,17 @@
 							       autocomplete="off">
 						</div>
 					</div>
+					<div class="col-md-12" th:if="${not #strings.equals(role,0)}">
+						<div class="form-group">
+							<span class="name-specification">状态</span>
+							<select name="functionStatus" id="functionStatusUpdate" class="form-control">
+								<option value="0">待办</option>
+								<option value="1">进行中</option>
+								<option value="2">已完成</option>
+								<option value="3" th:if="${#strings.equals(role,1)}">已验收</option>
+							</select>
+						</div>
+					</div>
 					<div class="col-md-12">
 						<div class="form-group">
 							<p class="card-category text-info mb-1">功能描述</p>
@@ -217,7 +228,7 @@
 <script type="text/javascript">
     $(function () {
         showProjectFunction()
-    })
+    });
 
     function showProjectFunction() {
         var projectFunctionId = "[[${projectsFunction.id}]]";
@@ -302,9 +313,10 @@
                 $("#ProjectFunctionRealizeUpdate").val(result.realizeUserName);
                 $("#ProjectFunctionPlanStartTimeUpdate").val(result.plannedStartTime);
                 $("#ProjectFunctionPlanEndTimeUpdate").val(result.plannedEndTime);
+				$("#functionStatusUpdate").val(result.functionStatus);
                 $("#ProjectFunctionDescriptionUpdate").text(result.description);
             }
-        })
+        });
         $('#functionUpdate').modal('show');
     }
 </script>
@@ -325,6 +337,7 @@
         var id = $("#ProjectFunctionIdUpdate").val();
         var plannedStartTime = $("#ProjectFunctionPlanStartTimeUpdate").val();
         var plannedEndTime = $("#ProjectFunctionPlanEndTimeUpdate").val();
+		var functionStatus = $("#functionStatusUpdate").val();
         var description = $("#ProjectFunctionDescriptionUpdate").val();
 		$.ajax({
             type: "put",
@@ -333,6 +346,7 @@
                 id: id,
                 plannedStartTime: plannedStartTime,
                 plannedEndTime: plannedEndTime,
+				functionStatus: functionStatus,
                 description: description,
             },
             success: function (result){
@@ -343,8 +357,8 @@
                         type: "success",
                         buttons: false,
                         timer: 1500,
-                    })
-	                showProjectFunction()
+                    });
+	                showProjectFunction();
                     $('#functionUpdate').modal('hide');
                 }
             }
