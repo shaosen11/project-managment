@@ -44,9 +44,9 @@ public class ProjectsPackageController {
         //还没有存在包
         Integer packageId = null;
         ProjectsPackage packageIdByProjectId = projectsPackageService.getPackageIdByProjectId(projectsPackage.getProjectId());
-        if(packageIdByProjectId == null){
+        if (packageIdByProjectId == null) {
             packageId = 1;
-        }else {
+        } else {
             packageId = packageIdByProjectId.getPackageId() + 1;
         }
         System.out.println("packageId:::" + packageId);
@@ -56,7 +56,7 @@ public class ProjectsPackageController {
         Projects projects = projectService.getById(projectsPackage.getProjectId());
         projects.setLastUpdateTime(new Date());
         projectService.editProject(projects);
-        Map<String,Object> pathMap = new HashMap<>();
+        Map<String, Object> pathMap = new HashMap<>();
         pathMap.put("projectId", projectsPackage.getProjectId());
         pathMap.put("userId", projectsPackage.getUserId());
         String pathString = PathUtil.pathUtil(pathMap);
@@ -65,11 +65,11 @@ public class ProjectsPackageController {
 
     @ResponseBody
     @GetMapping("/projectsPackage")
-    public boolean checkPackageByProjectIdAndPackageName(ProjectsPackage projectsPackage){
+    public boolean checkPackageByProjectIdAndPackageName(ProjectsPackage projectsPackage) {
         System.out.println(projectsPackage);
-        if(projectsPackageService.getPackageByProjectIdAndPackageName(projectsPackage.getProjectId(), projectsPackage.getPackageName()) == null){
+        if (projectsPackageService.getPackageByProjectIdAndPackageName(projectsPackage.getProjectId(), projectsPackage.getPackageName()) == null) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
