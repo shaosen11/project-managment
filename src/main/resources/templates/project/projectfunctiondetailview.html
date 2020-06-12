@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>ProjectFunction-ProjectManagment</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+	<link rel="icon" th:href="@{/assets/img/icon.ico}" type="image/x-icon"/>
+	<div th:replace="commom/bar :: commom_css"></div>
+	<link rel="stylesheet" th:href="@{/assets/css/atlantis.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/js/bootstrap-datepicker-master/css/bootstrap-datepicker3.standalone.css}">
+
+</head>
+<body>
+<div class="wrapper">
+	<div th:replace="commom/bar :: topbar"></div>
+	<!-- Sidebar -->
+	<div th:replace="commom/bar :: projectsidebar"></div>
+	<!-- End Sidebar -->
+
+	<div class="main-panel">
+		<div class="content">
+			<div class="panel-header bg-secondary-gradient col-md-12">
+				<div class="page-inner py-5">
+					<div class="page-header">
+						<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row row">
+							<h4 class="page-title text-capitalize">[[${project.name}]]功能</h4>
+						</div>
+
+					</div>
+					<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row row">
+						<div>
+							<h2 class="text-white pb-2 fw-bold" id="ProjectFunctionName"></h2>
+							<h5 class="text-white op-7 mb-2" id="ProjectFunctionDescription"></h5>
+						</div>
+						<div class="ml-md-auto py-2 py-md-0">
+							<button class="btn btn-secondary btn-round" onclick="projectFunctionUpdateModel()">
+								<i class="fas fa-cog"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="page-inner mt--5">
+				<div class="row mt--2">
+					<div class="col-md-12">
+						<div class="card full-height">
+							<div class="card-body">
+								<div class="card-body">
+									<div class="d-flex justify-content-between">
+										<div>
+											<h5><b>功能点进度</b></h5>
+											<p class="text-muted" id="functionStatusText"></p>
+										</div>
+										<h3 class="text-info fw-bold" id="dayDifference"></h3>
+									</div>
+									<div class="progress progress-sm">
+										<div class="progress-bar bg-white w-0" role="progressbar"
+										     id="functionStatusNumberClass"></div>
+									</div>
+									<div class="d-flex justify-content-between mt-2">
+										<p class="text-muted mb-0">进度条</p>
+										<p class="text-muted mb-0" id="functionStatusNumber"></p>
+									</div>
+								</div>
+
+							</div>
+							<div class="card-footer">
+								<div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+									<div class="col-md-6">
+										<h6 class="fw-bold mt-3 mb-0">创建者：
+											<span id="ProjectFunctionPublicUser"></span>
+										</h6>
+									</div>
+									<div class="col-md-6">
+										<h6 class="fw-bold mt-3 mb-0">实现者：
+											<span id="ProjectFunctionRealize"></span>
+										</h6>
+									</div>
+									<div class="col-md-6">
+										<h6 class="fw-bold mt-3 mb-0">计划开始时间：
+											<span id="ProjectFunctionPlanStartTime"></span>
+										</h6>
+									</div>
+									<div class="col-md-6">
+										<h6 class="fw-bold mt-3 mb-0">计划结束时间：
+											<span id="ProjectFunctionPlanEndTime"></span>
+										</h6>
+									</div>
+									<div class="col-md-6">
+										<h6 class="fw-bold mt-3 mb-0">实际开始时间 ：
+											<span id="ProjectFunctionActualStartTime"></span>
+										</h6>
+									</div>
+									<div class="col-md-6">
+										<h6 class="fw-bold mt-3 mb-0">实际结束时间：
+											<span id="ProjectFunctionActualEndTime"></span>
+										</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="page-inner">
+				<!--功能点概览-->
+				<div class="row">
+					<div class="card col-md-12">
+						<div class="card-header">
+							<div class="card-title">
+								待办信息
+							</div>
+						</div>
+						<div class="card-body"></div>
+					</div>
+					<div class="card col-md-12">
+						<div class="card-header">
+							<div class="card-title">
+								进行信息
+							</div>
+						</div>
+						<div class="card-body"></div>
+					</div>
+					<div class="card col-md-12">
+						<div class="card-header">
+							<div class="card-title">
+								已完成信息
+							</div>
+						</div>
+						<div class="card-body"></div>
+					</div>
+					<div class="card col-md-12">
+						<div class="card-header">
+							<div class="card-title">
+								验收信息
+							</div>
+						</div>
+						<div class="card-body"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--model框-->
+<div th:replace="commom/bar :: uploadfilemodel"></div>
+<div th:replace="commom/bar :: newprojectpackage"></div>
+<!--功能详情弹出框-->
+<div class="modal fade" id="functionUpdate" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="ProjectFunctionNameUpdate">
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" id="ProjectFunctionIdUpdate">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<span class="name-specification">发布者</span>
+							<input type="text" name="plannedStartTime" id="ProjectFunctionPublicUserUpdate" class="form-control"
+							       autocomplete="off" readonly>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<span class="name-specification">实现者</span>
+							<input type="text" name="plannedStartTime" id="ProjectFunctionRealizeUpdate" class="form-control"
+							       autocomplete="off" readonly>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="name-specification">计划开始时间</span>
+							<input type="text" name="plannedStartTime" id="ProjectFunctionPlanStartTimeUpdate" class="form-control"
+							       autocomplete="off">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<span class="name-specification">计划结束时间</span>
+							<input type="text" name="plannedEndTime" id="ProjectFunctionPlanEndTimeUpdate" class="form-control"
+							       autocomplete="off">
+						</div>
+					</div>
+					<div class="col-md-12" th:if="${not #strings.equals(role,0)}">
+						<div class="form-group">
+							<span class="name-specification">状态</span>
+							<select name="functionStatus" id="functionStatusUpdate" class="form-control">
+								<option value="0">待办</option>
+								<option value="1">进行中</option>
+								<option value="2">已完成</option>
+								<option value="3" th:if="${#strings.equals(role,1)}">已验收</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<p class="card-category text-info mb-1">功能描述</p>
+							<textarea type="text" class="form-control" name="description" id="ProjectFunctionDescriptionUpdate"
+							          autocomplete="off"></textarea>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer no-bd">
+				<button type="button" class="btn btn-primary" onclick="UpdateFunction()">修改</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: commom_js"/>
+<!--公共JS-->
+<th:block th:replace="commom/bar :: nav_project_js"/>
+<!--日期选择器-->
+<script th:src="@{/assets/js/bootstrap-datepicker-master/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap-datepicker-master/locales/bootstrap-datepicker.zh-CN.min.js}"></script>
+
+<!--设置功能点详情-->
+<script type="text/javascript">
+    $(function () {
+        showProjectFunction()
+    });
+
+    function showProjectFunction() {
+        var projectFunctionId = "[[${projectsFunction.id}]]";
+        $.ajax({
+            type: "Get",
+            url: "/projectFunction",
+            data: {
+                id: projectFunctionId,
+            },
+            success: function (result) {
+                $("#ProjectFunctionId").val(result.id);
+                $("#ProjectFunctionName").text("功能点名称：" + result.functionName);
+                $("#ProjectFunctionPublicUser").text(result.publishUserName);
+                $("#ProjectFunctionRealize").text(result.realizeUserName);
+                $("#ProjectFunctionPlanStartTime").text(result.plannedStartTime);
+                $("#ProjectFunctionPlanEndTime").text(result.plannedEndTime);
+                $("#ProjectFunctionActualStartTime").text(result.actualStartTime);
+                $("#ProjectFunctionActualEndTime").text(result.actualEndTime);
+                $("#ProjectFunctionDescription").text(result.description);
+                if (result.functionStatus == 0) {
+                    $("#functionStatusText").text("状态：待办")
+                    $("#functionStatusNumber").text("25%")
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-25")
+
+                } else if (result.functionStatus == 1) {
+                    $("#functionStatusText").text("状态：进行中")
+                    $("#functionStatusNumber").text("50%")
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-50")
+                } else if (result.functionStatus == 2) {
+                    $("#functionStatusText").text("状态：已完成")
+                    $("#functionStatusNumber").text("75%")
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-75")
+                } else if (result.functionStatus == 3) {
+                    $("#functionStatusText").text("状态：已验收")
+                    $("#functionStatusNumber").text("100%")
+                    $("#functionStatusNumberClass").attr("class", "progress-bar bg-info w-100")
+                }
+                dayDifference(result.plannedEndTime, result.functionStatus)
+            }
+        })
+    }
+
+    function dayDifference(date, functionStatus) {
+        var date1 = date;  //开始时间
+        var date2 = new Date();    //结束时间
+        var date3 = new Date(date1).getTime() - date2.getTime();   //时间差的毫秒数
+        var days = Math.floor(date3 / (24 * 3600 * 1000))
+        if (functionStatus == 0 || functionStatus == 1) {
+            if (days > 0) {
+                $("#dayDifference").text("距离验收还有" + days + "天")
+            } else {
+                $("#dayDifference").text("功能点计划尚未完成")
+            }
+        } else if (functionStatus == 2) {
+            $("#dayDifference").text("功能点等待验收")
+        } else if (functionStatus == 3) {
+            $("#dayDifference").text("功能点计划已结束")
+        }
+
+
+    }
+
+</script>
+<!--修改功能点-->
+<script type="text/javascript">
+    function projectFunctionUpdateModel() {
+        var projectFunctionId = "[[${projectsFunction.id}]]";
+        checkLoginAndPowerAndDoFunction(projectFunctionUpdateModelShow, projectFunctionId)
+    }
+
+    function projectFunctionUpdateModelShow(argument) {
+        $.ajax({
+            type: "Get",
+            url: "/projectFunction",
+            data: {
+                id: argument[1],
+            },
+            success: function (result) {
+                $("#ProjectFunctionIdUpdate").val(result.id);
+                $("#ProjectFunctionNameUpdate").text(result.functionName);
+                $("#ProjectFunctionPublicUserUpdate").val(result.publishUserName);
+                $("#ProjectFunctionRealizeUpdate").val(result.realizeUserName);
+                $("#ProjectFunctionPlanStartTimeUpdate").val(result.plannedStartTime);
+                $("#ProjectFunctionPlanEndTimeUpdate").val(result.plannedEndTime);
+				$("#functionStatusUpdate").val(result.functionStatus);
+                $("#ProjectFunctionDescriptionUpdate").text(result.description);
+            }
+        });
+        $('#functionUpdate').modal('show');
+    }
+</script>
+<!--时间插件-->
+<script type="text/javascript">
+    $('#ProjectFunctionPlanStartTimeUpdate').datepicker({
+        format: 'yyyy=mm/dd',
+        language: "zh-CN"
+    })
+    $('#ProjectFunctionPlanEndTimeUpdate').datepicker({
+        format: 'yyyy/mm/dd',
+        language: "zh-CN"
+    })
+</script>
+<!--修改功能信息-->
+<script type="text/javascript">
+    function UpdateFunction(){
+        var id = $("#ProjectFunctionIdUpdate").val();
+        var plannedStartTime = $("#ProjectFunctionPlanStartTimeUpdate").val();
+        var plannedEndTime = $("#ProjectFunctionPlanEndTimeUpdate").val();
+		var functionStatus = $("#functionStatusUpdate").val();
+        var description = $("#ProjectFunctionDescriptionUpdate").val();
+		$.ajax({
+            type: "put",
+            url: "/projectFunction",
+            data: {
+                id: id,
+                plannedStartTime: plannedStartTime,
+                plannedEndTime: plannedEndTime,
+				functionStatus: functionStatus,
+                description: description,
+            },
+            success: function (result){
+                if (result.ok) {
+                    swal({
+                        icon: "success",
+                        text: "修改成功！",
+                        type: "success",
+                        buttons: false,
+                        timer: 1500,
+                    });
+	                showProjectFunction();
+                    $('#functionUpdate').modal('hide');
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

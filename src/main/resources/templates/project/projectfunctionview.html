@@ -22,7 +22,7 @@
 					<h4 class="page-title">[[${project.name}]]功能点</h4>
 					<ul class="breadcrumbs">
 						<li class="nav-home">
-							<a href="#">
+							<a th:href="@{/}">
 								<i class="flaticon-home"></i>
 							</a>
 						</li>
@@ -30,13 +30,13 @@
 							<i class="flaticon-right-arrow"></i>
 						</li>
 						<li class="nav-item">
-							<a href="#">Base</a>
+							<a th:href="@{/projects_view/{id}(id=${project.id})}">项目主面板</a>
 						</li>
 						<li class="separator">
 							<i class="flaticon-right-arrow"></i>
 						</li>
 						<li class="nav-item">
-							<a href="#">Panels</a>
+							<a th:href="@{/project_function_view/{id}(id=${project.id})}">项目功能点</a>
 						</li>
 					</ul>
 				</div>
@@ -425,55 +425,8 @@
 		</div>
 	</div>
 </div>
-<!--功能详情弹出框-->
-<div class="modal fade" id="functionDetial" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="card card-pricing">
-				<div class="card-header">
-					<h4 class="card-title" id="ProjectFunctionName">我的收藏</h4>
-				</div>
-				<div class="card-body">
-					<ul class="specification-list">
-						<li>
-							<span class="name-specification">发布者</span>
-							<span class="status-specification" id="ProjectFunctionPublicUser"></span>
-						</li>
-						<li>
-							<span class="name-specification">实现者</span>
-							<span class="status-specification" id="ProjectFunctionRealize"></span>
-						</li>
-						<li>
-							<span class="name-specification">计划开始时间</span>
-							<span class="status-specification" id="ProjectFunctionPlanStartTime"></span>
-						</li>
-						<li>
-							<span class="name-specification">实际开始时间</span>
-							<span class="status-specification" id="ProjectFunctionActualStartTime"></span>
-						</li>
-						<li>
-							<span class="name-specification">计划结束时间</span>
-							<span class="status-specification" id="ProjectFunctionPlanEndTime"></span>
-						</li>
-						<li>
-							<span class="name-specification">实际结束时间</span>
-							<span class="status-specification" id="ProjectFunctionActualEndTime"></span>
-						</li>
-						<li>
-							<p class="card-category text-info mb-1">功能描述</p>
-							<p class="card-text" id="ProjectFunctionDescription">
 
-							</p>
-						</li>
-					</ul>
-				</div>
-				<div class="card-footer">
-					<button class="btn btn-primary btn-block" onclick="abc()"><b>修改</b></button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+
 <!--公共JS-->
 <th:block th:replace="commom/bar :: commom_js"/>
 <!--公共JS-->
@@ -879,30 +832,7 @@
         }
     }
 </script>
-<!--功能点详情-->
-<script type="text/javascript">
-    function projectFunctionModel(id) {
-        console.log(id);
-        $.ajax({
-            type: "Get",
-            url: "/projectFunction",
-            data: {
-                id: id,
-            },
-            success: function (result) {
-                $("#ProjectFunctionName").text(result.functionName);
-                $("#ProjectFunctionPublicUser").text(result.publishUserName);
-                $("#ProjectFunctionRealize").text(result.realizeUserName);
-                $("#ProjectFunctionPlanStartTime").text(result.plannedStartTime);
-                $("#ProjectFunctionPlanEndTime").text(result.plannedEndTime);
-                $("#ProjectFunctionActualStartTime").text(result.actualStartTime);
-                $("#ProjectFunctionActualEndTime").text(result.actualEndTime);
-                $("#ProjectFunctionDescription").text(result.description);
-            }
-        })
-        $('#functionDetial').modal('show');
-    }
-</script>
+
 <!--时间插件-->
 <script type="text/javascript">
     $('#plannedStartTime').datepicker({
@@ -914,11 +844,12 @@
         language: "zh-CN"
     })
 </script>
-<!--修改功能点-->
+<!--功能点详情-->
 <script type="text/javascript">
-    function abc() {
-        console.log(111);
+    function projectFunctionDetail(projectFunctionId) {
+        location.href = "/project_function_detail_view/" + projectFunctionId;
     }
 </script>
+
 </body>
 </html>

@@ -17,14 +17,14 @@ public class ProjectsFunction {
     private String publishUserName;
     private Integer realizeUserId;
     private String realizeUserName;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date plannedStartTime;//计划开始时间
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date plannedEndTime;//计划结束时间
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date actualStartTime;////实际开始时间
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date actualEndTime;//实际结束时间
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date plannedStartTime;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date plannedEndTime;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date actualStartTime;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private Date actualEndTime;
     private String delReason;
     private Integer deleteFlag;
     private String description;

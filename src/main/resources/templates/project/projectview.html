@@ -21,7 +21,7 @@
                     <h4 class="page-title">项目主页面</h4>
                     <ul class="breadcrumbs">
                         <li class="nav-home">
-                            <a href="#">
+                            <a th:href="@{/}">
                                 <i class="flaticon-home"></i>
                             </a>
                         </li>
@@ -29,13 +29,7 @@
                             <i class="flaticon-right-arrow"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="#">Base</a>
-                        </li>
-                        <li class="separator">
-                            <i class="flaticon-right-arrow"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">Panels</a>
+                            <a th:href="@{/projects_view/{id}(id=${project.id})}">项目主面板</a>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +49,7 @@
                                         <div class="numbers">
                                             <p class="card-category">代码行</p>
                                             <h4 class="card-title" id="projectCodeLineNumber">
-                                                [[${projects.codeLineNumber}]]</h4>
+                                                [[${project.codeLineNumber}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +69,7 @@
                                         <div class="numbers">
                                             <p class="card-category">上传次数</p>
                                             <h4 class="card-title" id="projectCodeUpdateCount">
-                                                [[${projects.codeUpdateCount}]]</h4>
+                                                [[${project.codeUpdateCount}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +89,7 @@
                                         <div class="numbers">
                                             <p class="card-category">文件数量</p>
                                             <h4 class="card-title" id="projectDocumentCount">
-                                                [[${projects.documentCount}]]</h4>
+                                                [[${project.documentCount}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +108,7 @@
                                     <div class="col col-stats">
                                         <div class="numbers">
                                             <p class="card-category">贡献者</p>
-                                            <h4 class="card-title" id="projectUserCount">[[${projects.userCount}]]</h4>
+                                            <h4 class="card-title" id="projectUserCount">[[${project.userCount}]]</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -270,48 +264,6 @@
 <!--model框-->
 <div th:replace="commom/bar :: uploadfilemodel"></div>
 <div th:replace="commom/bar :: newprojectpackage"></div>
-<div class="modal fade" id="addFunction" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h5 class="modal-title">
-                        <span class="fw-mediumbold">
-                            New</span>
-                    <span class="fw-light">
-                            Function
-                        </span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="small">Create a new Function using this form, make sure you fill them all</p>
-                <div class="row">
-                    <div class="col-md-6 pr-0">
-                        <div class="form-group form-group-default">
-                            <label>功能名</label>
-                            <input id="addName" name="functionName" type="text" class="form-control"
-                                   placeholder="fill functionName" onBlur="checkFunctionName()">
-                            <span class="default" style="color: #3c763d" id="nameErr">请输入功能名称</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pr-0">
-                        <div class="form-group form-group-default">
-                            <label>实现用户</label>
-                            <input id="addRealizeUserId" name="realizeUserId" type="text" class="form-control"
-                                   placeholder="fill realizeUserId">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer no-bd">
-                <button type="button" class="btn btn-primary" onclick="addFunction()">Add</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <!--公共JS-->

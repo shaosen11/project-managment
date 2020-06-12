@@ -119,6 +119,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/document/*/*","/files/projects/*/*").permitAll()
                 //projectIntroduce
                 .antMatchers("/projectIntroduce","/projectIndexIntroduce","/projectViewIntroduce","/projectDocumentIntroduce").permitAll()
+                //projectfunctiondetailview
+                .antMatchers("/project_function_detail_view/*").permitAll()
 
                 .anyRequest().access("@rbacService.hasPermission(request,authentication)")
             .and()
@@ -153,7 +155,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         //将项目中的静态资源路径开放
         web.ignoring()
-            .antMatchers("/assets/**");
+            .antMatchers("/assets/**")
+            .antMatchers("/assets2/**");
     }
 
     @Bean

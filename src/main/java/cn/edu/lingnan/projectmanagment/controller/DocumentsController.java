@@ -102,6 +102,8 @@ public class DocumentsController {
             }
         }
         model.addAttribute("projectAdmin", projectAdmin);
+        Projects project = projectService.getById(projectId);
+        model.addAttribute("project", project);
         return "project/documentview";
     }
 

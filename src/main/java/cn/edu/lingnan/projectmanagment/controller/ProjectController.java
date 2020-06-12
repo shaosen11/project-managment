@@ -84,8 +84,8 @@ public class ProjectController {
         userClick1.setClickTime(now);
         userClickService.addUserClick(userClick1);
         //获取项目信息
-        Projects projects = projectService.getById(projectId);
-        model.addAttribute("projects", projects);
+        Projects project = projectService.getById(projectId);
+        model.addAttribute("project", project);
         model.addAttribute("projectId", projectId);
         return "project/projectview";
     }

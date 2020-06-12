@@ -41,6 +41,9 @@ public class ProjectsUserController {
     private UserServiceImpl userService;
 
     @Autowired
+    private ProjectsFunctionServiceImpl projectsFunctionService;
+
+    @Autowired
     private MessageServiceImpl messageService;
 
     @Autowired
@@ -225,12 +228,15 @@ public class ProjectsUserController {
 
     @GetMapping("/project_user_cooperation_view/{projectId}")
     public String projectUserCooperationView(@PathVariable("projectId")Integer projectId, Model model) {
+        Projects project = projectService.getById(projectId);
         model.addAttribute("projectId", projectId);
+        model.addAttribute("project", project);
         return "project/projectusercooperationview";
     }
 
     @GetMapping("/project_user_view/{projectId}")
     public String projectUserView(@PathVariable("projectId") Integer projectId, Model model) {
+        Projects project = projectService.getById(projectId);
         Integer countByProjectId = projectUserService.getCountByProjectId(projectId);
         Integer managment = projectUserService.getCountByProjectIdAndDuty(projectId, 1);
         Integer admin = projectUserService.getCountByProjectIdAndDuty(projectId, 2);
@@ -239,6 +245,7 @@ public class ProjectsUserController {
         model.addAttribute("admin", managment + admin);
         model.addAttribute("codeDevelop", codeDevelop);
         model.addAttribute("projectId", projectId);
+        model.addAttribute("project", project);
         return "project/projectuserview";
     }
 
@@ -320,7 +327,7 @@ public class ProjectsUserController {
     }
 
     /**
-     * 判断用户是项目管理员
+     * 判断用户是项目管理员或者功能点实现者或者功能点发布者
      *
      * @param projectId
      * @param request
@@ -328,10 +335,18 @@ public class ProjectsUserController {
      */
     @GetMapping("/projectUserDuty")
     @ResponseBody
-    public ProjectsUserDuty projectsUserDuty(Integer projectId, HttpServletRequest request) {
+    public Integer projectsUserDuty(Integer projectId, Integer projectFunctionId,HttpServletRequest request) {
         MyUserDetails myUserDetails = UserUtil.getMyUserDetailsBySecurity(request);
         ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(myUserDetails.getId(), projectId);
-        return projectsUser.getProjectsUserDuty();
+        ProjectsFunction projectsFunction = projectsFunctionService.getById(projectFunctionId);
+        Integer duty = 0;
+        if(projectsUser.getProjectsUserDuty().getId() != 3){//管理员
+            duty = 1;
+        }else if(projectsFunction.getRealizeUserId() == myUserDetails.getId()||projectsFunction.getPublishUserId()==myUserDetails.getId()){
+            duty = 2;
+        }
+        return duty;
+
     }
 
     @GetMapping("/projectUsers")

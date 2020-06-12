@@ -4,11 +4,11 @@ $(function () {
     package_list(projectId);
     $("#packageName").keyup(function () {
         setTimeout('checkPackage()', 1000);
-    })
+    });
     if (userId != "") {
         projectMessageCount();
     }
-})
+});
 
 
 //项目包结构
@@ -165,22 +165,23 @@ $(function () {
     $("#projectSideBarA4").attr("href", '/project_function_view/' + projectId)
     $("#projectSideBarA5").attr("href", '/project_user_view/' + projectId)
     // $("#projectSideBarA6").attr("href", '/project_user_cooperation_view?projectId=' + projectId)
-})
+});
 
 //判断用户是否有权限标记
 var projectAdminFlag;
 
 //判断用户是否登录,是否项目人员,是否有权限
-function judgeProjectAdmin() {
+function judgeProjectAdmin(arguments) {
     $.ajax({
         type: "Get",
         url: "/projectUserDuty",
         data: {
             projectId: projectId,
+            projectFunctionId: arguments,
         },
         dataType: "json",
         success: function (data) {
-            if (data.id != 3) {
+            if (data != 0) {
                 projectAdminFlag = true;
             } else {
                 projectAdminFlag = false;
@@ -217,10 +218,10 @@ function checkLoginAndPowerAndDoFunction(doFunction) {
     //检查是否登录
     if (userId != "") {
         //检查是否项目人员
-        judgeProjectUser()
+        judgeProjectUser();
         if (projectUserFlag) {
-            //检查是否项目管理员
-            judgeProjectAdmin();
+            //检查是否项目管理员或者功能点发布者或者功能点实现者
+            judgeProjectAdmin(arguments[1]);
             if (projectAdminFlag) {
                 doFunction(arguments);
             } else {
@@ -238,7 +239,7 @@ function checkLoginAndPowerAndDoFunction(doFunction) {
 function checkLoginAndProjectUserAndDoFunction(doFunction) {
     //检查是否登录
     if (userId != "") {
-        judgeProjectUser()
+        judgeProjectUser();
         if (projectUserFlag) {
             doFunction(arguments)
         } else {

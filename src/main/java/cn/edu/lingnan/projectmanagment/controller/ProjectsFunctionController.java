@@ -476,5 +476,39 @@ public class ProjectsFunctionController {
         System.out.println(projectsFunction);
         return projectsFunction;
     }
+
+    @PutMapping("/projectFunction")
+    @ResponseBody
+    public AJaxResponse projectFunctionById(ProjectsFunction projectsFunction){
+        projectsFunctionService.editProjectFunction(projectsFunction);
+        return AJaxResponse.success();
+    }
+
+    @GetMapping("/project_function_detail_view/{projectFunctionId}")
+    public String projectFunctionDetailView(@PathVariable("projectFunctionId") Integer projectFunctionId, Model model,HttpServletRequest request){
+        ProjectsFunction projectsFunction = projectsFunctionService.getById(projectFunctionId);
+        Projects project = projectService.getById(projectsFunction.getProjectsId());
+        MyUserDetails user = UserUtil.getMyUserDetailsBySecurity(request);
+        Integer role = 0;
+        if(user != null){
+            ProjectsUser projectsUser = projectUserService.getByUserIdAndProjectId(user.getId(),project.getId());
+            if(projectsUser.getDutyCode() != 3){//项目负责人或者管理员
+                role = 1;
+            }else if(user.getId() == projectsFunction.getRealizeUserId()){//功能点实现者
+                role = 2;
+            }
+        }
+        model.addAttribute("projectsFunction", projectsFunction);
+        model.addAttribute("project", project);
+        model.addAttribute("projectId", projectsFunction.getProjectsId());
+        model.addAttribute("role",role);
+        return "project/projectfunctiondetailview";
+    }
+
+    @GetMapping("/project_function_test")
+    public String projectFunctionTest() {
+        return "page2/widgets2";
+    }
+
 }
 
