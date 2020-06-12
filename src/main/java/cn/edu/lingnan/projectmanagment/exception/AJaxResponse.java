@@ -16,14 +16,15 @@ public class AJaxResponse {
     public AJaxResponse() {
     }
 
-    public static AJaxResponse success(){
+    public static AJaxResponse success() {
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(true);
         resultBean.setCode(200);
         resultBean.setMessage("success");
         return resultBean;
     }
-    public static AJaxResponse success(Object data){
+
+    public static AJaxResponse success(Object data) {
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(true);
         resultBean.setCode(200);
@@ -32,7 +33,7 @@ public class AJaxResponse {
         return resultBean;
     }
 
-    public static AJaxResponse success(String msg){
+    public static AJaxResponse success(String msg) {
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(true);
         resultBean.setCode(200);
@@ -40,7 +41,7 @@ public class AJaxResponse {
         return resultBean;
     }
 
-    public static AJaxResponse success(Object data, String msg){
+    public static AJaxResponse success(Object data, String msg) {
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(true);
         resultBean.setCode(200);
@@ -48,16 +49,17 @@ public class AJaxResponse {
         resultBean.setData(data);
         return resultBean;
     }
-    public static AJaxResponse error(CustomException e){
+
+    public static AJaxResponse error(CustomException e) {
         AJaxResponse resultBean = new AJaxResponse();
         resultBean.setOk(false);
         resultBean.setData("/login");
         resultBean.setCode(e.getCode());
-        if (e.getCode() == CustomExceptionType.USER_INPUT_ERROR.getCode()){
+        if (e.getCode() == CustomExceptionType.USER_INPUT_ERROR.getCode()) {
             resultBean.setMessage(e.getMessage());
-        }else if (e.getCode() == CustomExceptionType.SYSTEM_ERROR.getCode()){
+        } else if (e.getCode() == CustomExceptionType.SYSTEM_ERROR.getCode()) {
             resultBean.setMessage(e.getMessage() + ",系统出现异常");
-        }else{
+        } else {
             resultBean.setMessage("系统出现未知异常");
         }
         return resultBean;
